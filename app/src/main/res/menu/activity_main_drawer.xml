@@ -6,7 +6,7 @@
     <group android:checkableBehavior="single">
         <item
                 android:id="@+id/scan_qr"
-                android:icon="@drawable/ic_menu_camera"
+                android:icon="@drawable/ic_scan_qr_code"
                 android:title="Сканирование QR-кода"/>
         <item
                 android:id="@+id/nav_gallery"
