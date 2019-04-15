@@ -88,15 +88,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 integrator.initiateScan()
             }
             R.id.nav_gallery -> {
-                try {
-                    val barcodeEncoder = BarcodeEncoder()
-                    val randomNumber = Random().nextInt(100)
-                    val bitmap = barcodeEncoder.encodeBitmap("Hello world: $randomNumber", BarcodeFormat.QR_CODE, 400, 400)
-                    val imageViewQrCode = findViewById<ImageView>(R.id.qrCode)
-                    imageViewQrCode.setImageBitmap(bitmap)
-                } catch (e: Exception) {
-
-                }
+                val barcodeEncoder = BarcodeEncoder()
+                val randomNumber = Random().nextInt(100)
+                val bitmap = barcodeEncoder.encodeBitmap("Hello world: $randomNumber", BarcodeFormat.QR_CODE, 400, 400)
+                val imageViewQrCode = findViewById<ImageView>(R.id.qrCode)
+                imageViewQrCode.setImageBitmap(bitmap)
             }
             R.id.nav_slideshow -> {
 
