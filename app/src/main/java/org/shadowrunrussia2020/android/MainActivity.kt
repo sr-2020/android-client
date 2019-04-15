@@ -9,10 +9,14 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ImageView
 import android.widget.Toast
+import com.google.zxing.BarcodeFormat
 import com.google.zxing.integration.android.IntentIntegrator
+import com.journeyapps.barcodescanner.BarcodeEncoder
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import java.util.*
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -84,7 +88,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 integrator.initiateScan()
             }
             R.id.nav_gallery -> {
+                try {
+                    val barcodeEncoder = BarcodeEncoder()
+                    val randomNumber = Random().nextInt(100)
+                    val bitmap = barcodeEncoder.encodeBitmap("Hello world: $randomNumber", BarcodeFormat.QR_CODE, 400, 400)
+                    val imageViewQrCode = findViewById<ImageView>(R.id.qrCode)
+                    imageViewQrCode.setImageBitmap(bitmap)
+                } catch (e: Exception) {
 
+                }
             }
             R.id.nav_slideshow -> {
 
