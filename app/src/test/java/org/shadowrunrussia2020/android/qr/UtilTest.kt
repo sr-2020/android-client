@@ -64,4 +64,10 @@ class UtilTest {
             "d810Aw1ybkhZHello",
             encode(Data(Type.CRAFTED_ITEM, 13, 1497919090, "Hello")))
     }
+
+    @Test
+    fun encode_WorksWithCyrillicCharacters() {
+        val data = Data(Type.CRAFTED_ITEM, 13, 1497919090, "Рыба")
+        assertEquals(decode(encode(data)), data)
+    }
 }
