@@ -1,5 +1,6 @@
 package org.shadowrunrussia2020.android
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
@@ -73,8 +74,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // as you specify a parent activity in AndroidManifest.xml.
         when (item.itemId) {
             R.id.action_settings -> return true
+            R.id.action_logout -> { exit(); return true }
             else -> return super.onOptionsItemSelected(item)
         }
+    }
+
+    @SuppressLint("ApplySharedPref")
+    private fun exit() {
+        val preferences = (application as ShadowrunRussia2020Application).getGlobalSharedPreferences()
+        preferences.edit().remove(getString(R.string.token_preference_key)).commit()
+        // TODO(aeremin) Add equivalent
+        // this.stopService(Intent(this, BeaconsScanner::class.java))
+        val intent = Intent(this, LoginActivity::class.java)
+        finishAffinity()
+        startActivity(intent)
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {

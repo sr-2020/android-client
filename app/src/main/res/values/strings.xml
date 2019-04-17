@@ -27,4 +27,5 @@
     <string name="default_backend_url">http://position.evarun.ru/api/v1/</string>
     <string name="token_preference_key">backend_token</string>
     <string name="backend_url_key">backend_url</string>
+    <string name="action_logout">Выход</string>
 </resources>
