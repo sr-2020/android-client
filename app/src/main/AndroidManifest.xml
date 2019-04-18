@@ -16,6 +16,8 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true">
+        <activity android:name=".ShowQrActivity">
+        </activity>
         <activity
                 android:name=".LoginActivity"
                 android:label="@string/title_activity_login"
