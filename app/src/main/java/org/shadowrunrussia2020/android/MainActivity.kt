@@ -11,11 +11,12 @@ import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import org.shadowrunrussia2020.android.qr.Data
 import org.shadowrunrussia2020.android.qr.Type
+import org.shadowrunrussia2020.android.qr.maybeProcessActivityResult
+import org.shadowrunrussia2020.android.qr.startScanQrActivity
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -40,13 +41,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
-        if (result != null) {
-            if (result.contents == null) {
-                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show()
-            } else {
-                Toast.makeText(this, "Scanned: " + result.contents, Toast.LENGTH_LONG).show()
-            }
+        val qrData = maybeProcessActivityResult(this, requestCode, resultCode, data)
+        if (qrData != null) {
+            Toast.makeText(this, "Содержимое QR-кода: ${qrData.type}, ${qrData.payload}", Toast.LENGTH_LONG).show()
         } else {
             super.onActivityResult(requestCode, resultCode, data)
         }
@@ -91,13 +88,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         when (item.itemId) {
-            R.id.scan_qr -> {
-                val integrator = IntentIntegrator(this)
-                integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
-                integrator.setPrompt("Сканирование QR-кода. Для включения/выключения подсветки вспышкой используйте кнопки регулировки громкости.")
-                integrator.setBeepEnabled(false)
-                integrator.initiateScan()
-            }
+            R.id.scan_qr -> startScanQrActivity(this)
             R.id.nav_gallery -> startShowQrActivity(this, Data(Type.SHOP_BILL, 0, 0, "Hello"))
             R.id.nav_slideshow -> {
 
