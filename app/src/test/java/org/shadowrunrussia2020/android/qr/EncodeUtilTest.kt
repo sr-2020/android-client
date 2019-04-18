@@ -4,7 +4,7 @@ import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
-class UtilTest {
+class EncodeUtilTest {
     @Test
     fun decode_ThrowsFormatExceptionIfTooShort() {
         assertFailsWith(FormatException::class) {
