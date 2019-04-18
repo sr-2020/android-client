@@ -6,19 +6,19 @@
     <group android:checkableBehavior="single">
         <item
                 android:id="@+id/scan_qr"
-                android:icon="@drawable/ic_scan_qr_code"
+                android:icon="@drawable/scan_qr_code"
                 android:title="Сканирование QR-кода"/>
         <item
                 android:id="@+id/nav_gallery"
-                android:icon="@drawable/ic_generate_id_qr_code"
+                android:icon="@drawable/generate_id_qr_code"
                 android:title="Генерация QR-кода"/>
         <item
                 android:id="@+id/nav_slideshow"
-                android:icon="@drawable/ic_menu_slideshow"
+                android:icon="@drawable/menu_slideshow"
                 android:title="Slideshow"/>
         <item
                 android:id="@+id/nav_manage"
-                android:icon="@drawable/ic_menu_manage"
+                android:icon="@drawable/menu_manage"
                 android:title="Tools"/>
     </group>
 
@@ -26,11 +26,11 @@
         <menu>
             <item
                     android:id="@+id/nav_share"
-                    android:icon="@drawable/ic_menu_share"
+                    android:icon="@drawable/menu_share"
                     android:title="Share"/>
             <item
                     android:id="@+id/nav_send"
-                    android:icon="@drawable/ic_menu_send"
+                    android:icon="@drawable/menu_send"
                     android:title="Send"/>
         </menu>
     </item>
