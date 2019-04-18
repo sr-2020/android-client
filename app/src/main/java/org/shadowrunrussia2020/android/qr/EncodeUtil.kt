@@ -3,6 +3,7 @@ package org.shadowrunrussia2020.android.qr
 import com.google.common.io.BaseEncoding
 import okio.Buffer
 import java.security.MessageDigest
+import java.util.*
 
 enum class Type {
     UNKNOWN,
@@ -22,6 +23,7 @@ data class Data(val type: Type, val kind: Byte, val validUntil: Int, val payload
 
 class FormatException(): Exception()
 class ValidationException(): Exception()
+class ExpiredException(): Exception()
 
 internal fun signature(packedData: ByteArray, data: String): String {
     // TODO: get salt from environment variable during build
@@ -64,6 +66,10 @@ fun decode(content: String): Data {
     val expectedSignature = signature(bufCopy.readByteArray(), content.slice(IntRange(12, content.length - 1)))
     if (content.slice(IntRange(0, 3)) != expectedSignature)
         throw ValidationException()
+
+    if (validUntil < Date().time / 1000)
+        throw ExpiredException()
+
     val payload = content.slice(IntRange(12, content.length - 1))
     return Data(Type.values()[type.toInt()], kind, validUntil, payload)
 }
