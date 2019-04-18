@@ -17,6 +17,7 @@ import org.shadowrunrussia2020.android.qr.Data
 import org.shadowrunrussia2020.android.qr.Type
 import org.shadowrunrussia2020.android.qr.maybeProcessActivityResult
 import org.shadowrunrussia2020.android.qr.startScanQrActivity
+import java.util.*
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -89,7 +90,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Handle navigation view item clicks here.
         when (item.itemId) {
             R.id.scan_qr -> startScanQrActivity(this)
-            R.id.nav_gallery -> startShowQrActivity(this, Data(Type.SHOP_BILL, 0, 0, "Hello"))
+            R.id.nav_gallery -> startShowQrActivity(this,
+                Data(Type.DIGITAL_SIGNATURE, 0, (Date().time / 1000).toInt() + 3600, "Petya"))
             R.id.nav_slideshow -> {
 
             }
