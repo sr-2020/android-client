@@ -1,26 +1,36 @@
 package org.shadowrunrussia2020.android
 
 import android.annotation.SuppressLint
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.design.widget.Snackbar
+import android.support.v4.app.ActivityCompat.finishAffinity
+import android.support.v4.content.ContextCompat.startActivity
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.TextView
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import kotlinx.android.synthetic.main.nav_header_main.*
+import org.shadowrunrussia2020.android.models.billing.Balance
+import org.shadowrunrussia2020.android.models.billing.Transaction
 import org.shadowrunrussia2020.android.qr.Data
 import org.shadowrunrussia2020.android.qr.Type
 import org.shadowrunrussia2020.android.qr.maybeProcessActivityResult
 import org.shadowrunrussia2020.android.qr.startScanQrActivity
+import java.lang.System.exit
 import java.util.*
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+    private lateinit var mModel: BillingViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +49,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
+
+        mModel = ViewModelProviders.of(this).get(BillingViewModel::class.java)
+        val textView2 = findViewById<TextView>(R.id.textView2)
+        mModel.getBalance().observe(this, Observer { balance: Int? -> textView2.text = balance.toString() })
+        val textView3 = findViewById<TextView>(R.id.textView3)
+        mModel.getHistory().observe(this, Observer { h: List<Transaction>? -> textView3.text = h?.size.toString() })
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -69,7 +85,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         when (item.itemId) {
-            R.id.action_settings -> return true
+            R.id.action_settings -> { mModel.refresh(); return true }
             R.id.action_logout -> { exit(); return true }
             else -> return super.onOptionsItemSelected(item)
         }
