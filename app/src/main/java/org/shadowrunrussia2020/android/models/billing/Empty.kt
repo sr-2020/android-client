@@ -1,0 +1,3 @@
+package org.shadowrunrussia2020.android.models.billing
+
+class Empty()
