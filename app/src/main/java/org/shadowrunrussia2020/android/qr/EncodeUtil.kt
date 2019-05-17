@@ -26,7 +26,7 @@ class ValidationException(): Exception()
 class ExpiredException(): Exception()
 
 internal fun signature(packedData: ByteArray, data: String): String {
-    // TODO: get salt from environment variable during build
+    // TODO(aeremin): get salt from environment variable during build
     val salt = "do you like ponies?"
     val md = MessageDigest.getInstance("MD5")
     md.update(packedData)
