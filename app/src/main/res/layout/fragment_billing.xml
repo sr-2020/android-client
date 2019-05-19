@@ -16,7 +16,7 @@
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Баланс:"
+                android:text="@string/account_balance"
                 android:id="@+id/labelBalance" android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textAlignment="viewStart"
                 android:layout_marginStart="16dp"
@@ -25,7 +25,6 @@
         <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="5683"
                 android:id="@+id/textViewBalance"
                 android:layout_marginEnd="16dp"
                 android:layout_marginTop="16dp"
@@ -42,7 +41,7 @@
             android:id="@+id/newTransferGroup"
             android:layout_marginTop="24dp">
         <TextView
-                android:text="Новый перевод"
+                android:text="@string/new_transfer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textNewTransfer"
@@ -52,21 +51,21 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:ems="10"
-                android:id="@+id/editTextRecipient" android:hint="Получатель"/>
+                android:id="@+id/editTextRecipient" android:hint="@string/transfer_receiver"/>
         <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number"
                 android:ems="10"
-                android:id="@+id/editTextAmount" android:hint="Сумма"/>
+                android:id="@+id/editTextAmount" android:hint="@string/transfer_amount"/>
         <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:ems="10"
-                android:id="@+id/editTextTransferComment" android:hint="Комментарий (опционально)"/>
+                android:id="@+id/editTextTransferComment" android:hint="@string/transfer_comment"/>
         <Button
-                android:text="Перевести"
+                android:text="@string/trasfer_confirm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" android:id="@+id/buttonTransfer"/>
     </LinearLayout>

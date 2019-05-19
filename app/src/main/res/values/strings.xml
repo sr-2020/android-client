@@ -31,4 +31,10 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="account_balance">Баланс:</string>
+    <string name="new_transfer">Новый перевод</string>
+    <string name="transfer_receiver">Получатель</string>
+    <string name="transfer_amount">Сумма</string>
+    <string name="transfer_comment">Комментарий (опционально)</string>
+    <string name="trasfer_confirm">Перевести</string>
 </resources>
