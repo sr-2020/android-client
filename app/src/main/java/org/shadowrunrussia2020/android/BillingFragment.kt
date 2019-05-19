@@ -4,6 +4,8 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,22 +16,28 @@ class BillingFragment : Fragment() {
 
     private lateinit var mModel: BillingViewModel
 
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_billing, container, false)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         mModel = ViewModelProviders.of(activity!!).get(BillingViewModel::class.java)
 
         val textViewBalance = view.findViewById<TextView>(R.id.textViewBalance)
-        mModel.getBalance().observe(this, Observer { balance: Int? -> textViewBalance.text =
-            "Баланс: ${balance.toString()}"
-        })
-        val textViewHistory = view.findViewById<TextView>(R.id.textViewHistory)
-        mModel.getHistory().observe(this, Observer { h: List<Transaction>? -> textViewHistory.text =
-            "Всего операций: ${h?.size.toString()}"
-        })
-    }
+        mModel.getBalance().observe(this, Observer { balance: Int? -> textViewBalance.text = balance.toString() })
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_billing, container, false)
+        // See RecyclerView guide for details if needed
+        // https://developer.android.com/guide/topics/ui/layout/recyclerview
+        val recyclerView = view.findViewById<RecyclerView>(R.id.transactionHistoryView)
+        recyclerView.setHasFixedSize(true)
+        recyclerView.layoutManager = LinearLayoutManager(activity!!)
+
+        val adapter = TransactionsAdapter(mModel)
+        mModel.getHistory().observe(this,
+            Observer { data: List<Transaction>? -> if (data != null) adapter.setData(data) })
+
+        recyclerView.adapter = adapter
     }
 }

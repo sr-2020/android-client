@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+  <ImageView
+          android:id="@+id/statusIcon"
+          android:layout_width="40dp"
+          android:layout_height="50dp"
+          tools:src="@tools:sample/avatars"
+          app:layout_constraintStart_toStartOf="parent"
+          android:layout_marginStart="8dp"
+          app:layout_constraintTop_toTopOf="parent"
+          android:layout_marginTop="8dp" android:contentDescription="Photo" app:srcCompat="@drawable/menu_send"/>
+
+  <TextView
+          android:id="@+id/username"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          tools:text="@tools:sample/full_names"
+          android:textSize="20sp"
+          android:textColor="@android:color/black"
+          app:layout_constraintTop_toTopOf="@+id/statusIcon"
+          app:layout_constraintStart_toEndOf="@+id/statusIcon"
+          android:layout_marginStart="8dp"
+          android:layout_marginBottom="8dp"
+          app:layout_constraintBottom_toTopOf="@+id/comment"/>
+
+  <TextView
+      android:id="@+id/comment"
+      android:layout_width="285dp"
+      android:layout_height="20dp"
+      tools:text="@tools:sample/lorem[4:10]"
+      app:layout_constraintBottom_toBottomOf="@+id/statusIcon"
+      app:layout_constraintStart_toEndOf="@+id/statusIcon"
+      android:layout_marginStart="8dp"
+      app:layout_constraintEnd_toEndOf="parent"
+      android:layout_marginEnd="8dp"
+      app:layout_constraintHorizontal_bias="0.050" />
+
+  <TextView
+          android:id="@+id/amount"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          tools:text="@tools:sample/date/hhmm"
+          app:layout_constraintTop_toTopOf="@+id/statusIcon"
+          app:layout_constraintEnd_toEndOf="parent"
+          android:layout_marginEnd="8dp"/>
+</android.support.constraint.ConstraintLayout>
