@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.design.widget.Snackbar
 import android.support.v4.app.ActivityCompat.finishAffinity
+import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat.startActivity
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
@@ -17,7 +18,7 @@ import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.app_bar_main.*
+import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.nav_header_main.*
 import org.shadowrunrussia2020.android.models.billing.Balance
 import org.shadowrunrussia2020.android.models.billing.Transaction
@@ -27,6 +28,8 @@ import org.shadowrunrussia2020.android.qr.maybeProcessActivityResult
 import org.shadowrunrussia2020.android.qr.startScanQrActivity
 import java.lang.System.exit
 import java.util.*
+
+
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -51,10 +54,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         nav_view.setNavigationItemSelectedListener(this)
 
         mModel = ViewModelProviders.of(this).get(BillingViewModel::class.java)
-        val textView2 = findViewById<TextView>(R.id.textView2)
-        mModel.getBalance().observe(this, Observer { balance: Int? -> textView2.text = balance.toString() })
-        val textView3 = findViewById<TextView>(R.id.textView3)
-        mModel.getHistory().observe(this, Observer { h: List<Transaction>? -> textView3.text = h?.size.toString() })
+        //val textView2 = findViewById<TextView>(R.id.textView2)
+        //mModel.getBalance().observe(this, Observer { balance: Int? -> textView2.text = balance.toString() })
+        //val textView3 = findViewById<TextView>(R.id.textView3)
+        //mModel.getHistory().observe(this, Observer { h: List<Transaction>? -> textView3.text = h?.size.toString() })
+
+        // TODO(aeremin) This is wrong, as onCreate is called e.g. on screen orientation change.
+        // Should we use savedInstanceState to track current fragment or something like that?
+        setContentFragment(MainFragment())
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -105,24 +112,19 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         when (item.itemId) {
+            R.id.nav_main -> setContentFragment(MainFragment())
+            R.id.nav_billing -> setContentFragment(BillingFragment())
             R.id.scan_qr -> startScanQrActivity(this)
             R.id.nav_gallery -> startShowQrActivity(this,
                 Data(Type.DIGITAL_SIGNATURE, 0, (Date().time / 1000).toInt() + 3600, "Petya"))
-            R.id.nav_slideshow -> {
-
-            }
-            R.id.nav_manage -> {
-
-            }
-            R.id.nav_share -> {
-
-            }
-            R.id.nav_send -> {
-
-            }
         }
 
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    private fun setContentFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment)
+            .addToBackStack(null).commit()
     }
 }
