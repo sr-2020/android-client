@@ -33,6 +33,7 @@ import java.util.*
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+
     private lateinit var mModel: BillingViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,13 +53,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
-
         mModel = ViewModelProviders.of(this).get(BillingViewModel::class.java)
-        //val textView2 = findViewById<TextView>(R.id.textView2)
-        //mModel.getBalance().observe(this, Observer { balance: Int? -> textView2.text = balance.toString() })
-        //val textView3 = findViewById<TextView>(R.id.textView3)
-        //mModel.getHistory().observe(this, Observer { h: List<Transaction>? -> textView3.text = h?.size.toString() })
-
         // TODO(aeremin) This is wrong, as onCreate is called e.g. on screen orientation change.
         // Should we use savedInstanceState to track current fragment or something like that?
         setContentFragment(MainFragment())
