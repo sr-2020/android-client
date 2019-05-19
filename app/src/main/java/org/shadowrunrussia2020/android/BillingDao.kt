@@ -16,7 +16,7 @@ interface BillingDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun setBalance(balance: Balance)
 
-    @Query("SELECT * FROM `Transaction`")
+    @Query("SELECT * FROM `Transaction` ORDER BY created_at DESC")
     fun history(): LiveData<List<Transaction>>
 
     @Query("SELECT * FROM `Balance`")
