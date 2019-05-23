@@ -3,7 +3,6 @@ package org.shadowrunrussia2020.android
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MediatorLiveData
 import android.util.Log
-import kotlinx.coroutines.Deferred
 import org.shadowrunrussia2020.android.models.billing.*
 import retrofit2.Response
 

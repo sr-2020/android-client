@@ -1,38 +1,27 @@
 package org.shadowrunrussia2020.android
 
 import android.annotation.SuppressLint
-import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.design.widget.Snackbar
-import android.support.v4.app.ActivityCompat.finishAffinity
 import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat.startActivity
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.TextView
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_main.*
-import kotlinx.android.synthetic.main.nav_header_main.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.shadowrunrussia2020.android.models.billing.Balance
-import org.shadowrunrussia2020.android.models.billing.Transaction
 import org.shadowrunrussia2020.android.qr.Data
 import org.shadowrunrussia2020.android.qr.Type
 import org.shadowrunrussia2020.android.qr.maybeProcessActivityResult
 import org.shadowrunrussia2020.android.qr.startScanQrActivity
-import java.lang.System.exit
 import java.util.*
-
-
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
