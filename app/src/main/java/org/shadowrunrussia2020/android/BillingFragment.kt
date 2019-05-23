@@ -5,7 +5,6 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat.getSystemService
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
@@ -17,13 +16,11 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import com.google.gson.Gson
-import kotlinx.android.synthetic.main.recycler_view_item.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.shadowrunrussia2020.android.models.billing.Transaction
-import kotlinx.coroutines.*
-
-data class ErrorMessage(val message: String)
-data class Error(val error: ErrorMessage)
 
 class BillingFragment : Fragment() {
 
@@ -84,18 +81,19 @@ class BillingFragment : Fragment() {
             }
             val comment = mCommentField.text.toString()
             CoroutineScope(Dispatchers.IO).launch {
-                val result = mModel.transferMoney(Integer.parseInt(recipient), amount, comment)
-                withContext(Dispatchers.Main) {
-                    if (result.isSuccessful) {
+                try {
+                    val result = mModel.transferMoney(Integer.parseInt(recipient), amount, comment)
+                    withContext(Dispatchers.Main) {
                         Toast.makeText(activity, "Перевод осуществлен", Toast.LENGTH_LONG).show();
                         mRecipientField.text.clear()
                         mAmountField.text.clear()
                         mCommentField.text.clear()
                         val inputManager:InputMethodManager = activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                         inputManager.hideSoftInputFromWindow(view.windowToken, InputMethodManager.SHOW_FORCED)
-                    } else {
-                        val m = Gson().fromJson(result.errorBody()!!.string(), Error::class.java).error.message
-                        Toast.makeText(activity, "Ошибка. Некорректный перевод: ${m}", Toast.LENGTH_LONG).show();
+                    }
+                } catch (e: Exception) {
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(activity, "Ошибка. ${e.message}", Toast.LENGTH_LONG).show();
                     }
                 }
             }
