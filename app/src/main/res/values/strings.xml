@@ -37,4 +37,5 @@
     <string name="transfer_amount">Сумма</string>
     <string name="transfer_comment">Комментарий (опционально)</string>
     <string name="trasfer_confirm">Перевести</string>
+    <string name="insufficient_money">Недостаточно денег</string>
 </resources>

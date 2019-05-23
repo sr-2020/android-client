@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import com.google.gson.Gson
+import kotlinx.android.synthetic.main.recycler_view_item.*
 import org.shadowrunrussia2020.android.models.billing.Transaction
 import kotlinx.coroutines.*
 
@@ -23,6 +25,9 @@ data class Error(val error: ErrorMessage)
 class BillingFragment : Fragment() {
 
     private lateinit var mModel: BillingViewModel
+    private lateinit var mRecipientField: EditText
+    private lateinit var mAmountField: EditText
+    private lateinit var mCommentField: EditText
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_billing, container, false)
@@ -48,13 +53,35 @@ class BillingFragment : Fragment() {
 
         recyclerView.adapter = adapter
 
+        mRecipientField = view.findViewById<EditText>(R.id.editTextRecipient)
+        mAmountField = view.findViewById<EditText>(R.id.editTextAmount)
+        mCommentField = view.findViewById<EditText>(R.id.editTextTransferComment)
+
         val button = view.findViewById<Button>(R.id.buttonTransfer)
         button.setOnClickListener {
-            val receiver = Integer.parseInt(view.findViewById<EditText>(R.id.editTextRecipient).text.toString())
-            val amount = Integer.parseInt(view.findViewById<EditText>(R.id.editTextAmount).text.toString())
-            val comment = view.findViewById<EditText>(R.id.editTextTransferComment).text.toString()
+            mRecipientField.error = null
+            mAmountField.error = null
+            val recipient = mRecipientField.text.toString()
+            val amountString = mAmountField.text.toString()
+            if (TextUtils.isEmpty(recipient)) {
+                mRecipientField.error = getString(R.string.error_field_required)
+                mRecipientField.requestFocus()
+                return@setOnClickListener
+            }
+            if (TextUtils.isEmpty(amountString)) {
+                mAmountField.error = getString(R.string.error_field_required)
+                mAmountField.requestFocus()
+                return@setOnClickListener
+            }
+            val amount = Integer.parseInt(amountString)
+            if (amount > mModel.getBalance().value ?: 0) {
+                mAmountField.error = getString(R.string.insufficient_money)
+                mAmountField.requestFocus()
+                return@setOnClickListener
+            }
+            val comment = mCommentField.text.toString()
             CoroutineScope(Dispatchers.IO).launch {
-                val result = mModel.transferMoney(receiver, amount, comment)
+                val result = mModel.transferMoney(Integer.parseInt(recipient), amount, comment)
                 withContext(Dispatchers.Main) {
                     if (result.isSuccessful) {
                         Toast.makeText(activity, "Перевод осуществлен", Toast.LENGTH_LONG).show();
@@ -65,6 +92,8 @@ class BillingFragment : Fragment() {
                     }
                 }
             }
+
         }
     }
 }
+
