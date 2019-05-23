@@ -2,14 +2,17 @@ package org.shadowrunrussia2020.android
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat.getSystemService
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -85,7 +88,11 @@ class BillingFragment : Fragment() {
                 withContext(Dispatchers.Main) {
                     if (result.isSuccessful) {
                         Toast.makeText(activity, "Перевод осуществлен", Toast.LENGTH_LONG).show();
-                        // TODO(aeremin): Clean input fields, un-focus them
+                        mRecipientField.text.clear()
+                        mAmountField.text.clear()
+                        mCommentField.text.clear()
+                        val inputManager:InputMethodManager = activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                        inputManager.hideSoftInputFromWindow(view.windowToken, InputMethodManager.SHOW_FORCED)
                     } else {
                         val m = Gson().fromJson(result.errorBody()!!.string(), Error::class.java).error.message
                         Toast.makeText(activity, "Ошибка. Некорректный перевод: ${m}", Toast.LENGTH_LONG).show();
