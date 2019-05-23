@@ -3,34 +3,20 @@ package org.shadowrunrussia2020.android
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MediatorLiveData
 import android.util.Log
-import org.jetbrains.anko.doAsync
-import org.shadowrunrussia2020.android.models.billing.AccountInfo
-import org.shadowrunrussia2020.android.models.billing.Balance
-import org.shadowrunrussia2020.android.models.billing.Transaction
-import retrofit2.Call
-import retrofit2.Callback
+import kotlinx.coroutines.Deferred
+import org.shadowrunrussia2020.android.models.billing.*
 import retrofit2.Response
 
 class BillingRepository(private val mService: BillingWebService, private val mBillingDao: BillingDao) {
-    fun refresh() {
-        mService.accountInfo().enqueue(object : Callback<AccountInfo> {
-            override fun onResponse(call: Call<AccountInfo>, response: Response<AccountInfo>) {
-                Log.i("BillingRepository", "Http request succeeded, response = " + response.body())
-                val accountInfo = response.body()
-                if (accountInfo == null) {
-                    Log.e("BillingRepository", "Invalid server response - body is empty")
-                    return
-                }
-                doAsync {
-                    mBillingDao.insertTransactions(accountInfo.history)
-                    mBillingDao.setBalance(Balance(0, accountInfo.balance))
-                }
-            }
-
-            override fun onFailure(call: Call<AccountInfo>, t: Throwable) {
-                Log.e("BillingRepository", "Http request failed: $t")
-            }
-        })
+    suspend fun refresh() {
+        val response = mService.accountInfo().await()
+        val accountInfo = response.body()
+        if (accountInfo == null) {
+            Log.e("BillingRepository", "Invalid server response - body is empty")
+        } else {
+            mBillingDao.insertTransactions(accountInfo.history)
+            mBillingDao.setBalance(Balance(0, accountInfo.balance))
+        }
     }
 
     fun getHistory(): LiveData<List<Transaction>> {
@@ -46,5 +32,11 @@ class BillingRepository(private val mService: BillingWebService, private val mBi
 
     fun getBalance(): LiveData<Int> {
         return mBalanceData
+    }
+
+    suspend fun transferMoney(transfer: Transfer): Response<Empty> {
+        val result = mService.transfer(transfer).await()
+        refresh()
+        return result
     }
 }

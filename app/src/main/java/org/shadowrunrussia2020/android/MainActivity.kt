@@ -20,6 +20,9 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.nav_header_main.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.shadowrunrussia2020.android.models.billing.Balance
 import org.shadowrunrussia2020.android.models.billing.Transaction
 import org.shadowrunrussia2020.android.qr.Data
@@ -87,7 +90,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         when (item.itemId) {
-            R.id.action_settings -> { mModel.refresh(); return true }
+            R.id.action_settings -> { CoroutineScope(Dispatchers.IO).launch { mModel.refresh() }; return true }
             R.id.action_logout -> { exit(); return true }
             else -> return super.onOptionsItemSelected(item)
         }
