@@ -85,10 +85,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    @SuppressLint("ApplySharedPref")
     private fun exit() {
-        val preferences = (application as ShadowrunRussia2020Application).getGlobalSharedPreferences()
-        preferences.edit().remove(getString(R.string.token_preference_key)).commit()
+        (application as ShadowrunRussia2020Application).getSession().invalidate()
         // TODO(aeremin) Add equivalent
         // this.stopService(Intent(this, BeaconsScanner::class.java))
         val intent = Intent(this, LoginActivity::class.java)

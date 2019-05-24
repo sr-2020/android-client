@@ -1,15 +1,21 @@
 package org.shadowrunrussia2020.android
 
 import com.google.gson.Gson
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.Interceptor
-import okhttp3.OkHttpClient
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
+
 
 data class ErrorMessage(val message: String)
 data class Error(val error: ErrorMessage)
+
+class AuthorizationInterceptor(private val session: Session) : Interceptor {
+    override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
+        val authorizedRequest = chain.request().newBuilder()
+            .header("Authorization", "Bearer ${session.getToken()}")
+            .build()
+        return chain.proceed(authorizedRequest)
+    }
+}
 
 class TestSuccessInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
@@ -19,6 +25,8 @@ class TestSuccessInterceptor : Interceptor {
         if (response.isSuccessful) {
             return response
         } else {
+            // TODO(aeremin) If response.code() is 401/403 (Unauthorized) - force a logout
+            // TODO(aeremin) Show Toast right here, without delegating to caller?
             val message: String
             try {
                 message = Gson().fromJson(response.body()!!.string(), Error::class.java).error.message
@@ -28,16 +36,4 @@ class TestSuccessInterceptor : Interceptor {
             throw IOException(message)
         }
     }
-}
-
-fun defaultRetrofitBuilder(): Retrofit.Builder {
-    return Retrofit.Builder()
-        .baseUrl("http://192.168.178.29/")
-        .addConverterFactory(GsonConverterFactory.create())
-        .addCallAdapterFactory(CoroutineCallAdapterFactory())
-        .client(OkHttpClient.Builder().addInterceptor(TestSuccessInterceptor()).build())
-}
-
-fun defaultRetrofit(): Retrofit {
-    return defaultRetrofitBuilder().build()
 }

@@ -3,8 +3,8 @@ package org.shadowrunrussia2020.android
 import `in`.aerem.comconbeacons.models.LoginRequest
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.annotation.SuppressLint
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
@@ -33,7 +33,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var mProgressView: View
     private lateinit var mLoginFormView: View
 
-    private lateinit var mSharedPreferences: SharedPreferences
+    private val mApplication by lazy { application as ShadowrunRussia2020Application }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,10 +59,9 @@ class LoginActivity : AppCompatActivity() {
         mLoginFormView = findViewById(R.id.login_form)
         mProgressView = findViewById(R.id.login_progress)
 
-        mSharedPreferences = (application as ShadowrunRussia2020Application).getGlobalSharedPreferences()
-        val maybeToken = mSharedPreferences.getString(getString(R.string.token_preference_key), null)
+        val maybeToken = mApplication.getSession().getToken()
         if (maybeToken != null) {
-            onSuccessfulLogin(maybeToken)
+            goToMainActivity()
         }
 
         val versionView = findViewById<TextView>(R.id.version)
@@ -98,10 +97,12 @@ class LoginActivity : AppCompatActivity() {
         builder.show()
     }
 
+    @SuppressLint("ApplySharedPref")
     private fun saveServerAddress(address: String) {
-        val editor = mSharedPreferences.edit()
-        editor.putString(getString(R.string.backend_url_key), address)
-        editor.commit()
+        mApplication.getGlobalSharedPreferences()
+            .edit()
+            .putString(getString(R.string.backend_url_key), address)
+            .commit()
     }
 
     private inner class LoginFormData(var email: String, var password: String)
@@ -149,12 +150,13 @@ class LoginActivity : AppCompatActivity() {
         })
     }
 
-    protected fun onSuccessfulLogin(token: String) {
+    private fun saveTokenAndGoToMainActivity(token: String) {
         Log.i(TAG, "Successful login, token = $token")
-        val editor = mSharedPreferences.edit()
-        editor.putString(getString(R.string.token_preference_key), token)
-        editor.commit()
+        mApplication.getSession().setToken(token)
+        goToMainActivity()
+    }
 
+    private fun goToMainActivity() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
     }
@@ -184,7 +186,7 @@ class LoginActivity : AppCompatActivity() {
         override fun onPostExecute(result: LoginResult) {
             onFinish()
             if (result.success) {
-                onSuccessfulLogin(result.apiKey)
+                saveTokenAndGoToMainActivity(result.apiKey)
             } else if (result.noConnection) {
                 val toast = Toast.makeText(this@LoginActivity, "Сервер недоступен", Toast.LENGTH_LONG)
                 toast.setGravity(Gravity.TOP, 0, 0)

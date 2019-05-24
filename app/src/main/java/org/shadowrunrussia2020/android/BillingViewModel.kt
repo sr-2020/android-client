@@ -11,7 +11,7 @@ import retrofit2.Response
 
 class BillingViewModel(application: Application) : AndroidViewModel(application) {
     private val mBillingRepository = BillingRepository(
-        defaultRetrofit().create(BillingWebService::class.java),
+        (application as ShadowrunRussia2020Application).getRetrofit().create(BillingWebService::class.java),
         Room.databaseBuilder(
             getApplication(),
             CacheDatabase::class.java, "cache-db"
