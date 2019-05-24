@@ -26,14 +26,15 @@ class TestSuccessInterceptor : Interceptor {
             return response
         } else {
             // TODO(aeremin) If response.code() is 401/403 (Unauthorized) - force a logout
-            // TODO(aeremin) Show Toast right here, without delegating to caller?
-            val message: String
-            try {
-                message = Gson().fromJson(response.body()!!.string(), Error::class.java).error.message
-            } catch (e: Exception) {
-                throw IOException("Некорректный ответ сервера")
-            }
-            throw IOException(message)
+            throw IOException(getExceptionMessage(response.body()!!.string()))
+        }
+    }
+
+    private fun getExceptionMessage(body: String): String {
+        return try {
+            Gson().fromJson(body, Error::class.java).error.message
+        } catch (e: Exception) {
+            "Некорректный ответ сервера"
         }
     }
 }
