@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
@@ -52,6 +53,20 @@ class BillingFragment : Fragment() {
             Observer { data: List<Transaction>? -> if (data != null) adapter.setData(data) })
 
         recyclerView.adapter = adapter
+
+        val refresher = view.findViewById<SwipeRefreshLayout>(R.id.swipeRefreshLayout)
+        refresher.setOnRefreshListener {
+            CoroutineScope(Dispatchers.IO).launch {
+                try {
+                    mModel.refresh()
+                } catch (e: Exception) {
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(activity, "Ошибка. ${e.message}", Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+            refresher.isRefreshing = false
+        }
 
         mRecipientField = view.findViewById<EditText>(R.id.editTextRecipient)
         mAmountField = view.findViewById<EditText>(R.id.editTextAmount)

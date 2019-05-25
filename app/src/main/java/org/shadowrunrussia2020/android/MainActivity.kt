@@ -1,6 +1,5 @@
 package org.shadowrunrussia2020.android
 
-import android.annotation.SuppressLint
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
@@ -14,9 +13,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import org.shadowrunrussia2020.android.qr.Data
 import org.shadowrunrussia2020.android.qr.Type
 import org.shadowrunrussia2020.android.qr.maybeProcessActivityResult
@@ -25,8 +21,6 @@ import java.util.*
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-
-    private lateinit var mModel: BillingViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +39,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
-        mModel = ViewModelProviders.of(this).get(BillingViewModel::class.java)
         // TODO(aeremin) This is wrong, as onCreate is called e.g. on screen orientation change.
         // Should we use savedInstanceState to track current fragment or something like that?
         setContentFragment(MainFragment())
@@ -79,7 +72,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         when (item.itemId) {
-            R.id.action_settings -> { CoroutineScope(Dispatchers.IO).launch { mModel.refresh() }; return true }
+            R.id.action_settings -> { return true }
             R.id.action_logout -> { exit(); return true }
             else -> return super.onOptionsItemSelected(item)
         }
