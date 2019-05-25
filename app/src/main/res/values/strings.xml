@@ -29,8 +29,6 @@
     <string name="backend_url_key">backend_url</string>
     <string name="action_logout">Выход</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="account_balance">Баланс:</string>
     <string name="new_transfer">Новый перевод</string>
     <string name="transfer_receiver">Получатель</string>

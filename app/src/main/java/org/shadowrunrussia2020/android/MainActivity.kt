@@ -1,6 +1,5 @@
 package org.shadowrunrussia2020.android
 
-import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
@@ -80,8 +79,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun exit() {
         (application as ShadowrunRussia2020Application).getSession().invalidate()
-        // TODO(aeremin) Add equivalent
-        // this.stopService(Intent(this, BeaconsScanner::class.java))
+        // TODO(aeremin) Add equivalent of this.stopService(Intent(this, BeaconsScanner::class.java))
         val intent = Intent(this, LoginActivity::class.java)
         finishAffinity()
         startActivity(intent)
