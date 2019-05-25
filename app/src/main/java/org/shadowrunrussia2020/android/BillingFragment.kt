@@ -64,8 +64,8 @@ class BillingFragment : Fragment() {
                         Toast.makeText(activity, "Ошибка. ${e.message}", Toast.LENGTH_LONG).show();
                     }
                 }
+                withContext(Dispatchers.Main) { refresher.isRefreshing = false }
             }
-            refresher.isRefreshing = false
         }
 
         mRecipientField = view.findViewById<EditText>(R.id.editTextRecipient)
