@@ -1,7 +1,7 @@
 package org.shadowrunrussia2020.android
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MediatorLiveData
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import android.util.Log
 import org.shadowrunrussia2020.android.models.billing.Balance
 import org.shadowrunrussia2020.android.models.billing.Empty

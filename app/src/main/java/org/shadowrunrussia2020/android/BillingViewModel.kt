@@ -1,9 +1,9 @@
 package org.shadowrunrussia2020.android
 
 import android.app.Application
-import android.arch.lifecycle.AndroidViewModel
-import android.arch.lifecycle.LiveData
-import android.arch.persistence.room.Room
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.room.Room
 import org.shadowrunrussia2020.android.models.billing.Empty
 import org.shadowrunrussia2020.android.models.billing.Transaction
 import org.shadowrunrussia2020.android.models.billing.Transfer

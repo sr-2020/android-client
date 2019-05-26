@@ -1,8 +1,8 @@
 package org.shadowrunrussia2020.android
 
-import android.arch.persistence.room.Database
-import android.arch.persistence.room.RoomDatabase
-import android.arch.persistence.room.TypeConverters
+import androidx.room.Database
+import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import org.shadowrunrussia2020.android.models.billing.Balance
 import org.shadowrunrussia2020.android.models.billing.Transaction
 

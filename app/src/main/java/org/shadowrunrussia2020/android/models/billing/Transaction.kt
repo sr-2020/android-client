@@ -1,7 +1,7 @@
 package org.shadowrunrussia2020.android.models.billing
 
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.PrimaryKey
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import java.util.*
 
 @Entity
