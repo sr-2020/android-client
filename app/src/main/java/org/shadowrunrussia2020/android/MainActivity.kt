@@ -2,15 +2,15 @@ package org.shadowrunrussia2020.android
 
 import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.navigation.NavigationView
-import com.google.android.material.snackbar.Snackbar
-import androidx.fragment.app.Fragment
-import androidx.core.view.GravityCompat
-import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
+import androidx.navigation.findNavController
+import com.google.android.material.navigation.NavigationView
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import org.shadowrunrussia2020.android.qr.Data
 import org.shadowrunrussia2020.android.qr.Type
@@ -38,9 +38,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
-        // TODO(aeremin) This is wrong, as onCreate is called e.g. on screen orientation change.
-        // Should we use savedInstanceState to track current fragment or something like that?
-        setContentFragment(MainFragment())
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -88,8 +85,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         when (item.itemId) {
-            R.id.nav_main -> setContentFragment(MainFragment())
-            R.id.nav_billing -> setContentFragment(BillingFragment())
+            R.id.nav_main -> setContentFragment(R.id.mainFragment)
+            R.id.nav_billing -> setContentFragment(R.id.billingFragment)
             R.id.scan_qr -> startScanQrActivity(this)
             R.id.nav_gallery -> startShowQrActivity(this,
                 Data(Type.DIGITAL_SIGNATURE, 0, (Date().time / 1000).toInt() + 3600, "Petya"))
@@ -99,8 +96,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
-    private fun setContentFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment)
-            .addToBackStack(null).commit()
+    private fun setContentFragment(fragmentId: Int) {
+        findNavController(R.id.nav_host_fragment).navigate(fragmentId)
     }
 }
