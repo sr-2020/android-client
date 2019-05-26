@@ -3,7 +3,10 @@ package org.shadowrunrussia2020.android
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MediatorLiveData
 import android.util.Log
-import org.shadowrunrussia2020.android.models.billing.*
+import org.shadowrunrussia2020.android.models.billing.Balance
+import org.shadowrunrussia2020.android.models.billing.Empty
+import org.shadowrunrussia2020.android.models.billing.Transaction
+import org.shadowrunrussia2020.android.models.billing.Transfer
 import retrofit2.Response
 
 class BillingRepository(private val mService: BillingWebService, private val mBillingDao: BillingDao) {
@@ -13,7 +16,12 @@ class BillingRepository(private val mService: BillingWebService, private val mBi
         if (accountInfo == null) {
             Log.e("BillingRepository", "Invalid server response - body is empty")
         } else {
-            mBillingDao.insertTransactions(accountInfo.history)
+            mBillingDao.insertTransactions(accountInfo.history.map {
+                    if (it.sin_from == accountInfo.sin) {
+                        it.amount = -it.amount
+                    }
+                it
+            })
             mBillingDao.setBalance(Balance(0, accountInfo.balance))
         }
     }

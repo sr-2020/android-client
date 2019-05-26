@@ -7,8 +7,8 @@
     android:layout_height="wrap_content">
 
   <ImageView
-          android:id="@+id/statusIcon"
-          android:layout_width="40dp"
+          android:id="@+id/direction"
+          android:layout_width="50dp"
           android:layout_height="50dp"
           tools:src="@tools:sample/avatars"
           app:layout_constraintStart_toStartOf="parent"
@@ -17,14 +17,14 @@
           android:layout_marginTop="8dp" android:contentDescription="Photo" app:srcCompat="@drawable/menu_send"/>
 
   <TextView
-          android:id="@+id/username"
+          android:id="@+id/amount"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           tools:text="@tools:sample/full_names"
           android:textSize="20sp"
           android:textColor="@android:color/black"
-          app:layout_constraintTop_toTopOf="@+id/statusIcon"
-          app:layout_constraintStart_toEndOf="@+id/statusIcon"
+          app:layout_constraintTop_toTopOf="@+id/direction"
+          app:layout_constraintStart_toEndOf="@+id/direction"
           android:layout_marginStart="8dp"
           android:layout_marginBottom="8dp"
           app:layout_constraintBottom_toTopOf="@+id/comment"/>
@@ -34,19 +34,19 @@
       android:layout_width="285dp"
       android:layout_height="20dp"
       tools:text="@tools:sample/lorem[4:10]"
-      app:layout_constraintBottom_toBottomOf="@+id/statusIcon"
-      app:layout_constraintStart_toEndOf="@+id/statusIcon"
+      app:layout_constraintBottom_toBottomOf="@+id/direction"
+      app:layout_constraintStart_toEndOf="@+id/direction"
       android:layout_marginStart="8dp"
       app:layout_constraintEnd_toEndOf="parent"
       android:layout_marginEnd="8dp"
       app:layout_constraintHorizontal_bias="0.050" />
 
   <TextView
-          android:id="@+id/amount"
+          android:id="@+id/time"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           tools:text="@tools:sample/date/hhmm"
-          app:layout_constraintTop_toTopOf="@+id/statusIcon"
+          app:layout_constraintTop_toTopOf="@+id/direction"
           app:layout_constraintEnd_toEndOf="parent"
           android:layout_marginEnd="8dp"/>
 </android.support.constraint.ConstraintLayout>

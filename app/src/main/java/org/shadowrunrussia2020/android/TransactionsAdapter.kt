@@ -4,7 +4,9 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import org.ocpsoft.prettytime.PrettyTime
 import org.shadowrunrussia2020.android.models.billing.Transaction
 import java.util.*
 
@@ -23,11 +25,21 @@ class TransactionsAdapter(model: BillingViewModel) : RecyclerView.Adapter<Transa
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val transaction = mDataset[position]
-        holder.mUsernameView.text = "${transaction.sin_from} --> ${transaction.sin_to}"
-        holder.mCommentView.text = transaction.comment
-        // TODO(aeremin) Use PrettyTime
-        //holder.mTimeView.text = /*PrettyTime(Locale("ru")).format(*/ transaction.created_at.toString()
-        holder.mAmountView.text = /*PrettyTime(Locale("ru")).format(*/ transaction.amount.toString()
+        if (transaction.amount > 0) {
+            holder.mDirectionView.setImageResource(R.drawable.ic_transfer_to)
+            holder.mCommentView.text = "${transaction.sin_from}${commentInBrackets(transaction)}"
+            holder.mAmountView.text = transaction.amount.toString()
+        } else {
+            holder.mDirectionView.setImageResource(R.drawable.ic_transfer_from)
+            holder.mCommentView.text = "${transaction.sin_to}${commentInBrackets(transaction)}"
+            holder.mAmountView.text = (-transaction.amount).toString()
+        }
+        holder.mTimeView.text = PrettyTime(Locale("ru")).format(transaction.created_at)
+    }
+
+    private fun commentInBrackets(t: Transaction): String {
+        if (t.comment == null) return ""
+        return " (${t.comment})"
     }
 
     override fun getItemCount(): Int {
@@ -35,8 +47,9 @@ class TransactionsAdapter(model: BillingViewModel) : RecyclerView.Adapter<Transa
     }
 
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        var mUsernameView: TextView = itemView.findViewById(R.id.username)
-        var mCommentView: TextView = itemView.findViewById(R.id.comment)
+        var mDirectionView: ImageView = itemView.findViewById(R.id.direction)
         var mAmountView: TextView = itemView.findViewById(R.id.amount)
+        var mCommentView: TextView = itemView.findViewById(R.id.comment)
+        var mTimeView: TextView = itemView.findViewById(R.id.time)
     }
 }
