@@ -26,7 +26,7 @@ class ShadowrunRussia2020Application : Application() {
 
     private fun createRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("http://192.168.178.29/")
+            .baseUrl("http://gateway.evarun.ru/api/v1/")
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .client(createClient())

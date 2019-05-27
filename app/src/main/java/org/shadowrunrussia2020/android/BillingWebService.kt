@@ -13,8 +13,7 @@ interface BillingWebService {
     @POST("transfer")
     fun transfer(@Body request: Transfer): Deferred<Response<Empty>>
 
-    // TODO(aeremin): Inject sin? Or it will be done server-side in API Gateway?
-    @GET("account_info/777")
+    @GET("account_info")
     fun accountInfo(): Deferred<Response<AccountInfo>>
 }
 

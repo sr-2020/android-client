@@ -31,6 +31,6 @@ class BillingViewModel(application: Application) : AndroidViewModel(application)
     }
 
     suspend fun transferMoney(receiver: Int, amount: Int, comment: String?): Response<Empty> {
-        return mBillingRepository.transferMoney(Transfer(777, receiver, amount, comment))
+        return mBillingRepository.transferMoney(Transfer(receiver, amount, comment))
     }
 }
