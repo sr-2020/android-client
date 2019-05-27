@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import kotlinx.android.synthetic.main.fragment_billing.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -54,17 +55,10 @@ class BillingFragment : Fragment() {
 
         recyclerView.adapter = adapter
 
+        refreshData()
+
         val refresher = view.findViewById<SwipeRefreshLayout>(R.id.swipeRefreshLayout)
-        refresher.setOnRefreshListener {
-            CoroutineScope(Dispatchers.Main).launch {
-                try {
-                    withContext(CoroutineScope(Dispatchers.IO).coroutineContext) { mModel.refresh() }
-                } catch (e: Exception) {
-                    Toast.makeText(activity, "Ошибка. ${e.message}", Toast.LENGTH_LONG).show();
-                }
-                refresher.isRefreshing = false
-            }
-        }
+        refresher.setOnRefreshListener { refreshData() }
 
         mRecipientField = view.findViewById<EditText>(R.id.editTextRecipient)
         mAmountField = view.findViewById<EditText>(R.id.editTextAmount)
@@ -111,6 +105,15 @@ class BillingFragment : Fragment() {
         }
     }
 
-    // TODO(aeremin) Refresh data when entering this fragment
+    private fun refreshData() {
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                withContext(CoroutineScope(Dispatchers.IO).coroutineContext) { mModel.refresh() }
+            } catch (e: Exception) {
+                Toast.makeText(activity, "Ошибка. ${e.message}", Toast.LENGTH_LONG).show();
+            }
+            swipeRefreshLayout.isRefreshing = false
+        }
+    }
 }
 
