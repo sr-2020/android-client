@@ -56,15 +56,13 @@ class BillingFragment : Fragment() {
 
         val refresher = view.findViewById<SwipeRefreshLayout>(R.id.swipeRefreshLayout)
         refresher.setOnRefreshListener {
-            CoroutineScope(Dispatchers.IO).launch {
+            CoroutineScope(Dispatchers.Main).launch {
                 try {
-                    mModel.refresh()
+                    withContext(CoroutineScope(Dispatchers.IO).coroutineContext) { mModel.refresh() }
                 } catch (e: Exception) {
-                    withContext(Dispatchers.Main) {
-                        Toast.makeText(activity, "Ошибка. ${e.message}", Toast.LENGTH_LONG).show();
-                    }
+                    Toast.makeText(activity, "Ошибка. ${e.message}", Toast.LENGTH_LONG).show();
                 }
-                withContext(Dispatchers.Main) { refresher.isRefreshing = false }
+                refresher.isRefreshing = false
             }
         }
 
@@ -95,21 +93,18 @@ class BillingFragment : Fragment() {
                 return@setOnClickListener
             }
             val comment = mCommentField.text.toString()
-            CoroutineScope(Dispatchers.IO).launch {
+            CoroutineScope(Dispatchers.Main).launch {
                 try {
-                    val result = mModel.transferMoney(Integer.parseInt(recipient), amount, comment)
-                    withContext(Dispatchers.Main) {
-                        Toast.makeText(activity, "Перевод осуществлен", Toast.LENGTH_LONG).show();
-                        mRecipientField.text.clear()
-                        mAmountField.text.clear()
-                        mCommentField.text.clear()
-                        val inputManager:InputMethodManager = activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                        inputManager.hideSoftInputFromWindow(view.windowToken, InputMethodManager.SHOW_FORCED)
-                    }
+                    withContext(Dispatchers.IO) { mModel.transferMoney(Integer.parseInt(recipient), amount, comment) }
+                    Toast.makeText(activity, "Перевод осуществлен", Toast.LENGTH_LONG).show();
+                    mRecipientField.text.clear()
+                    mAmountField.text.clear()
+                    mCommentField.text.clear()
+                    val inputManager: InputMethodManager =
+                        activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    inputManager.hideSoftInputFromWindow(view.windowToken, InputMethodManager.SHOW_FORCED)
                 } catch (e: Exception) {
-                    withContext(Dispatchers.Main) {
-                        Toast.makeText(activity, "Ошибка. ${e.message}", Toast.LENGTH_LONG).show();
-                    }
+                    Toast.makeText(activity, "Ошибка. ${e.message}", Toast.LENGTH_LONG).show();
                 }
             }
 
