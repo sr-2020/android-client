@@ -1,11 +1,11 @@
 package org.shadowrunrussia2020.android
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import org.ocpsoft.prettytime.PrettyTime
 import org.shadowrunrussia2020.android.models.billing.Transaction
 import java.util.*
@@ -38,8 +38,9 @@ class TransactionsAdapter(model: BillingViewModel) : RecyclerView.Adapter<Transa
     }
 
     private fun commentInBrackets(t: Transaction): String {
-        if (t.comment == null) return ""
-        return " (${t.comment})"
+        val comment = t.comment
+        if (comment == null || comment.isEmpty()) return ""
+        return "($comment)"
     }
 
     override fun getItemCount(): Int {
