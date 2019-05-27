@@ -85,6 +85,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun exit() {
         (application as ShadowrunRussia2020Application).getSession().invalidate()
         // TODO(aeremin) Add equivalent of this.stopService(Intent(this, BeaconsScanner::class.java))
+        // TODO(aeremin) Reset state of Room database
         val intent = Intent(this, LoginActivity::class.java)
         finishAffinity()
         startActivity(intent)

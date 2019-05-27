@@ -110,5 +110,7 @@ class BillingFragment : Fragment() {
 
         }
     }
+
+    // TODO(aeremin) Refresh data when entering this fragment
 }
 
