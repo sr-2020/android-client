@@ -7,16 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import kotlinx.android.synthetic.main.fragment_billing.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -27,9 +22,6 @@ import org.shadowrunrussia2020.android.models.billing.Transaction
 class BillingFragment : Fragment() {
 
     private lateinit var mModel: BillingViewModel
-    private lateinit var mRecipientField: EditText
-    private lateinit var mAmountField: EditText
-    private lateinit var mCommentField: EditText
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_billing, container, false)
@@ -40,60 +32,52 @@ class BillingFragment : Fragment() {
 
         mModel = ViewModelProviders.of(activity!!).get(BillingViewModel::class.java)
 
-        val textViewBalance = view.findViewById<TextView>(R.id.textViewBalance)
         mModel.getBalance().observe(this, Observer { balance: Int? -> textViewBalance.text = balance.toString() })
 
         // See RecyclerView guide for details if needed
         // https://developer.android.com/guide/topics/ui/layout/recyclerview
-        val recyclerView = view.findViewById<RecyclerView>(R.id.transactionHistoryView)
-        recyclerView.setHasFixedSize(true)
-        recyclerView.layoutManager = LinearLayoutManager(activity!!)
+        transactionHistoryView.setHasFixedSize(true)
+        transactionHistoryView.layoutManager = LinearLayoutManager(activity!!)
 
         val adapter = TransactionsAdapter(mModel)
         mModel.getHistory().observe(this,
             Observer { data: List<Transaction>? -> if (data != null) adapter.setData(data) })
 
-        recyclerView.adapter = adapter
+        transactionHistoryView.adapter = adapter
 
         refreshData()
 
-        val refresher = view.findViewById<SwipeRefreshLayout>(R.id.swipeRefreshLayout)
-        refresher.setOnRefreshListener { refreshData() }
+        swipeRefreshLayout.setOnRefreshListener { refreshData() }
 
-        mRecipientField = view.findViewById<EditText>(R.id.editTextRecipient)
-        mAmountField = view.findViewById<EditText>(R.id.editTextAmount)
-        mCommentField = view.findViewById<EditText>(R.id.editTextTransferComment)
-
-        val button = view.findViewById<Button>(R.id.buttonTransfer)
-        button.setOnClickListener {
-            mRecipientField.error = null
-            mAmountField.error = null
-            val recipient = mRecipientField.text.toString()
-            val amountString = mAmountField.text.toString()
+        buttonTransfer.setOnClickListener {
+            editTextRecipient.error = null
+            editTextAmount.error = null
+            val recipient = editTextRecipient.text.toString()
+            val amountString = editTextAmount.text.toString()
             if (TextUtils.isEmpty(recipient)) {
-                mRecipientField.error = getString(R.string.error_field_required)
-                mRecipientField.requestFocus()
+                editTextRecipient.error = getString(R.string.error_field_required)
+                editTextRecipient.requestFocus()
                 return@setOnClickListener
             }
             if (TextUtils.isEmpty(amountString)) {
-                mAmountField.error = getString(R.string.error_field_required)
-                mAmountField.requestFocus()
+                editTextAmount.error = getString(R.string.error_field_required)
+                editTextAmount.requestFocus()
                 return@setOnClickListener
             }
             val amount = Integer.parseInt(amountString)
             if (amount > mModel.getBalance().value ?: 0) {
-                mAmountField.error = getString(R.string.insufficient_money)
-                mAmountField.requestFocus()
+                editTextAmount.error = getString(R.string.insufficient_money)
+                editTextAmount.requestFocus()
                 return@setOnClickListener
             }
-            val comment = mCommentField.text.toString()
+            val comment = editTextTransferComment.text.toString()
             CoroutineScope(Dispatchers.Main).launch {
                 try {
                     withContext(Dispatchers.IO) { mModel.transferMoney(Integer.parseInt(recipient), amount, comment) }
                     Toast.makeText(activity, "Перевод осуществлен", Toast.LENGTH_LONG).show();
-                    mRecipientField.text.clear()
-                    mAmountField.text.clear()
-                    mCommentField.text.clear()
+                    editTextRecipient.text.clear()
+                    editTextAmount.text.clear()
+                    editTextTransferComment.text.clear()
                     val inputManager: InputMethodManager =
                         activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                     inputManager.hideSoftInputFromWindow(view.windowToken, InputMethodManager.SHOW_FORCED)

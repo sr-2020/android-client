@@ -7,15 +7,18 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import android.text.InputType
 import android.text.TextUtils
 import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.widget.*
+import android.widget.EditText
+import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import kotlinx.android.synthetic.main.activity_login.*
 import org.shadowrunrussia2020.android.models.LoginResult
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -27,12 +30,6 @@ class LoginActivity : AppCompatActivity() {
     // Keep track of the login task to ensure we can cancel it if requested.
     private var mAuthTask: UserLoginTask? = null
 
-    // UI references.
-    private lateinit var mEmailView: AutoCompleteTextView
-    private lateinit var mPasswordView: EditText
-    private lateinit var mProgressView: View
-    private lateinit var mLoginFormView: View
-
     private val mApplication by lazy { application as ShadowrunRussia2020Application }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,9 +37,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         // Set up the login form.
-        mEmailView = findViewById(R.id.email)
-        mPasswordView = findViewById(R.id.password)
-        mPasswordView.setOnEditorActionListener(TextView.OnEditorActionListener { _, id, _ ->
+        passwordInput.setOnEditorActionListener(TextView.OnEditorActionListener { _, id, _ ->
             if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
                 attemptLogin()
                 return@OnEditorActionListener true
@@ -50,22 +45,16 @@ class LoginActivity : AppCompatActivity() {
             false
         })
 
-        val mEmailSignInButton = findViewById<Button>(R.id.email_sign_in_button)
-        mEmailSignInButton.setOnClickListener { attemptLogin() }
+        email_sign_in_button.setOnClickListener { attemptLogin() }
 
-        findViewById<ImageButton>(R.id.settings_button).setOnClickListener { showSettings() }
-
-
-        mLoginFormView = findViewById(R.id.login_form)
-        mProgressView = findViewById(R.id.login_progress)
+        settingsButton.setOnClickListener { showSettings() }
 
         val maybeToken = mApplication.getSession().getToken()
         if (maybeToken != null) {
             goToMainActivity()
         }
 
-        val versionView = findViewById<TextView>(R.id.version)
-        versionView.text = "v%s.%d".format(BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE)
+        version.text = "v%s.%d".format(BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE)
     }
 
     private fun attemptLogin() {
@@ -108,20 +97,20 @@ class LoginActivity : AppCompatActivity() {
     private inner class LoginFormData(var email: String, var password: String)
 
     private fun loginFormData(): LoginFormData? {
-        mEmailView.error = null
-        mPasswordView.error = null
-        val email = mEmailView.text.toString().trim()
-        val password = mPasswordView.text.toString()
+        emailInput.error = null
+        passwordInput.error = null
+        val email = emailInput.text.toString().trim()
+        val password = passwordInput.text.toString()
         // Check for a valid password, if the user entered one.
         if (TextUtils.isEmpty(password)) {
-            mPasswordView.error = getString(R.string.error_empty_password)
-            mPasswordView.requestFocus()
+            passwordInput.error = getString(R.string.error_empty_password)
+            passwordInput.requestFocus()
             return null
         }
         // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
-            mEmailView.error = getString(R.string.error_field_required)
-            mEmailView.requestFocus()
+            emailInput.error = getString(R.string.error_field_required)
+            emailInput.requestFocus()
             return null
         }
 
@@ -131,21 +120,21 @@ class LoginActivity : AppCompatActivity() {
     private fun showProgress(show: Boolean) {
         val shortAnimTime = resources.getInteger(android.R.integer.config_shortAnimTime)
 
-        mLoginFormView.visibility = if (show) View.GONE else View.VISIBLE
-        mLoginFormView.animate().setDuration(shortAnimTime.toLong()).alpha(
+        login_form.visibility = if (show) View.GONE else View.VISIBLE
+        login_form.animate().setDuration(shortAnimTime.toLong()).alpha(
             (if (show) 0 else 1).toFloat()
         ).setListener(object : AnimatorListenerAdapter() {
             override fun onAnimationEnd(animation: Animator) {
-                mLoginFormView.visibility = if (show) View.GONE else View.VISIBLE
+                login_form.visibility = if (show) View.GONE else View.VISIBLE
             }
         })
 
-        mProgressView.visibility = if (show) View.VISIBLE else View.GONE
-        mProgressView.animate().setDuration(shortAnimTime.toLong()).alpha(
+        login_progress.visibility = if (show) View.VISIBLE else View.GONE
+        login_progress.animate().setDuration(shortAnimTime.toLong()).alpha(
             (if (show) 1 else 0).toFloat()
         ).setListener(object : AnimatorListenerAdapter() {
             override fun onAnimationEnd(animation: Animator) {
-                mProgressView.visibility = if (show) View.VISIBLE else View.GONE
+                login_progress.visibility = if (show) View.VISIBLE else View.GONE
             }
         })
     }
@@ -192,8 +181,8 @@ class LoginActivity : AppCompatActivity() {
                 toast.setGravity(Gravity.TOP, 0, 0)
                 toast.show()
             } else {
-                mPasswordView.error = getString(R.string.error_incorrect_password)
-                mPasswordView.requestFocus()
+                passwordInput.error = getString(R.string.error_incorrect_password)
+                passwordInput.requestFocus()
             }
         }
 

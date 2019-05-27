@@ -3,9 +3,9 @@ package org.shadowrunrussia2020.android
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.widget.ImageView
 import com.google.zxing.BarcodeFormat
 import com.journeyapps.barcodescanner.BarcodeEncoder
+import kotlinx.android.synthetic.main.activity_show_qr.*
 import org.shadowrunrussia2020.android.qr.Data
 import org.shadowrunrussia2020.android.qr.encode
 
@@ -23,7 +23,6 @@ class ShowQrActivity : Activity() {
 
         val barcodeEncoder = BarcodeEncoder()
         val bitmap = barcodeEncoder.encodeBitmap(intent.getStringExtra("QR_CONTENT"), BarcodeFormat.QR_CODE, 400, 400)
-        val imageViewQrCode = findViewById<ImageView>(R.id.qrCodeImage)
-        imageViewQrCode.setImageBitmap(bitmap)
+        qrCodeImage.setImageBitmap(bitmap)
     }
 }
