@@ -15,6 +15,9 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.launch
 import org.shadowrunrussia2020.android.qr.Data
 import org.shadowrunrussia2020.android.qr.Type
 import org.shadowrunrussia2020.android.qr.maybeProcessActivityResult
@@ -84,8 +87,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun exit() {
         (application as ShadowrunRussia2020Application).getSession().invalidate()
+        CoroutineScope(IO).launch { (application as ShadowrunRussia2020Application).getDatabase().clearAllTables() }
         // TODO(aeremin) Add equivalent of this.stopService(Intent(this, BeaconsScanner::class.java))
-        // TODO(aeremin) Reset state of Room database
         val intent = Intent(this, LoginActivity::class.java)
         finishAffinity()
         startActivity(intent)
