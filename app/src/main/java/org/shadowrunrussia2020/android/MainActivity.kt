@@ -14,9 +14,7 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.CoroutineScope
@@ -29,7 +27,7 @@ import org.shadowrunrussia2020.android.qr.startScanQrActivity
 import java.util.*
 
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity() {
     lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,11 +58,23 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
         })
 
-        nav_view.setNavigationItemSelectedListener(this)
-
         val navController = findNavController(R.id.nav_host_fragment)
         appBarConfiguration = AppBarConfiguration(navController.graph, drawer_layout)
         nav_view.setupWithNavController(navController)
+
+        // TODO(aeremin) Use more Navigation UI & navigation graphs
+        // https://developer.android.com/guide/navigation/navigation-migrate
+        nav_view.menu.findItem(R.id.scan_qr).setOnMenuItemClickListener {
+            startScanQrActivity(this)
+            drawer_layout.closeDrawer(GravityCompat.START)
+            true
+        }
+        nav_view.menu.findItem(R.id.nav_gallery).setOnMenuItemClickListener {
+            startShowQrActivity(this,
+                Data(Type.DIGITAL_SIGNATURE, 0, (Date().time / 1000).toInt() + 3600, "Petya"))
+            drawer_layout.closeDrawer(GravityCompat.START)
+            true
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -108,21 +118,5 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val intent = Intent(this, LoginActivity::class.java)
         finishAffinity()
         startActivity(intent)
-    }
-
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment)
-        if (item.onNavDestinationSelected(navController)) {
-            return true
-        }
-
-        when (item.itemId) {
-            R.id.scan_qr -> startScanQrActivity(this)
-            R.id.nav_gallery -> startShowQrActivity(this,
-                Data(Type.DIGITAL_SIGNATURE, 0, (Date().time / 1000).toInt() + 3600, "Petya"))
-        }
-
-        drawer_layout.closeDrawer(GravityCompat.START)
-        return true
     }
 }
