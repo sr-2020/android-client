@@ -99,5 +99,7 @@ class BillingFragment : Fragment() {
             swipeRefreshLayout.isRefreshing = false
         }
     }
+    
+    // TODO(aeremin) Hide screen keyboard on leaving the screen
 }
 
