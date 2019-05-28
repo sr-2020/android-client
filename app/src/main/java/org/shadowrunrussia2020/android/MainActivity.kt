@@ -28,7 +28,7 @@ import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
-    lateinit var appBarConfiguration: AppBarConfiguration
+    private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
