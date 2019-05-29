@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
@@ -29,6 +30,7 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +54,7 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        val navController = findNavController(R.id.nav_host_fragment)
+        navController = findNavController(R.id.nav_host_fragment)
         nav_view.setupWithNavController(navController)
 
         appBarConfiguration = AppBarConfiguration.Builder(hashSetOf(R.id.mainFragment, R.id.billingFragment))
@@ -92,7 +94,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        return NavigationUI.navigateUp(findNavController(R.id.nav_host_fragment), appBarConfiguration)
+        return NavigationUI.navigateUp(navController, appBarConfiguration)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -110,8 +112,6 @@ class MainActivity : AppCompatActivity() {
         (application as ShadowrunRussia2020Application).getSession().invalidate()
         CoroutineScope(IO).launch { (application as ShadowrunRussia2020Application).getDatabase().clearAllTables() }
         // TODO(aeremin) Add equivalent of this.stopService(Intent(this, BeaconsScanner::class.java))
-        val intent = Intent(this, LoginActivity::class.java)
-        finishAffinity()
-        startActivity(intent)
+        navController.navigate(R.id.action_global_logout)
     }
 }
