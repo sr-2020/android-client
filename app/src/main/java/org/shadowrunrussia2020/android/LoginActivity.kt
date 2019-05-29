@@ -49,11 +49,6 @@ class LoginActivity : AppCompatActivity() {
 
         settingsButton.setOnClickListener { showSettings() }
 
-        val maybeToken = mApplication.getSession().getToken()
-        if (maybeToken != null) {
-            goToMainActivity()
-        }
-
         version.text = "v%s.%d".format(BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE)
     }
 

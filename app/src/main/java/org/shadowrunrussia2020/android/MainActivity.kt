@@ -35,10 +35,16 @@ class MainActivity : AppCompatActivity() {
         .build()
     }
     private val navController: NavController by lazy { findNavController(R.id.nav_host_fragment) }
+    private val app by lazy { application as ShadowrunRussia2020Application }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        if (app.getSession().getToken() == null) {
+            navController.navigate(R.id.action_global_logout)
+        }
+
         setSupportActionBar(toolbar)
 
         fab.setOnClickListener { view ->
