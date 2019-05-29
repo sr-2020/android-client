@@ -29,8 +29,12 @@ import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var appBarConfiguration: AppBarConfiguration
-    private lateinit var navController: NavController
+    private val appBarConfiguration by lazy {
+        AppBarConfiguration.Builder(hashSetOf(R.id.mainFragment, R.id.billingFragment))
+        .setDrawerLayout(drawer_layout)
+        .build()
+    }
+    private val navController: NavController by lazy { findNavController(R.id.nav_host_fragment) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,12 +58,7 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        navController = findNavController(R.id.nav_host_fragment)
         nav_view.setupWithNavController(navController)
-
-        appBarConfiguration = AppBarConfiguration.Builder(hashSetOf(R.id.mainFragment, R.id.billingFragment))
-            .setDrawerLayout(drawer_layout)
-            .build()
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration)
 
         // TODO(aeremin) Use more Navigation UI & navigation graphs
