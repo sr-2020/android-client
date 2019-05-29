@@ -8,12 +8,12 @@ import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
@@ -40,12 +40,6 @@ class MainActivity : AppCompatActivity() {
                 .setAction("Action", null).show()
         }
 
-        val toggle = ActionBarDrawerToggle(
-            this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
-        )
-        drawer_layout.addDrawerListener(toggle)
-        toggle.syncState()
-
         drawer_layout.addDrawerListener(object : DrawerLayout.DrawerListener {
             override fun onDrawerSlide(drawerView: View, slideOffset: Float) {}
             override fun onDrawerOpened(drawerView: View) {}
@@ -59,8 +53,12 @@ class MainActivity : AppCompatActivity() {
         })
 
         val navController = findNavController(R.id.nav_host_fragment)
-        appBarConfiguration = AppBarConfiguration(navController.graph, drawer_layout)
         nav_view.setupWithNavController(navController)
+
+        appBarConfiguration = AppBarConfiguration.Builder(hashSetOf(R.id.mainFragment, R.id.billingFragment))
+            .setDrawerLayout(drawer_layout)
+            .build()
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration)
 
         // TODO(aeremin) Use more Navigation UI & navigation graphs
         // https://developer.android.com/guide/navigation/navigation-migrate
@@ -86,18 +84,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onBackPressed() {
-        if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
-            drawer_layout.closeDrawer(GravityCompat.START)
-        } else {
-            super.onBackPressed()
-        }
-    }
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
         return true
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return return NavigationUI.navigateUp(findNavController(R.id.nav_host_fragment), appBarConfiguration)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
