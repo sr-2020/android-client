@@ -10,7 +10,7 @@ import org.ocpsoft.prettytime.PrettyTime
 import org.shadowrunrussia2020.android.models.billing.Transaction
 import java.util.*
 
-class TransactionsAdapter(model: BillingViewModel) : RecyclerView.Adapter<TransactionsAdapter.ViewHolder>() {
+class TransactionsAdapter : RecyclerView.Adapter<TransactionsAdapter.ViewHolder>() {
     private var mDataset: List<Transaction> = ArrayList()
 
     fun setData(newData: List<Transaction>) {

@@ -91,7 +91,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        return return NavigationUI.navigateUp(findNavController(R.id.nav_host_fragment), appBarConfiguration)
+        return NavigationUI.navigateUp(findNavController(R.id.nav_host_fragment), appBarConfiguration)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

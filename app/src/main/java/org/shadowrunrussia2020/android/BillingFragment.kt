@@ -39,7 +39,7 @@ class BillingFragment : Fragment() {
         transactionHistoryView.setHasFixedSize(true)
         transactionHistoryView.layoutManager = LinearLayoutManager(activity!!)
 
-        val adapter = TransactionsAdapter(mModel)
+        val adapter = TransactionsAdapter()
         mModel.getHistory().observe(this,
             Observer { data: List<Transaction>? -> if (data != null) adapter.setData(data) })
 
