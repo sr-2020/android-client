@@ -1,6 +1,8 @@
 package org.shadowrunrussia2020.android.qr
 
+import android.os.Parcelable
 import com.google.common.io.BaseEncoding
+import kotlinx.android.parcel.Parcelize
 import okio.Buffer
 import java.security.MessageDigest
 import java.util.*
@@ -19,7 +21,7 @@ enum class Type {
     PASSPORT,
 }
 
-data class Data(val type: Type, val kind: Byte, val validUntil: Int, val payload: String)
+@Parcelize data class Data(val type: Type, val kind: Byte, val validUntil: Int, val payload: String) : Parcelable
 
 class FormatException(): Exception()
 class ValidationException(): Exception()

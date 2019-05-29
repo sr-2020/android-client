@@ -68,8 +68,9 @@ class MainActivity : AppCompatActivity() {
             true
         }
         nav_view.menu.findItem(R.id.nav_gallery).setOnMenuItemClickListener {
-            startShowQrActivity(this,
+            val action = MainNavGraphDirections.actionGlobalShowQr(
                 Data(Type.DIGITAL_SIGNATURE, 0, (Date().time / 1000).toInt() + 3600, "Petya"))
+            navController.navigate(action)
             drawer_layout.closeDrawer(GravityCompat.START)
             true
         }
