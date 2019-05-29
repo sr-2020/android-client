@@ -6,11 +6,11 @@
     <fragment android:id="@+id/mainFragment"
               android:name="org.shadowrunrussia2020.android.MainFragment"
               tools:layout="@layout/fragment_main"
-              android:label="MainFragment"/>
+              android:label="Главная страница"/>
     <fragment android:id="@+id/billingFragment"
               android:name="org.shadowrunrussia2020.android.BillingFragment"
               tools:layout="@layout/fragment_billing"
-              android:label="BillingFragment"/>
+              android:label="Экономика"/>
     <action android:id="@+id/action_global_main" app:destination="@id/mainFragment"/>
     <action android:id="@+id/action_global_billing" app:destination="@id/billingFragment"/>
     <action android:id="@+id/action_global_show_qr" app:destination="@id/showQrActivity"/>
