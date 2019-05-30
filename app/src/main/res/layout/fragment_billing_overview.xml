@@ -62,7 +62,7 @@
                 android:ems="10"
                 android:id="@+id/editTextTransferComment" android:hint="@string/transfer_comment"/>
         <Button
-                android:text="@string/trasfer_confirm"
+                android:text="@string/transfer_confirm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" android:id="@+id/buttonTransfer"/>
     </LinearLayout>
