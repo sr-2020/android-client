@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              tools:context=".TransactionDetailsFragment" android:orientation="vertical"
+              android:layout_marginTop="?android:attr/actionBarSize">
+    <TextView
+            android:text='Идентификатор'
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:id="@+id/labelId"/>
+    <TextView
+            tools:text="2516"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:id="@+id/valueId"/>
+    <TextView
+            android:text='Дата и время'
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:id="@+id/labelDate"/>
+    <TextView
+            tools:text="25.05.2090"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:id="@+id/valueDate"/>
+    <TextView
+            android:text='Отправитель'
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:id="@+id/labelFrom"/>
+    <TextView
+            tools:text="123"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:id="@+id/valueFrom"/>
+    <TextView
+            android:text='Получатель'
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:id="@+id/labelTo"/>
+    <TextView
+            tools:text="777"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:id="@+id/valueTo"/>
+    <TextView
+            android:text='Сумма'
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:id="@+id/labelAmount"/>
+    <TextView
+            tools:text="45"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:id="@+id/valueAmount"/>
+    <TextView
+            android:text='Комментарий'
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:id="@+id/labelСomment"/>
+    <TextView
+            tools:text="Это тебе на конфеты. Купи большую коробку. Сдачу можешь оставить себе."
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:id="@+id/valueComment"/>
+</LinearLayout>

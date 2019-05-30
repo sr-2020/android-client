@@ -10,7 +10,10 @@
     <fragment android:id="@+id/billingFragment"
               android:name="org.shadowrunrussia2020.android.BillingFragment"
               tools:layout="@layout/fragment_billing_overview"
-              android:label="Экономика"/>
+              android:label="Экономика">
+        <action android:id="@+id/action_transaction_details"
+                app:destination="@id/transactionDetailsFragment"/>
+    </fragment>
     <action android:id="@+id/action_global_main" app:destination="@id/mainFragment"/>
     <action android:id="@+id/action_global_billing" app:destination="@id/billingFragment"/>
     <action android:id="@+id/action_global_show_qr" app:destination="@id/showQrActivity"/>
@@ -21,4 +24,9 @@
     </activity>
     <activity android:id="@+id/loginActivity" android:name="org.shadowrunrussia2020.android.LoginActivity"
               android:label="activity_login" tools:layout="@layout/activity_login"/>
+    <fragment android:id="@+id/transactionDetailsFragment"
+              android:name="org.shadowrunrussia2020.android.TransactionDetailsFragment"
+              android:label="Подробности операции" tools:layout="@layout/fragment_transaction_details">
+        <argument android:name="transaction" app:argType="org.shadowrunrussia2020.android.models.billing.Transaction"/>
+    </fragment>
 </navigation>
