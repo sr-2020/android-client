@@ -1,4 +1,4 @@
-package org.shadowrunrussia2020.android
+package org.shadowrunrussia2020.android.billing
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,6 +14,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.shadowrunrussia2020.android.R
 
 
 class BillingFragment : Fragment() {

@@ -8,7 +8,7 @@
               tools:layout="@layout/fragment_main"
               android:label="Главная страница"/>
     <fragment android:id="@+id/billingFragment"
-              android:name="org.shadowrunrussia2020.android.BillingFragment"
+              android:name="org.shadowrunrussia2020.android.billing.BillingFragment"
               tools:layout="@layout/fragment_billing_overview"
               android:label="Экономика">
         <action android:id="@+id/action_transaction_details"
@@ -18,15 +18,15 @@
     <action android:id="@+id/action_global_billing" app:destination="@id/billingFragment"/>
     <action android:id="@+id/action_global_show_qr" app:destination="@id/showQrActivity"/>
     <action android:id="@+id/action_global_logout" app:destination="@id/loginActivity"/>
-    <activity android:id="@+id/showQrActivity" android:name="org.shadowrunrussia2020.android.ShowQrActivity"
+    <activity android:id="@+id/showQrActivity" android:name="org.shadowrunrussia2020.android.qr.ShowQrActivity"
               android:label="activity_show_qr" tools:layout="@layout/activity_show_qr" app:action="show_qr">
         <argument android:name="qrData" app:argType="org.shadowrunrussia2020.android.qr.Data"/>
     </activity>
     <activity android:id="@+id/loginActivity" android:name="org.shadowrunrussia2020.android.LoginActivity"
               android:label="activity_login" tools:layout="@layout/activity_login"/>
     <fragment android:id="@+id/transactionDetailsFragment"
-              android:name="org.shadowrunrussia2020.android.TransactionDetailsFragment"
+              android:name="org.shadowrunrussia2020.android.billing.TransactionDetailsFragment"
               android:label="Подробности операции" tools:layout="@layout/fragment_transaction_details">
-        <argument android:name="transaction" app:argType="org.shadowrunrussia2020.android.models.billing.Transaction"/>
+        <argument android:name="transaction" app:argType="org.shadowrunrussia2020.android.billing.models.Transaction"/>
     </fragment>
 </navigation>

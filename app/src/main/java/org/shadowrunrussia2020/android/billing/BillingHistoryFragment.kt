@@ -1,4 +1,4 @@
-package org.shadowrunrussia2020.android
+package org.shadowrunrussia2020.android.billing
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_billing_history.*
-import org.shadowrunrussia2020.android.models.billing.Transaction
+import org.shadowrunrussia2020.android.R
+import org.shadowrunrussia2020.android.billing.models.Transaction
 
 class BillingHistoryFragment : Fragment() {
 

@@ -1,12 +1,12 @@
-package org.shadowrunrussia2020.android
+package org.shadowrunrussia2020.android.billing
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import org.shadowrunrussia2020.android.models.billing.Balance
-import org.shadowrunrussia2020.android.models.billing.Transaction
+import org.shadowrunrussia2020.android.billing.models.Balance
+import org.shadowrunrussia2020.android.billing.models.Transaction
 
 @Dao
 interface BillingDao {

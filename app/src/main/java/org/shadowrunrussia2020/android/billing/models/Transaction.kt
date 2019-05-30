@@ -1,4 +1,4 @@
-package org.shadowrunrussia2020.android.models.billing
+package org.shadowrunrussia2020.android.billing.models
 
 import android.os.Parcelable
 import androidx.room.Entity

@@ -1,4 +1,4 @@
-package org.shadowrunrussia2020.android
+package org.shadowrunrussia2020.android.billing
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +8,8 @@ import android.widget.TextView
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import org.ocpsoft.prettytime.PrettyTime
-import org.shadowrunrussia2020.android.models.billing.Transaction
+import org.shadowrunrussia2020.android.R
+import org.shadowrunrussia2020.android.billing.models.Transaction
 import java.util.*
 
 class TransactionsAdapter : RecyclerView.Adapter<TransactionsAdapter.ViewHolder>() {
@@ -37,7 +38,11 @@ class TransactionsAdapter : RecyclerView.Adapter<TransactionsAdapter.ViewHolder>
         }
         holder.mTimeView.text = PrettyTime(Locale("ru")).format(transaction.created_at)
         holder.itemView.setOnClickListener {
-            it.findNavController().navigate(BillingFragmentDirections.actionTransactionDetails(transaction))
+            it.findNavController().navigate(
+                BillingFragmentDirections.actionTransactionDetails(
+                    transaction
+                )
+            )
         }
     }
 

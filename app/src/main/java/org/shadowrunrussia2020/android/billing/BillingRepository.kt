@@ -1,12 +1,12 @@
-package org.shadowrunrussia2020.android
+package org.shadowrunrussia2020.android.billing
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import android.util.Log
-import org.shadowrunrussia2020.android.models.billing.Balance
-import org.shadowrunrussia2020.android.models.billing.Empty
-import org.shadowrunrussia2020.android.models.billing.Transaction
-import org.shadowrunrussia2020.android.models.billing.Transfer
+import org.shadowrunrussia2020.android.billing.models.Balance
+import org.shadowrunrussia2020.android.billing.models.Empty
+import org.shadowrunrussia2020.android.billing.models.Transaction
+import org.shadowrunrussia2020.android.billing.models.Transfer
 import retrofit2.Response
 
 class BillingRepository(private val mService: BillingWebService, private val mBillingDao: BillingDao) {

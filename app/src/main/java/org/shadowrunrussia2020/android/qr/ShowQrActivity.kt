@@ -1,4 +1,4 @@
-package org.shadowrunrussia2020.android
+package org.shadowrunrussia2020.android.qr
 
 import android.app.Activity
 import android.os.Bundle
@@ -6,7 +6,7 @@ import androidx.navigation.navArgs
 import com.google.zxing.BarcodeFormat
 import com.journeyapps.barcodescanner.BarcodeEncoder
 import kotlinx.android.synthetic.main.activity_show_qr.*
-import org.shadowrunrussia2020.android.qr.encode
+import org.shadowrunrussia2020.android.R
 
 class ShowQrActivity : Activity() {
     private val args: ShowQrActivityArgs by navArgs()

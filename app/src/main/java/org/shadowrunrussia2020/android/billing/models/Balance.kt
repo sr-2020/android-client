@@ -1,4 +1,4 @@
-package org.shadowrunrussia2020.android.models.billing
+package org.shadowrunrussia2020.android.billing.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
