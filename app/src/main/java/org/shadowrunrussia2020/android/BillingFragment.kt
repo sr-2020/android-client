@@ -33,10 +33,16 @@ class BillingFragment : Fragment() {
 
         swipeRefreshLayout.setOnRefreshListener { refreshData() }
 
+        tabLayout.setupWithViewPager(viewPager)
+
         viewPager.adapter = object : FragmentPagerAdapter(childFragmentManager) {
             override fun getCount(): Int = 2
             override fun getItem(position: Int): Fragment {
                 return if (position == 0) BillingOverviewFragment() else BillingHistoryFragment()
+            }
+
+            override fun getPageTitle(position: Int): CharSequence? {
+                return if (position == 0) "Обзор" else "История"
             }
         }
 
