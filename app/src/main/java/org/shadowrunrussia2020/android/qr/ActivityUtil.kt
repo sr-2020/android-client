@@ -15,12 +15,7 @@ fun startScanQrActivity(parent: Activity) {
 }
 
 fun maybeProcessActivityResult(parent: Activity, requestCode: Int, resultCode: Int, data: Intent?): Data? {
-    val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
-    if (result == null)
-        return null;
-
-    if (result.contents == null)
-        return null;
+    val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data) ?: return null
 
     try {
         return decode(result.contents)
