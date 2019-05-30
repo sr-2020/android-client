@@ -1,11 +1,10 @@
 package org.shadowrunrussia2020.android
 
-import `in`.aerem.comconbeacons.models.LoginRequest
+import org.shadowrunrussia2020.android.models.LoginRequest
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.os.AsyncTask
 import android.os.Bundle
 import android.text.InputType
 import android.text.TextUtils
@@ -19,16 +18,15 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_login.*
-import org.shadowrunrussia2020.android.models.LoginResult
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.IOException
 
 
 class LoginActivity : AppCompatActivity() {
     private val TAG = "SR2020-LoginActivity"
-
-    // Keep track of the login task to ensure we can cancel it if requested.
-    private var mAuthTask: UserLoginTask? = null
 
     private val mApplication by lazy { application as ShadowrunRussia2020Application }
 
@@ -53,16 +51,25 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun attemptLogin() {
-        if (mAuthTask != null) {
-            return
-        }
-        val loginFormData = loginFormData()
-        if (loginFormData != null) {
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
+        val loginFormData = loginFormData() ?: return
+        val service = (application as ShadowrunRussia2020Application)
+            .getAuthRetrofit().create(AuthenticationWebService::class.java)
+
+        CoroutineScope(Dispatchers.Main).launch {
             showProgress(true)
-            mAuthTask = UserLoginTask(loginFormData.email, loginFormData.password)
-            mAuthTask!!.execute(null as Void?)
+            try {
+                var response = withContext(Dispatchers.IO)
+                { service.login(LoginRequest(loginFormData.email, loginFormData.password)) }.await()
+                saveTokenAndGoToMainActivity(response.api_key)
+            } catch (e: IOException) {
+                passwordInput.error = getString(R.string.error_incorrect_password)
+                passwordInput.requestFocus()
+            } catch (e: Exception) {
+                val toast = Toast.makeText(this@LoginActivity, "Сервер недоступен", Toast.LENGTH_LONG)
+                toast.setGravity(Gravity.TOP, 0, 0)
+                toast.show()
+            }
+            showProgress(false)
         }
     }
 
@@ -137,58 +144,7 @@ class LoginActivity : AppCompatActivity() {
     private fun saveTokenAndGoToMainActivity(token: String) {
         Log.i(TAG, "Successful login, token = $token")
         mApplication.getSession().setToken(token)
-        goToMainActivity()
-    }
-
-    private fun goToMainActivity() {
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-    }
-
-    inner class UserLoginTask internal constructor(email: String, password: String) : AsyncTask<Void, Void, LoginResult>() {
-        private val mLoginRequest: LoginRequest = LoginRequest(email, password)
-
-        override fun doInBackground(vararg voids: Void): LoginResult {
-            try {
-                val service = Retrofit.Builder()
-                    .baseUrl(getBackendUrl(application, this@LoginActivity))
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build().create(AuthenticationWebService::class.java)
-                val c = service.login(mLoginRequest)
-                val response = c.execute()
-                if (response.isSuccessful) {
-                    return LoginResult(true, false, response.body()!!.api_key)
-                }
-                Log.e(TAG, "Unsuccessful response: " + response.errorBody())
-                return LoginResult(false, false, "")
-            } catch (e: Exception) {
-                Log.e(TAG, "IOException: $e")
-                return LoginResult(false, true, "")
-            }
-        }
-
-        override fun onPostExecute(result: LoginResult) {
-            onFinish()
-            if (result.success) {
-                saveTokenAndGoToMainActivity(result.apiKey)
-            } else if (result.noConnection) {
-                val toast = Toast.makeText(this@LoginActivity, "Сервер недоступен", Toast.LENGTH_LONG)
-                toast.setGravity(Gravity.TOP, 0, 0)
-                toast.show()
-            } else {
-                passwordInput.error = getString(R.string.error_incorrect_password)
-                passwordInput.requestFocus()
-            }
-        }
-
-        override fun onCancelled() {
-            onFinish()
-        }
-
-        private fun onFinish() {
-            mAuthTask = null
-            showProgress(false)
-        }
+        startActivity(Intent(this, MainActivity::class.java))
     }
 }
 

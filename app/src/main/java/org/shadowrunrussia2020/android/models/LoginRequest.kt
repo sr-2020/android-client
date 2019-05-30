@@ -1,3 +1,3 @@
-package `in`.aerem.comconbeacons.models
+package org.shadowrunrussia2020.android.models
 
 class LoginRequest(var email: String, var password: String)

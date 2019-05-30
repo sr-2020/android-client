@@ -1,14 +1,14 @@
 package org.shadowrunrussia2020.android
 
-import `in`.aerem.comconbeacons.models.LoginRequest
-import `in`.aerem.comconbeacons.models.LoginResponse
-import retrofit2.Call
+import org.shadowrunrussia2020.android.models.LoginRequest
+import org.shadowrunrussia2020.android.models.LoginResponse
+import kotlinx.coroutines.Deferred
 import retrofit2.http.Body
 import retrofit2.http.POST
 
 // See Swagger API documentation at http://85.143.222.113/api/documentation
 interface AuthenticationWebService {
     @POST("login")
-    fun login(@Body request: LoginRequest): Call<LoginResponse>
+    fun login(@Body request: LoginRequest): Deferred<LoginResponse>
 }
 
