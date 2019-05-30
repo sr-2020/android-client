@@ -8,16 +8,16 @@ class EncodeUtilTest {
     @Test
     fun decode_ThrowsFormatExceptionIfTooShort() {
         assertFailsWith(FormatException::class) {
-            decode("24f6Aw2A2Nt")
+            decode("EQ1ybkhZksI")
         }
     }
 
     @Test
     fun decode_ChangingAnySymbolFailsSignatureCheck() {
-        val validString = "24f6Aw2A2NtwHello"
+        val validString = "92c2EQ1ybkhZHello"
         for (i in 0 until validString.length) {
             assertFailsWith(ValidationException::class) {
-                val invalidString = validString.slice(IntRange(0, i - 1)) + "B" + validString.slice(
+                val invalidString = validString.slice(IntRange(0, i - 1)) + "A" + validString.slice(
                     IntRange(
                         i + 1,
                         validString.length - 1
@@ -31,13 +31,13 @@ class EncodeUtilTest {
     @Test
     fun decode_InvalidSymbolInSignatureLeadToValidationError() {
         assertFailsWith(ValidationException::class) {
-            decode("X4f6Aw2A2NtwHello") // Symbol X is not hex symbol
+            decode("X2c2EQ1ybkhZHello") // Symbol X is not hex symbol
         }
     }
 
     @Test
     fun decode_InvalidSymbolsInHeaderLeadToException() {
-        val validString = "24f6Aw2A2NtwHello"
+        val validString = "92c2EQ1ybkhZHello"
         for (i in 4 until 4 + 8) {
             assertFailsWith(FormatException::class) {
                 val invalidString = validString.slice(IntRange(0, i - 1)) + "?" + validString.slice(
@@ -52,29 +52,22 @@ class EncodeUtilTest {
     }
 
     @Test
-    fun decode_TimeUntilInPastLeadsToException() {
-        assertFailsWith(ExpiredException::class) {
-            decode("d810Aw1ybkhZHello")
-        }
-    }
-
-    @Test
     fun decode_IsCorrect() {
         assertEquals(
-            Data(Type.CRAFTED_ITEM, 13, 1893456000, "Hello"),
-            decode("24f6Aw2A2NtwHello"))
+            Data(Type.CRAFTED_ITEM, 13, 1497919090, "Hello"),
+            decode("d810Aw1ybkhZHello"))
     }
 
     @Test
     fun encode_IsCorrect() {
         assertEquals(
-            "24f6Aw2A2NtwHello",
-            encode(Data(Type.CRAFTED_ITEM, 13, 1893456000, "Hello")))
+            "d810Aw1ybkhZHello",
+            encode(Data(Type.CRAFTED_ITEM, 13, 1497919090, "Hello")))
     }
 
     @Test
     fun encode_WorksWithCyrillicCharacters() {
-        val data = Data(Type.CRAFTED_ITEM, 13, 1893456000, "Рыба")
+        val data = Data(Type.CRAFTED_ITEM, 13, 1497919090, "Рыба")
         assertEquals(decode(encode(data)), data)
     }
 }
