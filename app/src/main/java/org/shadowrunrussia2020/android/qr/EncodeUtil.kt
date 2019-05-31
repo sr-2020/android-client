@@ -29,7 +29,23 @@ internal fun signature(packedData: ByteArray, data: String): String {
     // TODO(aeremin): get salt from environment variable during build
     val salt = "do you like ponies?"
     val md = MessageDigest.getInstance("MD5")
-    md.update(packedData)
+    for (b in packedData) {
+        // This is awful hack. "Golden" implementation (https://github.com/alice-larp/alice-larp-sdk/blob/master/packages/alice-qr-lib/qr.ts)
+        // is kinda broken. It can add invalid (in UTF-8 sense) character in the string, which then gets converted to
+        // the [239, 191, 189] triplet. See e.g.
+        // 1) https://haacked.com/archive/2012/01/30/hazards-of-converting-binary-data-to-a-string.aspx/
+        // 2) https://stackoverflow.com/questions/43918055/why-redis-returns-a-239-191-189-response-buffer
+        // As we (at least for now) want to be compatible with "golden" implementation, we mimic such behaviour.
+        if (b >= 0) {
+            md.update(b)
+        } else {
+            md.update(239.toByte())
+            md.update(191.toByte())
+            md.update(189.toByte())
+        }
+    }
+    //md.update(packedData)
+    val a = (data + salt).toByteArray()
     md.update(data.toByteArray())
     md.update(salt.toByteArray())
     val md5hash = md.digest()

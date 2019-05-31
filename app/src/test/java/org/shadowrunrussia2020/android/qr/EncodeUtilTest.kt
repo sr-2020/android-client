@@ -59,6 +59,13 @@ class EncodeUtilTest {
     }
 
     @Test
+    fun decode_IsCorrect2() {
+        assertEquals(
+            Data(Type.PAYMENT_REQUEST_WITH_PRICE, 0, 1700000000, "123,1267,abc"),
+            decode("ca7fBwAA8VNl123,1267,abc"))
+    }
+
+    @Test
     fun encode_IsCorrect() {
         assertEquals(
             "d810Aw1ybkhZHello",
