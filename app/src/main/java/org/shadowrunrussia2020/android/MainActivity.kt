@@ -23,7 +23,6 @@ import kotlinx.coroutines.launch
 import org.shadowrunrussia2020.android.qr.Data
 import org.shadowrunrussia2020.android.qr.Type
 import org.shadowrunrussia2020.android.qr.maybeProcessActivityResult
-import org.shadowrunrussia2020.android.qr.startScanQrActivity
 import java.util.*
 
 
@@ -61,11 +60,6 @@ class MainActivity : AppCompatActivity() {
 
         // TODO(aeremin) Use more Navigation UI & navigation graphs
         // https://developer.android.com/guide/navigation/navigation-migrate
-        nav_view.menu.findItem(R.id.scan_qr).setOnMenuItemClickListener {
-            startScanQrActivity(this)
-            drawer_layout.closeDrawer(GravityCompat.START)
-            true
-        }
         nav_view.menu.findItem(R.id.nav_gallery).setOnMenuItemClickListener {
             val action = MainNavGraphDirections.actionGlobalShowQr(
                 Data(Type.DIGITAL_SIGNATURE, 0, (Date().time / 1000).toInt() + 3600, "Petya"))
@@ -79,15 +73,6 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         if (app.getSession().getToken() == null) {
             navController.navigate(R.id.action_global_logout)
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        val qrData = maybeProcessActivityResult(this, requestCode, resultCode, data)
-        if (qrData != null) {
-            Toast.makeText(this, "Содержимое QR-кода: ${qrData.type}, ${qrData.payload}", Toast.LENGTH_LONG).show()
-        } else {
-            super.onActivityResult(requestCode, resultCode, data)
         }
     }
 

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools" android:id="@+id/scan_qr_nav_graph.xml"
+            app:startDestination="@id/scanQrFragment">
+
+    <fragment android:id="@+id/scanQrFragment" android:name="org.shadowrunrussia2020.android.qr.ScanQrFragment"
+              android:label="fragment_scan_qr" tools:layout="@layout/fragment_scan_qr">
+        <action android:id="@+id/action_bill_scanned"
+                app:destination="@id/billScannedFragment"/>
+    </fragment>
+    <activity android:id="@+id/mainActivity" android:name="org.shadowrunrussia2020.android.MainActivity"
+              android:label="MainActivity"/>
+    <fragment android:id="@+id/billScannedFragment" android:name="org.shadowrunrussia2020.android.qr.BillScannedFragment"
+              android:label="fragment_bill_scanned" tools:layout="@layout/fragment_bill_scanned">
+        <argument android:name="transfer" app:argType="org.shadowrunrussia2020.android.billing.models.Transfer"/>
+    </fragment>
+    <action android:id="@+id/action_global_back_to_main" app:destination="@id/mainActivity"/>
+</navigation>
