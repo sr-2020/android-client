@@ -3,7 +3,7 @@ package org.shadowrunrussia2020.android.billing
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import android.util.Log
-import org.shadowrunrussia2020.android.billing.models.Balance
+import org.shadowrunrussia2020.android.billing.models.AccountOverview
 import org.shadowrunrussia2020.android.billing.models.Empty
 import org.shadowrunrussia2020.android.billing.models.Transaction
 import org.shadowrunrussia2020.android.billing.models.Transfer
@@ -22,7 +22,8 @@ class BillingRepository(private val mService: BillingWebService, private val mBi
                     }
                 it
             })
-            mBillingDao.setBalance(Balance(0, accountInfo.balance))
+            mBillingDao.setAccountOverview(
+                AccountOverview(id = 0, sin = accountInfo.sin, balance = accountInfo.balance))
         }
     }
 
@@ -30,15 +31,8 @@ class BillingRepository(private val mService: BillingWebService, private val mBi
         return mBillingDao.history()
     }
 
-    private val mBalanceData = MediatorLiveData<Int>()
-
-    init {
-        mBalanceData.addSource(mBillingDao.balance())
-        { item: Balance? -> mBalanceData.value = item?.balance ?: 0 }
-    }
-
-    fun getBalance(): LiveData<Int> {
-        return mBalanceData
+    fun getAccountOverview(): LiveData<AccountOverview> {
+        return mBillingDao.accountOverview()
     }
 
     suspend fun transferMoney(transfer: Transfer): Response<Empty> {

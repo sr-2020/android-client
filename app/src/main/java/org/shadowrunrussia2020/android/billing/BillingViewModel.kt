@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import org.shadowrunrussia2020.android.ShadowrunRussia2020Application
+import org.shadowrunrussia2020.android.billing.models.AccountOverview
 import org.shadowrunrussia2020.android.billing.models.Empty
 import org.shadowrunrussia2020.android.billing.models.Transaction
 import org.shadowrunrussia2020.android.billing.models.Transfer
@@ -15,8 +16,8 @@ class BillingViewModel(application: Application) : AndroidViewModel(application)
         application.getDatabase().billingDao()
     )
 
-    fun getBalance(): LiveData<Int> {
-        return mBillingRepository.getBalance();
+    fun getAccountOverview(): LiveData<AccountOverview> {
+        return mBillingRepository.getAccountOverview()
     }
 
     fun getHistory(): LiveData<List<Transaction>> {

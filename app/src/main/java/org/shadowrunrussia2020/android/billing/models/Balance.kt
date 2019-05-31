@@ -4,8 +4,9 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class Balance(
+data class AccountOverview (
     @PrimaryKey
     var id: Int,
+    var sin: Int,
     var balance: Int
 )
