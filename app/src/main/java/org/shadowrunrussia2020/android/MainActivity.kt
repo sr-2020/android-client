@@ -40,10 +40,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        if (app.getSession().getToken() == null) {
-            navController.navigate(R.id.action_global_logout)
-        }
-
         setSupportActionBar(toolbar)
 
         fab.setOnClickListener { view ->
@@ -76,6 +72,13 @@ class MainActivity : AppCompatActivity() {
             navController.navigate(action)
             drawer_layout.closeDrawer(GravityCompat.START)
             true
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (app.getSession().getToken() == null) {
+            navController.navigate(R.id.action_global_logout)
         }
     }
 
