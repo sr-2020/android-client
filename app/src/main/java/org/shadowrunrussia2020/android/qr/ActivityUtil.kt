@@ -23,6 +23,8 @@ fun maybeProcessActivityResult(parent: Activity, requestCode: Int, resultCode: I
         Toast.makeText(parent, "Неподдерживаемый QR-код", Toast.LENGTH_LONG).show()
     } catch (e: FormatException) {
         Toast.makeText(parent, "Неподдерживаемый QR-код", Toast.LENGTH_LONG).show()
+    } catch (e: ExpiredException) {
+        Toast.makeText(parent, "Срок действия QR-кода истек", Toast.LENGTH_LONG).show()
     }
     return null
 }
