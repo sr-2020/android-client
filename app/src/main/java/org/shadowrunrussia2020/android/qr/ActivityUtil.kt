@@ -6,10 +6,10 @@ import android.widget.Toast
 import com.google.zxing.integration.android.IntentIntegrator
 
 fun maybeProcessActivityResult(parent: Activity, requestCode: Int, resultCode: Int, data: Intent?): Data? {
-    val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data) ?: return null
+    val contents = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)?.contents ?: return null
 
     try {
-        return decode(result.contents)
+        return decode(contents)
     } catch (e: ValidationException) {
         Toast.makeText(parent, "Неподдерживаемый QR-код", Toast.LENGTH_LONG).show()
     } catch (e: FormatException) {
