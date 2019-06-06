@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1027317493504",
+    "firebase_url": "https://sr2020-182da.firebaseio.com",
+    "project_id": "sr2020-182da",
+    "storage_bucket": "sr2020-182da.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1027317493504:android:8f27c0fc4309c50b",
+        "android_client_info": {
+          "package_name": "org.shadowrunrussia2020.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1027317493504-t5ngkt1k5a18bgp5cp3mjil88975snea.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPUUoajClUF8bxNxZ7oLnm7_sG77YqwJQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1027317493504-t5ngkt1k5a18bgp5cp3mjil88975snea.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
