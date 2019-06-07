@@ -17,6 +17,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -142,6 +144,18 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun saveTokenAndGoToMainActivity(token: String) {
+        FirebaseInstanceId.getInstance().instanceId
+            .addOnCompleteListener(OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    Log.w(TAG, "getInstanceId failed", task.exception)
+                    return@OnCompleteListener
+                }
+
+                // Get new Instance ID token
+                val msg = task.result?.token
+                Log.d(TAG, "token = $msg")
+            })
+
         Log.i(TAG, "Successful login, token = $token")
         mApplication.getSession().setToken(token)
         startActivity(Intent(this, MainActivity::class.java))
