@@ -11,9 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class ShadowrunRussia2020Application : Application() {
     private val mSession by lazy { Session(getGlobalSharedPreferences()) }
-    // TODO(aeremin): Merge retrofits when backend addresses will be same
     private val mRetrofit by lazy { createRetrofit() }
-    private val mAuthRetrofit by lazy { createAuthRetrofit() }
     private val mDatabase by lazy { createDatabase() }
 
     fun getGlobalSharedPreferences(): SharedPreferences {
@@ -28,24 +26,11 @@ class ShadowrunRussia2020Application : Application() {
         return mRetrofit
     }
 
-    fun getAuthRetrofit(): Retrofit {
-        return mAuthRetrofit
-    }
-
     fun getDatabase(): CacheDatabase {
         return mDatabase
     }
 
     private fun createRetrofit(): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl("http://gateway.evarun.ru/api/v1/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(CoroutineCallAdapterFactory())
-            .client(createClient())
-            .build()
-    }
-
-    private fun createAuthRetrofit(): Retrofit {
         return Retrofit.Builder()
             .baseUrl(getBackendUrl(this, this))
             .addConverterFactory(GsonConverterFactory.create())

@@ -10,10 +10,10 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface BillingWebService {
-    @POST("transfer")
+    @POST("billing/transfer")
     fun transfer(@Body request: Transfer): Deferred<Response<Empty>>
 
-    @GET("account_info")
+    @GET("billing/account_info")
     fun accountInfo(): Deferred<Response<AccountInfo>>
 }
 

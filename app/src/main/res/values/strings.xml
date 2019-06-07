@@ -24,7 +24,7 @@
     <string name="cancel">Отмена</string>
     <string name="ok">Oк</string>
 
-    <string name="default_backend_url">http://auth.evarun.ru/api/v1/</string>
+    <string name="default_backend_url">http://gateway.evarun.ru/api/v1/</string>
     <string name="token_preference_key">backend_token</string>
     <string name="backend_url_key">backend_url</string>
     <string name="action_logout">Выход</string>

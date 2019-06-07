@@ -53,7 +53,7 @@ class LoginActivity : AppCompatActivity() {
     private fun attemptLogin() {
         val loginFormData = loginFormData() ?: return
         val service = (application as ShadowrunRussia2020Application)
-            .getAuthRetrofit().create(AuthenticationWebService::class.java)
+            .getRetrofit().create(AuthenticationWebService::class.java)
 
         CoroutineScope(Dispatchers.Main).launch {
             showProgress(true)
