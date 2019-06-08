@@ -29,8 +29,8 @@ import java.util.*
 class MainActivity : AppCompatActivity() {
     private val appBarConfiguration by lazy {
         AppBarConfiguration.Builder(hashSetOf(R.id.mainFragment, R.id.billingFragment))
-        .setDrawerLayout(drawer_layout)
-        .build()
+            .setDrawerLayout(drawer_layout)
+            .build()
     }
     private val navController: NavController by lazy { findNavController(R.id.nav_host_fragment) }
     private val app by lazy { application as ShadowrunRussia2020Application }
@@ -62,7 +62,8 @@ class MainActivity : AppCompatActivity() {
         // https://developer.android.com/guide/navigation/navigation-migrate
         nav_view.menu.findItem(R.id.nav_gallery).setOnMenuItemClickListener {
             val action = MainNavGraphDirections.actionGlobalShowQr(
-                Data(Type.DIGITAL_SIGNATURE, 0, (Date().time / 1000).toInt() + 3600, "Petya"))
+                Data(Type.DIGITAL_SIGNATURE, 0, (Date().time / 1000).toInt() + 3600, "Petya")
+            )
             navController.navigate(action)
             drawer_layout.closeDrawer(GravityCompat.START)
             true
@@ -91,8 +92,12 @@ class MainActivity : AppCompatActivity() {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         when (item.itemId) {
-            R.id.action_settings -> { return true }
-            R.id.action_logout -> { exit(); return true }
+            R.id.action_settings -> {
+                return true
+            }
+            R.id.action_logout -> {
+                exit(); return true
+            }
             else -> return super.onOptionsItemSelected(item)
         }
     }
