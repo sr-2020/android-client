@@ -144,18 +144,8 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun saveTokenAndGoToMainActivity(token: String) {
-        FirebaseInstanceId.getInstance().instanceId
-            .addOnCompleteListener(OnCompleteListener { task ->
-                if (!task.isSuccessful) {
-                    Log.w(TAG, "getInstanceId failed", task.exception)
-                    return@OnCompleteListener
-                }
-
-                // Get new Instance ID token
-                val msg = task.result?.token
-                Log.d(TAG, "token = $msg")
-            })
-
+        val msg = FirebaseInstanceId.getInstance().token
+        Log.d(TAG, "token = $msg")
         Log.i(TAG, "Successful login, token = $token")
         mApplication.getSession().setToken(token)
         startActivity(Intent(this, MainActivity::class.java))

@@ -16,10 +16,14 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_billing.*
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.shadowrunrussia2020.android.qr.Data
 import org.shadowrunrussia2020.android.qr.Type
 import org.shadowrunrussia2020.android.qr.maybeProcessActivityResult
@@ -104,8 +108,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun exit() {
         (application as ShadowrunRussia2020Application).getSession().invalidate()
-        CoroutineScope(IO).launch { (application as ShadowrunRussia2020Application).getDatabase().clearAllTables() }
         // TODO(aeremin) Add equivalent of this.stopService(Intent(this, BeaconsScanner::class.java))
-        navController.navigate(R.id.action_global_logout)
+        CoroutineScope(Dispatchers.Main).launch {
+            withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
+                (application as ShadowrunRussia2020Application).getDatabase().clearAllTables()
+                FirebaseInstanceId.getInstance().deleteInstanceId()
+            }
+            navController.navigate(R.id.action_global_logout)
+        }
     }
 }
