@@ -5,7 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import org.shadowrunrussia2020.android.ShadowrunRussia2020Application
 import org.shadowrunrussia2020.android.billing.models.AccountOverview
-import org.shadowrunrussia2020.android.billing.models.Empty
+import org.shadowrunrussia2020.android.models.Empty
 import org.shadowrunrussia2020.android.billing.models.Transaction
 import org.shadowrunrussia2020.android.billing.models.Transfer
 import retrofit2.Response

@@ -1,10 +1,9 @@
 package org.shadowrunrussia2020.android.billing
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
 import android.util.Log
 import org.shadowrunrussia2020.android.billing.models.AccountOverview
-import org.shadowrunrussia2020.android.billing.models.Empty
+import org.shadowrunrussia2020.android.models.Empty
 import org.shadowrunrussia2020.android.billing.models.Transaction
 import org.shadowrunrussia2020.android.billing.models.Transfer
 import retrofit2.Response

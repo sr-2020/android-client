@@ -24,6 +24,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.shadowrunrussia2020.android.models.LoginResponse
+import org.shadowrunrussia2020.android.models.SaveTokenRequest
 import java.io.IOException
 
 
@@ -62,7 +64,7 @@ class LoginActivity : AppCompatActivity() {
             try {
                 var response = withContext(Dispatchers.IO)
                 { service.login(LoginRequest(loginFormData.email, loginFormData.password)) }.await()
-                saveTokenAndGoToMainActivity(response.api_key)
+                saveTokenAndGoToMainActivity(response)
             } catch (e: IOException) {
                 passwordInput.error = getString(R.string.error_incorrect_password)
                 passwordInput.requestFocus()
@@ -143,9 +145,12 @@ class LoginActivity : AppCompatActivity() {
         })
     }
 
-    private fun saveTokenAndGoToMainActivity(token: String) {
-        val msg = FirebaseInstanceId.getInstance().token
-        Log.d(TAG, "token = $msg")
+    private fun saveTokenAndGoToMainActivity(response: LoginResponse) {
+        val firebaseToken = FirebaseInstanceId.getInstance().token
+        val service = (application as ShadowrunRussia2020Application).getPushRetrofit().create(PushWebService::class.java)
+        CoroutineScope(Dispatchers.IO).launch{ service.saveToken(SaveTokenRequest(id=response.id, token=firebaseToken!!)) }
+        Log.d(TAG, "Firebase token = $firebaseToken")
+        val token = response.api_key
         Log.i(TAG, "Successful login, token = $token")
         mApplication.getSession().setToken(token)
         startActivity(Intent(this, MainActivity::class.java))
