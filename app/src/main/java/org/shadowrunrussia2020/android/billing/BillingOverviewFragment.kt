@@ -64,9 +64,9 @@ class BillingOverviewFragment : Fragment() {
                 try {
                     withContext(Dispatchers.IO) { mModel.transferMoney(Integer.parseInt(recipient), amount, comment) }
                     Toast.makeText(activity, "Перевод осуществлен", Toast.LENGTH_LONG).show();
-                    editTextRecipient.text.clear()
-                    editTextAmount.text.clear()
-                    editTextTransferComment.text.clear()
+                    editTextRecipient.text!!.clear()
+                    editTextAmount.text!!.clear()
+                    editTextTransferComment.text!!.clear()
                     val inputManager: InputMethodManager =
                         activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                     inputManager.hideSoftInputFromWindow(view.windowToken, InputMethodManager.SHOW_FORCED)

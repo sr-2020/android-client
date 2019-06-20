@@ -4,8 +4,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
     <LinearLayout
-                  xmlns:app="http://schemas.android.com/apk/res-auto"
-                  android:orientation="vertical"
+            android:orientation="vertical"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content">
         <LinearLayout
@@ -71,24 +70,43 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/textNewTransfer"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
-            <EditText
+
+            <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:ems="10"
-                    android:id="@+id/editTextRecipient" android:hint="@string/transfer_receiver"/>
-            <EditText
+                    android:layout_height="match_parent">
+                <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:ems="10"
+                        android:id="@+id/editTextRecipient"
+                        android:hint="@string/transfer_receiver"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:ems="10"
-                    android:id="@+id/editTextAmount" android:hint="@string/transfer_amount"/>
-            <EditText
+                    android:layout_height="match_parent">
+                <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:ems="10"
+                        android:id="@+id/editTextAmount"
+                        android:hint="@string/transfer_amount"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
-                    android:ems="10"
-                    android:id="@+id/editTextTransferComment" android:hint="@string/transfer_comment"/>
+                    android:layout_height="match_parent">
+                <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName"
+                        android:ems="10"
+                        android:id="@+id/editTextTransferComment"
+                        android:hint="@string/transfer_comment"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
             <Button
                     android:text="@string/transfer_confirm"
                     android:layout_width="match_parent"
