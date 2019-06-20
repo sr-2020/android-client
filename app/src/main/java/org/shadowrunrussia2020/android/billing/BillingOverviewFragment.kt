@@ -60,6 +60,7 @@ class BillingOverviewFragment : Fragment() {
                 return@setOnClickListener
             }
             val comment = editTextTransferComment.text.toString()
+            buttonTransfer.isEnabled = false
             CoroutineScope(Dispatchers.Main).launch {
                 try {
                     withContext(Dispatchers.IO) { mModel.transferMoney(Integer.parseInt(recipient), amount, comment) }
@@ -72,6 +73,8 @@ class BillingOverviewFragment : Fragment() {
                     inputManager.hideSoftInputFromWindow(view.windowToken, InputMethodManager.SHOW_FORCED)
                 } catch (e: Exception) {
                     Toast.makeText(activity, "Ошибка. ${e.message}", Toast.LENGTH_LONG).show();
+                } finally {
+                    buttonTransfer.isEnabled = true
                 }
             }
 
