@@ -12,8 +12,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 class ShadowrunRussia2020Application : Application() {
     private val mSession by lazy { Session(getGlobalSharedPreferences()) }
     private val mRetrofit by lazy { createRetrofit() }
-    private val mPushRetrofit by lazy { createPushRetrofit() }
-
     private val mDatabase by lazy { createDatabase() }
 
     fun getGlobalSharedPreferences(): SharedPreferences {
@@ -26,10 +24,6 @@ class ShadowrunRussia2020Application : Application() {
 
     fun getRetrofit(): Retrofit {
         return mRetrofit
-    }
-
-    fun getPushRetrofit(): Retrofit {
-        return mPushRetrofit
     }
 
     fun getDatabase(): CacheDatabase {
@@ -46,12 +40,6 @@ class ShadowrunRussia2020Application : Application() {
     private fun createRetrofit(): Retrofit {
         return baseRetrofitBuilder()
             .baseUrl(getBackendUrl(this, this))
-            .build()
-    }
-
-    private fun createPushRetrofit(): Retrofit {
-        return baseRetrofitBuilder()
-            .baseUrl("https://push-o5ricu5t6q-uc.a.run.app/")
             .build()
     }
 

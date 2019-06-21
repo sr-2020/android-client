@@ -63,7 +63,15 @@ class LoginActivity : AppCompatActivity() {
             showProgress(true)
             try {
                 var response = withContext(Dispatchers.IO)
-                { service.login(LoginRequest(loginFormData.email, loginFormData.password)) }.await()
+                {
+                    service.login(
+                        LoginRequest(
+                            email = loginFormData.email,
+                            password = loginFormData.password,
+                            firebase_token = FirebaseInstanceId.getInstance().token!!
+                        )
+                    )
+                }.await()
                 saveTokenAndGoToMainActivity(response)
             } catch (e: IOException) {
                 passwordInput.error = getString(R.string.error_incorrect_password)
@@ -146,10 +154,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun saveTokenAndGoToMainActivity(response: LoginResponse) {
-        val firebaseToken = FirebaseInstanceId.getInstance().token
-        val service = (application as ShadowrunRussia2020Application).getPushRetrofit().create(PushWebService::class.java)
-        CoroutineScope(Dispatchers.IO).launch{ service.saveToken(SaveTokenRequest(id=response.id, token=firebaseToken!!)) }
-        Log.d(TAG, "Firebase token = $firebaseToken")
         val token = response.api_key
         Log.i(TAG, "Successful login, token = $token")
         mApplication.getSession().setToken(token)
