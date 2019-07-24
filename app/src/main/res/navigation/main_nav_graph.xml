@@ -14,8 +14,14 @@
         <action android:id="@+id/action_transaction_details"
                 app:destination="@id/transactionDetailsFragment"/>
     </fragment>
+    <fragment android:id="@+id/characterFragment"
+              android:name="org.shadowrunrussia2020.android.character.CharacterOverviewFragment"
+              tools:layout="@layout/fragment_character_overview"
+              android:label="Персонаж">
+    </fragment>
     <action android:id="@+id/action_global_main" app:destination="@id/mainFragment"/>
     <action android:id="@+id/action_global_billing" app:destination="@id/billingFragment"/>
+    <action android:id="@+id/action_global_character" app:destination="@id/characterFragment"/>
     <action android:id="@+id/action_global_scan_qr" app:destination="@id/scanQrActivity"/>
     <action android:id="@+id/action_global_show_qr" app:destination="@id/showQrActivity"/>
     <action android:id="@+id/action_global_logout" app:destination="@id/loginActivity"/>

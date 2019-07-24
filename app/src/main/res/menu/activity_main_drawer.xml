@@ -12,6 +12,10 @@
                 android:id="@+id/action_global_billing"
                 android:icon="@drawable/menu_manage"
                 android:title="Экономика"/>
+        <item
+                android:id="@+id/action_global_character"
+                android:icon="@drawable/menu_manage"
+                android:title="Персонаж"/>
     </group>
 
     <item android:title="QR">

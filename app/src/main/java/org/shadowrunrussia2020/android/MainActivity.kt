@@ -1,12 +1,10 @@
 package org.shadowrunrussia2020.android
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -18,21 +16,18 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_billing.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.shadowrunrussia2020.android.qr.Data
 import org.shadowrunrussia2020.android.qr.Type
-import org.shadowrunrussia2020.android.qr.maybeProcessActivityResult
 import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
     private val appBarConfiguration by lazy {
-        AppBarConfiguration.Builder(hashSetOf(R.id.mainFragment, R.id.billingFragment))
+        AppBarConfiguration.Builder(hashSetOf(R.id.mainFragment, R.id.billingFragment, R.id.characterFragment))
             .setDrawerLayout(drawer_layout)
             .build()
     }
