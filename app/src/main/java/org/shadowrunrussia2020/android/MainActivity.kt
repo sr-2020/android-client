@@ -67,8 +67,6 @@ class MainActivity : AppCompatActivity() {
         nav_view.setupWithNavController(navController)
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration)
 
-        // TODO(aeremin) Use more Navigation UI & navigation graphs
-        // https://developer.android.com/guide/navigation/navigation-migrate
         nav_view.menu.findItem(R.id.nav_gallery).setOnMenuItemClickListener {
             val action = MainNavGraphDirections.actionGlobalShowQr(
                 Data(Type.DIGITAL_SIGNATURE, 0, (Date().time / 1000).toInt() + 3600, "Petya")
