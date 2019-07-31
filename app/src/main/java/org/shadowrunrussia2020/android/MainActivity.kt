@@ -1,10 +1,18 @@
 package org.shadowrunrussia2020.android
 
+import android.Manifest
+import android.bluetooth.BluetoothAdapter
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.location.LocationManager
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
 import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -33,6 +41,8 @@ class MainActivity : AppCompatActivity() {
     }
     private val navController: NavController by lazy { findNavController(R.id.nav_host_fragment) }
     private val app by lazy { application as ShadowrunRussia2020Application }
+    private val PERMISSION_REQUEST_COARSE_LOCATION = 1
+    private val REQUEST_ENABLE_BT = 2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,7 +84,50 @@ class MainActivity : AppCompatActivity() {
         if (app.getSession().getToken() == null) {
             navController.navigate(R.id.action_global_logout)
         }
+
+        checkEverythingEnabled()
+        startService(Intent(this, BeaconsScanner::class.java))
     }
+
+    private fun checkEverythingEnabled() {
+        checkBluetoothEnabled()
+        checkLocationPermission()
+        checkLocationService()
+    }
+
+    private fun checkBluetoothEnabled() {
+        if (!BluetoothAdapter.getDefaultAdapter().isEnabled) {
+            val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT)
+        }
+    }
+
+    private fun checkLocationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            // Android M Permission check
+            if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(
+                    arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
+                    PERMISSION_REQUEST_COARSE_LOCATION
+                )
+            }
+        }
+    }
+
+    private fun checkLocationService() {
+        val manager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            AlertDialog.Builder(this)
+                .setMessage(getString(R.string.enable_location))
+                .setCancelable(false)
+                .setPositiveButton(getString(R.string.ok)) { _, _ ->
+                    startActivityForResult(Intent (Settings.ACTION_LOCATION_SOURCE_SETTINGS), 0)
+                }
+                .create()
+                .show()
+        }
+    }
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -103,7 +156,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun exit() {
         (application as ShadowrunRussia2020Application).getSession().invalidate()
-        // TODO(aeremin) Add equivalent of this.stopService(Intent(this, BeaconsScanner::class.java))
+        this.stopService(Intent(this, BeaconsScanner::class.java))
         CoroutineScope(Dispatchers.Main).launch {
             withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
                 (application as ShadowrunRussia2020Application).getDatabase().clearAllTables()

@@ -29,6 +29,12 @@
             </intent-filter>
         </service>
 
+        <service
+                android:name=".BeaconsScanner"
+                android:enabled="true"
+                android:exported="true">
+        </service>
+
         <activity android:name=".qr.ScanQrActivity">
         </activity>
         <activity android:name=".qr.ShowQrActivity">
