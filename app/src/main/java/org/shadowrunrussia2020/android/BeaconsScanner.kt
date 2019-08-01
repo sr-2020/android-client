@@ -60,6 +60,7 @@ class BeaconsScanner : Service(), BeaconConsumer {
             .setSmallIcon(R.drawable.abc_ic_star_black_48dp)
             .setContentTitle("Приложение висит в фоне!")
             .setContentIntent(pendingIntent)
+            .setGroup("beacons")
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
