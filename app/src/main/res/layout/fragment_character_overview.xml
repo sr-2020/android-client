@@ -36,7 +36,64 @@
         <Button
                 android:text="Вжух!"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/buttonСastDummySpell"/>
+                android:layout_height="wrap_content" android:id="@+id/buttonCastDummySpell"/>
+
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="24dp"
+                app:layout_constraintBottom_toTopOf="@+id/newTransferGroup" android:id="@+id/testGroup1">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Нажатий на кнопку 1: "
+                    android:id="@+id/labelTest1" android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textAlignment="viewStart"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+            />
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textTest1"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="16dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" android:textAlignment="viewEnd"/>
+        </LinearLayout>
+        <Button
+                android:text="Кнопка 1 (Firebase RT DB)"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/buttonTest1"/>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="24dp"
+                app:layout_constraintBottom_toTopOf="@+id/newTransferGroup" android:id="@+id/testGroup2">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Нажатий на кнопку 2: "
+                    android:id="@+id/labelTest2" android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textAlignment="viewStart"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+            />
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textTest2"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="16dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" android:textAlignment="viewEnd"/>
+        </LinearLayout>
+
+
+        <Button
+                android:text="Кнопка 2 (Firestore)"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/buttonTest2"/>
     </LinearLayout>
 
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
