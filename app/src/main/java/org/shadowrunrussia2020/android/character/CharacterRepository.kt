@@ -9,8 +9,7 @@ import retrofit2.Response
 
 class CharacterRepository(private val mService: CharacterWebService, private val mDao: CharacterDao) {
     suspend fun refresh() {
-        // TODO: Get id from somewhere?
-        saveToDao(mService.get("8").await())
+        saveToDao(mService.get().await())
     }
 
     fun getCharacter(): LiveData<Character> {
@@ -18,8 +17,7 @@ class CharacterRepository(private val mService: CharacterWebService, private val
     }
 
     suspend fun sendEvent(event: Event) {
-        // TODO: Get id from somewhere?
-        saveToDao(mService.postEvent("8", event).await())
+        saveToDao(mService.postEvent(event).await())
     }
 
     private fun saveToDao(response: Response<CharacterResponse>) {
