@@ -35,7 +35,14 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
     private val appBarConfiguration by lazy {
-        AppBarConfiguration.Builder(hashSetOf(R.id.mainFragment, R.id.billingFragment, R.id.characterFragment))
+        AppBarConfiguration.Builder(
+            hashSetOf(
+                R.id.mainFragment,
+                R.id.billingFragment,
+                R.id.characterFragment,
+                R.id.spellbookFragment
+            )
+        )
             .setDrawerLayout(drawer_layout)
             .build()
     }

@@ -16,6 +16,10 @@
                 android:id="@+id/action_global_character"
                 android:icon="@drawable/menu_manage"
                 android:title="Персонаж"/>
+        <item
+                android:id="@+id/action_global_spellbook"
+                android:icon="@drawable/menu_manage"
+                android:title="Книга заклинаний"/>
     </group>
 
     <item android:title="QR">

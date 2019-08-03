@@ -4,10 +4,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.shadowrunrussia2020.android.R
 import org.shadowrunrussia2020.android.character.CharacterViewModel
 import org.shadowrunrussia2020.android.character.models.Spell
@@ -36,7 +38,13 @@ class SpellsAdapter : RecyclerView.Adapter<SpellsAdapter.ViewHolder>() {
         holder.mAmountView.text = spell.eventType
         holder.mCommentView.text = spell.description
         holder.itemView.setOnClickListener {
-            CoroutineScope(Dispatchers.IO).launch{ mModel?.postEvent(spell.eventType) }
+            CoroutineScope(Dispatchers.Main).launch {
+                try {
+                    withContext(CoroutineScope(Dispatchers.IO).coroutineContext) { mModel?.postEvent(spell.eventType) }
+                } catch (e: Exception) {
+                    Toast.makeText(it.context, "Ошибка. ${e.message}", Toast.LENGTH_LONG).show();
+                }
+            }
         }
     }
 

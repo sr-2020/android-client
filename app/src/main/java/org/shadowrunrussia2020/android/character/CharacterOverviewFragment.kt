@@ -10,7 +10,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.*
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_character_overview.*
@@ -19,8 +18,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.shadowrunrussia2020.android.R
-import org.shadowrunrussia2020.android.character.models.Character
-import org.shadowrunrussia2020.android.magic.SpellsAdapter
 
 class CharacterOverviewFragment : Fragment() {
 
@@ -98,20 +95,6 @@ class CharacterOverviewFragment : Fragment() {
         }
 
         swipeRefreshLayout.setOnRefreshListener { refreshData() }
-
-
-        // See RecyclerView guide for details if needed
-        // https://developer.android.com/guide/topics/ui/layout/recyclerview
-        availableSpellsView.setHasFixedSize(true)
-        availableSpellsView.layoutManager = LinearLayoutManager(activity!!)
-
-        val adapter = SpellsAdapter()
-        mModel.getCharacter().observe(this,
-            Observer { data: Character? -> if (data != null) adapter.setData(data.spells) })
-
-        adapter.setViewModel(mModel)
-
-        availableSpellsView.adapter = adapter
     }
 
     private fun refreshData() {
