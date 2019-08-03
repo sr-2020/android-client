@@ -1,3 +1,5 @@
 package org.shadowrunrussia2020.android.character.models
 
-data class Event(val eventType: String)
+import org.shadowrunrussia2020.android.models.Empty
+
+data class Event(val eventType: String, val data: Empty)

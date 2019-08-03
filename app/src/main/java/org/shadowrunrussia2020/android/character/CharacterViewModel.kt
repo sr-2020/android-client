@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import org.shadowrunrussia2020.android.ShadowrunRussia2020Application
 import org.shadowrunrussia2020.android.character.models.Character
 import org.shadowrunrussia2020.android.character.models.Event
+import org.shadowrunrussia2020.android.models.Empty
 
 class CharacterViewModel(application: Application) : AndroidViewModel(application) {
     private val mRepository = CharacterRepository(
@@ -22,6 +23,6 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
     suspend fun postEvent(eventType: String) {
-        return mRepository.sendEvent(Event(eventType))
+        return mRepository.sendEvent(Event(eventType, Empty()))
     }
 }
