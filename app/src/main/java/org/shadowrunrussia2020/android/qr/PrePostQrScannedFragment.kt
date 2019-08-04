@@ -1,42 +1,67 @@
 package org.shadowrunrussia2020.android.qr
 
 
-import android.app.Dialog
-import android.content.DialogInterface
 import android.os.Bundle
-import android.transition.Visibility
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
-import kotlinx.android.synthetic.main.fragment_bill_scanned.*
-import kotlinx.android.synthetic.main.recycler_view_item.*
+import kotlinx.android.synthetic.main.pre_post_qr_scanned.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.shadowrunrussia2020.android.R
 import org.shadowrunrussia2020.android.billing.BillingViewModel
+import org.shadowrunrussia2020.android.billing.models.Transfer
 
 
-class BillScannedFragment : Fragment() {
-
-    private val args: BillScannedFragmentArgs by navArgs()
+class PrePostQrScannedFragment : Fragment() {
+    private val viewModel by lazy { ViewModelProviders.of(requireActivity()).get(QrViewModel::class.java) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_bill_scanned, container, false)
+        return inflater.inflate(R.layout.pre_post_qr_scanned, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         progressLoader.visibility = View.INVISIBLE
-        val t = args.transfer
+        if (viewModel.data.error) {
+            findNavController().navigate(PrePostQrScannedFragmentDirections.actionGlobalBackToMain())
+            return
+        }
+
+        val qrData = viewModel.data.qrData
+        if (qrData == null) {
+            findNavController().navigate(PrePostQrScannedFragmentDirections.actionStartScan())
+            return
+        }
+
+        when (qrData.type) {
+            Type.PAYMENT_REQUEST_WITH_PRICE -> {
+                try {
+                    val parts = qrData.payload.split(',', limit = 3)
+                    askForTransfer(Transfer(sin_to = parts[0].toInt(), amount = parts[1].toInt(), comment = parts[2]))
+                    return
+                } catch (e: Exception) {
+                    Toast.makeText(activity!!, "Неподдерживаемый QR-код", Toast.LENGTH_LONG).show()
+                }
+            }
+            else -> {
+                Toast.makeText(
+                    activity!!,
+                    "Содержимое QR-кода: ${qrData.type}, ${qrData.payload}",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
+    }
+
+    private fun askForTransfer(t: Transfer) {
         AlertDialog.Builder(activity!!)
             .setMessage(
                 "Запрос о переводе %d нью-йен на аккаунт %d. Комментарий: %s. Подтверждаете перевод?".format(
