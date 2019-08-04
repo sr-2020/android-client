@@ -52,7 +52,7 @@ class SpellDetailsFragment : Fragment() {
     private fun castOnSelf() {
         CoroutineScope(Dispatchers.Main).launch {
             try {
-                withContext(CoroutineScope(Dispatchers.IO).coroutineContext) { mModel?.postEvent(spell.eventType) }
+                withContext(CoroutineScope(Dispatchers.IO).coroutineContext) { mModel.postEvent(spell.eventType) }
             } catch (e: Exception) {
                 Toast.makeText(context, "Ошибка. ${e.message}", Toast.LENGTH_LONG).show();
             }
