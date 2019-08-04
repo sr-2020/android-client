@@ -14,7 +14,6 @@ import org.altbeacon.beacon.*
 import org.shadowrunrussia2020.android.character.CharacterRepository
 import org.shadowrunrussia2020.android.character.CharacterWebService
 import org.shadowrunrussia2020.android.character.models.Event
-import org.shadowrunrussia2020.android.models.Empty
 
 
 class BeaconsScanner : Service(), BeaconConsumer {
@@ -112,7 +111,7 @@ class BeaconsScanner : Service(), BeaconConsumer {
         for (b in beacons) {
             Log.d(TAG, "Beacon id = " + b.id1 + "-" + b.id2 + "-" + b.id3 + " RSSI = " + b.rssi)
             if (b.rssi > -50) {
-                CoroutineScope(Dispatchers.IO).launch { mRepository.sendEvent(Event("dummy-spell", Empty())) }
+                CoroutineScope(Dispatchers.IO).launch { mRepository.sendEvent(Event("dummy-spell")) }
             }
         }
     }

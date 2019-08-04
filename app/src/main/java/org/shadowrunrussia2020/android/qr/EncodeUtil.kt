@@ -9,7 +9,7 @@ import java.util.*
 
 enum class Type {
     UNKNOWN,
-    GRIMOIRE,
+    REWRITABLE,
     ALCHEMY_REAGENT,
     CRAFTED_ITEM,
     ENCHANTED_ITEM,

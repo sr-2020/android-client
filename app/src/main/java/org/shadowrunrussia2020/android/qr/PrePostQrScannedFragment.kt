@@ -18,6 +18,7 @@ import kotlinx.coroutines.withContext
 import org.shadowrunrussia2020.android.R
 import org.shadowrunrussia2020.android.billing.BillingViewModel
 import org.shadowrunrussia2020.android.billing.models.Transfer
+import org.shadowrunrussia2020.android.character.CharacterViewModel
 
 
 class PrePostQrScannedFragment : Fragment() {
@@ -46,6 +47,14 @@ class PrePostQrScannedFragment : Fragment() {
                 try {
                     val parts = qrData.payload.split(',', limit = 3)
                     askForTransfer(Transfer(sin_to = parts[0].toInt(), amount = parts[1].toInt(), comment = parts[2]))
+                    return
+                } catch (e: Exception) {
+                    Toast.makeText(activity!!, "Неподдерживаемый QR-код", Toast.LENGTH_LONG).show()
+                }
+            }
+            Type.REWRITABLE -> {
+                try {
+                    consume(qrData.payload.toInt())
                     return
                 } catch (e: Exception) {
                     Toast.makeText(activity!!, "Неподдерживаемый QR-код", Toast.LENGTH_LONG).show()
@@ -83,5 +92,15 @@ class PrePostQrScannedFragment : Fragment() {
                 findNavController().navigate(R.id.action_global_back_to_main)
             }
             .create().show()
+    }
+
+    private fun consume(qrId: Int) {
+        CoroutineScope(Dispatchers.Main).launch {
+            val m = ViewModelProviders.of(activity!!).get(CharacterViewModel::class.java)
+            progressLoader.visibility = View.VISIBLE
+            withContext(CoroutineScope(Dispatchers.IO).coroutineContext)
+            { m.postEvent("scanQr", hashMapOf("qrCode" to qrId)) }
+            findNavController().navigate(R.id.action_global_back_to_main)
+        }
     }
 }
