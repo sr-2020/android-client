@@ -7,8 +7,9 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Spell(
-    val eventType: String,
+    val humanReadableName: String,
     val description: String,
+    val eventType: String,
     val canTargetItem: Boolean,
     val canTargetLocation: Boolean,
     val canTargetSelf: Boolean,

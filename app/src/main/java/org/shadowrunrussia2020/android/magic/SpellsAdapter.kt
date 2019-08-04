@@ -25,7 +25,7 @@ class SpellsAdapter : RecyclerView.Adapter<SpellsAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val spell = mDataset[position]
-        holder.mAmountView.text = spell.eventType
+        holder.mAmountView.text = spell.humanReadableName
         holder.mCommentView.text = spell.description
         holder.itemView.setOnClickListener {
             it.findNavController().navigate(SpellbookFragmentDirections.actionSelectSpell(spell))

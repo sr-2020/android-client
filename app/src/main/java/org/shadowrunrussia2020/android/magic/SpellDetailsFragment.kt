@@ -38,7 +38,7 @@ class SpellDetailsFragment : Fragment() {
         val qrData = qrViewModel.data.qrData;
         if (qrData != null) castOnTarget(qrData)
 
-        textSpellName.text = spell.eventType
+        textSpellName.text = spell.humanReadableName
         textSpellDescription.text = spell.description
 
         castOnSelf.isEnabled = spell.canTargetSelf
