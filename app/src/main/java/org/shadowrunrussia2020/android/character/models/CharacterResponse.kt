@@ -1,8 +1,11 @@
 package org.shadowrunrussia2020.android.character.models
 
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class Spell(
     val eventType: String,
     val description: String,
@@ -10,7 +13,7 @@ data class Spell(
     val canTargetLocation: Boolean,
     val canTargetSelf: Boolean,
     val canTargetSingleTarget: Boolean
-)
+): Parcelable
 
 @Entity
 data class Character(@PrimaryKey val modelId: String, val spellsCasted: Int, val spells: List<Spell>)

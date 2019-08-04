@@ -31,7 +31,6 @@ class SpellbookFragment : Fragment() {
         val adapter = SpellsAdapter()
         mModel.getCharacter().observe(this,
             Observer { data: Character? -> if (data != null) adapter.setData(data.spells) })
-        adapter.setViewModel(mModel)
         availableSpellsView.adapter = adapter
     }
 }
