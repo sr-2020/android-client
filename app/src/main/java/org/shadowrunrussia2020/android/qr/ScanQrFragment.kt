@@ -34,6 +34,6 @@ class ScanQrFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         val qrData = maybeProcessActivityResult(activity!!, requestCode, resultCode, data)
         viewModel.data = QrDataOrError(qrData = qrData, error = (qrData == null));
-        findNavController().navigate(ScanQrFragmentDirections.actionScanComplete())
+        findNavController().popBackStack()
     }
 }

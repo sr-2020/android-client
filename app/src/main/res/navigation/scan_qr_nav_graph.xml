@@ -14,9 +14,7 @@
     </fragment>
 
     <fragment android:id="@+id/scanQrFragment" android:name="org.shadowrunrussia2020.android.qr.ScanQrFragment"
-              android:label="fragment_scan_qr" tools:layout="@layout/fragment_scan_qr">
-        <action android:id="@+id/action_scan_complete" app:destination="@id/prePostQrScannedFragment"/>
-    </fragment>
+              android:label="fragment_scan_qr" tools:layout="@layout/fragment_scan_qr"/>
 
     <action android:id="@+id/action_global_back_to_main" app:destination="@id/mainActivity"/>
 </navigation>
