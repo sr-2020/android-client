@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
@@ -49,7 +48,7 @@ class PrePostQrScannedFragment : Fragment() {
                     askForTransfer(Transfer(sin_to = parts[0].toInt(), amount = parts[1].toInt(), comment = parts[2]))
                     return
                 } catch (e: Exception) {
-                    Toast.makeText(activity!!, "Неподдерживаемый QR-код", Toast.LENGTH_LONG).show()
+                    showErrorMessage(requireContext(), "Ошибка. Неожиданный QR-код.")
                 }
             }
             Type.REWRITABLE -> {
@@ -57,15 +56,11 @@ class PrePostQrScannedFragment : Fragment() {
                     consume(qrData.payload.toInt())
                     return
                 } catch (e: Exception) {
-                    Toast.makeText(activity!!, "Неподдерживаемый QR-код", Toast.LENGTH_LONG).show()
+                    showErrorMessage(requireContext(), "Ошибка. Неожиданный QR-код.")
                 }
             }
             else -> {
-                Toast.makeText(
-                    activity!!,
-                    "Содержимое QR-кода: ${qrData.type}, ${qrData.payload}",
-                    Toast.LENGTH_LONG
-                ).show()
+                showInfoMessage(requireContext(), "Содержимое QR-кода: ${qrData.type}, ${qrData.payload}")
             }
         }
     }

@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
@@ -21,6 +20,7 @@ import org.shadowrunrussia2020.android.character.models.Spell
 import org.shadowrunrussia2020.android.qr.Data
 import org.shadowrunrussia2020.android.qr.QrViewModel
 import org.shadowrunrussia2020.android.qr.Type
+import org.shadowrunrussia2020.android.qr.showErrorMessage
 
 class SpellDetailsFragment : Fragment() {
     private val args: SpellDetailsFragmentArgs by navArgs()
@@ -54,7 +54,7 @@ class SpellDetailsFragment : Fragment() {
             try {
                 withContext(CoroutineScope(Dispatchers.IO).coroutineContext) { mModel.postEvent(spell.eventType) }
             } catch (e: Exception) {
-                Toast.makeText(context, "Ошибка. ${e.message}", Toast.LENGTH_LONG).show();
+                showErrorMessage(requireContext(), "Ошибка. ${e.message}")
             }
         }
     }
@@ -73,13 +73,12 @@ class SpellDetailsFragment : Fragment() {
                             hashMapOf("qrCode" to qrData.payload.toInt())
                         )
                     }
-                    Toast.makeText(context, "Заклинание применено на цель", Toast.LENGTH_LONG).show();
                 } catch (e: Exception) {
-                    Toast.makeText(context, "Ошибка. ${e.message}", Toast.LENGTH_LONG).show();
+                    showErrorMessage(requireContext(), "Ошибка. ${e.message}")
                 }
             }
         } else {
-            Toast.makeText(context, "Ошибка. Неожиданный QR-код.", Toast.LENGTH_LONG).show();
+            showErrorMessage(requireContext(), "Ошибка. Неожиданный QR-код.")
         }
     }
 }

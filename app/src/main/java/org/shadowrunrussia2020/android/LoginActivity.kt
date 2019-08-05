@@ -1,6 +1,5 @@
 package org.shadowrunrussia2020.android
 
-import org.shadowrunrussia2020.android.models.LoginRequest
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.annotation.SuppressLint
@@ -9,23 +8,21 @@ import android.os.Bundle
 import android.text.InputType
 import android.text.TextUtils
 import android.util.Log
-import android.view.Gravity
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.shadowrunrussia2020.android.models.LoginRequest
 import org.shadowrunrussia2020.android.models.LoginResponse
-import org.shadowrunrussia2020.android.models.SaveTokenRequest
+import org.shadowrunrussia2020.android.qr.showErrorMessage
 import java.io.IOException
 
 
@@ -77,9 +74,7 @@ class LoginActivity : AppCompatActivity() {
                 passwordInput.error = getString(R.string.error_incorrect_password)
                 passwordInput.requestFocus()
             } catch (e: Exception) {
-                val toast = Toast.makeText(this@LoginActivity, "Сервер недоступен", Toast.LENGTH_LONG)
-                toast.setGravity(Gravity.TOP, 0, 0)
-                toast.show()
+               showErrorMessage(this@LoginActivity, "Сервер недоступен")
             }
             showProgress(false)
         }

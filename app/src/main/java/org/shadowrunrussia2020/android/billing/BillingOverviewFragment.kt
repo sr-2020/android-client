@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -17,6 +16,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.shadowrunrussia2020.android.R
+import org.shadowrunrussia2020.android.qr.showErrorMessage
+import org.shadowrunrussia2020.android.qr.showSuccessMessage
 
 class BillingOverviewFragment : Fragment() {
 
@@ -64,7 +65,7 @@ class BillingOverviewFragment : Fragment() {
             CoroutineScope(Dispatchers.Main).launch {
                 try {
                     withContext(Dispatchers.IO) { mModel.transferMoney(Integer.parseInt(recipient), amount, comment) }
-                    Toast.makeText(activity, "Перевод осуществлен", Toast.LENGTH_LONG).show();
+                    showSuccessMessage(requireContext(), "Перевод осуществлен")
                     editTextRecipient.text!!.clear()
                     editTextAmount.text!!.clear()
                     editTextTransferComment.text!!.clear()
@@ -72,7 +73,7 @@ class BillingOverviewFragment : Fragment() {
                         activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                     inputManager.hideSoftInputFromWindow(view.windowToken, InputMethodManager.SHOW_FORCED)
                 } catch (e: Exception) {
-                    Toast.makeText(activity, "Ошибка. ${e.message}", Toast.LENGTH_LONG).show();
+                    showErrorMessage(requireContext(), "Ошибка. ${e.message}")
                 } finally {
                     buttonTransfer.isEnabled = true
                 }
