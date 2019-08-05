@@ -93,9 +93,13 @@ class PrePostQrScannedFragment : Fragment() {
         CoroutineScope(Dispatchers.Main).launch {
             val m = ViewModelProviders.of(activity!!).get(CharacterViewModel::class.java)
             progressLoader.visibility = View.VISIBLE
-            withContext(CoroutineScope(Dispatchers.IO).coroutineContext)
-            { m.postEvent("scanQr", hashMapOf("qrCode" to qrId)) }
-            findNavController().navigate(R.id.action_global_back_to_main)
+            try {
+                withContext(CoroutineScope(Dispatchers.IO).coroutineContext)
+                { m.postEvent("scanQr", hashMapOf("qrCode" to qrId)) }
+            } catch (e: Exception) {
+                showErrorMessage(requireContext(), "$e")
+            }
         }
+        findNavController().navigate(R.id.action_global_back_to_main)
     }
 }
