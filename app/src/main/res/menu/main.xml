@@ -2,13 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+            android:id="@+id/action_global_scan_qr"
+            android:icon="@drawable/scan_qr_code"
+            android:title="Сканирование QR-кода"
+            app:showAsAction="ifRoom"/>
+
+    <item
             android:id="@+id/action_logout"
             android:icon="@drawable/exit_to_app"
             android:title="@string/action_logout"
-            android:visible="true" app:showAsAction="ifRoom"/>
-
-    <item android:id="@+id/action_settings"
-          android:title="@string/action_settings"
-          android:orderInCategory="100"
-          app:showAsAction="never"/>
+            app:showAsAction="never"/>
 </menu>

@@ -25,10 +25,6 @@
     <item android:title="QR">
         <menu>
             <item
-                    android:id="@+id/action_global_scan_qr"
-                    android:icon="@drawable/scan_qr_code"
-                    android:title="Сканирование QR-кода"/>
-            <item
                     android:id="@+id/nav_gallery"
                     android:icon="@drawable/generate_id_qr_code"
                     android:title="Генерация QR-кода"/>

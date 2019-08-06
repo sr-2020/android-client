@@ -20,6 +20,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.iid.FirebaseInstanceId
@@ -149,13 +150,10 @@ class MainActivity : AppCompatActivity() {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         when (item.itemId) {
-            R.id.action_settings -> {
-                return true
-            }
             R.id.action_logout -> {
                 exit(); return true
             }
-            else -> return super.onOptionsItemSelected(item)
+            else -> return item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(item)
         }
     }
 
