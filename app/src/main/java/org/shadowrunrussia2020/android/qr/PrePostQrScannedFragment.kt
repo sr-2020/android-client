@@ -97,7 +97,7 @@ class PrePostQrScannedFragment : Fragment() {
                 withContext(CoroutineScope(Dispatchers.IO).coroutineContext)
                 { m.postEvent("scanQr", hashMapOf("qrCode" to qrId)) }
             } catch (e: Exception) {
-                showErrorMessage(requireContext(), "$e")
+                showErrorMessage(requireContext(), e.message?: "Неожиданная ошибка сервера")
             }
         }
         findNavController().navigate(R.id.action_global_back_to_main)
