@@ -41,8 +41,6 @@ import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var model: LiveData<Character>
-
     private val appBarConfiguration by lazy {
         AppBarConfiguration.Builder(
             hashSetOf(
@@ -71,12 +69,6 @@ class MainActivity : AppCompatActivity() {
                 .setAction("Action", null).show()
         }
 
-        // TODO: Cleanup CharacterViewModel usage. The only thing we actually need is modelId.
-        // But currently we use bunch of hacks to make sure that model.value won't be null at the time of call.
-        model = ViewModelProviders.of(this).get(CharacterViewModel::class.java).getCharacter()
-        model.observe(this,
-            Observer { data: Character? -> Log.e("MainActivity", data.toString())})
-
         drawer_layout.addDrawerListener(object : DrawerLayout.SimpleDrawerListener() {
             override fun onDrawerStateChanged(newState: Int) {
                 val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -90,15 +82,21 @@ class MainActivity : AppCompatActivity() {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration)
 
         nav_view.menu.findItem(R.id.nav_gallery).setOnMenuItemClickListener {
-            CoroutineScope(Dispatchers.Main).launch {
-                //withContext(CoroutineScope(Dispatchers.IO).coroutineContext) { model.refresh() }
-                val characterId = model.value!!.modelId
-                val action = MainNavGraphDirections.actionGlobalShowQr(
-                    Data(Type.DIGITAL_SIGNATURE, 0, (Date().time / 1000).toInt() + 3600, characterId)
-                )
-                navController.navigate(action)
-                drawer_layout.closeDrawer(GravityCompat.START)
+            val characterData = ViewModelProviders.of(this).get(CharacterViewModel::class.java).getCharacter()
+            val observer: Observer<Character> = object : Observer<Character> {
+                override fun onChanged(character: Character?) {
+                    if (character != null) {
+                        characterData.removeObserver(this)
+                        val action = MainNavGraphDirections.actionGlobalShowQr(
+                            Data(Type.DIGITAL_SIGNATURE, 0, (Date().time / 1000).toInt() + 3600, character.modelId)
+                        )
+                        navController.navigate(action)
+                        drawer_layout.closeDrawer(GravityCompat.START)
+                    }
+                }
+
             }
+            characterData.observeForever(observer)
             true
         }
     }
