@@ -64,21 +64,19 @@ class SpellDetailsFragment : Fragment() {
     }
 
     private fun castOnTarget(qrData: Data) {
-        if (qrData.type == Type.REWRITABLE) {
-            CoroutineScope(Dispatchers.Main).launch {
-                try {
-                    withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
-                        mModel.postEvent(
-                            spell.eventType,
-                            hashMapOf("qrCode" to qrData.payload.toInt())
-                        )
-                    }
-                } catch (e: Exception) {
-                    showErrorMessage(requireContext(), "Ошибка. ${e.message}")
+        val eventData = when {
+            qrData.type == Type.REWRITABLE -> hashMapOf("qrCode" to qrData.payload.toInt())
+            qrData.type == Type.DIGITAL_SIGNATURE -> hashMapOf("targetCharacterId" to qrData.payload.toInt())
+            else -> {showErrorMessage(requireContext(), "Ошибка. Неожиданный QR-код."); return}
+        }
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
+                    mModel.postEvent(spell.eventType, eventData)
                 }
+            } catch (e: Exception) {
+                showErrorMessage(requireContext(), "Ошибка. ${e.message}")
             }
-        } else {
-            showErrorMessage(requireContext(), "Ошибка. Неожиданный QR-код.")
         }
     }
 }

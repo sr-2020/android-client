@@ -9,6 +9,7 @@ import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.inputmethod.InputMethodManager
@@ -16,6 +17,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -29,12 +33,16 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.shadowrunrussia2020.android.character.CharacterViewModel
+import org.shadowrunrussia2020.android.character.models.Character
 import org.shadowrunrussia2020.android.qr.Data
 import org.shadowrunrussia2020.android.qr.Type
 import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var model: LiveData<Character>
+
     private val appBarConfiguration by lazy {
         AppBarConfiguration.Builder(
             hashSetOf(
@@ -63,6 +71,12 @@ class MainActivity : AppCompatActivity() {
                 .setAction("Action", null).show()
         }
 
+        // TODO: Cleanup CharacterViewModel usage. The only thing we actually need is modelId.
+        // But currently we use bunch of hacks to make sure that model.value won't be null at the time of call.
+        model = ViewModelProviders.of(this).get(CharacterViewModel::class.java).getCharacter()
+        model.observe(this,
+            Observer { data: Character? -> Log.e("MainActivity", data.toString())})
+
         drawer_layout.addDrawerListener(object : DrawerLayout.SimpleDrawerListener() {
             override fun onDrawerStateChanged(newState: Int) {
                 val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -76,11 +90,15 @@ class MainActivity : AppCompatActivity() {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration)
 
         nav_view.menu.findItem(R.id.nav_gallery).setOnMenuItemClickListener {
-            val action = MainNavGraphDirections.actionGlobalShowQr(
-                Data(Type.DIGITAL_SIGNATURE, 0, (Date().time / 1000).toInt() + 3600, "Petya")
-            )
-            navController.navigate(action)
-            drawer_layout.closeDrawer(GravityCompat.START)
+            CoroutineScope(Dispatchers.Main).launch {
+                //withContext(CoroutineScope(Dispatchers.IO).coroutineContext) { model.refresh() }
+                val characterId = model.value!!.modelId
+                val action = MainNavGraphDirections.actionGlobalShowQr(
+                    Data(Type.DIGITAL_SIGNATURE, 0, (Date().time / 1000).toInt() + 3600, characterId)
+                )
+                navController.navigate(action)
+                drawer_layout.closeDrawer(GravityCompat.START)
+            }
             true
         }
     }
@@ -127,7 +145,7 @@ class MainActivity : AppCompatActivity() {
                 .setMessage(getString(R.string.enable_location))
                 .setCancelable(false)
                 .setPositiveButton(getString(R.string.ok)) { _, _ ->
-                    startActivityForResult(Intent (Settings.ACTION_LOCATION_SOURCE_SETTINGS), 0)
+                    startActivityForResult(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS), 0)
                 }
                 .create()
                 .show()
