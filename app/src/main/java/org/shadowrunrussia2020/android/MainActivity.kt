@@ -9,7 +9,6 @@ import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.inputmethod.InputMethodManager
@@ -17,7 +16,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
@@ -33,6 +31,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.shadowrunrussia2020.android.billing.BillingViewModel
 import org.shadowrunrussia2020.android.character.CharacterViewModel
 import org.shadowrunrussia2020.android.character.models.Character
 import org.shadowrunrussia2020.android.qr.Data
@@ -58,6 +57,9 @@ class MainActivity : AppCompatActivity() {
     private val PERMISSION_REQUEST_COARSE_LOCATION = 1
     private val REQUEST_ENABLE_BT = 2
 
+    private val characterViewModel by lazy { ViewModelProviders.of(this).get(CharacterViewModel::class.java) }
+    private val billingViewModel by lazy { ViewModelProviders.of(this).get(BillingViewModel::class.java) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -82,7 +84,7 @@ class MainActivity : AppCompatActivity() {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration)
 
         nav_view.menu.findItem(R.id.nav_gallery).setOnMenuItemClickListener {
-            val characterData = ViewModelProviders.of(this).get(CharacterViewModel::class.java).getCharacter()
+            val characterData = characterViewModel.getCharacter()
             val observer: Observer<Character> = object : Observer<Character> {
                 override fun onChanged(character: Character?) {
                     if (character != null) {
@@ -105,6 +107,12 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         if (app.getSession().getToken() == null) {
             navController.navigate(R.id.action_global_logout)
+            return
+        }
+
+        CoroutineScope(Dispatchers.IO).launch {
+            characterViewModel.refresh()
+            billingViewModel.refresh()
         }
 
         checkEverythingEnabled()
