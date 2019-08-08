@@ -36,6 +36,7 @@ import org.shadowrunrussia2020.android.character.CharacterViewModel
 import org.shadowrunrussia2020.android.character.models.Character
 import org.shadowrunrussia2020.android.qr.Data
 import org.shadowrunrussia2020.android.qr.Type
+import org.shadowrunrussia2020.android.qr.showErrorMessage
 import java.util.*
 
 
@@ -110,9 +111,16 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-        CoroutineScope(Dispatchers.IO).launch {
-            characterViewModel.refresh()
-            billingViewModel.refresh()
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
+                    characterViewModel.refresh()
+                    billingViewModel.refresh()
+                }
+            } catch (e: Exception) {
+                showErrorMessage(this@MainActivity, "Ошибка. ${e.message}")
+                navController.navigate(R.id.action_global_logout)
+            }
         }
 
         checkEverythingEnabled()

@@ -46,7 +46,7 @@ class ShadowrunRussia2020Application : Application() {
     private fun createClient(): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(AuthorizationInterceptor(getSession()))
-            .addInterceptor(TestSuccessInterceptor())
+            .addInterceptor(TestSuccessInterceptor(getSession()))
             .build()
     }
 

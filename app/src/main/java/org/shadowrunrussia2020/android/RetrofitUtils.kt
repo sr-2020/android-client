@@ -17,7 +17,7 @@ class AuthorizationInterceptor(private val session: Session) : Interceptor {
     }
 }
 
-class TestSuccessInterceptor : Interceptor {
+class TestSuccessInterceptor(private val session: Session) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
         val request = chain.request()
         var response = chain.proceed(request)
@@ -25,7 +25,9 @@ class TestSuccessInterceptor : Interceptor {
         if (response.isSuccessful) {
             return response
         } else {
-            // TODO(aeremin) If response.code() is 401/403 (Unauthorized) - force a logout
+            if (response.code() == 401 || response.code() == 403 || response.code() == 404) {
+                session.invalidate()
+            }
             throw IOException(getExceptionMessage(response.body()!!.string()))
         }
     }
