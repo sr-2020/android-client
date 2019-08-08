@@ -107,8 +107,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         if (app.getSession().getToken() == null) {
-            navController.navigate(R.id.action_global_logout)
-            return
+            return exit()
         }
 
         CoroutineScope(Dispatchers.Main).launch {
@@ -119,7 +118,7 @@ class MainActivity : AppCompatActivity() {
                 }
             } catch (e: Exception) {
                 showErrorMessage(this@MainActivity, "Ошибка. ${e.message}")
-                navController.navigate(R.id.action_global_logout)
+                exit()
             }
         }
 
