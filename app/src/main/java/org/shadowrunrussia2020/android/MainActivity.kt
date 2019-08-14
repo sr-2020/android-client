@@ -103,6 +103,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        if (app.getSession().getToken() == null) {
+            goToLoginScreen()
+        }
+    }
+
     override fun onResume() {
         super.onResume()
         if (app.getSession().getToken() == null) {
@@ -195,7 +202,16 @@ class MainActivity : AppCompatActivity() {
                 (application as ShadowrunRussia2020Application).getDatabase().clearAllTables()
                 FirebaseInstanceId.getInstance().deleteInstanceId()
             }
-            navController.navigate(R.id.action_global_logout)
+            goToLoginScreen()
         }
+    }
+
+    private fun goToLoginScreen() {
+        // We don't use Android's Navigation Component here because it somehow messes with back stack no matter what
+        // we do (i.e. pressing "back" on login screen tries to go to the main screen).
+        // Current implementation is taken from
+        // https://medium.com/google-developer-experts/using-navigation-architecture-component-in-a-large-banking-app-ac84936a42c2
+        startActivity(Intent(this, LoginActivity::class.java))
+        finish()
     }
 }
