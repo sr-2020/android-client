@@ -132,6 +132,14 @@ class MainActivity : AppCompatActivity() {
         startService(Intent(this, BeaconsScanner::class.java))
     }
 
+    override fun onBackPressed() {
+        if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
+            drawer_layout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
     private fun checkEverythingEnabled() {
         checkBluetoothEnabled()
         checkLocationPermission()
