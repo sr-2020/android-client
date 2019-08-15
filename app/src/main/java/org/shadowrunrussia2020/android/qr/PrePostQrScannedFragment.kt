@@ -84,7 +84,7 @@ class PrePostQrScannedFragment : Fragment() {
                 }
             }
             .setNegativeButton(R.string.cancel) { _, _ ->
-                findNavController().navigate(R.id.action_global_back_to_main)
+                findNavController().navigate(PrePostQrScannedFragmentDirections.actionGlobalBackToMain())
             }
             .create().show()
     }
@@ -100,6 +100,6 @@ class PrePostQrScannedFragment : Fragment() {
                 showErrorMessage(requireContext(), e.message?: "Неожиданная ошибка сервера")
             }
         }
-        findNavController().navigate(R.id.action_global_back_to_main)
+        findNavController().navigate(PrePostQrScannedFragmentDirections.actionGlobalBackToMain())
     }
 }

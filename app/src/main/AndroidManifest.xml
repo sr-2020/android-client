@@ -35,7 +35,8 @@
                 android:exported="true">
         </service>
 
-        <activity android:name=".qr.ScanQrActivity">
+        <activity android:name=".qr.ScanQrActivity"
+                  android:noHistory="true">
         </activity>
         <activity android:name=".qr.ShowQrActivity">
         </activity>
