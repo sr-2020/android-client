@@ -12,8 +12,9 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.google.zxing.BarcodeFormat
 import com.journeyapps.barcodescanner.BarcodeEncoder
-import kotlinx.android.synthetic.main.activity_show_qr.*
-import kotlinx.android.synthetic.main.fragment_character_overview.*
+import kotlinx.android.synthetic.main.activity_show_qr.qrCodeImage
+import kotlinx.android.synthetic.main.fragment_character_overview.swipeRefreshLayout
+import kotlinx.android.synthetic.main.fragment_wounded.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -71,6 +72,18 @@ class WoundedFragment : Fragment() {
         )
 
         swipeRefreshLayout.setOnRefreshListener { refreshData() }
+
+        buttonDebugSelfRevive.setOnClickListener {
+            CoroutineScope(Dispatchers.Main).launch {
+                try {
+                    withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
+                        mModel.postEvent("revive")
+                    }
+                } catch (e: Exception) {
+                    showErrorMessage(requireActivity(), "${e.message}")
+                }
+            }
+        }
     }
 
     private fun refreshData() {
