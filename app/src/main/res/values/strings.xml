@@ -40,5 +40,7 @@
     <string name="insufficient_money">Недостаточно денег</string>
 
     <string name="enable_location">Для работы приложения необходимо включить доступ к местоположению</string>
-    <string name="wounded">Вы в тяжране!</string>
+    <string name="wounded">Тяжелое ранение</string>
+    <string name="body_qr">Код для взаимодействия с телом</string>
+
 </resources>
