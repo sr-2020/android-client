@@ -6,7 +6,10 @@
             android:icon="@drawable/scan_qr_code"
             android:title="Сканирование QR-кода"
             app:showAsAction="ifRoom"/>
-
+    <item
+            android:id="@+id/action_wound"
+            android:title="@string/action_wound"
+            app:showAsAction="never"/>
     <item
             android:id="@+id/action_logout"
             android:icon="@drawable/exit_to_app"

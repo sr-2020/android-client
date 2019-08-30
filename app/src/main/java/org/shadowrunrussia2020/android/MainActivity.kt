@@ -198,6 +198,16 @@ class MainActivity : AppCompatActivity() {
             R.id.action_logout -> {
                 exit(); return true
             }
+            R.id.action_wound -> {
+                CoroutineScope(Dispatchers.Main).launch {
+                    try {
+                        withContext(CoroutineScope(Dispatchers.IO).coroutineContext) { characterViewModel.postEvent("wound") }
+                    } catch (e: Exception) {
+                        showErrorMessage(this@MainActivity, "${e.message}")
+                    }
+                }
+                return true
+            }
             else -> return item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(item)
         }
     }
