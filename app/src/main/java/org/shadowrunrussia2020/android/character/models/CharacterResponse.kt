@@ -19,6 +19,7 @@ data class Spell(
 @Entity
 data class Character(
     @PrimaryKey val modelId: String,
+    val timestamp: Long,
     val healthState: String,
     val spellsCasted: Int,
     val spells: List<Spell>
