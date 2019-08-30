@@ -14,9 +14,14 @@ data class Spell(
     val canTargetLocation: Boolean,
     val canTargetSelf: Boolean,
     val canTargetSingleTarget: Boolean
-): Parcelable
+) : Parcelable
 
 @Entity
-data class Character(@PrimaryKey val modelId: String, val spellsCasted: Int, val spells: List<Spell>)
+data class Character(
+    @PrimaryKey val modelId: String,
+    val healthState: String,
+    val spellsCasted: Int,
+    val spells: List<Spell>
+)
 
 data class CharacterResponse(val workModel: Character)

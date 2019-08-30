@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -100,6 +101,23 @@ class MainActivity : AppCompatActivity() {
             }
             characterData.observeForever(observer)
             true
+        }
+
+        characterViewModel.getCharacter().observe(this,
+            Observer { data: Character? ->
+                if (data != null && data.healthState != "healthy") {
+                    navController.navigate(MainNavGraphDirections.actionGlobalWounded())
+                }
+            })
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.id == R.id.woundedFragment) {
+                toolbar.visibility = View.GONE
+                drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+            } else {
+                toolbar.visibility = View.VISIBLE
+                drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+            }
         }
     }
 
