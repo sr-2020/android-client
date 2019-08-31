@@ -58,8 +58,12 @@ class MainActivity : AppCompatActivity() {
     private val PERMISSION_REQUEST_COARSE_LOCATION = 1
     private val REQUEST_ENABLE_BT = 2
 
-    private val characterViewModel by lazy { ViewModelProviders.of(this).get(CharacterViewModel::class.java) }
-    private val billingViewModel by lazy { ViewModelProviders.of(this).get(BillingViewModel::class.java) }
+    private val characterViewModel by lazy {
+        ViewModelProviders.of(this).get(CharacterViewModel::class.java)
+    }
+    private val billingViewModel by lazy {
+        ViewModelProviders.of(this).get(BillingViewModel::class.java)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,7 +95,12 @@ class MainActivity : AppCompatActivity() {
                     if (character != null) {
                         characterData.removeObserver(this)
                         val action = MainNavGraphDirections.actionGlobalShowQr(
-                            Data(Type.DIGITAL_SIGNATURE, 0, (Date().time / 1000).toInt() + 3600, character.modelId)
+                            Data(
+                                Type.DIGITAL_SIGNATURE,
+                                0,
+                                (Date().time / 1000).toInt() + 3600,
+                                character.modelId
+                            )
                         )
                         navController.navigate(action)
                         drawer_layout.closeDrawer(GravityCompat.START)
@@ -220,14 +229,20 @@ class MainActivity : AppCompatActivity() {
             R.id.action_wound -> {
                 CoroutineScope(Dispatchers.Main).launch {
                     try {
-                        withContext(CoroutineScope(Dispatchers.IO).coroutineContext) { characterViewModel.postEvent("wound") }
+                        withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
+                            characterViewModel.postEvent(
+                                "wound"
+                            )
+                        }
                     } catch (e: Exception) {
                         showErrorMessage(this@MainActivity, "${e.message}")
                     }
                 }
                 return true
             }
-            else -> return item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(item)
+            else -> return item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(
+                item
+            )
         }
     }
 
