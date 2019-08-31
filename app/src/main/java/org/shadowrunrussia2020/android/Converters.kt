@@ -3,6 +3,7 @@ package org.shadowrunrussia2020.android
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import org.shadowrunrussia2020.android.character.models.HistoryRecord
 import org.shadowrunrussia2020.android.character.models.Spell
 import java.util.*
 
@@ -25,6 +26,16 @@ class Converters {
 
     @TypeConverter
     fun spellsToJson(value: List<Spell>): String {
+        return Gson().toJson(value)
+    }
+
+    @TypeConverter
+    fun jsonToHistory(value: String): List<HistoryRecord> {
+        return Gson().fromJson(value, object : TypeToken<List<HistoryRecord>>() {}.type)
+    }
+
+    @TypeConverter
+    fun historyToJson(value: List<HistoryRecord>): String {
         return Gson().toJson(value)
     }
 }

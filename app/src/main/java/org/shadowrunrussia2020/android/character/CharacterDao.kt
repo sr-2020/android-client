@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import org.shadowrunrussia2020.android.character.models.Character
+import org.shadowrunrussia2020.android.character.models.HistoryRecord
 
 @Dao
 interface CharacterDao {
@@ -14,4 +15,12 @@ interface CharacterDao {
 
     @Query("SELECT * FROM `Character`")
     fun character(): LiveData<Character>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertHistory(transactions: List<HistoryRecord>)
+
+    @Query("SELECT * FROM `HistoryRecord` ORDER BY timestamp DESC")
+    fun history(): LiveData<List<HistoryRecord>>
 }
+
+

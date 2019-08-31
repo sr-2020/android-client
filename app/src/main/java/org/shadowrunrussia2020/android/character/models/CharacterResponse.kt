@@ -16,13 +16,25 @@ data class Spell(
     val canTargetSingleTarget: Boolean
 ) : Parcelable
 
+
+@Parcelize
+@Entity
+data class HistoryRecord(
+    @PrimaryKey val id: String,
+    val timestamp: Long,
+    val title: String,
+    val shortText: String,
+    val longText: String
+) : Parcelable
+
 @Entity
 data class Character(
     @PrimaryKey val modelId: String,
     val timestamp: Long,
     val healthState: String,
     val spellsCasted: Int,
-    val spells: List<Spell>
+    val spells: List<Spell>,
+    var history: List<HistoryRecord>
 )
 
-data class CharacterResponse(val workModel: Character)
+data class CharacterResponse(var workModel: Character)

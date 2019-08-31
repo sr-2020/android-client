@@ -93,4 +93,10 @@
                 android:id="@+id/action_choose_medication"
                 app:destination="@id/scanQrFragmentMedication" />
     </fragment>
+    <fragment
+            android:id="@+id/historyFragment"
+            android:name="org.shadowrunrussia2020.android.HistoryFragment"
+            android:label="История"
+            tools:layout="@layout/fragment_history" />
+    <action android:id="@+id/action_global_history" app:destination="@id/historyFragment" />
 </navigation>

@@ -47,7 +47,8 @@ class MainActivity : AppCompatActivity() {
             hashSetOf(
                 R.id.billingFragment,
                 R.id.characterFragment,
-                R.id.spellbookFragment
+                R.id.spellbookFragment,
+                R.id.historyFragment
             )
         )
             .setDrawerLayout(drawer_layout)
