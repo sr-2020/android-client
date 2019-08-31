@@ -10,11 +10,15 @@
           android:id="@+id/direction"
           android:layout_width="50dp"
           android:layout_height="50dp"
-          tools:src="@tools:sample/avatars"
-          app:layout_constraintStart_toStartOf="parent"
           android:layout_marginStart="8dp"
+          android:layout_marginTop="8dp"
+          android:contentDescription="Photo"
+          android:visibility="visible"
+          app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toTopOf="parent"
-          android:layout_marginTop="8dp" android:contentDescription="Photo" app:srcCompat="@drawable/menu_send"/>
+          app:srcCompat="@drawable/menu_send"
+          tools:src="@tools:sample/avatars"
+          tools:visibility="visible" />
 
   <TextView
           android:id="@+id/amount"

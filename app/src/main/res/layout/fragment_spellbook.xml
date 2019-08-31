@@ -12,6 +12,6 @@
                 android:layout_height="match_parent"
                 android:id="@+id/availableSpellsView"
                 tools:itemCount="10"
-                tools:listitem="@layout/recycler_view_item"/>
+                tools:listitem="@layout/generic_recycler_view_item"/>
     
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

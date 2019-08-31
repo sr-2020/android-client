@@ -19,14 +19,14 @@ class SpellsAdapter : RecyclerView.Adapter<SpellsAdapter.ViewHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val v = LayoutInflater.from(parent.context).inflate(R.layout.recycler_view_item, parent, false)
+        val v = LayoutInflater.from(parent.context).inflate(R.layout.generic_recycler_view_item, parent, false)
         return ViewHolder(v)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val spell = mDataset[position]
-        holder.mAmountView.text = spell.humanReadableName
-        holder.mCommentView.text = spell.description
+        holder.mMainTextView.text = spell.humanReadableName
+        holder.mSubTextView.text = spell.description
         holder.itemView.setOnClickListener {
             it.findNavController().navigate(SpellbookFragmentDirections.actionSelectSpell(spell))
         }
@@ -37,7 +37,7 @@ class SpellsAdapter : RecyclerView.Adapter<SpellsAdapter.ViewHolder>() {
     }
 
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        var mAmountView: TextView = itemView.findViewById(R.id.amount)
-        var mCommentView: TextView = itemView.findViewById(R.id.comment)
+        var mMainTextView: TextView = itemView.findViewById(R.id.mainText)
+        var mSubTextView: TextView = itemView.findViewById(R.id.subText)
     }
 }
