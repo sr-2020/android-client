@@ -47,6 +47,11 @@
             android:label="fragment_scan_qr_spell"
             tools:layout="@layout/fragment_scan_qr" />
     <fragment
+            android:id="@+id/scanQrFragmentMedication"
+            android:name="org.shadowrunrussia2020.android.qr.ScanQrFragment"
+            android:label="fragment_scan_qr_medication"
+            tools:layout="@layout/fragment_scan_qr" />
+    <fragment
             android:id="@+id/scanQrFragment"
             android:name="org.shadowrunrussia2020.android.qr.ScanQrFragment"
             android:label="Сканирование QR-кода"
@@ -84,5 +89,8 @@
         <argument
                 android:name="targetId"
                 app:argType="integer" />
+        <action
+                android:id="@+id/action_choose_medication"
+                app:destination="@id/scanQrFragmentMedication" />
     </fragment>
 </navigation>

@@ -47,5 +47,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="finish_to_clinical_death">Добить</string>
+    <string name="inject_medication">Ввести препарат</string>
 
 </resources>

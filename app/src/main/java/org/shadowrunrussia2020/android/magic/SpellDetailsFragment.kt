@@ -17,16 +17,12 @@ import kotlinx.coroutines.withContext
 import org.shadowrunrussia2020.android.R
 import org.shadowrunrussia2020.android.character.CharacterViewModel
 import org.shadowrunrussia2020.android.character.models.Spell
-import org.shadowrunrussia2020.android.qr.Data
-import org.shadowrunrussia2020.android.qr.QrViewModel
-import org.shadowrunrussia2020.android.qr.Type
-import org.shadowrunrussia2020.android.qr.showErrorMessage
+import org.shadowrunrussia2020.android.qr.*
 
 class SpellDetailsFragment : Fragment() {
     private val args: SpellDetailsFragmentArgs by navArgs()
     private val spell: Spell by lazy { args.spell }
     private val mModel by lazy { ViewModelProviders.of(requireActivity()).get(CharacterViewModel::class.java) }
-    private val qrViewModel by lazy { ViewModelProviders.of(requireActivity()).get(QrViewModel::class.java) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_spell_details, container, false)
@@ -35,7 +31,10 @@ class SpellDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val qrViewModel = ViewModelProviders.of(requireActivity()).get(QrViewModel::class.java)
         val qrData = qrViewModel.data.qrData;
+        qrViewModel.data = QrDataOrError(null, false)
+
         if (qrData != null) castOnTarget(qrData)
 
         textSpellName.text = spell.humanReadableName
