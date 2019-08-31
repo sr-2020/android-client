@@ -41,6 +41,7 @@
 
     <string name="enable_location">Для работы приложения необходимо включить доступ к местоположению</string>
     <string name="wounded">Тяжелое ранение</string>
+    <string name="clinically_dead">Клиническая смерть</string>
     <string name="body_qr">Код для взаимодействия с телом</string>
     <string name="debug_self_revive">Отладка: самовоскрешение</string>
 

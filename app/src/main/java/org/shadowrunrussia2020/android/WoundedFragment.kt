@@ -82,6 +82,10 @@ class WoundedFragment : Fragment() {
             )
         }
 
+        textViewTitle.text =
+            if (character.healthState == "wounded") getString(R.string.wounded)
+            else getString(R.string.clinically_dead)
+
         // Needed to prevent code from being stale and thus invalid
         regenerateBodyQr(character)
     }
