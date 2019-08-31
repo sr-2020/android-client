@@ -45,30 +45,7 @@ class WoundedFragment : Fragment() {
 
         mModel.getCharacter().observe(
             this,
-            Observer { data: Character? ->
-                if (data != null) {
-                    if (data.healthState == "healthy") {
-                        findNavController().navigate(
-                            MainNavGraphDirections.actionGlobalCharacter(),
-                            NavOptions.Builder().setPopUpTo(R.id.main_nav_graph, true).build()
-                        )
-                    }
-
-                    val barcodeEncoder = BarcodeEncoder()
-                    val bitmap =
-                        barcodeEncoder.encodeBitmap(
-                            encode(
-                                Data(
-                                    Type.DIGITAL_SIGNATURE,
-                                    0,
-                                    (data.timestamp / 1000 + 3600).toInt(),
-                                    data.modelId
-                                )
-                            ), BarcodeFormat.QR_CODE, 400, 400
-                        )
-                    qrCodeImage.setImageBitmap(bitmap)
-                }
-            }
+            Observer { data: Character? -> if (data != null) onCharacterUpdate(data) }
         )
 
         swipeRefreshLayout.setOnRefreshListener { refreshData() }
@@ -95,5 +72,33 @@ class WoundedFragment : Fragment() {
             }
             swipeRefreshLayout.isRefreshing = false
         }
+    }
+
+    private fun onCharacterUpdate(character: Character) {
+        if (character.healthState == "healthy") {
+            findNavController().navigate(
+                MainNavGraphDirections.actionGlobalCharacter(),
+                NavOptions.Builder().setPopUpTo(R.id.main_nav_graph, true).build()
+            )
+        }
+
+        // Needed to prevent code from being stale and thus invalid
+        regenerateBodyQr(character)
+    }
+
+    private fun regenerateBodyQr(character: Character) {
+        val barcodeEncoder = BarcodeEncoder()
+        val bitmap =
+            barcodeEncoder.encodeBitmap(
+                encode(
+                    Data(
+                        Type.DIGITAL_SIGNATURE,
+                        0,
+                        (character.timestamp / 1000 + 3600).toInt(),
+                        character.modelId
+                    )
+                ), BarcodeFormat.QR_CODE, 400, 400
+            )
+        qrCodeImage.setImageBitmap(bitmap)
     }
 }
