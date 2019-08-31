@@ -19,6 +19,7 @@ enum class Type {
     SHOP_BILL,
     DIGITAL_SIGNATURE,
     PASSPORT,
+    WOUNDED_BODY,
 }
 
 @Parcelize data class Data(val type: Type, val kind: Byte, val validUntil: Int, val payload: String) : Parcelable

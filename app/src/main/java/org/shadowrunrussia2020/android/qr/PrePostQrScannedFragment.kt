@@ -63,6 +63,18 @@ class PrePostQrScannedFragment : Fragment() {
                     showErrorMessage(requireContext(), "Ошибка. Неожиданный QR-код.")
                 }
             }
+            Type.WOUNDED_BODY -> {
+                try {
+                    findNavController().navigate(
+                        PrePostQrScannedFragmentDirections.actionInteractWithBody(
+                            qrData.payload.toInt()
+                        )
+                    )
+                    return
+                } catch (e: Exception) {
+                    showErrorMessage(requireContext(), "Ошибка. Неожиданный QR-код.")
+                }
+            }
             else -> {
                 showInfoMessage(requireContext(), "Содержимое QR-кода: ${qrData.type}, ${qrData.payload}")
                 findNavController().popBackStack()

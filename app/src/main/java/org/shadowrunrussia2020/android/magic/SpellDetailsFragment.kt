@@ -66,7 +66,7 @@ class SpellDetailsFragment : Fragment() {
     private fun castOnTarget(qrData: Data) {
         val eventData = when {
             qrData.type == Type.REWRITABLE -> hashMapOf("qrCode" to qrData.payload.toInt())
-            qrData.type == Type.DIGITAL_SIGNATURE -> hashMapOf("targetCharacterId" to qrData.payload.toInt())
+            qrData.type == Type.DIGITAL_SIGNATURE || qrData.type == Type.WOUNDED_BODY -> hashMapOf("targetCharacterId" to qrData.payload.toInt())
             else -> {showErrorMessage(requireContext(), "Ошибка. Неожиданный QR-код."); return}
         }
         CoroutineScope(Dispatchers.Main).launch {

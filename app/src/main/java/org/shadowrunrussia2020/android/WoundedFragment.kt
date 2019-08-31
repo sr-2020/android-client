@@ -96,7 +96,7 @@ class WoundedFragment : Fragment() {
             barcodeEncoder.encodeBitmap(
                 encode(
                     Data(
-                        Type.DIGITAL_SIGNATURE,
+                        Type.WOUNDED_BODY,
                         0,
                         (character.timestamp / 1000 + 3600).toInt(),
                         character.modelId

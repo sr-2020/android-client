@@ -45,4 +45,7 @@
     <string name="body_qr">Код для взаимодействия с телом</string>
     <string name="debug_self_revive">Отладка: самовоскрешение</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>
