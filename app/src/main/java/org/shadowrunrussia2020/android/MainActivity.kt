@@ -105,7 +105,8 @@ class MainActivity : AppCompatActivity() {
 
         characterViewModel.getCharacter().observe(this,
             Observer { data: Character? ->
-                if (data != null && data.healthState != "healthy") {
+                if (data != null && data.healthState != "healthy" &&
+                    navController.currentDestination?.id != R.id.woundedFragment) {
                     navController.navigate(MainNavGraphDirections.actionGlobalWounded())
                 }
             })
