@@ -30,12 +30,16 @@ class PrePostQrScannedFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         progressLoader.visibility = View.INVISIBLE
-        if (viewModel.data.error) {
-            findNavController().navigate(PrePostQrScannedFragmentDirections.actionGlobalBackToMain())
+
+        val vmData = viewModel.data
+        viewModel.data = QrDataOrError(qrData = null, error = false)
+
+        if (vmData.error) {
+            findNavController().popBackStack()
             return
         }
 
-        val qrData = viewModel.data.qrData
+        val qrData = vmData.qrData
         if (qrData == null) {
             findNavController().navigate(PrePostQrScannedFragmentDirections.actionStartScan())
             return
@@ -61,6 +65,7 @@ class PrePostQrScannedFragment : Fragment() {
             }
             else -> {
                 showInfoMessage(requireContext(), "Содержимое QR-кода: ${qrData.type}, ${qrData.payload}")
+                findNavController().popBackStack()
             }
         }
     }
@@ -80,11 +85,11 @@ class PrePostQrScannedFragment : Fragment() {
                     progressLoader.visibility = View.VISIBLE
                     withContext(CoroutineScope(Dispatchers.IO).coroutineContext)
                     { m.transferMoney(receiver = t.sin_to, amount = t.amount, comment = t.comment) }
-                    findNavController().navigate(R.id.action_global_back_to_main)
+                    findNavController().popBackStack(R.id.prePostQrScannedFragment, true)
                 }
             }
             .setNegativeButton(R.string.cancel) { _, _ ->
-                findNavController().navigate(PrePostQrScannedFragmentDirections.actionGlobalBackToMain())
+                findNavController().popBackStack()
             }
             .create().show()
     }
@@ -99,7 +104,7 @@ class PrePostQrScannedFragment : Fragment() {
             } catch (e: Exception) {
                 showErrorMessage(requireContext(), e.message?: "Неожиданная ошибка сервера")
             }
+            findNavController().popBackStack()
         }
-        findNavController().navigate(PrePostQrScannedFragmentDirections.actionGlobalBackToMain())
     }
 }

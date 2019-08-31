@@ -24,7 +24,6 @@
     </fragment>
     <action android:id="@+id/action_global_billing" app:destination="@id/billingFragment"/>
     <action android:id="@+id/action_global_character" app:destination="@id/characterFragment"/>
-    <action android:id="@+id/action_global_scan_qr" app:destination="@id/scanQrActivity"/>
     <action android:id="@+id/action_global_show_qr" app:destination="@id/showQrActivity"/>
     <action android:id="@+id/action_global_spellbook" app:destination="@id/spellbookFragment"/>
     <activity android:id="@+id/showQrActivity" android:name="org.shadowrunrussia2020.android.qr.ShowQrActivity"
@@ -36,16 +35,22 @@
               android:label="Подробности операции" tools:layout="@layout/fragment_transaction_details">
         <argument android:name="transaction" app:argType="org.shadowrunrussia2020.android.billing.models.Transaction"/>
     </fragment>
-    <activity android:id="@+id/scanQrActivity" android:name="org.shadowrunrussia2020.android.qr.ScanQrActivity"
-              android:label="activity_scan_qr" tools:layout="@layout/activity_scan_qr"/>
     <fragment android:id="@+id/spellDetailsFragment"
               android:name="org.shadowrunrussia2020.android.magic.SpellDetailsFragment"
               tools:layout="@layout/fragment_spell_details" android:label="Описание заклинания">
-        <action android:id="@+id/action_choose_spell_target" app:destination="@id/scanQrFragment"/>
+        <action android:id="@+id/action_choose_spell_target" app:destination="@id/scanQrFragmentSpell"/>
         <argument android:name="spell" app:argType="org.shadowrunrussia2020.android.character.models.Spell"/>
     </fragment>
-    <fragment android:id="@+id/scanQrFragment" android:name="org.shadowrunrussia2020.android.qr.ScanQrFragment"
-              android:label="fragment_scan_qr" tools:layout="@layout/fragment_scan_qr"/>
+    <fragment
+            android:id="@+id/scanQrFragmentSpell"
+            android:name="org.shadowrunrussia2020.android.qr.ScanQrFragment"
+            android:label="fragment_scan_qr_spell"
+            tools:layout="@layout/fragment_scan_qr" />
+    <fragment
+            android:id="@+id/scanQrFragment"
+            android:name="org.shadowrunrussia2020.android.qr.ScanQrFragment"
+            android:label="Сканирование QR-кода"
+            tools:layout="@layout/fragment_scan_qr" />
     <fragment
             android:id="@+id/woundedFragment"
             android:name="org.shadowrunrussia2020.android.WoundedFragment"
@@ -56,4 +61,14 @@
             app:destination="@+id/woundedFragment"
             app:popUpTo="@+id/main_nav_graph"
             app:popUpToInclusive="true" />
+    <fragment
+            android:id="@+id/prePostQrScannedFragment"
+            android:name="org.shadowrunrussia2020.android.qr.PrePostQrScannedFragment"
+            android:label="Сканирование QR-кода"
+            tools:layout="@layout/pre_post_qr_scanned" >
+        <action
+                android:id="@+id/action_start_scan"
+                app:destination="@+id/scanQrFragment" />
+    </fragment>
+    <action android:id="@+id/action_global_scan_qr" app:destination="@id/prePostQrScannedFragment" />
 </navigation>

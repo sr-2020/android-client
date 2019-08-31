@@ -21,7 +21,6 @@ class ScanQrFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.data = QrDataOrError(qrData = null, error = false)
         val integrator = IntentIntegrator.forSupportFragment(this)
         integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
         integrator.setPrompt(
