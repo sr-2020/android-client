@@ -102,7 +102,11 @@
             android:id="@+id/historyFragment"
             android:name="org.shadowrunrussia2020.android.HistoryFragment"
             android:label="История"
-            tools:layout="@layout/fragment_history" />
+            tools:layout="@layout/fragment_history" >
+        <action
+                android:id="@+id/action_select_history_record"
+                app:destination="@id/historyRecordDetailsFragment" />
+    </fragment>
     <action android:id="@+id/action_global_history" app:destination="@id/historyFragment" />
     <fragment
             android:id="@+id/activeAbilitiesFragment"
@@ -140,5 +144,13 @@
         <argument
                 android:name="ability"
                 app:argType="org.shadowrunrussia2020.android.character.models.PassiveAbility" />
+    </fragment>
+    <fragment
+            android:id="@+id/historyRecordDetailsFragment"
+            android:name="org.shadowrunrussia2020.android.HistoryRecordDetailsFragment"
+            android:label="Подробности" >
+        <argument
+                android:name="record"
+                app:argType="org.shadowrunrussia2020.android.character.models.HistoryRecord" />
     </fragment>
 </navigation>

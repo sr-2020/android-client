@@ -4,8 +4,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import org.ocpsoft.prettytime.PrettyTime
+import org.shadowrunrussia2020.android.HistoryFragmentDirections
 import org.shadowrunrussia2020.android.R
 import org.shadowrunrussia2020.android.character.models.HistoryRecord
 import java.util.*
@@ -28,9 +30,9 @@ class CharacterHistoryAdapter : RecyclerView.Adapter<CharacterHistoryAdapter.Vie
         holder.mMainTextView.text = record.title
         holder.mSubTextView.text = record.shortText
         holder.mTimeTextView.text = PrettyTime(Locale("ru")).format(Date(record.timestamp))
-        //holder.itemView.setOnClickListener {
-        //    it.findNavController().navigate(SpellbookFragmentDirections.actionSelectSpell(spell))
-        //}
+        holder.itemView.setOnClickListener {
+            it.findNavController().navigate(HistoryFragmentDirections.actionSelectHistoryRecord(record))
+        }
     }
 
     override fun getItemCount(): Int {
