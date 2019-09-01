@@ -58,7 +58,7 @@
             tools:layout="@layout/fragment_scan_qr" />
     <fragment
             android:id="@+id/woundedFragment"
-            android:name="org.shadowrunrussia2020.android.WoundedFragment"
+            android:name="org.shadowrunrussia2020.android.character.WoundedFragment"
             android:label="fragment_wounded"
             tools:layout="@layout/fragment_wounded" />
     <action

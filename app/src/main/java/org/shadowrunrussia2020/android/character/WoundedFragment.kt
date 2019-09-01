@@ -1,4 +1,4 @@
-package org.shadowrunrussia2020.android
+package org.shadowrunrussia2020.android.character
 
 
 import android.os.Bundle
@@ -19,7 +19,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.shadowrunrussia2020.android.character.CharacterViewModel
+import org.shadowrunrussia2020.android.MainNavGraphDirections
+import org.shadowrunrussia2020.android.R
 import org.shadowrunrussia2020.android.character.models.Character
 import org.shadowrunrussia2020.android.qr.Data
 import org.shadowrunrussia2020.android.qr.Type
