@@ -16,6 +16,23 @@ data class Spell(
     val canTargetSingleTarget: Boolean
 ) : Parcelable
 
+@Parcelize
+data class ActiveAbility(
+    val humanReadableName: String,
+    val description: String,
+    val eventType: String,
+    val canTargetSelf: Boolean,
+    val canTargetSingleTarget: Boolean
+) : Parcelable
+
+@Parcelize
+data class PassiveAbility(
+    val humanReadableName: String,
+    val description: String,
+    val eventType: String,
+    val canTargetSelf: Boolean,
+    val canTargetSingleTarget: Boolean
+) : Parcelable
 
 @Parcelize
 @Entity
@@ -32,9 +49,14 @@ data class Character(
     @PrimaryKey val modelId: String,
     val timestamp: Long,
     val healthState: String,
+    val maxHp: Int,
+    val magic: Int,
+    val magicPowerBonus: Int,
     val spellsCasted: Int,
     val spells: List<Spell>,
-    var history: List<HistoryRecord>
+    val activeAbilities: List<ActiveAbility>,
+    val passiveAbilities: List<PassiveAbility>,
+    val history: List<HistoryRecord>
 )
 
-data class CharacterResponse(var workModel: Character)
+data class CharacterResponse(val workModel: Character)

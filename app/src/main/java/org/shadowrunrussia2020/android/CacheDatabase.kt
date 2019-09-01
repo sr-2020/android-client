@@ -12,7 +12,7 @@ import org.shadowrunrussia2020.android.character.models.HistoryRecord
 
 @Database(
     entities = [AccountOverview::class, Transaction::class, Character::class, HistoryRecord::class],
-    version = 8
+    version = 9
 )
 @TypeConverters(Converters::class)
 abstract class CacheDatabase : RoomDatabase() {

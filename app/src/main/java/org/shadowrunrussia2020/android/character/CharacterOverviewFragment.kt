@@ -35,15 +35,11 @@ class CharacterOverviewFragment : Fragment() {
         mModel = ViewModelProviders.of(activity!!).get(CharacterViewModel::class.java)
         mModel.getCharacter().observe(this, Observer {
             if (it != null) {
-                textViewSpellsCasted.text = it.spellsCasted.toString()
+                textViewMaxHp.text = it.maxHp.toString()
+                textViewMagic.text = it.magic.toString()
+                textViewMagicPowerBonus.text = it.magicPowerBonus.toString()
             }
         })
-
-        buttonCastDummySpell.setOnClickListener {
-            CoroutineScope(Dispatchers.IO).launch {
-                mModel.postEvent("dummy-spell")
-            }
-        }
 
         database.getReference("spellsCasted").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {

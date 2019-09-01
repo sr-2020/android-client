@@ -3,7 +3,9 @@ package org.shadowrunrussia2020.android
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import org.shadowrunrussia2020.android.character.models.ActiveAbility
 import org.shadowrunrussia2020.android.character.models.HistoryRecord
+import org.shadowrunrussia2020.android.character.models.PassiveAbility
 import org.shadowrunrussia2020.android.character.models.Spell
 import java.util.*
 
@@ -36,6 +38,26 @@ class Converters {
 
     @TypeConverter
     fun historyToJson(value: List<HistoryRecord>): String {
+        return Gson().toJson(value)
+    }
+
+    @TypeConverter
+    fun jsonToActiveAbilities(value: String): List<ActiveAbility> {
+        return Gson().fromJson(value, object : TypeToken<List<ActiveAbility>>() {}.type)
+    }
+
+    @TypeConverter
+    fun activeAbilitiesToJson(value: List<ActiveAbility>): String {
+        return Gson().toJson(value)
+    }
+
+    @TypeConverter
+    fun jsonToPassiveAbilities(value: String): List<PassiveAbility> {
+        return Gson().fromJson(value, object : TypeToken<List<PassiveAbility>>() {}.type)
+    }
+
+    @TypeConverter
+    fun passiveAbilitiesToJson(value: List<PassiveAbility>): String {
         return Gson().toJson(value)
     }
 }
