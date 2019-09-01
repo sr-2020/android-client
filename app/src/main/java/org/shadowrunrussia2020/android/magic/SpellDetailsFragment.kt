@@ -25,8 +25,12 @@ import org.shadowrunrussia2020.android.qr.*
 class SpellDetailsFragment : Fragment() {
     private val args: SpellDetailsFragmentArgs by navArgs()
     private val spell: Spell by lazy { args.spell }
-    private val mModel by lazy {
+    private val mCharacterModel by lazy {
         ViewModelProviders.of(requireActivity()).get(CharacterViewModel::class.java)
+    }
+
+    private val mModel by lazy {
+        ViewModelProviders.of(requireActivity()).get(SpellDetailsViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -44,10 +48,13 @@ class SpellDetailsFragment : Fragment() {
         val qrData = qrViewModel.data.qrData;
         qrViewModel.data = QrDataOrError(null, false)
 
-        if (qrData != null) castOnTarget(qrData)
+        if (qrData != null) {
+            seekBarSpellPower.progress = mModel.power
+            castOnTarget(qrData)
+        }
 
-        textSpellName.text = spell.humanReadableName
-        textSpellDescription.text = spell.description
+        textAbilityName.text = spell.humanReadableName
+        textAbilityDescription.text = spell.description
 
         updateEnableness(true)
 
@@ -57,13 +64,14 @@ class SpellDetailsFragment : Fragment() {
         seekBarSpellPower.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 updateEnableness(progress > 0)
+                mModel.power = progress
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
 
-        mModel.getCharacter()
+        mCharacterModel.getCharacter()
             .observe(this, Observer { data: Character? ->
                 if (data != null) {
                     seekBarSpellPower.max = data.magic + data.magicPowerBonus
@@ -81,13 +89,14 @@ class SpellDetailsFragment : Fragment() {
         CoroutineScope(Dispatchers.Main).launch {
             try {
                 withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
-                    mModel.postEvent(
+                    mCharacterModel.postEvent(
                         spell.eventType, hashMapOf("power" to seekBarSpellPower.progress)
                     )
                 }
             } catch (e: Exception) {
                 showErrorMessage(requireContext(), "Ошибка. ${e.message}")
             }
+            findNavController().popBackStack()
         }
     }
 
@@ -112,11 +121,12 @@ class SpellDetailsFragment : Fragment() {
         CoroutineScope(Dispatchers.Main).launch {
             try {
                 withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
-                    mModel.postEvent(spell.eventType, eventData)
+                    mCharacterModel.postEvent(spell.eventType, eventData)
                 }
             } catch (e: Exception) {
                 showErrorMessage(requireContext(), "Ошибка. ${e.message}")
             }
+            findNavController().popBackStack()
         }
     }
 }
