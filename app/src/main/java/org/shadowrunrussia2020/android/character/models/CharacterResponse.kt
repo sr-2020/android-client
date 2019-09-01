@@ -29,9 +29,7 @@ data class ActiveAbility(
 data class PassiveAbility(
     val humanReadableName: String,
     val description: String,
-    val eventType: String,
-    val canTargetSelf: Boolean,
-    val canTargetSingleTarget: Boolean
+    val eventType: String
 ) : Parcelable
 
 @Parcelize

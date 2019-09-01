@@ -47,6 +47,11 @@
             android:label="fragment_scan_qr_spell"
             tools:layout="@layout/fragment_scan_qr" />
     <fragment
+            android:id="@+id/scanQrFragmentAbility"
+            android:name="org.shadowrunrussia2020.android.qr.ScanQrFragment"
+            android:label="fragment_scan_qr_spell"
+            tools:layout="@layout/fragment_scan_qr" />
+    <fragment
             android:id="@+id/scanQrFragmentMedication"
             android:name="org.shadowrunrussia2020.android.qr.ScanQrFragment"
             android:label="fragment_scan_qr_medication"
@@ -99,4 +104,41 @@
             android:label="История"
             tools:layout="@layout/fragment_history" />
     <action android:id="@+id/action_global_history" app:destination="@id/historyFragment" />
+    <fragment
+            android:id="@+id/activeAbilitiesFragment"
+            android:name="org.shadowrunrussia2020.android.abilities.ActiveAbilitiesFragment"
+            android:label="Активируемые способности" >
+        <action
+                android:id="@+id/action_select_active_ability"
+                app:destination="@id/activeAbilityDetailsFragment" />
+    </fragment>
+    <fragment
+            android:id="@+id/passiveAbilitiesFragment"
+            android:name="org.shadowrunrussia2020.android.abilities.PassiveAbilitiesFragment"
+            android:label="Пассивные способности" >
+        <action
+                android:id="@+id/action_select_passive_ability"
+                app:destination="@id/passiveAbilityDetailsFragment" />
+    </fragment>
+    <action android:id="@+id/action_global_active_abilities" app:destination="@id/activeAbilitiesFragment" />
+    <action android:id="@+id/action_global_passive_abilities" app:destination="@id/passiveAbilitiesFragment" />
+    <fragment
+            android:id="@+id/activeAbilityDetailsFragment"
+            android:name="org.shadowrunrussia2020.android.abilities.ActiveAbilityDetailsFragment"
+            android:label="Описание способности">
+        <argument
+                android:name="ability"
+                app:argType="org.shadowrunrussia2020.android.character.models.ActiveAbility" />
+        <action
+                android:id="@+id/action_choose_ability_target"
+                app:destination="@id/scanQrFragmentAbility" />
+    </fragment>
+    <fragment
+            android:id="@+id/passiveAbilityDetailsFragment"
+            android:name="org.shadowrunrussia2020.android.abilities.PassiveAbilityDetailsFragment"
+            android:label="Описание способности">
+        <argument
+                android:name="ability"
+                app:argType="org.shadowrunrussia2020.android.character.models.PassiveAbility" />
+    </fragment>
 </navigation>

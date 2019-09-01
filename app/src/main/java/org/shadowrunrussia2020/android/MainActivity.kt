@@ -48,6 +48,9 @@ class MainActivity : AppCompatActivity() {
                 R.id.billingFragment,
                 R.id.characterFragment,
                 R.id.spellbookFragment,
+                R.id.activeAbilitiesFragment,
+                R.id.passiveAbilitiesFragment,
+                R.id.spellbookFragment,
                 R.id.historyFragment
             )
         )

@@ -16,6 +16,14 @@
                 android:id="@+id/action_global_spellbook"
                 android:icon="@drawable/menu_manage"
                 android:title="Книга заклинаний"/>
+        <item
+                android:id="@+id/action_global_active_abilities"
+                android:icon="@drawable/menu_manage"
+                android:title="Активируемые способности"/>
+        <item
+                android:id="@+id/action_global_passive_abilities"
+                android:icon="@drawable/menu_manage"
+                android:title="Пассивные способности"/>
 
         <item
                 android:id="@+id/action_global_history"
