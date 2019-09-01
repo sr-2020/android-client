@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SeekBar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -48,24 +49,32 @@ class SpellDetailsFragment : Fragment() {
         textSpellName.text = spell.humanReadableName
         textSpellDescription.text = spell.description
 
-        castOnSelf.isEnabled = spell.canTargetSelf
-        castOnTarget.isEnabled = spell.canTargetItem || spell.canTargetSingleTarget
-        castOnLocation.isEnabled = spell.canTargetLocation
+        updateEnableness(true)
 
         castOnSelf.setOnClickListener { castOnSelf() }
         castOnTarget.setOnClickListener { chooseTarget() }
+
+        seekBarSpellPower.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                updateEnableness(progress > 0)
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+        })
 
         mModel.getCharacter()
             .observe(this, Observer { data: Character? ->
                 if (data != null) {
                     seekBarSpellPower.max = data.magic + data.magicPowerBonus
-                    val canCast = seekBarSpellPower.max > 0
-                    castOnSelf.isEnabled = spell.canTargetSelf && canCast
-                    castOnTarget.isEnabled =
-                        (spell.canTargetItem || spell.canTargetSingleTarget) && canCast
-                    castOnLocation.isEnabled = (spell.canTargetLocation) && canCast
                 }
             })
+    }
+
+    private fun updateEnableness(enable: Boolean) {
+        castOnSelf.isEnabled = enable && spell.canTargetSelf
+        castOnTarget.isEnabled = enable && (spell.canTargetItem || spell.canTargetSingleTarget)
+        castOnLocation.isEnabled = enable && spell.canTargetLocation
     }
 
     private fun castOnSelf() {
