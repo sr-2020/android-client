@@ -21,11 +21,11 @@ class CharacterRepository(private val mService: CharacterWebService, private val
         return mDao.history()
     }
 
-    suspend fun sendEvent(event: Event) {
-        saveToDao(mService.postEvent(event).await())
+    suspend fun sendEvent(event: Event): CharacterResponse? {
+        return saveToDao(mService.postEvent(event).await())
     }
 
-    private fun saveToDao(response: Response<CharacterResponse>) {
+    private fun saveToDao(response: Response<CharacterResponse>): CharacterResponse? {
         val character = response.body()
         if (character == null) {
             Log.e("CharacterRepository", "Invalid server response - body is empty")
@@ -34,5 +34,6 @@ class CharacterRepository(private val mService: CharacterWebService, private val
             mDao.insertHistory(character.workModel.history)
             mDao.setCharacter(character.workModel)
         }
+        return character
     }
 }

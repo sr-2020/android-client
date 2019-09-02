@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_history.*
 import kotlinx.coroutines.CoroutineScope
@@ -36,7 +37,9 @@ class HistoryFragment : Fragment() {
 
         characterHistoryView.setHasFixedSize(true)
         characterHistoryView.layoutManager = LinearLayoutManager(activity!!)
-        val adapter = CharacterHistoryAdapter()
+        val adapter = CharacterHistoryAdapter {
+            findNavController().navigate(HistoryFragmentDirections.actionSelectHistoryRecord(it))
+        }
         mModel.getHistory().observe(this,
             Observer { data: List<HistoryRecord>? -> if (data != null) adapter.setData(data) })
         characterHistoryView.adapter = adapter

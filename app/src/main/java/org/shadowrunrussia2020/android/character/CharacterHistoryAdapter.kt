@@ -4,15 +4,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import org.ocpsoft.prettytime.PrettyTime
-import org.shadowrunrussia2020.android.HistoryFragmentDirections
 import org.shadowrunrussia2020.android.R
 import org.shadowrunrussia2020.android.character.models.HistoryRecord
 import java.util.*
 
-class CharacterHistoryAdapter : RecyclerView.Adapter<CharacterHistoryAdapter.ViewHolder>() {
+class CharacterHistoryAdapter(private val itemClickedCallback: (HistoryRecord) -> Unit) :
+    RecyclerView.Adapter<CharacterHistoryAdapter.ViewHolder>() {
     private var mDataset: List<HistoryRecord> = ArrayList()
 
     fun setData(newData: List<HistoryRecord>) {
@@ -21,7 +20,8 @@ class CharacterHistoryAdapter : RecyclerView.Adapter<CharacterHistoryAdapter.Vie
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val v = LayoutInflater.from(parent.context).inflate(R.layout.generic_recycler_view_item, parent, false)
+        val v = LayoutInflater.from(parent.context)
+            .inflate(R.layout.generic_recycler_view_item, parent, false)
         return ViewHolder(v)
     }
 
@@ -31,7 +31,7 @@ class CharacterHistoryAdapter : RecyclerView.Adapter<CharacterHistoryAdapter.Vie
         holder.mSubTextView.text = record.shortText
         holder.mTimeTextView.text = PrettyTime(Locale("ru")).format(Date(record.timestamp))
         holder.itemView.setOnClickListener {
-            it.findNavController().navigate(HistoryFragmentDirections.actionSelectHistoryRecord(record))
+            itemClickedCallback(record)
         }
     }
 

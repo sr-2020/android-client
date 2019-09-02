@@ -40,6 +40,9 @@
               tools:layout="@layout/fragment_spell_details" android:label="Описание заклинания">
         <action android:id="@+id/action_choose_spell_target" app:destination="@id/scanQrFragmentSpell"/>
         <argument android:name="spell" app:argType="org.shadowrunrussia2020.android.character.models.Spell"/>
+        <action
+                android:id="@+id/action_show_spell_result"
+                app:destination="@id/genericListFragment" />
     </fragment>
     <fragment
             android:id="@+id/scanQrFragmentSpell"
@@ -152,5 +155,13 @@
         <argument
                 android:name="record"
                 app:argType="org.shadowrunrussia2020.android.character.models.HistoryRecord" />
+    </fragment>
+    <fragment
+            android:id="@+id/genericListFragment"
+            android:name="org.shadowrunrussia2020.android.GenericListFragment"
+            android:label="Результат заклинания">
+        <argument
+                android:name="records"
+                app:argType="org.shadowrunrussia2020.android.character.models.HistoryRecord[]" />
     </fragment>
 </navigation>

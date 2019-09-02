@@ -42,6 +42,15 @@ data class HistoryRecord(
     val longText: String
 ) : Parcelable
 
+@Parcelize
+data class SpellTrace(
+    val timestamp: Long,
+    val spellName: String,
+    val casterAura: String,
+    val power: Int,
+    val magicFeedback: Int
+) : Parcelable
+
 @Entity
 data class Character(
     @PrimaryKey val modelId: String,
@@ -57,4 +66,4 @@ data class Character(
     val history: List<HistoryRecord>
 )
 
-data class CharacterResponse(val workModel: Character)
+data class CharacterResponse(val workModel: Character, val tableResponse: List<SpellTrace>?)

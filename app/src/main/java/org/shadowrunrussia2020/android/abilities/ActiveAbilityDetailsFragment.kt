@@ -71,7 +71,7 @@ class ActiveAbilityDetailsFragment : Fragment() {
     }
 
     private fun castOnTarget(qrData: Data) {
-        val eventData = when {
+        val eventData: HashMap<String, Any> = when {
             qrData.type == Type.DIGITAL_SIGNATURE || qrData.type == Type.WOUNDED_BODY -> hashMapOf(
                 "targetCharacterId" to qrData.payload.toInt()
             )

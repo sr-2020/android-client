@@ -19,6 +19,7 @@ import kotlinx.coroutines.withContext
 import org.shadowrunrussia2020.android.R
 import org.shadowrunrussia2020.android.character.CharacterViewModel
 import org.shadowrunrussia2020.android.character.models.Character
+import org.shadowrunrussia2020.android.character.models.HistoryRecord
 import org.shadowrunrussia2020.android.character.models.Spell
 import org.shadowrunrussia2020.android.qr.*
 
@@ -61,7 +62,7 @@ class SpellDetailsFragment : Fragment() {
         castOnSelf.setOnClickListener { castOnSelf() }
         castOnTarget.setOnClickListener { chooseTarget() }
 
-        seekBarSpellPower.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
+        seekBarSpellPower.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 updateEnableness(progress > 0)
                 mModel.power = progress
@@ -88,15 +89,33 @@ class SpellDetailsFragment : Fragment() {
     private fun castOnSelf() {
         CoroutineScope(Dispatchers.Main).launch {
             try {
-                withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
+                val response = withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
                     mCharacterModel.postEvent(
-                        spell.eventType, hashMapOf("power" to seekBarSpellPower.progress)
+                        spell.eventType, hashMapOf(
+                            "power" to seekBarSpellPower.progress,
+                            "locationId" to "1"
+                        )
                     )
+                }
+                if (response?.tableResponse != null) {
+                    findNavController().navigate(
+                        SpellDetailsFragmentDirections.actionShowSpellResult(
+                            response.tableResponse.map {
+                                HistoryRecord(
+                                    "", it.timestamp,
+                                    "${it.spellName}, мощь: ${it.power}, откат: ${it.magicFeedback}",
+                                    it.casterAura, ""
+                                )
+                            }.toTypedArray()
+                        )
+                    )
+                } else {
+                    findNavController().popBackStack()
                 }
             } catch (e: Exception) {
                 showErrorMessage(requireContext(), "Ошибка. ${e.message}")
+                findNavController().popBackStack()
             }
-            findNavController().popBackStack()
         }
     }
 
@@ -108,11 +127,13 @@ class SpellDetailsFragment : Fragment() {
         val eventData = when {
             qrData.type == Type.REWRITABLE -> hashMapOf(
                 "qrCode" to qrData.payload.toInt(),
-                "power" to seekBarSpellPower.progress
+                "power" to seekBarSpellPower.progress,
+                "locationId" to "1"
             )
             qrData.type == Type.DIGITAL_SIGNATURE || qrData.type == Type.WOUNDED_BODY -> hashMapOf(
                 "targetCharacterId" to qrData.payload.toInt(),
-                "power" to seekBarSpellPower.progress
+                "power" to seekBarSpellPower.progress,
+                "locationId" to "1"
             )
             else -> {
                 showErrorMessage(requireContext(), "Ошибка. Неожиданный QR-код."); return
