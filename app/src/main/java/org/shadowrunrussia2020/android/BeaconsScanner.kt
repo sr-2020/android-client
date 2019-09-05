@@ -7,25 +7,18 @@ import android.os.Build
 import android.os.IBinder
 import android.os.RemoteException
 import android.util.Log
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import com.google.firebase.Timestamp
+import com.google.firebase.firestore.FirebaseFirestore
 import org.altbeacon.beacon.*
-import org.shadowrunrussia2020.android.character.CharacterRepository
-import org.shadowrunrussia2020.android.character.CharacterWebService
-import org.shadowrunrussia2020.android.character.models.Event
+import java.util.*
 
 
 class BeaconsScanner : Service(), BeaconConsumer {
     private val TAG = "ComConBeacons"
     // private lateinit var mBackgroundPowerSaver: BackgroundPowerSaver
     private lateinit var mBeaconManager: BeaconManager
-    private val mRepository by lazy {
-        CharacterRepository(
-            (application as ShadowrunRussia2020Application).getRetrofit().create(CharacterWebService::class.java),
-            (application as ShadowrunRussia2020Application).getDatabase().characterDao()
-        )
-    }
+    private val mApplication by lazy { (application as ShadowrunRussia2020Application) }
+    private val firestore = FirebaseFirestore.getInstance()
 
     override fun onCreate() {
         Log.d(TAG, "BeaconsScanner::onCreate")
@@ -54,7 +47,8 @@ class BeaconsScanner : Service(), BeaconConsumer {
 
         val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val pendingIntent =
+            PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
 
         val builder = Notification.Builder(this)
             .setSmallIcon(R.drawable.abc_ic_star_black_48dp)
@@ -99,7 +93,14 @@ class BeaconsScanner : Service(), BeaconConsumer {
             sendBeacons(beacons)
         }
         try {
-            mBeaconManager.startRangingBeaconsInRegion(Region("myRangingUniqueId", null, null, null))
+            mBeaconManager.startRangingBeaconsInRegion(
+                Region(
+                    "myRangingUniqueId",
+                    null,
+                    null,
+                    null
+                )
+            )
             mBeaconManager.addRangeNotifier(rangeNotifier)
         } catch (e: RemoteException) {
             Log.e(TAG, "RemoteException: $e")
@@ -109,10 +110,17 @@ class BeaconsScanner : Service(), BeaconConsumer {
 
     private fun sendBeacons(beacons: Collection<Beacon>) {
         for (b in beacons) {
-            Log.d(TAG, "Beacon id = " + b.id1 + "-" + b.id2 + "-" + b.id3 + " RSSI = " + b.rssi)
-            if (b.rssi > -50) {
-                CoroutineScope(Dispatchers.IO).launch { mRepository.sendEvent(Event("dummy-spell")) }
-            }
+            val beaconsCollection = firestore
+                .collection("characters")
+                .document(mApplication.getSession().getCharacterId().toString())
+                .collection("beacons")
+            beaconsCollection.add(
+                hashMapOf(
+                    "timestamp" to Timestamp(Date()),
+                    "mac" to b.bluetoothAddress,
+                    "rssi" to b.rssi
+                )
+            )
         }
     }
 

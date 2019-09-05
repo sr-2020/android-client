@@ -151,7 +151,7 @@ class LoginActivity : AppCompatActivity() {
     private fun saveTokenAndGoToMainActivity(response: LoginResponse) {
         val token = response.api_key
         Log.i(TAG, "Successful login, token = $token")
-        mApplication.getSession().setToken(token)
+        mApplication.getSession().setTokenAndId(token, response.id)
         startActivity(Intent(this, MainActivity::class.java))
     }
 }
