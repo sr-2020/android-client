@@ -44,6 +44,8 @@ class BeaconsScanner : Service(), BeaconConsumer {
         // Run full cycle every minute
         mBeaconManager.foregroundBetweenScanPeriod = 57000 // 57 seconds
         mBeaconManager.foregroundScanPeriod = 3000 // 3 seconds
+        mBeaconManager.backgroundBetweenScanPeriod = 57000 // 57 seconds
+        mBeaconManager.backgroundScanPeriod = 3000 // 3 seconds
 
         val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
