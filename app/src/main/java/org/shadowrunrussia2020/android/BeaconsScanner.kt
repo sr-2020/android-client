@@ -109,6 +109,7 @@ class BeaconsScanner : Service(), BeaconConsumer {
     }
 
     private fun sendBeacons(beacons: Collection<Beacon>) {
+        val t = Timestamp(Date())
         for (b in beacons) {
             val beaconsCollection = firestore
                 .collection("characters")
@@ -116,12 +117,22 @@ class BeaconsScanner : Service(), BeaconConsumer {
                 .collection("beacons")
             beaconsCollection.add(
                 hashMapOf(
-                    "timestamp" to Timestamp(Date()),
+                    "timestamp" to t,
                     "mac" to b.bluetoothAddress,
                     "rssi" to b.rssi
                 )
             )
         }
+        val wakeUpsCollection = firestore
+            .collection("characters")
+            .document(mApplication.getSession().getCharacterId().toString())
+            .collection("wakeups")
+        wakeUpsCollection.add(
+            hashMapOf(
+                "timestamp" to t,
+                "total_beacons" to beacons.size
+            )
+        )
     }
 
     override fun onBind(intent: Intent): IBinder? {
