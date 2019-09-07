@@ -1,4 +1,4 @@
-package org.shadowrunrussia2020.android
+package org.shadowrunrussia2020.android.positioning
 
 import android.app.*
 import android.content.Context
@@ -10,6 +10,9 @@ import android.util.Log
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import org.altbeacon.beacon.*
+import org.shadowrunrussia2020.android.MainActivity
+import org.shadowrunrussia2020.android.R
+import org.shadowrunrussia2020.android.ShadowrunRussia2020Application
 import java.util.*
 
 

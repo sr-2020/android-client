@@ -30,7 +30,7 @@
         </service>
 
         <service
-                android:name=".BeaconsScanner"
+                android:name=".positioning.BeaconsScanner"
                 android:enabled="true"
                 android:exported="true">
         </service>
