@@ -34,7 +34,7 @@ fun fromResponse(r: UserResponse): Position {
     val location = l?.label ?: "None"
 
     val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-    format.timeZone = TimeZone.getTimeZone("Europe/Moscow")
+    format.timeZone = TimeZone.getTimeZone("UTC")
     val date = format.parse(r.updated_at)
 
     return Position(r.id, r.name ?: "Anonymous", location, date)

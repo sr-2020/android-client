@@ -29,6 +29,12 @@
                 android:id="@+id/action_global_history"
                 android:icon="@drawable/menu_manage"
                 android:title="История"/>
+
+        <item
+                android:id="@+id/action_global_positions"
+                android:icon="@drawable/menu_manage"
+                android:title="Местоположение"/>
+
     </group>
 
     <item android:title="QR">

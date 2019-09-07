@@ -164,4 +164,10 @@
                 android:name="records"
                 app:argType="org.shadowrunrussia2020.android.character.models.HistoryRecord[]" />
     </fragment>
+    <fragment
+            android:id="@+id/allPositionsFragment"
+            android:name="org.shadowrunrussia2020.android.positioning.AllPositionsFragment"
+            android:label="Местоположение"
+            tools:layout="@layout/fragment_all_positions" />
+    <action android:id="@+id/action_global_positions" app:destination="@id/allPositionsFragment" />
 </navigation>

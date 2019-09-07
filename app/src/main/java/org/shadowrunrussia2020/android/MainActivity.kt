@@ -54,7 +54,8 @@ class MainActivity : AppCompatActivity() {
                 R.id.activeAbilitiesFragment,
                 R.id.passiveAbilitiesFragment,
                 R.id.spellbookFragment,
-                R.id.historyFragment
+                R.id.historyFragment,
+                R.id.allPositionsFragment
             )
         )
             .setDrawerLayout(drawer_layout)
