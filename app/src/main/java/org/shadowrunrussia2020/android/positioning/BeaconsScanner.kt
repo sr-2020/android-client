@@ -9,10 +9,14 @@ import android.os.RemoteException
 import android.util.Log
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.altbeacon.beacon.*
 import org.shadowrunrussia2020.android.MainActivity
 import org.shadowrunrussia2020.android.R
 import org.shadowrunrussia2020.android.ShadowrunRussia2020Application
+import java.io.IOException
 import java.util.*
 
 
@@ -21,6 +25,10 @@ class BeaconsScanner : Service(), BeaconConsumer {
     // private lateinit var mBackgroundPowerSaver: BackgroundPowerSaver
     private lateinit var mBeaconManager: BeaconManager
     private val mApplication by lazy { (application as ShadowrunRussia2020Application) }
+    private val mService by lazy {
+        mApplication.getRetrofit().create(PositionsWebService::class.java)
+    }
+
     private val firestore = FirebaseFirestore.getInstance()
 
     override fun onCreate() {
@@ -114,6 +122,19 @@ class BeaconsScanner : Service(), BeaconConsumer {
     }
 
     private fun sendBeacons(beacons: Collection<Beacon>) {
+        var beaconsList = mutableListOf<BeaconData>()
+        for (b in beacons) {
+            beaconsList.add(BeaconData(b.id1.toString(), b.bluetoothAddress, b.rssi))
+        }
+        val req = PositionsRequest(beaconsList)
+        CoroutineScope(Dispatchers.IO).launch {
+            try  {
+                val response = mService.positions(req).await()
+            } catch (e: IOException) {
+                Log.e(TAG, "Error while sending beacons to the server: ${e}");
+            }
+        }
+
         val t = Timestamp(Date())
         for (b in beacons) {
             val beaconsCollection = firestore
