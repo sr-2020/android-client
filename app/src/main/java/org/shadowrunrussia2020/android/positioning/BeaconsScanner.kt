@@ -25,9 +25,10 @@ class BeaconsScanner : Service(), BeaconConsumer {
     // private lateinit var mBackgroundPowerSaver: BackgroundPowerSaver
     private lateinit var mBeaconManager: BeaconManager
     private val mApplication by lazy { (application as ShadowrunRussia2020Application) }
-    private val mService by lazy {
-        mApplication.getRetrofit().create(PositionsWebService::class.java)
-    }
+    private val mBillingRepository by lazy { PositionsRepository(
+        mApplication.getRetrofit().create(PositionsWebService::class.java),
+        mApplication.getDatabase().positionsDao()
+    )}
 
     private val firestore = FirebaseFirestore.getInstance()
 
@@ -129,9 +130,9 @@ class BeaconsScanner : Service(), BeaconConsumer {
         val req = PositionsRequest(beaconsList)
         CoroutineScope(Dispatchers.IO).launch {
             try  {
-                val response = mService.positions(req).await()
+                mBillingRepository.sendBeacons(req)
             } catch (e: IOException) {
-                Log.e(TAG, "Error while sending beacons to the server: ${e}");
+                Log.e(TAG, "Error while sending beacons to the server: $e");
             }
         }
 
