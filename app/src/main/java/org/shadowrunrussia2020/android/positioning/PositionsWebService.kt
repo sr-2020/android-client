@@ -10,7 +10,7 @@ interface PositionsWebService {
     @POST("position/positions")
     fun positions(@Body request: PositionsRequest): Deferred<Response<PositionsResponse>>
 
-    @GET("position/users")
+    @GET("users")
     fun users():  Deferred<Response<List<UserResponse>>>
 }
 

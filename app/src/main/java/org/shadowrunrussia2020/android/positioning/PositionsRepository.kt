@@ -27,8 +27,7 @@ class PositionsRepository(
         if (positions == null) {
             Log.e("PositionsRepository", "Invalid server response - body is empty")
         } else {
-            // We additionally store history separately for easier access and querying
-            mPositionsDao.insertPositions(positions.map { fromResponse(it) })
+            mPositionsDao.insertPositions(positions.filter { it.location != null }.map { fromResponse(it) })
         }
     }
 }

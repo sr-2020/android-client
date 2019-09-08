@@ -5,16 +5,14 @@ import androidx.room.PrimaryKey
 import java.text.SimpleDateFormat
 import java.util.*
 
-class UserResponse (
+class UserResponse(
     var id: Int,
-    var router_id: Int,
-    var beacon_id: Int,
     var name: String?,
     var updated_at: String,
-    var location: Location?,
-    var status: String
+    var location_updated_at: String,
+    var location: Location?
 ) {
-    class Location (
+    class Location(
         var id: Int,
         var label: String
     )
@@ -35,7 +33,8 @@ fun fromResponse(r: UserResponse): Position {
 
     val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
     format.timeZone = TimeZone.getTimeZone("UTC")
-    val date = format.parse(r.updated_at)
+    val date =
+        format.parse(if (r.location_updated_at.length > 0) r.location_updated_at else r.updated_at)
 
     return Position(r.id, r.name ?: "Anonymous", location, date)
 }
