@@ -69,6 +69,9 @@ dependencies {
 
     implementation 'org.altbeacon:android-beacon-library:2.15.4'
     implementation 'com.github.GrenderG:Toasty:1.4.2'
+    implementation 'com.google.android.gms:play-services-location:17.0.0'
+
+    implementation 'com.bugfender.sdk:android:1.+'
 }
 
 apply plugin: 'com.google.gms.google-services'
