@@ -54,7 +54,7 @@ class BeaconsScanner : Service(), BeaconConsumer {
         mBeaconManager.beaconParsers.add(parser)
 
         // Run full cycle every minute
-        mBeaconManager.foregroundBetweenScanPeriod = 57000 // 57 seconds
+        mBeaconManager.foregroundBetweenScanPeriod = 1000 // 1 second
         mBeaconManager.foregroundScanPeriod = 3000 // 3 seconds
         mBeaconManager.backgroundBetweenScanPeriod = 57000 // 57 seconds
         mBeaconManager.backgroundScanPeriod = 3000 // 3 seconds
