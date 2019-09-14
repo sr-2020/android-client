@@ -26,7 +26,7 @@ class TestSuccessInterceptor(private val session: Session) : Interceptor {
             return response
         } else {
             if (response.code() == 401 || response.code() == 403 || response.code() == 404) {
-                session.invalidate()
+                // session.invalidate()
             }
             throw IOException(getExceptionMessage(response.body()!!.string()))
         }
