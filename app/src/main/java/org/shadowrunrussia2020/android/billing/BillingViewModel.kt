@@ -5,10 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import org.shadowrunrussia2020.android.ShadowrunRussia2020Application
 import org.shadowrunrussia2020.android.billing.models.AccountOverview
-import org.shadowrunrussia2020.android.models.Empty
 import org.shadowrunrussia2020.android.billing.models.Transaction
-import org.shadowrunrussia2020.android.billing.models.Transfer
-import retrofit2.Response
 
 class BillingViewModel(application: Application) : AndroidViewModel(application) {
     private val mBillingRepository = BillingRepository(
@@ -25,16 +22,18 @@ class BillingViewModel(application: Application) : AndroidViewModel(application)
     }
 
     suspend fun refresh() {
-        mBillingRepository.refresh()
+        // TODO(aeremin) Switch to use new backend and re-enable
+        // mBillingRepository.refresh()
     }
 
-    suspend fun transferMoney(receiver: Int, amount: Int, comment: String?): Response<Empty> {
-        return mBillingRepository.transferMoney(
+    suspend fun transferMoney(receiver: Int, amount: Int, comment: String?) {
+        // TODO(aeremin) Switch to use new backend and re-enable
+        /* return mBillingRepository.transferMoney(
             Transfer(
                 receiver,
                 amount,
                 comment
             )
-        )
+        ) */
     }
 }
