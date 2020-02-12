@@ -91,8 +91,8 @@ class MainActivity : AppCompatActivity() {
         drawer_layout.addDrawerListener(object : DrawerLayout.SimpleDrawerListener() {
             override fun onDrawerStateChanged(newState: Int) {
                 val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                if (currentFocus != null) {
-                    imm.hideSoftInputFromWindow(currentFocus.windowToken, 0)
+                currentFocus?.let {
+                    imm.hideSoftInputFromWindow(it.windowToken, 0)
                 }
             }
         })
