@@ -135,7 +135,7 @@ class MainActivity : AppCompatActivity(), IMainActivityDi {
 
         positionsViewModel.positions().observe(this,
             Observer { data: List<Position>? ->
-                val myPosition = data?.find { it.id == app.getSession().getCharacterId() }
+                val myPosition = data?.find { it.id == app.session.getCharacterId() }
                 if (myPosition != null) {
                     toolbar.subtitle = myPosition.location
                 }
@@ -154,14 +154,14 @@ class MainActivity : AppCompatActivity(), IMainActivityDi {
 
     override fun onStart() {
         super.onStart()
-        if (app.getSession().getToken() == null) {
+        if (app.session.getToken() == null) {
             goToLoginScreen()
         }
     }
 
     override fun onResume() {
         super.onResume()
-        if (app.getSession().getToken() == null) {
+        if (app.session.getToken() == null) {
             return exit()
         }
 
@@ -268,11 +268,11 @@ class MainActivity : AppCompatActivity(), IMainActivityDi {
     }
 
     override fun exit() {
-        (application as ShadowrunRussia2020Application).getSession().invalidate()
+        (application as ShadowrunRussia2020Application).session.invalidate()
         this.stopService(Intent(this, BeaconsScanner::class.java))
         CoroutineScope(Dispatchers.Main).launch {
             withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
-                (application as ShadowrunRussia2020Application).getDatabase().clearAllTables()
+                (application as ShadowrunRussia2020Application).database.clearAllTables()
                 FirebaseInstanceId.getInstance().deleteInstanceId()
             }
             goToLoginScreen()

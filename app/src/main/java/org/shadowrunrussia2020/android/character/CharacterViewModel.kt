@@ -11,8 +11,8 @@ import org.shadowrunrussia2020.android.character.models.HistoryRecord
 
 class CharacterViewModel(application: Application) : AndroidViewModel(application) {
     private val mRepository = CharacterRepository(
-        (application as ShadowrunRussia2020Application).getRetrofit().create(CharacterWebService::class.java),
-        application.getDatabase().characterDao()
+        (application as ShadowrunRussia2020Application).retrofit.create(CharacterWebService::class.java),
+        application.database.characterDao()
     )
 
     fun getCharacter(): LiveData<Character> {

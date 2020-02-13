@@ -13,8 +13,8 @@ class FirebaseMessagingService : com.google.firebase.messaging.FirebaseMessaging
     private val TAG = "FirebaseMessaging"
 
     private val mRepository by lazy {CharacterRepository(
-        (application as ShadowrunRussia2020Application).getRetrofit().create(CharacterWebService::class.java),
-        (application as ShadowrunRussia2020Application).getDatabase().characterDao()
+        (application as ShadowrunRussia2020Application).retrofit.create(CharacterWebService::class.java),
+        (application as ShadowrunRussia2020Application).database.characterDao()
     )}
 
     override fun onMessageReceived(remoteMessage: RemoteMessage?) {

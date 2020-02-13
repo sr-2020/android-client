@@ -2,6 +2,7 @@ package org.shadowrunrussia2020.android
 
 import com.google.gson.Gson
 import okhttp3.Interceptor
+import org.shadowrunrussia2020.android.common.Session
 import java.io.IOException
 
 

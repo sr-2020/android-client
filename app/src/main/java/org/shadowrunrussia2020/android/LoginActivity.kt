@@ -54,7 +54,7 @@ class LoginActivity : AppCompatActivity() {
     private fun attemptLogin() {
         val loginFormData = loginFormData() ?: return
         val service = (application as ShadowrunRussia2020Application)
-            .getRetrofit().create(AuthenticationWebService::class.java)
+            .retrofit.create(AuthenticationWebService::class.java)
 
         CoroutineScope(Dispatchers.Main).launch {
             showProgress(true)
@@ -151,7 +151,7 @@ class LoginActivity : AppCompatActivity() {
     private fun saveTokenAndGoToMainActivity(response: LoginResponse) {
         val token = response.api_key
         Log.i(TAG, "Successful login, token = $token")
-        mApplication.getSession().setTokenAndId(token, response.id)
+        mApplication.session.setTokenAndId(token, response.id)
         startActivity(Intent(this, MainActivity::class.java))
     }
 }

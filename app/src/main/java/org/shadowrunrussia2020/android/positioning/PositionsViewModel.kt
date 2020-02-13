@@ -7,8 +7,8 @@ import org.shadowrunrussia2020.android.ShadowrunRussia2020Application
 
 class PositionsViewModel(application: Application) : AndroidViewModel(application) {
     private val mBillingRepository = PositionsRepository(
-        (application as ShadowrunRussia2020Application).getRetrofit().create(PositionsWebService::class.java),
-        application.getDatabase().positionsDao()
+        (application as ShadowrunRussia2020Application).retrofit.create(PositionsWebService::class.java),
+        application.database.positionsDao()
     )
 
     fun positions(): LiveData<List<Position>> {

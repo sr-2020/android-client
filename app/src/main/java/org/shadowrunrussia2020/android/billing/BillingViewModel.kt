@@ -9,8 +9,8 @@ import org.shadowrunrussia2020.android.billing.models.Transaction
 
 class BillingViewModel(application: Application) : AndroidViewModel(application) {
     private val mBillingRepository = BillingRepository(
-        (application as ShadowrunRussia2020Application).getRetrofit().create(BillingWebService::class.java),
-        application.getDatabase().billingDao()
+        (application as ShadowrunRussia2020Application).retrofit.create(BillingWebService::class.java),
+        application.database.billingDao()
     )
 
     fun getAccountOverview(): LiveData<AccountOverview> {

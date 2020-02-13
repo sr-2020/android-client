@@ -15,6 +15,9 @@ project(':rest').projectDir = new File(settingsDir, 'model/rest')
 include ':room'
 project(':room').projectDir = new File(settingsDir, 'model/room')
 
+// Features
+include ':main_screen'
+project(':main_screen').projectDir = new File(settingsDir, 'features/main_screen')
 
 include ':settings'
 project(':settings').projectDir = new File(settingsDir, 'features/settings')

@@ -26,8 +26,8 @@ class BeaconsScanner : Service(), BeaconConsumer {
     private lateinit var mBeaconManager: BeaconManager
     private val mApplication by lazy { (application as ShadowrunRussia2020Application) }
     private val mBillingRepository by lazy { PositionsRepository(
-        mApplication.getRetrofit().create(PositionsWebService::class.java),
-        mApplication.getDatabase().positionsDao()
+        mApplication.retrofit.create(PositionsWebService::class.java),
+        mApplication.database.positionsDao()
     )}
 
     private val firestore = FirebaseFirestore.getInstance()
@@ -140,7 +140,7 @@ class BeaconsScanner : Service(), BeaconConsumer {
         for (b in beacons) {
             val beaconsCollection = firestore
                 .collection("characters")
-                .document(mApplication.getSession().getCharacterId().toString())
+                .document(mApplication.session.getCharacterId().toString())
                 .collection("beacons")
             beaconsCollection.add(
                 hashMapOf(
@@ -152,7 +152,7 @@ class BeaconsScanner : Service(), BeaconConsumer {
         }
         val wakeUpsCollection = firestore
             .collection("characters")
-            .document(mApplication.getSession().getCharacterId().toString())
+            .document(mApplication.session.getCharacterId().toString())
             .collection("wakeups")
         wakeUpsCollection.add(
             hashMapOf(
