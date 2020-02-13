@@ -14,3 +14,8 @@
 .externalNativeBuild
 app/release/
 app/debug/
+**/build
+gradlew
+gradlew.bat
+**.iml
+**/.idea
