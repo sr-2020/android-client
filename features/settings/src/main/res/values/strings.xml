@@ -1,0 +1,8 @@
+<resources>
+    <string name="logout">Logout</string>
+    <string name="logout_summary">This option stops app serwices and logging out you from app</string>
+    <string name="name_def_summary">name is absent</string>
+    <string name="name_title">You realy full name</string>
+    <string name="selfie_summary">It\'s that the techs better identify you</string>
+    <string name="selfie_title">Make selfie</string>
+</resources>

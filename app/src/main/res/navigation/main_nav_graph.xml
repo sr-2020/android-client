@@ -170,4 +170,10 @@
             android:label="Местоположение"
             tools:layout="@layout/fragment_all_positions" />
     <action android:id="@+id/action_global_positions" app:destination="@id/allPositionsFragment" />
+
+    <fragment
+            android:id="@+id/settingsFragment"
+            android:name="org.shadowrunrussia2020.android.settings.SettingsFragment"
+            android:label="@string/action_settings" />
+    <action android:id="@+id/action_settings" app:destination="@id/settingsFragment"/>
 </navigation>

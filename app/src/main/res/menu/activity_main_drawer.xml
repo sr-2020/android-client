@@ -7,43 +7,49 @@
         <item
                 android:id="@+id/action_global_billing"
                 android:icon="@drawable/menu_manage"
-                android:title="Экономика"/>
+                android:title="@string/economy"/>
         <item
                 android:id="@+id/action_global_character"
                 android:icon="@drawable/menu_manage"
-                android:title="Персонаж"/>
+                android:title="@string/charter"/>
         <item
                 android:id="@+id/action_global_spellbook"
                 android:icon="@drawable/menu_manage"
-                android:title="Книга заклинаний"/>
+                android:title="@string/spellBoock"/>
         <item
                 android:id="@+id/action_global_active_abilities"
                 android:icon="@drawable/menu_manage"
-                android:title="Активируемые способности"/>
+                android:title="@string/spells"/>
         <item
                 android:id="@+id/action_global_passive_abilities"
                 android:icon="@drawable/menu_manage"
-                android:title="Пассивные способности"/>
+                android:title="@string/skills"/>
 
         <item
                 android:id="@+id/action_global_history"
                 android:icon="@drawable/menu_manage"
-                android:title="История"/>
+                android:title="@string/history"/>
 
         <item
                 android:id="@+id/action_global_positions"
                 android:icon="@drawable/menu_manage"
-                android:title="Местоположение"/>
+                android:title="@string/location"/>
 
     </group>
 
-    <item android:title="QR">
+    <item android:title="@string/qr">
         <menu>
             <item
                     android:id="@+id/nav_gallery"
                     android:icon="@drawable/generate_id_qr_code"
-                    android:title="Генерация QR-кода"/>
+                    android:title="@string/generateQR"/>
         </menu>
     </item>
+
+    <item
+            android:id="@+id/action_settings"
+            android:icon="@drawable/settings"
+            android:title="@string/action_settings"/>
+
 
 </menu>
