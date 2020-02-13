@@ -7,6 +7,7 @@ import androidx.room.Room
 import com.bugfender.sdk.Bugfender
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.OkHttpClient
+import org.shadowrunrussia2020.android.common.CacheDatabase
 import org.shadowrunrussia2020.android.common.Session
 import org.shadowrunrussia2020.android.di.IApplicationSingletonDi
 import retrofit2.Retrofit
@@ -15,7 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class ShadowrunRussia2020Application : Application(), IApplicationSingletonDi {
     override val session by lazy { Session(getGlobalSharedPreferences()) }
     override val retrofit: Retrofit by lazy { createRetrofit() }
-    val database by lazy { createDatabase() }
+    override val database by lazy { createDatabase() }
 
     override fun onCreate() {
         super.onCreate()

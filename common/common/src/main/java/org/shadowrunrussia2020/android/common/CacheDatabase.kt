@@ -1,4 +1,4 @@
-package org.shadowrunrussia2020.android
+package org.shadowrunrussia2020.android.common
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
