@@ -10,8 +10,14 @@
                 android:title="@string/economy"/>
         <item
                 android:id="@+id/action_global_character"
-                android:icon="@drawable/menu_manage"
+                android:icon="@android:drawable/ic_menu_myplaces"
                 android:title="@string/charter"/>
+
+        <item
+                android:id="@+id/action_global_character_legacy"
+                android:icon="@android:drawable/ic_menu_myplaces"
+                android:iconTint="@android:color/holo_red_dark"
+                android:title="Старый экран"/>
         <item
                 android:id="@+id/action_global_spellbook"
                 android:icon="@drawable/menu_manage"

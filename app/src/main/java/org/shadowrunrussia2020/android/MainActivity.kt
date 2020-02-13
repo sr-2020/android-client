@@ -50,7 +50,8 @@ class MainActivity : AppCompatActivity(), IMainActivityDi {
         AppBarConfiguration.Builder(
             hashSetOf(
                 R.id.billingFragment,
-                R.id.characterFragment,
+                R.id.characterFragmentLegacy,
+                R.id.charterMainFragment,
                 R.id.spellbookFragment,
                 R.id.activeAbilitiesFragment,
                 R.id.passiveAbilitiesFragment,
