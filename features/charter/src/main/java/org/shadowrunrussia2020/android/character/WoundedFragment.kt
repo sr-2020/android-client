@@ -26,6 +26,7 @@ import org.shadowrunrussia2020.android.qr.Data
 import org.shadowrunrussia2020.android.qr.Type
 import org.shadowrunrussia2020.android.qr.encode
 import org.shadowrunrussia2020.android.qr.showErrorMessage
+import org.shadowrunrussia2020.charter.R
 
 
 class WoundedFragment : Fragment() {

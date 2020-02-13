@@ -38,11 +38,11 @@ dependencies {
     implementation "androidx.legacy:legacy-support-v4:$legacySupportVersion" // FIXME: Legacy
     implementation "com.google.android.material:material:$materialVersion"
     implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
-    implementation "com.journeyapps:zxing-android-embedded:$zxingEmbeddedVersion"
+
     implementation "com.squareup.okio:okio:$okioVersion"
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
-    api "com.google.guava:guava:$guavaVersion"
+
 //    testImplementation "junit:junit:$junitVersion"
 //    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
 //    androidTestImplementation "androidx.test:runner:1.1.0"

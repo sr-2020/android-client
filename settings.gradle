@@ -6,11 +6,16 @@ project(':common').projectDir = new File(settingsDir, 'common/common')
 include ':core'
 project(':core').projectDir = new File(settingsDir, 'common/core')
 
-include ':core'
-project(':core').projectDir = new File(settingsDir, 'common/core')
+include ':qr'
+project(':qr').projectDir = new File(settingsDir, 'common/qr')
 
 include ':rest'
 project(':rest').projectDir = new File(settingsDir, 'model/rest')
 
 include ':room'
 project(':room').projectDir = new File(settingsDir, 'model/room')
+
+//Features
+
+include ':charter'
+project(':charter').projectDir = new File(settingsDir, 'features/charter')

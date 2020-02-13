@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.google.zxing.integration.android.IntentIntegrator
-import org.shadowrunrussia2020.android.R
+import org.shadowrunrussia2020.qr.R
 
 class ScanQrFragment : Fragment() {
     private val viewModel by lazy { ViewModelProviders.of(requireActivity()).get(QrViewModel::class.java) }

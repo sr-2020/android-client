@@ -8,21 +8,21 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.firestore.FirebaseFirestore
+//import com.google.firebase.database.FirebaseDatabase
+//import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_character_overview.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.shadowrunrussia2020.android.R
 import org.shadowrunrussia2020.android.qr.showErrorMessage
+import org.shadowrunrussia2020.charter.R
 
 class CharacterOverviewFragment : Fragment() {
 
     private lateinit var mModel: CharacterViewModel
-    private val database = FirebaseDatabase.getInstance()
-    private val firestore = FirebaseFirestore.getInstance()
+//    private val database = FirebaseDatabase.getInstance()
+//    private val firestore = FirebaseFirestore.getInstance()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_character_overview, container, false)
