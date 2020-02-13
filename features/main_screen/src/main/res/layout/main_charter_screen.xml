@@ -6,8 +6,8 @@
         android:layout_height="match_parent">
 
 
-    <TextView
-            android:id="@+id/textView4"
+    <Button
+            android:id="@+id/bodySpinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -16,19 +16,68 @@
             android:textSize="25sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView2"
-             />
+            android:spinnerMode="dropdown"
+            android:padding="16dp"
+              />
+
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="@+id/bodySpinner"
+            app:layout_constraintStart_toStartOf="@+id/bodySpinner"
+            app:layout_constraintTop_toBottomOf="@+id/bodySpinner">
+
+
+        <TextView
+                android:id="@+id/imageView1"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_margin="15dp"
+                android:gravity="center"
+                android:drawableLeft="@android:drawable/btn_star_big_on"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView"
+                android:text="Звездный статус"
+                 />
+
+
+        <TextView
+                android:id="@+id/imageView2"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_margin="15dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView"
+                android:drawableLeft="@android:drawable/btn_dialog"
+                android:gravity="center"
+                android:text="второй статус"/>
+
+        <TextView
+                android:id="@+id/imageView3"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_margin="15dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView"
+                android:drawableLeft="@android:drawable/btn_star_big_off"
+                android:gravity="center"
+                android:text="третий статус"/>
+
+    </LinearLayout>
 
     <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="TextView"
+            android:text="+1 dmg"
             android:textSize="25sp"
             app:layout_constraintEnd_toStartOf="@+id/textView"
             app:layout_constraintStart_toEndOf="@+id/textView2"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="+1 dmg" />
+             />
 
     <TextView
             android:id="@+id/textView"
@@ -36,11 +85,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:text="TextView"
+            android:text="25HP"
             android:textSize="25sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="25HP" />
+             />
 
     <TextView
             android:id="@+id/textView2"
@@ -48,11 +97,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:text="TextView"
+            android:text="15MP"
             android:textSize="25sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="15MP" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
     <ImageView
             android:id="@+id/imageView"
