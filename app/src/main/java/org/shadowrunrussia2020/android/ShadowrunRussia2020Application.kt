@@ -7,10 +7,11 @@ import androidx.room.Room
 import com.bugfender.sdk.Bugfender
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.OkHttpClient
+import org.shadowrunrussia2020.android.di.IApplicationSingletonDi
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class ShadowrunRussia2020Application : Application() {
+class ShadowrunRussia2020Application : Application(), IApplicationSingletonDi {
     private val mSession by lazy { Session(getGlobalSharedPreferences()) }
     private val mRetrofit by lazy { createRetrofit() }
     private val mDatabase by lazy { createDatabase() }

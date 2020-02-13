@@ -35,6 +35,7 @@ import kotlinx.coroutines.withContext
 import org.shadowrunrussia2020.android.billing.BillingViewModel
 import org.shadowrunrussia2020.android.character.CharacterViewModel
 import org.shadowrunrussia2020.android.character.models.Character
+import org.shadowrunrussia2020.android.di.IMainActivityDi
 import org.shadowrunrussia2020.android.positioning.BeaconsScanner
 import org.shadowrunrussia2020.android.positioning.Position
 import org.shadowrunrussia2020.android.positioning.PositionsViewModel
@@ -44,7 +45,7 @@ import org.shadowrunrussia2020.android.qr.showErrorMessage
 import java.util.*
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), IMainActivityDi {
     private val appBarConfiguration by lazy {
         AppBarConfiguration.Builder(
             hashSetOf(
@@ -266,7 +267,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun exit() {
+    override fun exit() {
         (application as ShadowrunRussia2020Application).getSession().invalidate()
         this.stopService(Intent(this, BeaconsScanner::class.java))
         CoroutineScope(Dispatchers.Main).launch {
