@@ -18,9 +18,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.shadowrunrussia2020.android.R
 import org.shadowrunrussia2020.android.character.CharacterViewModel
-import org.shadowrunrussia2020.android.character.models.Character
-import org.shadowrunrussia2020.android.character.models.HistoryRecord
-import org.shadowrunrussia2020.android.character.models.Spell
+import org.shadowrunrussia2020.android.common.models.Character
+import org.shadowrunrussia2020.android.common.models.HistoryRecord
+import org.shadowrunrussia2020.android.common.models.Spell
 import org.shadowrunrussia2020.android.qr.*
 
 class SpellDetailsFragment : Fragment() {
@@ -97,10 +97,11 @@ class SpellDetailsFragment : Fragment() {
                         )
                     )
                 }
-                if (response?.tableResponse != null) {
+
+             response?.tableResponse ?.let { tableResponse->
                     findNavController().navigate(
                         SpellDetailsFragmentDirections.actionShowSpellResult(
-                            response.tableResponse.map {
+                            tableResponse.map {
                                 HistoryRecord(
                                     "", it.timestamp,
                                     "${it.spellName}, мощь: ${it.power}, откат: ${it.magicFeedback}",
@@ -109,9 +110,8 @@ class SpellDetailsFragment : Fragment() {
                             }.toTypedArray()
                         )
                     )
-                } else {
-                    findNavController().popBackStack()
-                }
+                } ?: findNavController().popBackStack()
+
             } catch (e: Exception) {
                 showErrorMessage(requireContext(), "Ошибка. ${e.message}")
                 findNavController().popBackStack()

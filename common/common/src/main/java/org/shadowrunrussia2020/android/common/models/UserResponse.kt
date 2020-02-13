@@ -1,4 +1,4 @@
-package org.shadowrunrussia2020.android.positioning
+package org.shadowrunrussia2020.android.common.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -28,7 +28,7 @@ data class Position(
 )
 
 fun fromResponse(r: UserResponse): Position {
-    val l = r.location;
+    val l = r.location
     val location = l?.label ?: "None"
 
     val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")

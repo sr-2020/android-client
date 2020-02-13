@@ -16,7 +16,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.shadowrunrussia2020.android.R
 import org.shadowrunrussia2020.android.character.CharacterHistoryAdapter
-import org.shadowrunrussia2020.android.character.models.HistoryRecord
+import org.shadowrunrussia2020.android.common.models.HistoryRecord
+import org.shadowrunrussia2020.android.common.models.Position
 import org.shadowrunrussia2020.android.qr.showErrorMessage
 
 class AllPositionsFragment : Fragment() {

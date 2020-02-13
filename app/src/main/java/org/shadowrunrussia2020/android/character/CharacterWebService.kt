@@ -1,7 +1,7 @@
 package org.shadowrunrussia2020.android.character
 
 import kotlinx.coroutines.Deferred
-import org.shadowrunrussia2020.android.character.models.CharacterResponse
+import org.shadowrunrussia2020.android.common.models.CharacterResponse
 import org.shadowrunrussia2020.android.character.models.Event
 import retrofit2.Response
 import retrofit2.http.Body

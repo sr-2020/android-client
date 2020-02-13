@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import kotlinx.android.synthetic.main.fragment_history_record_details.*
-import org.shadowrunrussia2020.android.character.models.HistoryRecord
+import org.shadowrunrussia2020.android.common.models.HistoryRecord
 
 class HistoryRecordDetailsFragment : Fragment() {
     private val args: HistoryRecordDetailsFragmentArgs by navArgs()

@@ -3,14 +3,14 @@ package org.shadowrunrussia2020.android
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import org.shadowrunrussia2020.android.billing.BillingDao
-import org.shadowrunrussia2020.android.billing.models.AccountOverview
-import org.shadowrunrussia2020.android.billing.models.Transaction
-import org.shadowrunrussia2020.android.character.CharacterDao
-import org.shadowrunrussia2020.android.character.models.Character
-import org.shadowrunrussia2020.android.character.models.HistoryRecord
-import org.shadowrunrussia2020.android.positioning.Position
-import org.shadowrunrussia2020.android.positioning.PositionsDao
+import org.shadowrunrussia2020.android.common.declaration.BillingDao
+import org.shadowrunrussia2020.android.common.models.AccountOverview
+import org.shadowrunrussia2020.android.common.models.Transaction
+import org.shadowrunrussia2020.android.common.declaration.CharacterDao
+import org.shadowrunrussia2020.android.common.models.Character
+import org.shadowrunrussia2020.android.common.models.HistoryRecord
+import org.shadowrunrussia2020.android.common.models.Position
+import org.shadowrunrussia2020.android.common.declaration.PositionsDao
 
 @Database(
     entities = [

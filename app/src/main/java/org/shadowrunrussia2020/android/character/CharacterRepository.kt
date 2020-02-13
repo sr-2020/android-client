@@ -2,10 +2,11 @@ package org.shadowrunrussia2020.android.character
 
 import android.util.Log
 import androidx.lifecycle.LiveData
-import org.shadowrunrussia2020.android.character.models.Character
-import org.shadowrunrussia2020.android.character.models.CharacterResponse
+import org.shadowrunrussia2020.android.common.models.Character
+import org.shadowrunrussia2020.android.common.models.CharacterResponse
 import org.shadowrunrussia2020.android.character.models.Event
-import org.shadowrunrussia2020.android.character.models.HistoryRecord
+import org.shadowrunrussia2020.android.common.models.HistoryRecord
+import org.shadowrunrussia2020.android.common.declaration.CharacterDao
 import retrofit2.Response
 
 class CharacterRepository(private val mService: CharacterWebService, private val mDao: CharacterDao) {

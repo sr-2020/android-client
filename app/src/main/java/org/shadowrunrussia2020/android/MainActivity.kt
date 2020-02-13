@@ -34,10 +34,10 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.shadowrunrussia2020.android.billing.BillingViewModel
 import org.shadowrunrussia2020.android.character.CharacterViewModel
-import org.shadowrunrussia2020.android.character.models.Character
+import org.shadowrunrussia2020.android.common.models.Character
 import org.shadowrunrussia2020.android.di.IMainActivityDi
 import org.shadowrunrussia2020.android.positioning.BeaconsScanner
-import org.shadowrunrussia2020.android.positioning.Position
+import org.shadowrunrussia2020.android.common.models.Position
 import org.shadowrunrussia2020.android.positioning.PositionsViewModel
 import org.shadowrunrussia2020.android.qr.Data
 import org.shadowrunrussia2020.android.qr.Type

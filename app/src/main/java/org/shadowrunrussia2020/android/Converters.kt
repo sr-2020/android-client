@@ -3,10 +3,10 @@ package org.shadowrunrussia2020.android
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import org.shadowrunrussia2020.android.character.models.ActiveAbility
-import org.shadowrunrussia2020.android.character.models.HistoryRecord
-import org.shadowrunrussia2020.android.character.models.PassiveAbility
-import org.shadowrunrussia2020.android.character.models.Spell
+import org.shadowrunrussia2020.android.common.models.ActiveAbility
+import org.shadowrunrussia2020.android.common.models.HistoryRecord
+import org.shadowrunrussia2020.android.common.models.PassiveAbility
+import org.shadowrunrussia2020.android.common.models.Spell
 import java.util.*
 
 

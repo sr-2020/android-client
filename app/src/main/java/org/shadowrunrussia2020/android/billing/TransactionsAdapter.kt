@@ -9,7 +9,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import org.ocpsoft.prettytime.PrettyTime
 import org.shadowrunrussia2020.android.R
-import org.shadowrunrussia2020.android.billing.models.Transaction
+import org.shadowrunrussia2020.android.common.models.Transaction
 import java.util.*
 
 class TransactionsAdapter : RecyclerView.Adapter<TransactionsAdapter.ViewHolder>() {

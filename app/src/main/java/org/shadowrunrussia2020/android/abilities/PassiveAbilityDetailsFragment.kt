@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import kotlinx.android.synthetic.main.fragment_spell_details.*
 import org.shadowrunrussia2020.android.R
-import org.shadowrunrussia2020.android.character.models.PassiveAbility
+import org.shadowrunrussia2020.android.common.models.PassiveAbility
 
 class PassiveAbilityDetailsFragment : Fragment() {
     private val args: PassiveAbilityDetailsFragmentArgs by navArgs()

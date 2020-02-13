@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.shadowrunrussia2020.android.R
 import org.shadowrunrussia2020.android.character.CharacterViewModel
-import org.shadowrunrussia2020.android.character.models.ActiveAbility
+import org.shadowrunrussia2020.android.common.models.ActiveAbility
 import org.shadowrunrussia2020.android.qr.*
 
 class ActiveAbilityDetailsFragment : Fragment() {

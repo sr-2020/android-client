@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.shadowrunrussia2020.android.R
 import org.shadowrunrussia2020.android.billing.BillingViewModel
-import org.shadowrunrussia2020.android.billing.models.Transfer
+import org.shadowrunrussia2020.android.common.models.Transfer
 import org.shadowrunrussia2020.android.character.CharacterViewModel
 
 

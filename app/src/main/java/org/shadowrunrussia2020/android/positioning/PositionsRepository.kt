@@ -2,6 +2,10 @@ package org.shadowrunrussia2020.android.positioning
 
 import android.util.Log
 import androidx.lifecycle.LiveData
+import org.shadowrunrussia2020.android.common.declaration.PositionsDao
+import org.shadowrunrussia2020.android.common.models.Position
+import org.shadowrunrussia2020.android.common.models.UserResponse
+import org.shadowrunrussia2020.android.common.models.fromResponse
 import retrofit2.Response
 
 class PositionsRepository(

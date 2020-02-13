@@ -1,6 +1,7 @@
 package org.shadowrunrussia2020.android.positioning
 
 import kotlinx.coroutines.Deferred
+import org.shadowrunrussia2020.android.common.models.UserResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET

@@ -1,4 +1,4 @@
-package org.shadowrunrussia2020.android.character.models
+package org.shadowrunrussia2020.android.common.models
 
 import android.os.Parcelable
 import androidx.room.Entity

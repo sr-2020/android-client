@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import org.shadowrunrussia2020.android.R
-import org.shadowrunrussia2020.android.character.models.ActiveAbility
+import org.shadowrunrussia2020.android.common.models.ActiveAbility
 import java.util.*
 
 class ActiveAbilitiesAdapter : RecyclerView.Adapter<ActiveAbilitiesAdapter.ViewHolder>() {

@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import org.ocpsoft.prettytime.PrettyTime
 import org.shadowrunrussia2020.android.R
-import org.shadowrunrussia2020.android.character.models.HistoryRecord
+import org.shadowrunrussia2020.android.common.models.HistoryRecord
 import java.util.*
 
 class CharacterHistoryAdapter(private val itemClickedCallback: (HistoryRecord) -> Unit) :

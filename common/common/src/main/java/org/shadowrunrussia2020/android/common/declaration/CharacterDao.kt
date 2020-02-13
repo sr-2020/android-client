@@ -1,12 +1,12 @@
-package org.shadowrunrussia2020.android.character
+package org.shadowrunrussia2020.android.common.declaration
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import org.shadowrunrussia2020.android.character.models.Character
-import org.shadowrunrussia2020.android.character.models.HistoryRecord
+import org.shadowrunrussia2020.android.common.models.Character
+import org.shadowrunrussia2020.android.common.models.HistoryRecord
 
 @Dao
 interface CharacterDao {

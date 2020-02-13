@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.shadowrunrussia2020.android.MainNavGraphDirections
 import org.shadowrunrussia2020.android.R
-import org.shadowrunrussia2020.android.character.models.Character
+import org.shadowrunrussia2020.android.common.models.Character
 import org.shadowrunrussia2020.android.qr.Data
 import org.shadowrunrussia2020.android.qr.Type
 import org.shadowrunrussia2020.android.qr.encode

@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import org.shadowrunrussia2020.android.R
-import org.shadowrunrussia2020.android.character.models.Spell
+import org.shadowrunrussia2020.android.common.models.Spell
 import java.util.*
 
 class SpellsAdapter : RecyclerView.Adapter<SpellsAdapter.ViewHolder>() {

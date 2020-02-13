@@ -4,10 +4,10 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import org.shadowrunrussia2020.android.ShadowrunRussia2020Application
-import org.shadowrunrussia2020.android.character.models.Character
-import org.shadowrunrussia2020.android.character.models.CharacterResponse
+import org.shadowrunrussia2020.android.common.models.Character
+import org.shadowrunrussia2020.android.common.models.CharacterResponse
 import org.shadowrunrussia2020.android.character.models.Event
-import org.shadowrunrussia2020.android.character.models.HistoryRecord
+import org.shadowrunrussia2020.android.common.models.HistoryRecord
 
 class CharacterViewModel(application: Application) : AndroidViewModel(application) {
     private val mRepository = CharacterRepository(

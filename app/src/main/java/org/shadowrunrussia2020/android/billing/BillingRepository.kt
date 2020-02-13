@@ -2,10 +2,11 @@ package org.shadowrunrussia2020.android.billing
 
 import androidx.lifecycle.LiveData
 import android.util.Log
-import org.shadowrunrussia2020.android.billing.models.AccountOverview
+import org.shadowrunrussia2020.android.common.models.AccountOverview
 import org.shadowrunrussia2020.android.models.Empty
-import org.shadowrunrussia2020.android.billing.models.Transaction
-import org.shadowrunrussia2020.android.billing.models.Transfer
+import org.shadowrunrussia2020.android.common.models.Transaction
+import org.shadowrunrussia2020.android.common.models.Transfer
+import org.shadowrunrussia2020.android.common.declaration.BillingDao
 import retrofit2.Response
 
 class BillingRepository(private val mService: BillingWebService, private val mBillingDao: BillingDao) {
@@ -22,7 +23,8 @@ class BillingRepository(private val mService: BillingWebService, private val mBi
                 it
             })
             mBillingDao.setAccountOverview(
-                AccountOverview(id = 0, sin = accountInfo.sin, balance = accountInfo.balance))
+                AccountOverview(id = 0, sin = accountInfo.sin, balance = accountInfo.balance)
+            )
         }
     }
 

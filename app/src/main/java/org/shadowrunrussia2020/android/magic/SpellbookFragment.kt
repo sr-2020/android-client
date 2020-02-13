@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_spellbook.*
 import org.shadowrunrussia2020.android.R
 import org.shadowrunrussia2020.android.character.CharacterViewModel
-import org.shadowrunrussia2020.android.character.models.Character
+import org.shadowrunrussia2020.android.common.models.Character
 
 class SpellbookFragment : Fragment() {
     private val mModel by lazy { ViewModelProviders.of(activity!!).get(CharacterViewModel::class.java) }
