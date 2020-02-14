@@ -8,6 +8,7 @@ import okhttp3.OkHttpClient
 import org.shadowrunrussia2020.android.AuthorizationInterceptor
 import org.shadowrunrussia2020.android.TestSuccessInterceptor
 import org.shadowrunrussia2020.android.common.Session
+import org.shadowrunrussia2020.android.common.declaration.repository.ICharacterRepository
 import org.shadowrunrussia2020.android.common.di.ApplicationSingletonScope
 import org.shadowrunrussia2020.android.getBackendUrl
 import org.shadowrunrussia2020.android.main.MainScreenDependency
@@ -54,4 +55,6 @@ class ApplicationDependency(val applicationProvider: WeakReference<Application>)
             .build()
     }
 
+    override val characterRepository: ICharacterRepository
+        get() = ApplicationSingletonScope.ComponentProvider.components.charterRepository
 }

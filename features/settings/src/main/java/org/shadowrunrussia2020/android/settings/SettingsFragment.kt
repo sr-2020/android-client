@@ -1,15 +1,9 @@
 package org.shadowrunrussia2020.android.settings
 
-import android.content.Context
-import android.content.DialogInterface
 import android.os.Bundle
-import android.util.AttributeSet
 import androidx.appcompat.app.AlertDialog
-import androidx.fragment.app.DialogFragment
-import androidx.preference.DialogPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import java.lang.RuntimeException
 
 class SettingsFragment : PreferenceFragmentCompat() {
 

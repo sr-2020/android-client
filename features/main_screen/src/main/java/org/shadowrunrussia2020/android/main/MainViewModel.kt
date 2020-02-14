@@ -1,12 +1,26 @@
 package org.shadowrunrussia2020.android.main
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
 import org.shadowrunrussia2020.android.common.di.ApplicationSingletonScope
+import org.shadowrunrussia2020.android.common.models.Character
+import org.shadowrunrussia2020.android.common.models.CharacterResponse
+import org.shadowrunrussia2020.android.common.models.Event
+import org.shadowrunrussia2020.android.common.models.HistoryRecord
 
-internal class MainViewModel(application: Application) : AndroidViewModel(application) {
+internal class MainViewModel : ViewModel() {
 
-    val dependency: MainScreenDependency = ApplicationSingletonScope.DependencyProvider.provideDependency()
+    private val dependency: MainScreenDependency = ApplicationSingletonScope.DependencyProvider.provideDependency()
+
+    private val mRepository = dependency.characterRepository
+
+    val character get(): LiveData<Character> = mRepository.getCharacter()
+    val history: LiveData<List<HistoryRecord>> get() = mRepository.getHistory()
+
+    suspend fun refresh() = mRepository.refresh()
+
+    suspend fun postEvent(eventType: String, data: HashMap<String, Any> = hashMapOf()): CharacterResponse? =
+        mRepository.sendEvent(Event(eventType, data))
 
 
 }
