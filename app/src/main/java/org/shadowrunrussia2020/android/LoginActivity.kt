@@ -20,6 +20,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.shadowrunrussia2020.android.common.di.ApplicationSingletonScope
 import org.shadowrunrussia2020.android.models.LoginRequest
 import org.shadowrunrussia2020.android.models.LoginResponse
 import org.shadowrunrussia2020.android.qr.showErrorMessage
@@ -53,8 +54,8 @@ class LoginActivity : AppCompatActivity() {
 
     private fun attemptLogin() {
         val loginFormData = loginFormData() ?: return
-        val service = (application as ShadowrunRussia2020Application)
-            .retrofit.create(AuthenticationWebService::class.java)
+
+        val service = ApplicationSingletonScope.DependencyProvider.dependency.retrofit.create(AuthenticationWebService::class.java)
 
         CoroutineScope(Dispatchers.Main).launch {
             showProgress(true)
@@ -151,7 +152,7 @@ class LoginActivity : AppCompatActivity() {
     private fun saveTokenAndGoToMainActivity(response: LoginResponse) {
         val token = response.api_key
         Log.i(TAG, "Successful login, token = $token")
-        mApplication.session.setTokenAndId(token, response.id)
+        ApplicationSingletonScope.DependencyProvider.dependency.session.setTokenAndId(token, response.id)
         startActivity(Intent(this, MainActivity::class.java))
     }
 }

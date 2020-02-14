@@ -1,32 +1,33 @@
-package org.shadowrunrussia2020.android.character
+package org.shadowrunrussia2020.android.model.charter
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import org.shadowrunrussia2020.android.common.models.Character
 import org.shadowrunrussia2020.android.common.models.CharacterResponse
-import org.shadowrunrussia2020.android.character.models.Event
+import org.shadowrunrussia2020.android.common.models.Event
 import org.shadowrunrussia2020.android.common.models.HistoryRecord
-import org.shadowrunrussia2020.android.common.declaration.CharacterDao
+import org.shadowrunrussia2020.android.common.declaration.dao.CharacterDao
+import org.shadowrunrussia2020.android.common.declaration.ICharacterRepository
 import retrofit2.Response
 
-class CharacterRepository(private val mService: CharacterWebService, private val mDao: CharacterDao) {
-    suspend fun refresh() {
+class CharacterRepository(private val mService: CharacterWebService, private val mDao: CharacterDao) : ICharacterRepository {
+    override suspend fun refresh() {
         saveToDao(mService.get().await())
     }
 
-    fun getCharacter(): LiveData<Character> {
+    override fun getCharacter(): LiveData<Character> {
         return mDao.character()
     }
 
-    fun getHistory(): LiveData<List<HistoryRecord>> {
+    override fun getHistory(): LiveData<List<HistoryRecord>> {
         return mDao.history()
     }
 
-    suspend fun sendEvent(event: Event): CharacterResponse? {
+    override suspend fun sendEvent(event: Event): CharacterResponse? {
         return saveToDao(mService.postEvent(event).await())
     }
 
-    private fun saveToDao(response: Response<CharacterResponse>): CharacterResponse? {
+    override fun saveToDao(response: Response<CharacterResponse>): CharacterResponse? {
         val character = response.body()
         if (character == null) {
             Log.e("CharacterRepository", "Invalid server response - body is empty")

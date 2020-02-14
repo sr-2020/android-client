@@ -34,6 +34,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.shadowrunrussia2020.android.billing.BillingViewModel
 import org.shadowrunrussia2020.android.character.CharacterViewModel
+import org.shadowrunrussia2020.android.common.di.ApplicationSingletonScope
 import org.shadowrunrussia2020.android.common.models.Character
 import org.shadowrunrussia2020.android.di.IMainActivityDi
 import org.shadowrunrussia2020.android.positioning.BeaconsScanner
@@ -64,7 +65,6 @@ class MainActivity : AppCompatActivity(), IMainActivityDi {
             .build()
     }
     private val navController: NavController by lazy { findNavController(R.id.nav_host_fragment) }
-    private val app by lazy { application as ShadowrunRussia2020Application }
     private val PERMISSION_REQUEST_COARSE_LOCATION = 1
     private val REQUEST_ENABLE_BT = 2
 
@@ -136,7 +136,7 @@ class MainActivity : AppCompatActivity(), IMainActivityDi {
 
         positionsViewModel.positions().observe(this,
             Observer { data: List<Position>? ->
-                val myPosition = data?.find { it.id == app.session.getCharacterId() }
+                val myPosition = data?.find { it.id == ApplicationSingletonScope.DependencyProvider.dependency.session.getCharacterId() }
                 if (myPosition != null) {
                     toolbar.subtitle = myPosition.location
                 }
@@ -155,14 +155,14 @@ class MainActivity : AppCompatActivity(), IMainActivityDi {
 
     override fun onStart() {
         super.onStart()
-        if (app.session.getToken() == null) {
+        if (ApplicationSingletonScope.DependencyProvider.dependency.session.getToken() == null) {
             goToLoginScreen()
         }
     }
 
     override fun onResume() {
         super.onResume()
-        if (app.session.getToken() == null) {
+        if (ApplicationSingletonScope.DependencyProvider.dependency.session.getToken() == null) {
             return exit()
         }
 
@@ -184,9 +184,9 @@ class MainActivity : AppCompatActivity(), IMainActivityDi {
 
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
-            drawer_layout.closeDrawer(GravityCompat.START);
+            drawer_layout.closeDrawer(GravityCompat.START)
         } else {
-            super.onBackPressed();
+            super.onBackPressed()
         }
     }
 
@@ -269,11 +269,11 @@ class MainActivity : AppCompatActivity(), IMainActivityDi {
     }
 
     override fun exit() {
-        (application as ShadowrunRussia2020Application).session.invalidate()
+        ApplicationSingletonScope.DependencyProvider.dependency.session.invalidate()
         this.stopService(Intent(this, BeaconsScanner::class.java))
         CoroutineScope(Dispatchers.Main).launch {
             withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
-                (application as ShadowrunRussia2020Application).database.clearAllTables()
+                ApplicationSingletonScope.DependencyProvider.dependency.database.clearAllTables()
                 FirebaseInstanceId.getInstance().deleteInstanceId()
             }
             goToLoginScreen()

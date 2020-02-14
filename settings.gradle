@@ -9,11 +9,10 @@ project(':core').projectDir = new File(settingsDir, 'common/core')
 //include ':core'
 //project(':core').projectDir = new File(settingsDir, 'common/core')
 
-include ':rest'
-project(':rest').projectDir = new File(settingsDir, 'model/rest')
+include ':model'
+project(':model').projectDir = new File(settingsDir, 'model/model')
 
-include ':room'
-project(':room').projectDir = new File(settingsDir, 'model/room')
+
 
 // Features
 include ':main_screen'

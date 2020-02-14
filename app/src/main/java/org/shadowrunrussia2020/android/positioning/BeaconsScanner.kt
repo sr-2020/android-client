@@ -16,6 +16,7 @@ import org.altbeacon.beacon.*
 import org.shadowrunrussia2020.android.MainActivity
 import org.shadowrunrussia2020.android.R
 import org.shadowrunrussia2020.android.ShadowrunRussia2020Application
+import org.shadowrunrussia2020.android.common.di.ApplicationSingletonScope
 import java.io.IOException
 import java.util.*
 
@@ -24,10 +25,9 @@ class BeaconsScanner : Service(), BeaconConsumer {
     private val TAG = "ComConBeacons"
     // private lateinit var mBackgroundPowerSaver: BackgroundPowerSaver
     private lateinit var mBeaconManager: BeaconManager
-    private val mApplication by lazy { (application as ShadowrunRussia2020Application) }
     private val mBillingRepository by lazy { PositionsRepository(
-        mApplication.retrofit.create(PositionsWebService::class.java),
-        mApplication.database.positionsDao()
+        ApplicationSingletonScope.DependencyProvider.dependency.retrofit.create(PositionsWebService::class.java),
+        ApplicationSingletonScope.DependencyProvider.dependency.database.positionsDao()
     )}
 
     private val firestore = FirebaseFirestore.getInstance()
@@ -140,7 +140,7 @@ class BeaconsScanner : Service(), BeaconConsumer {
         for (b in beacons) {
             val beaconsCollection = firestore
                 .collection("characters")
-                .document(mApplication.session.getCharacterId().toString())
+                .document(ApplicationSingletonScope.DependencyProvider.dependency.session.getCharacterId().toString())
                 .collection("beacons")
             beaconsCollection.add(
                 hashMapOf(
@@ -152,7 +152,7 @@ class BeaconsScanner : Service(), BeaconConsumer {
         }
         val wakeUpsCollection = firestore
             .collection("characters")
-            .document(mApplication.session.getCharacterId().toString())
+            .document(ApplicationSingletonScope.DependencyProvider.dependency.session.getCharacterId().toString())
             .collection("wakeups")
         wakeUpsCollection.add(
             hashMapOf(

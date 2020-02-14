@@ -1,4 +1,4 @@
-package org.shadowrunrussia2020.android.common.declaration
+package org.shadowrunrussia2020.android.common.declaration.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao

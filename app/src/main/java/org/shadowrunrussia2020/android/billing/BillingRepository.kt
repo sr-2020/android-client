@@ -6,7 +6,7 @@ import org.shadowrunrussia2020.android.common.models.AccountOverview
 import org.shadowrunrussia2020.android.models.Empty
 import org.shadowrunrussia2020.android.common.models.Transaction
 import org.shadowrunrussia2020.android.common.models.Transfer
-import org.shadowrunrussia2020.android.common.declaration.BillingDao
+import org.shadowrunrussia2020.android.common.declaration.dao.BillingDao
 import retrofit2.Response
 
 class BillingRepository(private val mService: BillingWebService, private val mBillingDao: BillingDao) {

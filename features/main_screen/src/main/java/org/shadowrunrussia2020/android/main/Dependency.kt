@@ -5,4 +5,4 @@ import org.shadowrunrussia2020.android.common.di.MainActivityScope
 
 interface ActivityScopeMainDependency : MainActivityScope
 
-interface ApplicationSingletonScopeMainDependency: ApplicationSingletonScope
+interface MainScreenDependency: ApplicationSingletonScope.Dependency
