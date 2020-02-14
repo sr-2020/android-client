@@ -6,12 +6,8 @@ project(':common').projectDir = new File(settingsDir, 'common/common')
 include ':core'
 project(':core').projectDir = new File(settingsDir, 'common/core')
 
-//include ':core'
-//project(':core').projectDir = new File(settingsDir, 'common/core')
-
 include ':model'
 project(':model').projectDir = new File(settingsDir, 'model/model')
-
 
 
 // Features
