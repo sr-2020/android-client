@@ -1,8 +1,8 @@
 package org.shadowrunrussia2020.android
 
 import kotlinx.coroutines.Deferred
-import org.shadowrunrussia2020.android.models.Empty
-import org.shadowrunrussia2020.android.models.SaveTokenRequest
+import org.shadowrunrussia2020.android.common.models.Empty
+import org.shadowrunrussia2020.android.common.models.SaveTokenRequest
 import retrofit2.http.Body
 import retrofit2.http.PUT
 

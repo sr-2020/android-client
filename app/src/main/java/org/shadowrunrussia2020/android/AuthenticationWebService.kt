@@ -1,7 +1,7 @@
 package org.shadowrunrussia2020.android
 
-import org.shadowrunrussia2020.android.models.LoginRequest
-import org.shadowrunrussia2020.android.models.LoginResponse
+import org.shadowrunrussia2020.android.common.models.LoginRequest
+import org.shadowrunrussia2020.android.common.models.LoginResponse
 import kotlinx.coroutines.Deferred
 import retrofit2.http.Body
 import retrofit2.http.POST

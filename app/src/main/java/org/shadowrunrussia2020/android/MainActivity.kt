@@ -273,7 +273,7 @@ class MainActivity : AppCompatActivity(), IMainActivityDi {
         this.stopService(Intent(this, BeaconsScanner::class.java))
         CoroutineScope(Dispatchers.Main).launch {
             withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
-                ApplicationSingletonScope.DependencyProvider.dependency.database.clearAllTables()
+                ApplicationSingletonScope.ComponentProvider.components.clearAllTables()
                 FirebaseInstanceId.getInstance().deleteInstanceId()
             }
             goToLoginScreen()

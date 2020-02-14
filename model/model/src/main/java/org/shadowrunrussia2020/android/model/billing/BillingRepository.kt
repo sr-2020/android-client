@@ -1,16 +1,17 @@
-package org.shadowrunrussia2020.android.billing
+package org.shadowrunrussia2020.android.model.billing
 
 import androidx.lifecycle.LiveData
 import android.util.Log
+import org.shadowrunrussia2020.android.common.declaration.repository.IBillingRepository
 import org.shadowrunrussia2020.android.common.models.AccountOverview
-import org.shadowrunrussia2020.android.models.Empty
 import org.shadowrunrussia2020.android.common.models.Transaction
 import org.shadowrunrussia2020.android.common.models.Transfer
-import org.shadowrunrussia2020.android.common.declaration.dao.BillingDao
+import org.shadowrunrussia2020.android.common.models.Empty
 import retrofit2.Response
 
-class BillingRepository(private val mService: BillingWebService, private val mBillingDao: BillingDao) {
-    suspend fun refresh() {
+class BillingRepository(private val mService: BillingWebService, private val mBillingDao: BillingDao) :
+    IBillingRepository {
+    override suspend fun refresh() {
         val response = mService.accountInfo().await()
         val accountInfo = response.body()
         if (accountInfo == null) {
@@ -28,15 +29,15 @@ class BillingRepository(private val mService: BillingWebService, private val mBi
         }
     }
 
-    fun getHistory(): LiveData<List<Transaction>> {
+    override fun getHistory(): LiveData<List<Transaction>> {
         return mBillingDao.history()
     }
 
-    fun getAccountOverview(): LiveData<AccountOverview> {
+    override fun getAccountOverview(): LiveData<AccountOverview> {
         return mBillingDao.accountOverview()
     }
 
-    suspend fun transferMoney(transfer: Transfer): Response<Empty> {
+    override suspend fun transferMoney(transfer: Transfer): Response<Empty> {
         val result = mService.transfer(transfer).await()
         refresh()
         return result

@@ -8,7 +8,7 @@ import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterF
 import okhttp3.OkHttpClient
 import org.shadowrunrussia2020.android.AuthorizationInterceptor
 import org.shadowrunrussia2020.android.TestSuccessInterceptor
-import org.shadowrunrussia2020.android.common.CacheDatabase
+import org.shadowrunrussia2020.android.model.CacheDatabase
 import org.shadowrunrussia2020.android.common.Session
 import org.shadowrunrussia2020.android.common.di.ApplicationSingletonScope
 import org.shadowrunrussia2020.android.getBackendUrl
@@ -28,7 +28,6 @@ class ApplicationDependency(val applicationProvider: WeakReference<Application>)
 
     override val session by lazy { Session(getGlobalSharedPreferences()) }
     override val retrofit: Retrofit by lazy { createRetrofit() }
-    override val database by lazy { createDatabase() }
 
     val application: Application
         get() = applicationProvider.get()
@@ -58,10 +57,4 @@ class ApplicationDependency(val applicationProvider: WeakReference<Application>)
             .build()
     }
 
-    private fun createDatabase(): CacheDatabase {
-        return Room.databaseBuilder(
-            application,
-            CacheDatabase::class.java, "cache-db"
-        ).fallbackToDestructiveMigration().build()
-    }
 }

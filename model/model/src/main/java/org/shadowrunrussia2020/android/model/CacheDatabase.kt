@@ -1,16 +1,19 @@
-package org.shadowrunrussia2020.android.common
+package org.shadowrunrussia2020.android.model
 
+import android.content.Context
 import androidx.room.Database
+import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import org.shadowrunrussia2020.android.common.declaration.dao.BillingDao
+import org.shadowrunrussia2020.android.common.Converters
 import org.shadowrunrussia2020.android.common.models.AccountOverview
 import org.shadowrunrussia2020.android.common.models.Transaction
-import org.shadowrunrussia2020.android.common.declaration.dao.CharacterDao
 import org.shadowrunrussia2020.android.common.models.Character
 import org.shadowrunrussia2020.android.common.models.HistoryRecord
 import org.shadowrunrussia2020.android.common.models.Position
-import org.shadowrunrussia2020.android.common.declaration.dao.PositionsDao
+import org.shadowrunrussia2020.android.model.billing.BillingDao
+import org.shadowrunrussia2020.android.model.charter.CharacterDao
+import org.shadowrunrussia2020.android.model.positions.PositionsDao
 
 @Database(
     entities = [
@@ -27,4 +30,9 @@ abstract class CacheDatabase : RoomDatabase() {
     abstract fun billingDao(): BillingDao
     abstract fun characterDao(): CharacterDao
     abstract fun positionsDao(): PositionsDao
+
+    companion object {
+        fun build(context: Context) =
+            Room.databaseBuilder(context, CacheDatabase::class.java, "cache-db").fallbackToDestructiveMigration().build()
+    }
 }

@@ -15,8 +15,11 @@ import kotlinx.coroutines.launch
 import org.altbeacon.beacon.*
 import org.shadowrunrussia2020.android.MainActivity
 import org.shadowrunrussia2020.android.R
-import org.shadowrunrussia2020.android.ShadowrunRussia2020Application
 import org.shadowrunrussia2020.android.common.di.ApplicationSingletonScope
+import org.shadowrunrussia2020.android.common.models.PositionsRequest
+import org.shadowrunrussia2020.android.model.positions.PositionsRepository
+import org.shadowrunrussia2020.android.model.positions.PositionsWebService
+import org.shadowrunrussia2020.android.common.models.BeaconDataModel
 import java.io.IOException
 import java.util.*
 
@@ -25,10 +28,7 @@ class BeaconsScanner : Service(), BeaconConsumer {
     private val TAG = "ComConBeacons"
     // private lateinit var mBackgroundPowerSaver: BackgroundPowerSaver
     private lateinit var mBeaconManager: BeaconManager
-    private val mBillingRepository by lazy { PositionsRepository(
-        ApplicationSingletonScope.DependencyProvider.dependency.retrofit.create(PositionsWebService::class.java),
-        ApplicationSingletonScope.DependencyProvider.dependency.database.positionsDao()
-    )}
+    private val positionsRepository by lazy { ApplicationSingletonScope.ComponentProvider.components.positionsRepository }
 
     private val firestore = FirebaseFirestore.getInstance()
 
@@ -123,14 +123,14 @@ class BeaconsScanner : Service(), BeaconConsumer {
     }
 
     private fun sendBeacons(beacons: Collection<Beacon>) {
-        var beaconsList = mutableListOf<BeaconData>()
+        var beaconsList = mutableListOf<BeaconDataModel>()
         for (b in beacons) {
-            beaconsList.add(BeaconData(b.id1.toString(), b.bluetoothAddress, b.rssi))
+            beaconsList.add(BeaconDataModel(b.id1.toString(), b.bluetoothAddress, b.rssi))
         }
         val req = PositionsRequest(beaconsList)
         CoroutineScope(Dispatchers.IO).launch {
             try  {
-                mBillingRepository.sendBeacons(req)
+                positionsRepository.sendBeacons(req)
             } catch (e: IOException) {
                 Log.e(TAG, "Error while sending beacons to the server: $e");
             }

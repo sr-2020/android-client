@@ -1,13 +1,11 @@
 package org.shadowrunrussia2020.android.common.di
 
-import org.shadowrunrussia2020.android.common.CacheDatabase
+import android.content.Context
 import org.shadowrunrussia2020.android.common.Session
 import org.shadowrunrussia2020.android.common.di.components.IModelSingletonComponent
 import retrofit2.Retrofit
 import java.lang.RuntimeException
 import java.lang.ref.WeakReference
-
-
 
 interface ApplicationSingletonScope {
     val dependency: Dependency
@@ -17,7 +15,6 @@ interface ApplicationSingletonScope {
 
         val retrofit: Retrofit
         val session: Session
-        val database: CacheDatabase
     }
 
     interface Components : IModelSingletonComponent
@@ -27,16 +24,24 @@ interface ApplicationSingletonScope {
 
         lateinit var app: WeakReference<ApplicationSingletonScope>
 
-        fun <_DEPENDENCY : ApplicationSingletonScope.Dependency> provideDependency(): _DEPENDENCY = app.get()?.dependency as? _DEPENDENCY
-            ?: throw RuntimeException("$ class is not provided in Application dependensy scope")
+        fun <_DEPENDENCY : Dependency> provideDependency(): _DEPENDENCY = app.get()?.dependency as? _DEPENDENCY
+            ?: throw RuntimeException("$ class is not provided in Application scope")
 
-        val dependency get() = app.get()?.dependency
-            ?: throw RuntimeException("$ class is not provided in Application dependensy scope")
+        val dependency
+            get() = app.get()?.dependency
+                ?: throw RuntimeException("$ class is not provided in Application scope")
     }
 
-    object ComponentProvider{
-        val components: ApplicationSingletonScope.Components = DependencyProvider.app.get()?.component
+    object ComponentProvider {
+        val components: Components = DependencyProvider.app.get()?.component
             ?: throw RuntimeException("Components not init now")
+    }
+
+    object ContextProvider {
+        lateinit var providedAppContext: WeakReference<Context>
+        val requireContext: Context
+            get() = providedAppContext.get()
+                ?: throw RuntimeException("Application context is not available now")
     }
 
 }

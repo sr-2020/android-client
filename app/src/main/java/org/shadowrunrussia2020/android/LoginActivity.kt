@@ -21,8 +21,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.shadowrunrussia2020.android.common.di.ApplicationSingletonScope
-import org.shadowrunrussia2020.android.models.LoginRequest
-import org.shadowrunrussia2020.android.models.LoginResponse
+import org.shadowrunrussia2020.android.common.models.LoginRequest
+import org.shadowrunrussia2020.android.common.models.LoginResponse
 import org.shadowrunrussia2020.android.qr.showErrorMessage
 import java.io.IOException
 

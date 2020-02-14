@@ -3,15 +3,15 @@ package org.shadowrunrussia2020.android.billing
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import org.shadowrunrussia2020.android.ShadowrunRussia2020Application
 import org.shadowrunrussia2020.android.common.di.ApplicationSingletonScope
 import org.shadowrunrussia2020.android.common.models.AccountOverview
 import org.shadowrunrussia2020.android.common.models.Transaction
+import org.shadowrunrussia2020.android.model.billing.BillingRepository
+import org.shadowrunrussia2020.android.model.billing.BillingWebService
 
 class BillingViewModel(application: Application) : AndroidViewModel(application) {
-    private val dependency = ApplicationSingletonScope.DependencyProvider.provideDependency<ApplicationSingletonScope.Dependency>()
 
-    private val mBillingRepository = BillingRepository(dependency.retrofit.create(BillingWebService::class.java), dependency.database.billingDao())
+    private val mBillingRepository = ApplicationSingletonScope.ComponentProvider.components.billingRepository
 
     fun getAccountOverview(): LiveData<AccountOverview> {
         return mBillingRepository.getAccountOverview()

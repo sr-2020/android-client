@@ -1,4 +1,4 @@
-package org.shadowrunrussia2020.android.common.declaration
+package org.shadowrunrussia2020.android.common.declaration.repository
 
 import androidx.lifecycle.LiveData
 import org.shadowrunrussia2020.android.common.models.Character

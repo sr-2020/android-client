@@ -34,6 +34,5 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     kapt "androidx.lifecycle:lifecycle-compiler:$androidArchLifecycle"
-    kapt "androidx.room:room-compiler:$roomVersion"
 
 }

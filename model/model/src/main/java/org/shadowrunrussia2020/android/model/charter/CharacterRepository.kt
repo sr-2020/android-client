@@ -6,11 +6,11 @@ import org.shadowrunrussia2020.android.common.models.Character
 import org.shadowrunrussia2020.android.common.models.CharacterResponse
 import org.shadowrunrussia2020.android.common.models.Event
 import org.shadowrunrussia2020.android.common.models.HistoryRecord
-import org.shadowrunrussia2020.android.common.declaration.dao.CharacterDao
-import org.shadowrunrussia2020.android.common.declaration.ICharacterRepository
+import org.shadowrunrussia2020.android.common.declaration.repository.ICharacterRepository
 import retrofit2.Response
 
-class CharacterRepository(private val mService: CharacterWebService, private val mDao: CharacterDao) : ICharacterRepository {
+class CharacterRepository(private val mService: CharacterWebService, private val mDao: CharacterDao) :
+    ICharacterRepository {
     override suspend fun refresh() {
         saveToDao(mService.get().await())
     }

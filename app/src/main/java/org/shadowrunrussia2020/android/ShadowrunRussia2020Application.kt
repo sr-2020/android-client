@@ -13,6 +13,7 @@ import java.lang.ref.WeakReference
 class ShadowrunRussia2020Application : Application(), ApplicationSingletonScope {
     init {
         ApplicationSingletonScope.DependencyProvider.app = WeakReference(this)
+        ApplicationSingletonScope.ContextProvider.providedAppContext = WeakReference(this)
     }
 
     override val dependency: IApplicationDependency by lazy { ApplicationDependency(WeakReference(this)) }

@@ -1,4 +1,4 @@
-package org.shadowrunrussia2020.android.common.declaration.dao
+package org.shadowrunrussia2020.android.model.billing
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao

@@ -1,8 +1,8 @@
-package org.shadowrunrussia2020.android.billing
+package org.shadowrunrussia2020.android.model.billing
 
 import kotlinx.coroutines.Deferred
 import org.shadowrunrussia2020.android.common.models.AccountInfo
-import org.shadowrunrussia2020.android.models.Empty
+import org.shadowrunrussia2020.android.common.models.Empty
 import org.shadowrunrussia2020.android.common.models.Transfer
 import retrofit2.Response
 import retrofit2.http.Body
