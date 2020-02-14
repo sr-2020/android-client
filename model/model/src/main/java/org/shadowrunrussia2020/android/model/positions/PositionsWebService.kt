@@ -9,7 +9,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 
-interface PositionsWebService {
+internal interface PositionsWebService {
     @POST("position/positions")
     fun positions(@Body request: PositionsRequest): Deferred<Response<PositionsResponse>>
 

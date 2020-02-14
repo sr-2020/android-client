@@ -16,10 +16,8 @@ import org.altbeacon.beacon.*
 import org.shadowrunrussia2020.android.MainActivity
 import org.shadowrunrussia2020.android.R
 import org.shadowrunrussia2020.android.common.di.ApplicationSingletonScope
-import org.shadowrunrussia2020.android.common.models.PositionsRequest
-import org.shadowrunrussia2020.android.model.positions.PositionsRepository
-import org.shadowrunrussia2020.android.model.positions.PositionsWebService
 import org.shadowrunrussia2020.android.common.models.BeaconDataModel
+import org.shadowrunrussia2020.android.common.models.PositionsRequest
 import java.io.IOException
 import java.util.*
 
@@ -129,7 +127,7 @@ class BeaconsScanner : Service(), BeaconConsumer {
         }
         val req = PositionsRequest(beaconsList)
         CoroutineScope(Dispatchers.IO).launch {
-            try  {
+            try {
                 positionsRepository.sendBeacons(req)
             } catch (e: IOException) {
                 Log.e(TAG, "Error while sending beacons to the server: $e");

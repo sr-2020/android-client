@@ -9,7 +9,7 @@ import org.shadowrunrussia2020.android.common.models.UserResponse
 import org.shadowrunrussia2020.android.common.models.fromResponse
 import retrofit2.Response
 
-class PositionsRepository(
+internal class PositionsRepository(
     private val mService: PositionsWebService,
     private val mPositionsDao: PositionsDao
 ) : IPositionsRepository {

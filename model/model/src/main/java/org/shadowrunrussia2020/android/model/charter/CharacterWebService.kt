@@ -8,7 +8,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 
-interface CharacterWebService {
+internal interface CharacterWebService {
     @GET("models-manager/character/model")
     fun get(): Deferred<Response<CharacterResponse>>
 

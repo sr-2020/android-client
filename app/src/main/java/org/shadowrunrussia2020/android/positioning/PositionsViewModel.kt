@@ -5,8 +5,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import org.shadowrunrussia2020.android.common.di.ApplicationSingletonScope
 import org.shadowrunrussia2020.android.common.models.Position
-import org.shadowrunrussia2020.android.model.positions.PositionsRepository
-import org.shadowrunrussia2020.android.model.positions.PositionsWebService
 
 class PositionsViewModel(application: Application) : AndroidViewModel(application) {
 

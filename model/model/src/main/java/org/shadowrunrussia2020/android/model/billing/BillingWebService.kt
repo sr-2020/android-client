@@ -9,7 +9,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 
-interface BillingWebService {
+internal interface BillingWebService {
     @POST("billing/transfer")
     fun transfer(@Body request: Transfer): Deferred<Response<Empty>>
 

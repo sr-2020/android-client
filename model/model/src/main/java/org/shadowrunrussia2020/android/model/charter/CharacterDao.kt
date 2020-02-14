@@ -9,7 +9,7 @@ import org.shadowrunrussia2020.android.common.models.Character
 import org.shadowrunrussia2020.android.common.models.HistoryRecord
 
 @Dao
-interface CharacterDao {
+internal interface CharacterDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun setCharacter(character: Character)
 

@@ -3,12 +3,10 @@ package org.shadowrunrussia2020.android.di
 import android.app.Application
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
-import androidx.room.Room
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.OkHttpClient
 import org.shadowrunrussia2020.android.AuthorizationInterceptor
 import org.shadowrunrussia2020.android.TestSuccessInterceptor
-import org.shadowrunrussia2020.android.model.CacheDatabase
 import org.shadowrunrussia2020.android.common.Session
 import org.shadowrunrussia2020.android.common.di.ApplicationSingletonScope
 import org.shadowrunrussia2020.android.getBackendUrl
@@ -16,7 +14,6 @@ import org.shadowrunrussia2020.android.main.MainScreenDependency
 import org.shadowrunrussia2020.android.model.di.ModelDependency
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.lang.RuntimeException
 import java.lang.ref.WeakReference
 
 interface IApplicationDependency :

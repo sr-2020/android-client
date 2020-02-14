@@ -9,7 +9,7 @@ import org.shadowrunrussia2020.android.common.models.AccountOverview
 import org.shadowrunrussia2020.android.common.models.Transaction
 
 @Dao
-interface BillingDao {
+internal interface BillingDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertTransactions(transactions: List<Transaction>)
 

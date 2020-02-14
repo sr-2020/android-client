@@ -9,7 +9,7 @@ import org.shadowrunrussia2020.android.common.models.Transfer
 import org.shadowrunrussia2020.android.common.models.Empty
 import retrofit2.Response
 
-class BillingRepository(private val mService: BillingWebService, private val mBillingDao: BillingDao) :
+internal class BillingRepository(private val mService: BillingWebService, private val mBillingDao: BillingDao) :
     IBillingRepository {
     override suspend fun refresh() {
         val response = mService.accountInfo().await()

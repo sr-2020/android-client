@@ -26,7 +26,7 @@ import org.shadowrunrussia2020.android.model.positions.PositionsDao
     version = 10
 )
 @TypeConverters(Converters::class)
-abstract class CacheDatabase : RoomDatabase() {
+internal abstract class CacheDatabase : RoomDatabase() {
     abstract fun billingDao(): BillingDao
     abstract fun characterDao(): CharacterDao
     abstract fun positionsDao(): PositionsDao
