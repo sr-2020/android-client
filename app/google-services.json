@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "1027317493504",
-    "firebase_url": "https://sr2020-182da.firebaseio.com",
-    "project_id": "sr2020-182da",
-    "storage_bucket": "sr2020-182da.appspot.com"
+    "project_number": "495839254410",
+    "firebase_url": "https://imposing-elixir-249711.firebaseio.com",
+    "project_id": "imposing-elixir-249711",
+    "storage_bucket": "imposing-elixir-249711.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1027317493504:android:8f27c0fc4309c50b",
+        "mobilesdk_app_id": "1:495839254410:android:e6f3439c18cb18c9cc5a73",
         "android_client_info": {
           "package_name": "org.shadowrunrussia2020.android"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1027317493504-t5ngkt1k5a18bgp5cp3mjil88975snea.apps.googleusercontent.com",
+          "client_id": "495839254410-s5f8fn5hioto7do8kjseujb014u5ov8u.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCPUUoajClUF8bxNxZ7oLnm7_sG77YqwJQ"
+          "current_key": "AIzaSyDxe6p74h3mB5Qckve_V8oxgVkByhXBDYc"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1027317493504-t5ngkt1k5a18bgp5cp3mjil88975snea.apps.googleusercontent.com",
+              "client_id": "495839254410-s5f8fn5hioto7do8kjseujb014u5ov8u.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
