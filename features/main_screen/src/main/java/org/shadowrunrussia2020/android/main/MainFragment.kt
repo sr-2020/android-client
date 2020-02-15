@@ -29,7 +29,7 @@ class MainFragment : Fragment() {
 
             it.passiveAbilities.forEach { ability ->
                 View.inflate(context, R.layout.main_character_view_item, statuses).apply {
-                    textHeader.text = ability.humanReadableName
+                    textHeader.text = ability.name
                     textSource.text = ability.description
                 }
 

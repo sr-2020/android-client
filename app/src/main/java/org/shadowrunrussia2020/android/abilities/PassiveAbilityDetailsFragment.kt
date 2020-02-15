@@ -25,7 +25,7 @@ class PassiveAbilityDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        textAbilityName.text = ability.humanReadableName
+        textAbilityName.text = ability.name
         textAbilityDescription.text = ability.description
     }
 }

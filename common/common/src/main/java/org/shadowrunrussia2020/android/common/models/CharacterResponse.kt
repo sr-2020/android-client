@@ -27,9 +27,9 @@ data class ActiveAbility(
 
 @Parcelize
 data class PassiveAbility(
-    val humanReadableName: String,
-    val description: String,
-    val eventType: String
+    val id: String,
+    val name: String,
+    val description: String
 ) : Parcelable
 
 @Parcelize

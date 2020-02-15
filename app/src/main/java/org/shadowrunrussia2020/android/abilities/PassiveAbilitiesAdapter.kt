@@ -25,7 +25,7 @@ class PassiveAbilitiesAdapter : RecyclerView.Adapter<PassiveAbilitiesAdapter.Vie
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val ability = mDataset[position]
-        holder.mMainTextView.text = ability.humanReadableName
+        holder.mMainTextView.text = ability.name
         holder.mSubTextView.text = ability.description
         holder.itemView.setOnClickListener {
             it.findNavController()
