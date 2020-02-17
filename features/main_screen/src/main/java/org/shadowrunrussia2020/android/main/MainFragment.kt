@@ -6,8 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import com.google.zxing.BarcodeFormat
+import com.journeyapps.barcodescanner.BarcodeEncoder
 import kotlinx.android.synthetic.main.main_character_view_item.view.*
 import kotlinx.android.synthetic.main.main_charter_screen.*
+import org.shadowrunrussia2020.android.common.utils.encode
+import org.shadowrunrussia2020.android.common.utils.qrData
 
 class MainFragment : Fragment() {
 
@@ -35,8 +39,14 @@ class MainFragment : Fragment() {
                     }
 
                 }
+
+                val barcodeEncoder = BarcodeEncoder()
+                val bitmap = barcodeEncoder.encodeBitmap(encode(it.qrData), BarcodeFormat.QR_CODE, 400, 400)
+                qrDataView.setImageBitmap(bitmap)
             }
         }
+
+
 
 
     }

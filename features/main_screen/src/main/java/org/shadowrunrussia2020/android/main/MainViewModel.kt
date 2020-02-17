@@ -21,6 +21,4 @@ internal class MainViewModel : ViewModel() {
 
     suspend fun postEvent(eventType: String, data: HashMap<String, Any> = hashMapOf()): CharacterResponse? =
         mRepository.sendEvent(Event(eventType, data))
-
-
 }

@@ -4,6 +4,7 @@ import android.os.Parcelable
 import com.google.common.io.BaseEncoding
 import kotlinx.android.parcel.Parcelize
 import okio.Buffer
+import org.shadowrunrussia2020.android.common.models.Character
 import java.security.MessageDigest
 import java.util.*
 
@@ -23,6 +24,14 @@ enum class Type {
 }
 
 @Parcelize data class Data(val type: Type, val kind: Byte, val validUntil: Int, val payload: String) : Parcelable
+
+val Character.qrData: Data
+    get() = Data(
+        type = Type.DIGITAL_SIGNATURE,
+        kind = 0,
+        validUntil = (Date().time / 1000).toInt() + 3600,
+        payload = this.modelId
+    )
 
 class FormatException: Exception()
 class ValidationException: Exception()
