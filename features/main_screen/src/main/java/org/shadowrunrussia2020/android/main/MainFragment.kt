@@ -20,21 +20,22 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.character.observe({ this.lifecycle }) {
-            textHp.text = "%s HP".format(it.maxHp)
-            textMana.text = "%s MP".format(it.magic)
-            textPowerBonus.text = "Power +%s ".format(it.magicPowerBonus)
-            textStatus.text = " %s ".format(it.healthState)
+            it?.let {
+                textHp.text = "%s HP".format(it.maxHp)
+                textMana.text = "%s MP".format(it.magic)
+                textPowerBonus.text = "Power +%s ".format(it.magicPowerBonus)
+                textStatus.text = " %s ".format(it.healthState)
 
-            statuses.removeAllViews()
+                statuses.removeAllViews()
 
-            it.passiveAbilities.forEach { ability ->
-                View.inflate(context, R.layout.main_character_view_item, statuses).apply {
-                    textHeader.text = ability.name
-                    textSource.text = ability.description
+                it.passiveAbilities.forEach { ability ->
+                    View.inflate(context, R.layout.main_character_view_item, statuses).apply {
+                        textHeader.text = ability.name
+                        textSource.text = ability.description
+                    }
+
                 }
-
             }
-
         }
 
 

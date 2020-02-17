@@ -22,10 +22,10 @@ import kotlinx.coroutines.withContext
 import org.shadowrunrussia2020.android.MainNavGraphDirections
 import org.shadowrunrussia2020.android.R
 import org.shadowrunrussia2020.android.common.models.Character
-import org.shadowrunrussia2020.android.qr.Data
-import org.shadowrunrussia2020.android.qr.Type
-import org.shadowrunrussia2020.android.qr.encode
-import org.shadowrunrussia2020.android.qr.showErrorMessage
+import org.shadowrunrussia2020.android.common.utils.Type
+import org.shadowrunrussia2020.android.common.utils.Data
+import org.shadowrunrussia2020.android.common.utils.encode
+import org.shadowrunrussia2020.android.common.utils.showErrorMessage
 
 
 class WoundedFragment : Fragment() {

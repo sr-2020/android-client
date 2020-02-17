@@ -18,6 +18,9 @@ import org.shadowrunrussia2020.android.R
 import org.shadowrunrussia2020.android.billing.BillingViewModel
 import org.shadowrunrussia2020.android.common.models.Transfer
 import org.shadowrunrussia2020.android.character.CharacterViewModel
+import org.shadowrunrussia2020.android.common.utils.Type
+import org.shadowrunrussia2020.android.common.utils.showErrorMessage
+import org.shadowrunrussia2020.android.common.utils.showInfoMessage
 
 
 class PrePostQrScannedFragment : Fragment() {
@@ -114,7 +117,7 @@ class PrePostQrScannedFragment : Fragment() {
                 withContext(CoroutineScope(Dispatchers.IO).coroutineContext)
                 { m.postEvent("scanQr", hashMapOf("qrCode" to qrId)) }
             } catch (e: Exception) {
-                showErrorMessage(requireContext(), e.message?: "Неожиданная ошибка сервера")
+                showErrorMessage(requireContext(), e.message ?: "Неожиданная ошибка сервера")
             }
             findNavController().popBackStack()
         }

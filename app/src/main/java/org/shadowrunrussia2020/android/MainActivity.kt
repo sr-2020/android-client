@@ -40,9 +40,9 @@ import org.shadowrunrussia2020.android.di.IMainActivityDi
 import org.shadowrunrussia2020.android.positioning.BeaconsScanner
 import org.shadowrunrussia2020.android.common.models.Position
 import org.shadowrunrussia2020.android.positioning.PositionsViewModel
-import org.shadowrunrussia2020.android.qr.Data
-import org.shadowrunrussia2020.android.qr.Type
-import org.shadowrunrussia2020.android.qr.showErrorMessage
+import org.shadowrunrussia2020.android.common.utils.Data
+import org.shadowrunrussia2020.android.common.utils.Type
+import org.shadowrunrussia2020.android.common.utils.showErrorMessage
 import java.util.*
 
 

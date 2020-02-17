@@ -1,4 +1,4 @@
-package org.shadowrunrussia2020.android.qr
+package org.shadowrunrussia2020.android.common.utils
 
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -62,21 +62,36 @@ class EncodeUtilTest {
     fun decode_IsCorrect() {
         assertEquals(
             Data(Type.CRAFTED_ITEM, 13, 1893456000, "Hello"),
-            decode("6263Aw2A2NtwHello"))
+            decode("6263Aw2A2NtwHello")
+        )
     }
 
     @Test
     fun decode_IsCorrect2() {
         assertEquals(
-            Data(Type.PAYMENT_REQUEST_WITH_PRICE, 0, 1700000000, "123,1267,abc"),
-            decode("ca7fBwAA8VNl123,1267,abc"))
+            Data(
+                Type.PAYMENT_REQUEST_WITH_PRICE,
+                0,
+                1700000000,
+                "123,1267,abc"
+            ),
+            decode("ca7fBwAA8VNl123,1267,abc")
+        )
     }
 
     @Test
     fun encode_IsCorrect() {
         assertEquals(
             "6263Aw2A2NtwHello",
-            encode(Data(Type.CRAFTED_ITEM, 13, 1893456000, "Hello")))
+            encode(
+                Data(
+                    Type.CRAFTED_ITEM,
+                    13,
+                    1893456000,
+                    "Hello"
+                )
+            )
+        )
     }
 
     @Test

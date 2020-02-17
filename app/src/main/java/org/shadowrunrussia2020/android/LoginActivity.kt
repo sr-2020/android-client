@@ -23,7 +23,7 @@ import kotlinx.coroutines.withContext
 import org.shadowrunrussia2020.android.common.di.ApplicationSingletonScope
 import org.shadowrunrussia2020.android.common.models.LoginRequest
 import org.shadowrunrussia2020.android.common.models.LoginResponse
-import org.shadowrunrussia2020.android.qr.showErrorMessage
+import org.shadowrunrussia2020.android.common.utils.showErrorMessage
 import java.io.IOException
 
 
@@ -75,7 +75,7 @@ class LoginActivity : AppCompatActivity() {
                 passwordInput.error = getString(R.string.error_incorrect_password)
                 passwordInput.requestFocus()
             } catch (e: Exception) {
-               showErrorMessage(this@LoginActivity, "Сервер недоступен")
+                showErrorMessage(this@LoginActivity, "Сервер недоступен")
             }
             showProgress(false)
         }

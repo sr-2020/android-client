@@ -7,6 +7,7 @@ import com.google.zxing.BarcodeFormat
 import com.journeyapps.barcodescanner.BarcodeEncoder
 import kotlinx.android.synthetic.main.activity_show_qr.*
 import org.shadowrunrussia2020.android.R
+import org.shadowrunrussia2020.android.common.utils.encode
 
 class ShowQrActivity : Activity() {
     private val args: ShowQrActivityArgs by navArgs()

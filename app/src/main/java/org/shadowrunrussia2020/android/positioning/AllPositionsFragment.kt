@@ -18,7 +18,7 @@ import org.shadowrunrussia2020.android.R
 import org.shadowrunrussia2020.android.character.CharacterHistoryAdapter
 import org.shadowrunrussia2020.android.common.models.HistoryRecord
 import org.shadowrunrussia2020.android.common.models.Position
-import org.shadowrunrussia2020.android.qr.showErrorMessage
+import org.shadowrunrussia2020.android.common.utils.showErrorMessage
 
 class AllPositionsFragment : Fragment() {
     private val mModel by lazy {

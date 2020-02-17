@@ -16,8 +16,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.shadowrunrussia2020.android.R
-import org.shadowrunrussia2020.android.qr.showErrorMessage
-import org.shadowrunrussia2020.android.qr.showSuccessMessage
+import org.shadowrunrussia2020.android.common.utils.showErrorMessage
+import org.shadowrunrussia2020.android.common.utils.showSuccessMessage
 
 class BillingOverviewFragment : Fragment() {
 

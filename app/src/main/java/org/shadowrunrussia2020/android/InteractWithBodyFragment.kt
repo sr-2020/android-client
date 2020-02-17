@@ -15,6 +15,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.shadowrunrussia2020.android.character.CharacterViewModel
+import org.shadowrunrussia2020.android.common.utils.Data
+import org.shadowrunrussia2020.android.common.utils.Type
+import org.shadowrunrussia2020.android.common.utils.showErrorMessage
 import org.shadowrunrussia2020.android.qr.*
 
 class InteractWithBodyFragment : Fragment() {

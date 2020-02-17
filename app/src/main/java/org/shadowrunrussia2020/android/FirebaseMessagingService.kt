@@ -6,7 +6,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.shadowrunrussia2020.android.common.di.ApplicationSingletonScope
-import org.shadowrunrussia2020.android.qr.showInfoMessage
+import org.shadowrunrussia2020.android.common.utils.showInfoMessage
 
 class FirebaseMessagingService : com.google.firebase.messaging.FirebaseMessagingService() {
     private val TAG = "FirebaseMessaging"

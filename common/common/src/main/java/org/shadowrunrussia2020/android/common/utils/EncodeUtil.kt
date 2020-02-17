@@ -1,4 +1,4 @@
-package org.shadowrunrussia2020.android.qr
+package org.shadowrunrussia2020.android.common.utils
 
 import android.os.Parcelable
 import com.google.common.io.BaseEncoding
@@ -24,9 +24,9 @@ enum class Type {
 
 @Parcelize data class Data(val type: Type, val kind: Byte, val validUntil: Int, val payload: String) : Parcelable
 
-class FormatException(): Exception()
-class ValidationException(): Exception()
-class ExpiredException(): Exception()
+class FormatException: Exception()
+class ValidationException: Exception()
+class ExpiredException: Exception()
 
 internal fun signature(packedData: ByteArray, data: String): String {
     // TODO(aeremin): get salt from environment variable during build

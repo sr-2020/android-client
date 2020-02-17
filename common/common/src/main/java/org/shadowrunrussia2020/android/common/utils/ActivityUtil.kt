@@ -1,4 +1,4 @@
-package org.shadowrunrussia2020.android.qr
+package org.shadowrunrussia2020.android.common.utils
 
 import android.app.Activity
 import android.content.Context
