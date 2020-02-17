@@ -24,7 +24,8 @@ import org.shadowrunrussia2020.android.common.models.Spell
 import org.shadowrunrussia2020.android.common.utils.Data
 import org.shadowrunrussia2020.android.common.utils.Type
 import org.shadowrunrussia2020.android.common.utils.showErrorMessage
-import org.shadowrunrussia2020.android.qr.*
+import org.shadowrunrussia2020.android.qr.QrDataOrError
+import org.shadowrunrussia2020.android.qr.QrViewModel
 
 class SpellDetailsFragment : Fragment() {
     private val args: SpellDetailsFragmentArgs by navArgs()
@@ -84,9 +85,9 @@ class SpellDetailsFragment : Fragment() {
     }
 
     private fun updateEnableness(enable: Boolean) {
-        castOnSelf.isEnabled = enable && spell.canTargetSelf
-        castOnTarget.isEnabled = enable && (spell.canTargetItem || spell.canTargetSingleTarget)
-        castOnLocation.isEnabled = enable && spell.canTargetLocation
+        castOnSelf.isEnabled = enable
+        castOnTarget.isEnabled = false;
+        castOnLocation.isEnabled = false;
     }
 
     private fun castOnSelf() {
