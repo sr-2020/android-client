@@ -1,6 +1,8 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
@@ -23,8 +25,9 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation "androidx.appcompat:appcompat:$appCompatVersion"
+    implementation project(':common')
+//    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+    implementation group: 'androidx.preference', name: 'preference', version: preferenceVersion
+   kapt "androidx.lifecycle:lifecycle-compiler:$androidArchLifecycle"
 }
