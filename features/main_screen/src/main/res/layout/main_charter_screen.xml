@@ -8,90 +8,42 @@
 
     <Button
             android:id="@+id/bodySpinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="48dp"
-            tools:text="Аватар "
-            android:textSize="25sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textMana"
-            android:spinnerMode="dropdown"
-            android:padding="16dp"
-              />
-
-    <LinearLayout
-            android:id="@+id/statuses"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:orientation="vertical"
             android:layout_margin="16dp"
-            app:layout_constraintEnd_toStartOf="@+id/imageView"
-            app:layout_constraintHorizontal_bias="1.0"
+            android:padding="16dp"
+            android:spinnerMode="dropdown"
+            android:text="TODO: тело"
+            android:textSize="25sp"
+            app:layout_constraintBottom_toBottomOf="@+id/qrDataView"
+            app:layout_constraintEnd_toStartOf="@+id/qrDataView"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bodySpinner">
+            app:layout_constraintTop_toTopOf="@+id/qrDataView"
+            tools:text="Аватар " />
 
-
-        <TextView
-                android:id="@+id/imageView1"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_margin="15dp"
-                android:drawableLeft="@android:drawable/btn_star_big_on"
-                android:gravity="center"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textHp"
-                tools:text="Звездный статус" />
-
-
-        <TextView
-                android:id="@+id/imageView2"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_margin="15dp"
-                android:drawableLeft="@android:drawable/btn_dialog"
-                android:gravity="center"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textHp"
-                tools:text="второй статус" />
-
-        <TextView
-                android:id="@+id/imageView3"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_margin="15dp"
-                android:drawableLeft="@android:drawable/btn_star_big_off"
-                android:gravity="center"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textHp"
-                tools:text="третий статус" />
-
-    </LinearLayout>
 
     <TextView
             android:id="@+id/textPowerBonus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            tools:text="+1 dmg"
-            android:textSize="25sp"
+            android:textColor="#000"
+            android:textSize="25dp"
             app:layout_constraintEnd_toStartOf="@+id/textHp"
             app:layout_constraintStart_toEndOf="@+id/textMana"
             app:layout_constraintTop_toTopOf="parent"
-             />
+            tools:text="99⚔" />
 
     <TextView
             android:id="@+id/textHp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            tools:text="25HP"
+            android:layout_margin="16dp"
+            android:textColor="#f00"
             android:textSize="25sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-             />
+            tools:text="15♡" />
 
     <TextView
             android:id="@+id/textMana"
@@ -99,30 +51,39 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            tools:text="15MP"
+            android:textColor="#00f"
             android:textSize="25sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="15✡" />
 
     <TextView
             android:id="@+id/textStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            tools:text="heality"
             android:textSize="25sp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="heality" />
 
     <ImageView
             android:id="@+id/qrDataView"
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:layout_margin="15dp"
+            android:translationZ="4dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textHp"
             tools:srcCompat="@drawable/qr_code" />
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/activeAbilityList"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/textStatus"
+            app:layout_constraintTop_toBottomOf="@+id/qrDataView" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

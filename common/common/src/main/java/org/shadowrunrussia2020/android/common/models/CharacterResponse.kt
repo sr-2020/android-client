@@ -1,6 +1,7 @@
 package org.shadowrunrussia2020.android.common.models
 
 import android.os.Parcelable
+import androidx.recyclerview.widget.DiffUtil
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
@@ -30,7 +31,12 @@ data class PassiveAbility(
     val id: String,
     val name: String,
     val description: String
-) : Parcelable
+) : Parcelable  {
+    companion object :DiffUtil.ItemCallback<PassiveAbility>() {
+        override fun areItemsTheSame(oldItem: PassiveAbility, newItem: PassiveAbility): Boolean = oldItem.id == newItem.id
+        override fun areContentsTheSame(oldItem: PassiveAbility, newItem: PassiveAbility): Boolean = oldItem == newItem
+    }
+}
 
 @Parcelize
 @Entity
