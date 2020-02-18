@@ -8,13 +8,10 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Spell(
+    val id: String,
     val humanReadableName: String,
     val description: String,
-    val eventType: String,
-    val canTargetItem: Boolean,
-    val canTargetLocation: Boolean,
-    val canTargetSelf: Boolean,
-    val canTargetSingleTarget: Boolean
+    val eventType: String
 ) : Parcelable
 
 @Parcelize
@@ -23,14 +20,16 @@ data class ActiveAbility(
     val description: String,
     val eventType: String,
     val canTargetSelf: Boolean,
-    val canTargetSingleTarget: Boolean
+    val canTargetSingleTarget: Boolean,
+    val validUntil: Long?
 ) : Parcelable
 
 @Parcelize
 data class PassiveAbility(
     val id: String,
     val name: String,
-    val description: String
+    val description: String,
+    val validUntil: Long?
 ) : Parcelable  {
     companion object :DiffUtil.ItemCallback<PassiveAbility>() {
         override fun areItemsTheSame(oldItem: PassiveAbility, newItem: PassiveAbility): Boolean = oldItem.id == newItem.id

@@ -9,18 +9,25 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import kotlinx.android.synthetic.main.fragment_spell_details.*
+import kotlinx.android.synthetic.main.fragment_active_ability_details.*
+import kotlinx.android.synthetic.main.fragment_spell_details.castOnSelf
+import kotlinx.android.synthetic.main.fragment_spell_details.castOnTarget
+import kotlinx.android.synthetic.main.fragment_spell_details.textAbilityDescription
+import kotlinx.android.synthetic.main.fragment_spell_details.textAbilityName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.ocpsoft.prettytime.PrettyTime
 import org.shadowrunrussia2020.android.R
 import org.shadowrunrussia2020.android.character.CharacterViewModel
 import org.shadowrunrussia2020.android.common.models.ActiveAbility
 import org.shadowrunrussia2020.android.common.utils.Data
 import org.shadowrunrussia2020.android.common.utils.Type
 import org.shadowrunrussia2020.android.common.utils.showErrorMessage
-import org.shadowrunrussia2020.android.qr.*
+import org.shadowrunrussia2020.android.qr.QrDataOrError
+import org.shadowrunrussia2020.android.qr.QrViewModel
+import java.util.*
 
 class ActiveAbilityDetailsFragment : Fragment() {
     private val args: ActiveAbilityDetailsFragmentArgs by navArgs()
@@ -48,6 +55,10 @@ class ActiveAbilityDetailsFragment : Fragment() {
 
         textAbilityName.text = ability.humanReadableName
         textAbilityDescription.text = ability.description
+        val validUntil = ability.validUntil
+        if (validUntil != null) {
+            textValidUntil.text = "Закончится " + PrettyTime(Locale("ru")).format(Date(validUntil))
+        }
 
         castOnSelf.isEnabled = ability.canTargetSelf
         castOnTarget.isEnabled = ability.canTargetSingleTarget
