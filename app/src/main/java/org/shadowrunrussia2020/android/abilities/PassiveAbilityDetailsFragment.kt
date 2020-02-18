@@ -7,9 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
-import kotlinx.android.synthetic.main.fragment_spell_details.*
+import kotlinx.android.synthetic.main.fragment_active_ability_details.*
+import kotlinx.android.synthetic.main.fragment_spell_details.textAbilityDescription
+import kotlinx.android.synthetic.main.fragment_spell_details.textAbilityName
+import org.ocpsoft.prettytime.PrettyTime
 import org.shadowrunrussia2020.android.R
 import org.shadowrunrussia2020.android.common.models.PassiveAbility
+import java.util.*
 
 class PassiveAbilityDetailsFragment : Fragment() {
     private val args: PassiveAbilityDetailsFragmentArgs by navArgs()
@@ -27,5 +31,9 @@ class PassiveAbilityDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         textAbilityName.text = ability.name
         textAbilityDescription.text = ability.description
+        val validUntil = ability.validUntil
+        if (validUntil != null) {
+            textValidUntil.text = "Закончится " + PrettyTime(Locale("ru")).format(Date(validUntil))
+        }
     }
 }

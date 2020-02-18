@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import org.ocpsoft.prettytime.PrettyTime
 import org.shadowrunrussia2020.android.R
 import org.shadowrunrussia2020.android.common.models.PassiveAbility
 import java.util.*
@@ -27,6 +28,12 @@ class PassiveAbilitiesAdapter : RecyclerView.Adapter<PassiveAbilitiesAdapter.Vie
         val ability = mDataset[position]
         holder.mMainTextView.text = ability.name
         holder.mSubTextView.text = ability.description
+        val validUntil = ability.validUntil
+        if (validUntil != null) {
+            holder.mTimeView.text =
+                "Закончится " + PrettyTime(Locale("ru")).format(Date(validUntil))
+        }
+
         holder.itemView.setOnClickListener {
             it.findNavController()
                 .navigate(PassiveAbilitiesFragmentDirections.actionSelectPassiveAbility(ability))
@@ -40,6 +47,7 @@ class PassiveAbilitiesAdapter : RecyclerView.Adapter<PassiveAbilitiesAdapter.Vie
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         var mMainTextView: TextView = itemView.findViewById(R.id.mainText)
         var mSubTextView: TextView = itemView.findViewById(R.id.subText)
+        var mTimeView: TextView = itemView.findViewById(R.id.time)
     }
 }
 
