@@ -3,7 +3,6 @@ package org.shadowrunrussia2020.android.character
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import org.shadowrunrussia2020.android.ShadowrunRussia2020Application
 import org.shadowrunrussia2020.android.common.di.ApplicationSingletonScope
 import org.shadowrunrussia2020.android.common.models.Character
 import org.shadowrunrussia2020.android.common.models.CharacterResponse
@@ -23,6 +22,11 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
 
     suspend fun refresh() {
         return mRepository.refresh()
+    }
+
+    suspend fun castSpell(spellId: String, data: HashMap<String, Any> = hashMapOf()): CharacterResponse? {
+        data["id"] = spellId
+        return postEvent("castSpell", data)
     }
 
     suspend fun postEvent(eventType: String, data: HashMap<String, Any> = hashMapOf()): CharacterResponse? {

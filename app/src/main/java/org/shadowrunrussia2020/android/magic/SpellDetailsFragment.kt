@@ -94,8 +94,8 @@ class SpellDetailsFragment : Fragment() {
         CoroutineScope(Dispatchers.Main).launch {
             try {
                 val response = withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
-                    mCharacterModel.postEvent(
-                        spell.eventType, hashMapOf(
+                    mCharacterModel.castSpell(
+                        spell.id, hashMapOf(
                             "power" to seekBarSpellPower.progress,
                             "locationId" to "1"
                         )
@@ -146,7 +146,7 @@ class SpellDetailsFragment : Fragment() {
         CoroutineScope(Dispatchers.Main).launch {
             try {
                 withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
-                    mCharacterModel.postEvent(spell.eventType, eventData)
+                    mCharacterModel.castSpell(spell.id, eventData)
                 }
             } catch (e: Exception) {
                 showErrorMessage(requireContext(), "Ошибка. ${e.message}")
