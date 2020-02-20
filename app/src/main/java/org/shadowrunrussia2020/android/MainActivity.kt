@@ -13,6 +13,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -25,6 +26,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.activity_main.*
@@ -36,13 +38,13 @@ import org.shadowrunrussia2020.android.billing.BillingViewModel
 import org.shadowrunrussia2020.android.character.CharacterViewModel
 import org.shadowrunrussia2020.android.common.di.ApplicationSingletonScope
 import org.shadowrunrussia2020.android.common.models.Character
-import org.shadowrunrussia2020.android.di.IMainActivityDi
-import org.shadowrunrussia2020.android.positioning.BeaconsScanner
 import org.shadowrunrussia2020.android.common.models.Position
-import org.shadowrunrussia2020.android.positioning.PositionsViewModel
 import org.shadowrunrussia2020.android.common.utils.Data
 import org.shadowrunrussia2020.android.common.utils.Type
 import org.shadowrunrussia2020.android.common.utils.showErrorMessage
+import org.shadowrunrussia2020.android.di.IMainActivityDi
+import org.shadowrunrussia2020.android.positioning.BeaconsScanner
+import org.shadowrunrussia2020.android.positioning.PositionsViewModel
 import java.util.*
 
 
@@ -131,6 +133,12 @@ class MainActivity : AppCompatActivity(), IMainActivityDi {
                 if (data != null && data.healthState != "healthy" &&
                     navController.currentDestination?.id != R.id.woundedFragment) {
                     navController.navigate(MainNavGraphDirections.actionGlobalWounded())
+                }
+
+                if (data != null) {
+                    val header = findViewById<NavigationView>(R.id.nav_view).getHeaderView(0);
+                    header.findViewById<TextView>(R.id.headerTitle).text = "Персонаж #${data.modelId}"
+                    header.findViewById<TextView>(R.id.headerSubtitle).text = ""
                 }
             })
 
