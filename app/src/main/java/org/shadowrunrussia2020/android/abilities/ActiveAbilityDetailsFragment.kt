@@ -60,8 +60,8 @@ class ActiveAbilityDetailsFragment : Fragment() {
             textValidUntil.text = "Закончится " + PrettyTime(Locale("ru")).format(Date(validUntil))
         }
 
-        castOnSelf.isEnabled = ability.canTargetSelf
-        castOnTarget.isEnabled = ability.canTargetSingleTarget
+        castOnSelf.isEnabled = !ability.hasTarget
+        castOnTarget.isEnabled = ability.hasTarget
 
         castOnSelf.setOnClickListener { castOnSelf() }
         castOnTarget.setOnClickListener { chooseTarget() }
@@ -71,7 +71,7 @@ class ActiveAbilityDetailsFragment : Fragment() {
         CoroutineScope(Dispatchers.Main).launch {
             try {
                 withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
-                    mModel.postEvent(ability.eventType)
+                    mModel.useAbility(ability.id)
                 }
             } catch (e: Exception) {
                 showErrorMessage(requireContext(), "Ошибка. ${e.message}")
@@ -96,7 +96,7 @@ class ActiveAbilityDetailsFragment : Fragment() {
         CoroutineScope(Dispatchers.Main).launch {
             try {
                 withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
-                    mModel.postEvent(ability.eventType, eventData)
+                    mModel.useAbility(ability.id, eventData)
                 }
             } catch (e: Exception) {
                 showErrorMessage(requireContext(), "Ошибка. ${e.message}")

@@ -29,6 +29,11 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         return postEvent("castSpell", data)
     }
 
+    suspend fun useAbility(abilityId: String, data: HashMap<String, Any> = hashMapOf()): CharacterResponse? {
+        data["id"] = abilityId
+        return postEvent("useAbility", data)
+    }
+
     suspend fun postEvent(eventType: String, data: HashMap<String, Any> = hashMapOf()): CharacterResponse? {
         return mRepository.sendEvent(Event(eventType, data))
     }

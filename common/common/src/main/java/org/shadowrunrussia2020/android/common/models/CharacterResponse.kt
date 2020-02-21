@@ -10,17 +10,15 @@ import kotlinx.android.parcel.Parcelize
 data class Spell(
     val id: String,
     val humanReadableName: String,
-    val description: String,
-    val eventType: String
+    val description: String
 ) : Parcelable
 
 @Parcelize
 data class ActiveAbility(
+    val id: String,
     val humanReadableName: String,
     val description: String,
-    val eventType: String,
-    val canTargetSelf: Boolean,
-    val canTargetSingleTarget: Boolean,
+    val hasTarget: Boolean,
     val validUntil: Long?
 ) : Parcelable
 
