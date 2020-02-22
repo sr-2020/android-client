@@ -10,7 +10,8 @@ import kotlinx.android.parcel.Parcelize
 data class Spell(
     val id: String,
     val humanReadableName: String,
-    val description: String
+    val description: String,
+    val hasTarget: Boolean
 ) : Parcelable
 
 @Parcelize

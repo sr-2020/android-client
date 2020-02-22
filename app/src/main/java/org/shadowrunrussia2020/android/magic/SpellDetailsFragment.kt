@@ -85,8 +85,8 @@ class SpellDetailsFragment : Fragment() {
     }
 
     private fun updateEnableness(enable: Boolean) {
-        castOnSelf.isEnabled = enable
-        castOnTarget.isEnabled = false;
+        castOnSelf.isEnabled = !spell.hasTarget
+        castOnTarget.isEnabled = spell.hasTarget
         castOnLocation.isEnabled = false;
     }
 
@@ -135,7 +135,7 @@ class SpellDetailsFragment : Fragment() {
                 "locationId" to "1"
             )
             qrData.type == Type.DIGITAL_SIGNATURE || qrData.type == Type.WOUNDED_BODY -> hashMapOf(
-                "targetCharacterId" to qrData.payload.toInt(),
+                "targetCharacterId" to qrData.payload,
                 "power" to seekBarSpellPower.progress,
                 "locationId" to "1"
             )
