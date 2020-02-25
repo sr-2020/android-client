@@ -63,8 +63,9 @@ class SpellDetailsFragment : Fragment() {
 
         updateEnableness(true)
 
-        castOnSelf.setOnClickListener { castOnSelf() }
-        castOnTarget.setOnClickListener { chooseTarget() }
+        castSpell.setOnClickListener {
+            if (spell.hasTarget) chooseTarget() else castOnSelf()
+        }
 
         seekBarSpellPower.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
@@ -85,9 +86,7 @@ class SpellDetailsFragment : Fragment() {
     }
 
     private fun updateEnableness(enable: Boolean) {
-        castOnSelf.isEnabled = !spell.hasTarget
-        castOnTarget.isEnabled = spell.hasTarget
-        castOnLocation.isEnabled = false;
+        castSpell.isEnabled = enable
     }
 
     private fun castOnSelf() {

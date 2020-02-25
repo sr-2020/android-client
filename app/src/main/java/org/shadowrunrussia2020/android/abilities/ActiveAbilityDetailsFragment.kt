@@ -10,8 +10,6 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import kotlinx.android.synthetic.main.fragment_active_ability_details.*
-import kotlinx.android.synthetic.main.fragment_spell_details.castOnSelf
-import kotlinx.android.synthetic.main.fragment_spell_details.castOnTarget
 import kotlinx.android.synthetic.main.fragment_spell_details.textAbilityDescription
 import kotlinx.android.synthetic.main.fragment_spell_details.textAbilityName
 import kotlinx.coroutines.CoroutineScope
@@ -59,12 +57,7 @@ class ActiveAbilityDetailsFragment : Fragment() {
         if (validUntil != null) {
             textValidUntil.text = "Закончится " + PrettyTime(Locale("ru")).format(Date(validUntil))
         }
-
-        castOnSelf.isEnabled = !ability.hasTarget
-        castOnTarget.isEnabled = ability.hasTarget
-
-        castOnSelf.setOnClickListener { castOnSelf() }
-        castOnTarget.setOnClickListener { chooseTarget() }
+        useAbility.setOnClickListener { if (ability.hasTarget) chooseTarget() else castOnSelf() }
     }
 
     private fun castOnSelf() {

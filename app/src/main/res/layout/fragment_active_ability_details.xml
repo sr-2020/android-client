@@ -49,18 +49,9 @@
             app:layout_constraintTop_toBottomOf="@id/textValidUntil">
 
         <Button
-                android:id="@+id/castOnSelf"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Применить на себя" />
-
-        <Button
-                android:id="@+id/castOnTarget"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Применить на цель" />
+            android:text="Применить"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/useAbility" android:layout_weight="1"/>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
