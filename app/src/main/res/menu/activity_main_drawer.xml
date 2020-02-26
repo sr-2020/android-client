@@ -14,6 +14,11 @@
                 android:title="@string/charter"/>
 
         <item
+                android:id="@+id/action_global_spellbook_new"
+                android:icon="@drawable/magic_book"
+                android:title="Книга заклинаний"/>
+
+        <item
                 android:id="@+id/action_global_active_abilities"
                 android:icon="@drawable/menu_manage"
                 android:title="@string/spells"/>

@@ -50,7 +50,7 @@ class UinversalAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     }
 
-    lateinit var activeList: List<UniversalViewData>
+    var activeList: List<UniversalViewData> = listOf()
 
     override fun getItemViewType(position: Int): Int = activeList[position].viewType
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder = activeList.first { it.viewType == viewType }.createViewHolder(parent)
