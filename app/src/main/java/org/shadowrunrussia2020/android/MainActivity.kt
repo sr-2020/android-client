@@ -37,12 +37,14 @@ import kotlinx.coroutines.withContext
 import org.shadowrunrussia2020.android.billing.BillingViewModel
 import org.shadowrunrussia2020.android.character.CharacterViewModel
 import org.shadowrunrussia2020.android.common.di.ApplicationSingletonScope
+import org.shadowrunrussia2020.android.common.di.MainActivityScope
 import org.shadowrunrussia2020.android.common.models.Character
 import org.shadowrunrussia2020.android.common.models.Position
 import org.shadowrunrussia2020.android.common.utils.Data
 import org.shadowrunrussia2020.android.common.utils.Type
 import org.shadowrunrussia2020.android.common.utils.showErrorMessage
 import org.shadowrunrussia2020.android.di.IMainActivityDi
+import org.shadowrunrussia2020.android.magic.cast.SpellCastFragment
 import org.shadowrunrussia2020.android.positioning.BeaconsScanner
 import org.shadowrunrussia2020.android.positioning.PositionsViewModel
 import java.util.*
@@ -131,7 +133,8 @@ class MainActivity : AppCompatActivity(), IMainActivityDi {
         characterViewModel.getCharacter().observe(this,
             Observer { data: Character? ->
                 if (data != null && data.healthState != "healthy" &&
-                    navController.currentDestination?.id != R.id.woundedFragment) {
+                    navController.currentDestination?.id != R.id.woundedFragment
+                ) {
                     navController.navigate(MainNavGraphDirections.actionGlobalWounded())
                 }
 
@@ -148,7 +151,7 @@ class MainActivity : AppCompatActivity(), IMainActivityDi {
                 if (myPosition != null) {
                     toolbar.subtitle = myPosition.location
                 }
-        })
+            })
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.woundedFragment) {
@@ -296,4 +299,14 @@ class MainActivity : AppCompatActivity(), IMainActivityDi {
         startActivity(Intent(this, LoginActivity::class.java))
         finish()
     }
+
+    override val router = object : MainActivityScope.Router {
+        override fun goToCastSpellScreen(spellId: String) {
+            navController.navigate(
+                R.id.action_cast_spell,
+                SpellCastFragment.createBundle(spellId)
+            )
+        }
+    }
+
 }

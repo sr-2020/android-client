@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.zxing.BarcodeFormat
 import com.journeyapps.barcodescanner.BarcodeEncoder
 import kotlinx.android.synthetic.main.main_charter_screen.*
+import org.shadowrunrussia2020.android.common.di.MainActivityScope
 import org.shadowrunrussia2020.android.common.utils.LinearSpaceItemDecoration
 import org.shadowrunrussia2020.android.common.utils.encode
 import org.shadowrunrussia2020.android.common.utils.qrData
@@ -19,19 +20,20 @@ class MainFragment : Fragment() {
 
     private val uinversalAdapter by lazy {
         UinversalAdapter().apply {
-            activeAbilityList.adapter = this
-            activeAbilityList.layoutManager = LinearLayoutManager(requireContext())
+
 //            activeAbilityList.addItemDecoration(LinearSpaceItemDecoration(4))
         }
     }
+
+    private val router by lazy { (activity as MainActivityScope).router }
 
     private val viewModel by lazy { ViewModelProviders.of(this)[MainViewModel::class.java] }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
         inflater.inflate(R.layout.main_charter_screen, container, false)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onResume() {
+        super.onResume()
 
         viewModel.character.observe({ this.lifecycle }) { ch ->
             ch?.let { character ->
@@ -41,7 +43,9 @@ class MainFragment : Fragment() {
 
                 uinversalAdapter.clear()
                 uinversalAdapter.appendList(
-                    character.spells.map { MagicSpellItem(it) as UniversalViewData }.let {
+                    character.spells.map { MagicSpellItem(it) {
+                        router.goToCastSpellScreen(it.id)
+                    } as UniversalViewData }.let {
                         if(it.isNotEmpty()) it.plus(createMagicBookHeader(it)) else it
                     }
                 )
@@ -67,6 +71,8 @@ class MainFragment : Fragment() {
             }
         }
 
+        activeAbilityList.adapter = uinversalAdapter
+        activeAbilityList.layoutManager = LinearLayoutManager(requireContext())
     }
 
 
