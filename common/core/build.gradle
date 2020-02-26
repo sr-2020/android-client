@@ -36,6 +36,7 @@ dependencies {
     api "androidx.legacy:legacy-support-v4:$legacySupportVersion" // FIXME: Legacy
     api "com.google.android.material:material:$materialVersion"
     api "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
+    api "androidx.core:core-ktx:1.2.0"
     api "com.journeyapps:zxing-android-embedded:$zxingEmbeddedVersion"
     api "com.squareup.okio:okio:$okioVersion"
     api "com.squareup.retrofit2:retrofit:$retrofitVersion"

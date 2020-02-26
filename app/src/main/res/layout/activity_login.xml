@@ -75,7 +75,16 @@
                     android:text="@string/action_sign_in"
                     android:textStyle="bold"/>
 
+            <LinearLayout
+                    android:id="@+id/logins"
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"/>
+
         </LinearLayout>
+
+
     </ScrollView>
     <ImageButton
             android:layout_width="wrap_content"

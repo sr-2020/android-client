@@ -10,7 +10,9 @@ import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import android.widget.Button
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -26,6 +28,13 @@ import org.shadowrunrussia2020.android.common.models.LoginResponse
 import org.shadowrunrussia2020.android.common.utils.showErrorMessage
 import java.io.IOException
 
+val loginsMap = listOf(
+    Pair("t1@foo.bar", "1"),
+    Pair("t2@foo.bar", "1"),
+    Pair("t3@foo.bar", "1"),
+    Pair("t52@foo.bar", "1"),
+    Pair("t54@foo.bar", "1")
+)
 
 class LoginActivity : AppCompatActivity() {
     private val TAG = "SR2020-LoginActivity"
@@ -39,21 +48,38 @@ class LoginActivity : AppCompatActivity() {
         // Set up the login form.
         passwordInput.setOnEditorActionListener(TextView.OnEditorActionListener { _, id, _ ->
             if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
-                attemptLogin()
+                loginFormData()?.let{
+                    attemptLogin(it.email, it.password)
+                }
                 return@OnEditorActionListener true
             }
             false
         })
 
-        email_sign_in_button.setOnClickListener { attemptLogin() }
+        email_sign_in_button.setOnClickListener {
+            loginFormData()?.let {
+                attemptLogin(it.email, it.password)
+            }
+        }
 
         settingsButton.setOnClickListener { showSettings() }
 
         version.text = "v%s.%d".format(BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE)
+
+        loginsMap.forEach { (login, pass) ->
+            logins.addView(Button(this).apply {
+
+                layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                text = login
+                setOnClickListener {
+                    attemptLogin(login, pass)
+                }
+            })
+        }
+
     }
 
-    private fun attemptLogin() {
-        val loginFormData = loginFormData() ?: return
+    private fun attemptLogin(email: String, password: String) {
 
         val service = ApplicationSingletonScope.DependencyProvider.dependency.retrofit.create(AuthenticationWebService::class.java)
 
@@ -64,8 +90,8 @@ class LoginActivity : AppCompatActivity() {
                 {
                     service.login(
                         LoginRequest(
-                            email = loginFormData.email,
-                            password = loginFormData.password,
+                            email = email,
+                            password = password,
                             firebase_token = FirebaseInstanceId.getInstance().token!!
                         )
                     )
