@@ -11,6 +11,7 @@ import org.shadowrunrussia2020.android.common.Session
 import org.shadowrunrussia2020.android.common.declaration.repository.ICharacterRepository
 import org.shadowrunrussia2020.android.common.di.ApplicationSingletonScope
 import org.shadowrunrussia2020.android.getBackendUrl
+import org.shadowrunrussia2020.android.magic.MagicScreenDependency
 import org.shadowrunrussia2020.android.main.MainScreenDependency
 import org.shadowrunrussia2020.android.model.di.ModelDependency
 import retrofit2.Retrofit
@@ -20,6 +21,7 @@ import java.lang.ref.WeakReference
 interface IApplicationDependency :
     ApplicationSingletonScope.Dependency,
     MainScreenDependency,
+    MagicScreenDependency,
     ModelDependency
 
 class ApplicationDependency(val applicationProvider: WeakReference<Application>) : IApplicationDependency {

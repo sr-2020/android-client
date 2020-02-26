@@ -7,23 +7,21 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
 import com.google.zxing.BarcodeFormat
 import com.journeyapps.barcodescanner.BarcodeEncoder
-import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.main_character_view_item.view.*
 import kotlinx.android.synthetic.main.main_charter_screen.*
-import org.shadowrunrussia2020.android.common.models.PassiveAbility
+import org.shadowrunrussia2020.android.common.utils.LinearSpaceItemDecoration
 import org.shadowrunrussia2020.android.common.utils.encode
 import org.shadowrunrussia2020.android.common.utils.qrData
+import org.shadowrunrussia2020.android.view.universal_list.*
 
 class MainFragment : Fragment() {
 
-    private val abilityListAdpter by lazy {
-        AbilityAdapter().apply {
+    private val uinversalAdapter by lazy {
+        UinversalAdapter().apply {
             activeAbilityList.adapter = this
             activeAbilityList.layoutManager = LinearLayoutManager(requireContext())
+//            activeAbilityList.addItemDecoration(LinearSpaceItemDecoration(4))
         }
     }
 
@@ -35,17 +33,36 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.character.observe({ this.lifecycle }) {
-            it?.let {
-                textHp.text = "%s♥".format(it.maxHp)
-                textMana.text = "%s✡".format(it.magic)
-                textPowerBonus.text = "%s⚔".format(it.magicPowerBonus)
-                textStatus.text = "You status: %s".format(it.healthState)
+        viewModel.character.observe({ this.lifecycle }) { ch ->
+            ch?.let { character ->
+                textHp.text = "%s♥".format(character.maxHp)
+                textMana.text = "%s✡".format(character.magic)
+                textPowerBonus.text = "%s⚔".format(character.magicPowerBonus)
 
-                abilityListAdpter.submitList(it.passiveAbilities)
+                uinversalAdapter.clear()
+                uinversalAdapter.appendList(
+                    character.spells.map { MagicSpellItem(it) as UniversalViewData }.let {
+                        if(it.isNotEmpty()) it.plus(createMagicBookHeader(it)) else it
+                    }
+                )
+
+                uinversalAdapter.appendList(
+                    character.passiveAbilities.map { PassiveAbilitySpellItem(it) as UniversalViewData }.let {
+                        if(it.isNotEmpty()) it.plus(createPassiveAbilityHeader(it)) else it
+                    }
+                )
+
+                uinversalAdapter.appendList(
+                    character.activeAbilities.map { ActiveAbilitySpellItem(it) as UniversalViewData }.let {
+                        if(it.isNotEmpty()) it.plus(createActiveAbilityHeader(it)) else it
+                    }
+                )
+
+
+                uinversalAdapter.apply()
 
                 val barcodeEncoder = BarcodeEncoder()
-                val bitmap = barcodeEncoder.encodeBitmap(encode(it.qrData), BarcodeFormat.QR_CODE, 400, 400)
+                val bitmap = barcodeEncoder.encodeBitmap(encode(character.qrData), BarcodeFormat.QR_CODE, 400, 400)
                 qrDataView.setImageBitmap(bitmap)
             }
         }

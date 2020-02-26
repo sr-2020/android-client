@@ -26,6 +26,7 @@ import org.shadowrunrussia2020.android.common.utils.Type
 import org.shadowrunrussia2020.android.common.utils.Data
 import org.shadowrunrussia2020.android.common.utils.encode
 import org.shadowrunrussia2020.android.common.utils.showErrorMessage
+import java.util.concurrent.TimeUnit
 
 
 class WoundedFragment : Fragment() {
@@ -99,7 +100,7 @@ class WoundedFragment : Fragment() {
                     Data(
                         Type.WOUNDED_BODY,
                         0,
-                        (character.timestamp / 1000 + 3600).toInt(),
+                        (TimeUnit.MILLISECONDS.toSeconds(character.timestamp) + TimeUnit.HOURS.toSeconds(1)).toInt(),
                         character.modelId
                     )
                 ), BarcodeFormat.QR_CODE, 400, 400

@@ -10,9 +10,7 @@ import org.shadowrunrussia2020.android.common.models.HistoryRecord
 
 internal class MainViewModel : ViewModel() {
 
-    private val dependency: MainScreenDependency = ApplicationSingletonScope.DependencyProvider.provideDependency()
-
-    private val mRepository = dependency.characterRepository
+    private val mRepository = ApplicationSingletonScope.DependencyProvider.provideDependency<MainScreenDependency>().characterRepository
 
     val character get(): LiveData<Character> = mRepository.getCharacter()
     val history: LiveData<List<HistoryRecord>> get() = mRepository.getHistory()

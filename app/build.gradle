@@ -35,8 +35,10 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':model')
     implementation project(':common')
+
     implementation project(':settings')
     implementation project(':main_screen')
+    implementation project(':magic')
 
     kapt "androidx.lifecycle:lifecycle-compiler:$androidArchLifecycle"
     kapt "androidx.room:room-compiler:$roomVersion"

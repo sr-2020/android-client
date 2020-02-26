@@ -7,8 +7,11 @@ import android.os.Build
 import android.os.IBinder
 import android.os.RemoteException
 import android.util.Log
+import com.google.common.collect.EvictingQueue
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
+import io.reactivex.Observable
+import io.reactivex.disposables.CompositeDisposable
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -18,8 +21,11 @@ import org.shadowrunrussia2020.android.R
 import org.shadowrunrussia2020.android.common.di.ApplicationSingletonScope
 import org.shadowrunrussia2020.android.common.models.BeaconDataModel
 import org.shadowrunrussia2020.android.common.models.PositionsRequest
+import org.shadowrunrussia2020.android.common.utils.MainThreadSchedulers
+import org.shadowrunrussia2020.android.common.utils.plusAssign
 import java.io.IOException
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 
 class BeaconsScanner : Service(), BeaconConsumer {
@@ -27,6 +33,10 @@ class BeaconsScanner : Service(), BeaconConsumer {
     // private lateinit var mBackgroundPowerSaver: BackgroundPowerSaver
     private lateinit var mBeaconManager: BeaconManager
     private val positionsRepository by lazy { ApplicationSingletonScope.ComponentProvider.components.positionsRepository }
+
+    val disposer = CompositeDisposable()
+
+    val notificationManager get() = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
     private val firestore = FirebaseFirestore.getInstance()
 
@@ -74,19 +84,28 @@ class BeaconsScanner : Service(), BeaconConsumer {
                 "My Notification Name", NotificationManager.IMPORTANCE_DEFAULT
             )
             channel.description = "My Notification Channel Description"
-            val notificationManager = getSystemService(
-                Context.NOTIFICATION_SERVICE
-            ) as NotificationManager
+
             notificationManager.createNotificationChannel(channel)
             builder.setChannelId(channel.id)
         }
-        mBeaconManager.enableForegroundServiceScanning(builder.build(), 1713)
+        val notification = builder.build()
+
+        disposer += Observable.interval(3, TimeUnit.SECONDS)
+            .observeOn(MainThreadSchedulers.androidUiScheduler)
+            .subscribe {
+                notification.contentView
+            }
+
+
+
+        mBeaconManager.enableForegroundServiceScanning(notification, 1713)
         mBeaconManager.bind(this)
 
         // mBackgroundPowerSaver = BackgroundPowerSaver(this)
     }
 
     override fun onDestroy() {
+        disposer.dispose()
         try {
             mBeaconManager.removeAllRangeNotifiers()
             mBeaconManager.stopRangingBeaconsInRegion(Region("myRangingUniqueId", null, null, null))
@@ -97,6 +116,8 @@ class BeaconsScanner : Service(), BeaconConsumer {
         }
 
     }
+
+    val timestamps = EvictingQueue.create<Timestamp>(20)
 
     override fun onBeaconServiceConnect() {
         Log.d(TAG, "onBeaconServiceConnect")
@@ -134,7 +155,8 @@ class BeaconsScanner : Service(), BeaconConsumer {
             }
         }
 
-        val t = Timestamp(Date())
+        val t = Timestamp.now()
+        timestamps.add(t)
         for (b in beacons) {
             val beaconsCollection = firestore
                 .collection("characters")

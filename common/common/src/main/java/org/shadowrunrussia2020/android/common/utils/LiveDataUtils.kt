@@ -6,10 +6,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 
 @MainThread
-fun <X, Y> LiveData<X>.map(mapFunction: Function<X?, Y>): LiveData<Y> = Transformations.map(this, mapFunction)
+fun <X, Y> LiveData<X>.map(mapFunction: (X?)-> Y): LiveData<Y> = Transformations.map(this, mapFunction)
 
 @MainThread
-fun <X, Y> LiveData<X>.switchMap(switchMapFunction: Function<X?, LiveData<Y>>): LiveData<Y?> = Transformations.switchMap(this, switchMapFunction)
+fun <X, Y> LiveData<X>.switchMap(switchMapFunction:  (X?)->LiveData<Y>): LiveData<Y?> = Transformations.switchMap(this, switchMapFunction)
 
 @MainThread
 fun <X> LiveData<X>.distinctUntilChanged(): LiveData<X?> = Transformations.distinctUntilChanged(this)

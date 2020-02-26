@@ -9,6 +9,8 @@ project(':core').projectDir = new File(settingsDir, 'common/core')
 include ':model'
 project(':model').projectDir = new File(settingsDir, 'model/model')
 
+include ':universal_list'
+project(':universal_list').projectDir = new File(settingsDir, 'features/view/universal_list')
 
 // Features
 include ':main_screen'
@@ -16,3 +18,7 @@ project(':main_screen').projectDir = new File(settingsDir, 'features/main_screen
 
 include ':settings'
 project(':settings').projectDir = new File(settingsDir, 'features/settings')
+
+include ':magic'
+project(':magic').projectDir = new File(settingsDir, 'features/magic')
+

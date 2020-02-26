@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="magic_item" type="id"/>
+    <item name="passive_ability_item" type="id"/>
+    <item name="active_ability_item" type="id"/>
+</resources>

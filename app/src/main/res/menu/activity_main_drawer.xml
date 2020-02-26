@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:tools="http://schemas.android.com/tools"
-      tools:showIn="navigation_view">
+      tools:showIn="@layout/activity_main">
 
     <group android:checkableBehavior="single">
         <item
@@ -13,15 +13,6 @@
                 android:icon="@android:drawable/ic_menu_myplaces"
                 android:title="@string/charter"/>
 
-        <item
-                android:id="@+id/action_global_character_legacy"
-                android:icon="@android:drawable/ic_menu_myplaces"
-                android:iconTint="@android:color/holo_red_dark"
-                android:title="Старый экран"/>
-        <item
-                android:id="@+id/action_global_spellbook"
-                android:icon="@drawable/menu_manage"
-                android:title="@string/spellBoock"/>
         <item
                 android:id="@+id/action_global_active_abilities"
                 android:icon="@drawable/menu_manage"
@@ -43,12 +34,24 @@
 
     </group>
 
-    <item android:title="@string/qr">
+    <item android:title="Legacy">
         <menu>
             <item
                     android:id="@+id/nav_gallery"
                     android:icon="@drawable/generate_id_qr_code"
-                    android:title="@string/generateQR"/>
+                    android:title="@string/generateQR"
+                    />
+
+            <item
+                    android:id="@+id/action_global_character_legacy"
+                    android:icon="@android:drawable/ic_menu_myplaces"
+                    android:iconTint="@android:color/holo_red_dark"
+                    android:title="Старый экран персонажа"/>
+
+            <item
+                    android:id="@+id/action_global_spellbook"
+                    android:icon="@drawable/menu_manage"
+                    android:title="Старый вариант книги заклинаний"/>
         </menu>
     </item>
 
