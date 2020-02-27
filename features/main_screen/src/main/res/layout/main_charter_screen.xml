@@ -1,80 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:context=".MainFragment">
 
-
-    <Button
-            android:id="@+id/bodySpinner"
-            android:layout_width="0dp"
+    <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:padding="16dp"
-            android:spinnerMode="dropdown"
-            android:text="TODO: тело"
-            android:textSize="25sp"
-            app:layout_constraintBottom_toBottomOf="@+id/qrDataView"
-            app:layout_constraintEnd_toStartOf="@+id/qrDataView"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/qrDataView"
-            tools:text="Аватар " />
+            android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_scrollFlags="scroll|snap">
 
 
-    <TextView
-            android:id="@+id/textPowerBonus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:textColor="#000"
-            android:textSize="25dp"
-            app:layout_constraintEnd_toStartOf="@+id/textHp"
-            app:layout_constraintStart_toEndOf="@+id/textMana"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="99⚔" />
-
-    <TextView
-            android:id="@+id/textHp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:textColor="#f00"
-            android:textSize="25sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="15♡" />
-
-    <TextView
-            android:id="@+id/textMana"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:textColor="#00f"
-            android:textSize="25sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="15✡" />
+            <Button
+                    android:id="@+id/bodySpinner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:padding="16dp"
+                    android:spinnerMode="dropdown"
+                    android:text="TODO: тело"
+                    android:textSize="25sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/qrDataView"
+                    app:layout_constraintEnd_toStartOf="@+id/qrDataView"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/qrDataView"
+                    tools:text="Аватар " />
 
 
+            <ImageView
+                    android:id="@+id/qrDataView"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_margin="15dp"
+                    android:translationZ="4dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:srcCompat="@drawable/qr_code" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ImageView
-            android:id="@+id/qrDataView"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_margin="15dp"
-            android:translationZ="4dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textHp"
-            tools:srcCompat="@drawable/qr_code" />
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+
+            <TextView
+                    android:id="@+id/textMana"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:textColor="#00f"
+                    android:textSize="25sp"
+                    tools:text="15✡" />
+
+
+            <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+            <TextView
+                    android:id="@+id/textPowerBonus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:textColor="#000"
+                    android:textSize="25dp"
+                    tools:text="99⚔" />
+
+
+            <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+
+            <TextView
+                    android:id="@+id/textHp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:textColor="#f00"
+                    android:textSize="25sp"
+                    tools:text="15♡" />
+        </LinearLayout>
+
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/activeAbilityList"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/qrDataView" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

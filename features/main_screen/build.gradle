@@ -31,6 +31,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation group: 'androidx.preference', name: 'preference', version: preferenceVersion
+    implementation "androidx.coordinatorlayout:coordinatorlayout:1.1.0"
 
     kapt "androidx.lifecycle:lifecycle-compiler:$androidArchLifecycle"
     kapt "androidx.room:room-compiler:$roomVersion"
