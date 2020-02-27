@@ -22,6 +22,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.onNavDestinationSelected
@@ -39,11 +40,13 @@ import org.shadowrunrussia2020.android.character.CharacterViewModel
 import org.shadowrunrussia2020.android.common.di.ApplicationSingletonScope
 import org.shadowrunrussia2020.android.common.di.MainActivityScope
 import org.shadowrunrussia2020.android.common.models.Character
+import org.shadowrunrussia2020.android.common.models.HistoryRecord
 import org.shadowrunrussia2020.android.common.models.Position
 import org.shadowrunrussia2020.android.common.utils.Data
 import org.shadowrunrussia2020.android.common.utils.Type
 import org.shadowrunrussia2020.android.common.utils.showErrorMessage
 import org.shadowrunrussia2020.android.di.IMainActivityDi
+import org.shadowrunrussia2020.android.magic.SpellDetailsFragmentDirections
 import org.shadowrunrussia2020.android.magic.cast.SpellCastFragment
 import org.shadowrunrussia2020.android.positioning.BeaconsScanner
 import org.shadowrunrussia2020.android.positioning.PositionsViewModel
@@ -305,6 +308,12 @@ class MainActivity : AppCompatActivity(), IMainActivityDi {
             navController.navigate(
                 R.id.action_cast_spell,
                 SpellCastFragment.createBundle(spellId)
+            )
+        }
+
+        override fun showSpellResult(records: Array<HistoryRecord>) {
+            navController.navigate(
+                SpellDetailsFragmentDirections.actionShowSpellResult(records)
             )
         }
     }
