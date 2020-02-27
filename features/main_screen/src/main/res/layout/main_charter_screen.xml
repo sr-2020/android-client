@@ -11,35 +11,55 @@
             android:id="@+id/appBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="#FFF">
 
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_scrollFlags="scroll|snap">
 
-
-            <Button
-                    android:id="@+id/bodySpinner"
+            <TextView
+                    android:id="@+id/fullTextHP"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:padding="16dp"
-                    android:spinnerMode="dropdown"
-                    android:text="TODO: тело"
-                    android:textSize="25sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/qrDataView"
+                    android:textColor="#f00"
+                    app:layout_constraintBottom_toTopOf="@+id/fullTextMana"
                     app:layout_constraintEnd_toStartOf="@+id/qrDataView"
+                    app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/qrDataView"
-                    tools:text="Аватар " />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Максимальные хиты: 15♡" />
+
+            <TextView
+                    android:id="@+id/fullTextMana"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="#00f"
+                    app:layout_constraintBottom_toTopOf="@+id/fullTextPover"
+                    app:layout_constraintEnd_toStartOf="@+id/qrDataView"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/fullTextHP"
+                    tools:text="Текущее значение маны: 15✡" />
+
+            <TextView
+                    android:id="@+id/fullTextPover"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/qrDataView"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/fullTextMana"
+                    tools:text="Бонус к мощи: 99⚔" />
 
 
             <ImageView
                     android:id="@+id/qrDataView"
                     android:layout_width="200dp"
                     android:layout_height="200dp"
-                    android:layout_margin="15dp"
                     android:translationZ="4dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
