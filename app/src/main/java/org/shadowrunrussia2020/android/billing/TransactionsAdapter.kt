@@ -27,16 +27,16 @@ class TransactionsAdapter : RecyclerView.Adapter<TransactionsAdapter.ViewHolder>
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val transaction = mDataset[position]
-        if (transaction.amount > 0) {
+        if (transaction.transferType == "Incoming") {
             holder.mDirectionView.setImageResource(R.drawable.ic_transfer_to)
-            holder.mCommentView.text = "${transaction.sin_from}${commentInBrackets(transaction)}"
+            holder.mCommentView.text = "${commentInBrackets(transaction)}"
             holder.mAmountView.text = transaction.amount.toString()
         } else {
             holder.mDirectionView.setImageResource(R.drawable.ic_transfer_from)
-            holder.mCommentView.text = "${transaction.sin_to}${commentInBrackets(transaction)}"
+            holder.mCommentView.text = "${commentInBrackets(transaction)}"
             holder.mAmountView.text = (-transaction.amount).toString()
         }
-        holder.mTimeView.text = PrettyTime(Locale("ru")).format(transaction.created_at)
+        holder.mTimeView.text = PrettyTime(Locale("ru")).format(transaction.operationTime)
         holder.itemView.setOnClickListener {
             it.findNavController().navigate(
                 BillingFragmentDirections.actionTransactionDetails(

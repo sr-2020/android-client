@@ -34,8 +34,8 @@ class BillingOverviewFragment : Fragment() {
         val accountOverview = mModel.getAccountOverview()
         accountOverview.observe(this, Observer {
             if (it != null) {
-                textViewBalance.text = it.balance.toString()
-                textViewSin.text = it.sin.toString()
+                textViewBalance.text = it.currentBalance.toString()
+                textViewSin.text = it.characterId.toString()
             }
         })
 
@@ -55,7 +55,7 @@ class BillingOverviewFragment : Fragment() {
                 return@setOnClickListener
             }
             val amount = Integer.parseInt(amountString)
-            if (amount > accountOverview.value?.balance ?:  0) {
+            if (amount > accountOverview.value?.currentBalance ?:  0) {
                 editTextAmount.error = getString(R.string.insufficient_money)
                 editTextAmount.requestFocus()
                 return@setOnClickListener

@@ -10,22 +10,32 @@ import java.util.*
 data class AccountOverview (
     @PrimaryKey
     var id: Int,
-    var sin: Int,
-    var balance: Int
+    var characterId: Int,
+    var currentBalance: Int,
+    var currentScoring: Int,
+    var lifeStyle: String
+)
+
+data class BalanceResponse(
+    var data: AccountOverview
 )
 
 @Parcelize
 @Entity
 data class Transaction(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     var id: Int,
-    var created_at: Date,
-    var sin_from: Int,
-    var sin_to: Int,
+    var operationTime: Date,
+    //var sin_from: Int,
+    //var sin_to: Int,
     var amount: Int,
     var comment: String?,
-    var recurrent_payment_id: Int?
+    var transferType: String
 ) : Parcelable
+
+data class TransfersResponse (
+    var data: List<Transaction>
+)
 
 @Parcelize
 data class Transfer(
@@ -33,5 +43,3 @@ data class Transfer(
     var amount: Int,
     var comment: String?
 ) : Parcelable
-
-data  class AccountInfo(var balance: Int, var sin: Int, var history: List<Transaction>)

@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import org.shadowrunrussia2020.android.common.di.ApplicationSingletonScope
 import org.shadowrunrussia2020.android.common.models.AccountOverview
 import org.shadowrunrussia2020.android.common.models.Transaction
+import org.shadowrunrussia2020.android.common.models.Transfer
 
 class BillingViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -20,18 +21,16 @@ class BillingViewModel(application: Application) : AndroidViewModel(application)
     }
 
     suspend fun refresh() {
-        // TODO(aeremin) Switch to use new backend and re-enable
-        // mBillingRepository.refresh()
+        mBillingRepository.refresh()
     }
 
     suspend fun transferMoney(receiver: Int, amount: Int, comment: String?) {
-        // TODO(aeremin) Switch to use new backend and re-enable
-        /* return mBillingRepository.transferMoney(
+        mBillingRepository.transferMoney(
             Transfer(
                 receiver,
                 amount,
                 comment
             )
-        ) */
+        )
     }
 }
