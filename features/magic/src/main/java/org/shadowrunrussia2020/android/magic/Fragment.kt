@@ -21,7 +21,7 @@ class MagicFragment : Fragment() {
 
     private val viewModel by lazy { ViewModelProviders.of(this)[MagicViewModel::class.java] }
     private val router by lazy { (activity as MainActivityScope).router }
-    private val uinversalAdapter by lazy { UinversalAdapter() }
+    private val uinversalAdapter by lazy { UniversalAdapter() }
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =

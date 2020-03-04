@@ -14,7 +14,7 @@ abstract class UniversalViewData {
     var onNotifyDataSetChanged: (() -> Unit)? = null
 }
 
-class UinversalAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class UniversalAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val list = mutableListOf<UniversalViewData>()
     private val comparator = object : Comparator<UniversalViewData> {
         override fun compare(o1: UniversalViewData?, o2: UniversalViewData?): Int {

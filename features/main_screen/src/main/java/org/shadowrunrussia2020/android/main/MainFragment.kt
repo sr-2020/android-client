@@ -18,7 +18,7 @@ import org.shadowrunrussia2020.android.view.universal_list.*
 
 class MainFragment : Fragment() {
 
-    private val uinversalAdapter by lazy { UinversalAdapter() }
+    private val uinversalAdapter by lazy { UniversalAdapter() }
 
     private val router by lazy { (activity as MainActivityScope).router }
 
