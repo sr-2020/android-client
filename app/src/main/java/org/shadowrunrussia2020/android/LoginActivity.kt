@@ -2,19 +2,15 @@ package org.shadowrunrussia2020.android
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.text.InputType
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.Button
-import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.activity_login.*
@@ -62,8 +58,6 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-        settingsButton.setOnClickListener { showSettings() }
-
         version.text = "v%s.%d".format(BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE)
 
         loginsMap.forEach { (login, pass) ->
@@ -105,29 +99,6 @@ class LoginActivity : AppCompatActivity() {
             }
             showProgress(false)
         }
-    }
-
-    private fun showSettings() {
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle(getString(R.string.choose_server_address_title))
-
-        val input = EditText(this)
-        input.inputType = InputType.TYPE_CLASS_TEXT
-        input.setText(getBackendUrl(application, this))
-        builder.setView(input)
-
-        builder.setPositiveButton(getString(R.string.ok)) { _, _ -> saveServerAddress(input.text.toString()) }
-        builder.setNegativeButton(getString(R.string.cancel)) { dialog, _ -> dialog.cancel() }
-
-        builder.show()
-    }
-
-    @SuppressLint("ApplySharedPref")
-    private fun saveServerAddress(address: String) {
-        mApplication.getGlobalSharedPreferences()
-            .edit()
-            .putString(getString(R.string.backend_url_key), address)
-            .commit()
     }
 
     private inner class LoginFormData(var email: String, var password: String)
