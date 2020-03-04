@@ -11,7 +11,6 @@ import com.google.zxing.BarcodeFormat
 import com.journeyapps.barcodescanner.BarcodeEncoder
 import kotlinx.android.synthetic.main.main_charter_screen.*
 import org.shadowrunrussia2020.android.common.di.MainActivityScope
-import org.shadowrunrussia2020.android.common.utils.LinearSpaceItemDecoration
 import org.shadowrunrussia2020.android.common.utils.encode
 import org.shadowrunrussia2020.android.common.utils.qrData
 import org.shadowrunrussia2020.android.view.universal_list.*

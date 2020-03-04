@@ -7,13 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.zxing.BarcodeFormat
-import com.journeyapps.barcodescanner.BarcodeEncoder
 import kotlinx.android.synthetic.main.magic_screen.*
 import org.shadowrunrussia2020.android.common.di.MainActivityScope
-import org.shadowrunrussia2020.android.common.models.Character
-import org.shadowrunrussia2020.android.common.utils.encode
-import org.shadowrunrussia2020.android.common.utils.qrData
 import org.shadowrunrussia2020.android.view.universal_list.*
 
 
