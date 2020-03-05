@@ -39,7 +39,11 @@ class Fragment : Fragment() {
 
                 universalAdapter.clear()
 
-                // TODO(aeremin) Demonstrate states also
+                universalAdapter.appendList(
+                    character.ethicState
+                        .sortedBy { it.scale }
+                        .map { EthicStateItem(it) })
+
                 universalAdapter.appendList(
                     character.ethicTrigger
                         .filter { it.kind == "principle" }

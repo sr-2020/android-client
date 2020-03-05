@@ -4,4 +4,5 @@
     <item name="passive_ability_item" type="id"/>
     <item name="active_ability_item" type="id"/>
     <item name="ethic_trigger_item" type="id"/>
+    <item name="ethic_state_item" type="id"/>
 </resources>
