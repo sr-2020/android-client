@@ -22,3 +22,5 @@ project(':settings').projectDir = new File(settingsDir, 'features/settings')
 include ':magic'
 project(':magic').projectDir = new File(settingsDir, 'features/magic')
 
+include ':ethics'
+project(':ethics').projectDir = new File(settingsDir, 'features/ethics')

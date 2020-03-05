@@ -3,10 +3,7 @@ package org.shadowrunrussia2020.android.common
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import org.shadowrunrussia2020.android.common.models.ActiveAbility
-import org.shadowrunrussia2020.android.common.models.HistoryRecord
-import org.shadowrunrussia2020.android.common.models.PassiveAbility
-import org.shadowrunrussia2020.android.common.models.Spell
+import org.shadowrunrussia2020.android.common.models.*
 import java.util.*
 
 
@@ -58,6 +55,26 @@ class Converters {
 
     @TypeConverter
     fun passiveAbilitiesToJson(value: List<PassiveAbility>): String {
+        return Gson().toJson(value)
+    }
+
+    @TypeConverter
+    fun jsonToEthicTrigger(value: String): List<EthicTrigger> {
+        return Gson().fromJson(value, object : TypeToken<List<EthicTrigger>>() {}.type)
+    }
+
+    @TypeConverter
+    fun ethicTriggerToJson(value: List<EthicTrigger>): String {
+        return Gson().toJson(value)
+    }
+
+    @TypeConverter
+    fun jsonToEthicState(value: String): List<EthicState> {
+        return Gson().fromJson(value, object : TypeToken<List<EthicState>>() {}.type)
+    }
+
+    @TypeConverter
+    fun ethicStateToJson(value: List<EthicState>): String {
         return Gson().toJson(value)
     }
 }

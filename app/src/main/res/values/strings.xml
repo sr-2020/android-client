@@ -56,6 +56,7 @@
     <string name="spellBoock">Книга заклинаний</string>
     <string name="spells">Активируемые способности</string>
     <string name="skills">Пассивные способности</string>
+    <string name="ethics">Этика</string>
     <string name="history">История</string>
     <string name="location">Местоположение</string>
     <string name="generateQR">Генерация QR-кода</string>

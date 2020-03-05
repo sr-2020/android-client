@@ -37,6 +37,20 @@ data class PassiveAbility(
 }
 
 @Parcelize
+data class EthicState(
+    val scale: String,
+    val value: Int,
+    val description: String
+) : Parcelable
+
+@Parcelize
+data class EthicTrigger(
+    val id: String,
+    val kind: String,
+    val description: String
+) : Parcelable
+
+@Parcelize
 @Entity
 data class HistoryRecord(
     @PrimaryKey val id: String,
@@ -67,6 +81,9 @@ data class Character(
     val spells: List<Spell>,
     val activeAbilities: List<ActiveAbility>,
     val passiveAbilities: List<PassiveAbility>,
+    val ethicState: List<EthicState>,
+    val ethicTrigger: List<EthicTrigger>,
+    val ethicLockedUntil: Long,
     val history: List<HistoryRecord>
 )
 

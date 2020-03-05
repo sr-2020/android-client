@@ -11,6 +11,7 @@ import org.shadowrunrussia2020.android.TestSuccessInterceptor
 import org.shadowrunrussia2020.android.common.Session
 import org.shadowrunrussia2020.android.common.declaration.repository.ICharacterRepository
 import org.shadowrunrussia2020.android.common.di.ApplicationSingletonScope
+import org.shadowrunrussia2020.android.ethics.EthicsScreenDependency
 import org.shadowrunrussia2020.android.magic.MagicScreenDependency
 import org.shadowrunrussia2020.android.main.MainScreenDependency
 import org.shadowrunrussia2020.android.model.di.ModelDependency
@@ -22,6 +23,7 @@ interface IApplicationDependency :
     ApplicationSingletonScope.Dependency,
     MainScreenDependency,
     MagicScreenDependency,
+    EthicsScreenDependency,
     ModelDependency
 
 class ApplicationDependency(val applicationProvider: WeakReference<Application>) : IApplicationDependency {
