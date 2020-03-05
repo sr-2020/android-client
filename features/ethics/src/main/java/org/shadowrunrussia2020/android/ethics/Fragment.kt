@@ -41,7 +41,16 @@ class Fragment : Fragment() {
 
                 // TODO(aeremin) Demonstrate states also
                 universalAdapter.appendList(
-                    character.ethicTrigger.map { EthicTriggerItem(it) { onTriggerActivated(it) }})
+                    character.ethicTrigger
+                        .filter { it.kind == "principle" }
+                        .sortedBy { it.description }
+                        .map { EthicTriggerItem(it) { onTriggerActivated(it) }})
+
+                universalAdapter.appendList(
+                    character.ethicTrigger
+                        .filter { it.kind != "principle" }
+                        .sortedBy { it.description }
+                        .map { EthicTriggerItem(it) { onTriggerActivated(it) }})
 
                 universalAdapter.apply()
             }

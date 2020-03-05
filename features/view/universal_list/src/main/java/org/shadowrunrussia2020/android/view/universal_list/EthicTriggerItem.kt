@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.ethic_trigger_item.view.*
 import kotlinx.android.synthetic.main.magic_spell_item.view.*
 import org.shadowrunrussia2020.android.common.models.EthicTrigger
 import org.shadowrunrussia2020.android.common.models.Spell
@@ -21,18 +22,12 @@ class EthicTriggerItem(
 }
 
 private class EthicTriggerViewHolder private constructor(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
-    // TODO(aeremin) Use dedicated layout
     constructor(parent: ViewGroup)
-            : this(LayoutInflater.from(parent.context).inflate(R.layout.magic_spell_item, parent, false))
+            : this(LayoutInflater.from(parent.context).inflate(R.layout.ethic_trigger_item, parent, false))
 
     fun bindView(trigger: EthicTrigger, onClick: (() -> Unit)?, hide: Boolean) {
-        // TODO(aeremin) Use proper icon (or remove icon altogether)
-        containerView.imageView.setImageDrawable(
-            containerView.resources.getDrawable(R.drawable.enchanted)
-        )
-
-        containerView.titleView.text = "Поступок"
-        containerView.contextView.text = trigger.description
+        containerView.mainText.text = trigger.description
+        containerView.subText.text = if (trigger.kind == "principle") "Нажми, если нарушил" else "Нажми, если выполнил"
         containerView.setOnClickListener { onClick?.invoke() }
     }
 }
