@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="logout">Выход</string>
-    <string name="logout_summary">Этот пункт меню остановит работу приложения и выбросит вас на экран авторизации.</string>
-    <string name="name_def_summary">имя не заполнено</string>
-    <string name="name_title">ФИО игрока</string>
-    <string name="selfie_title">Сделать свою фотографию</string>
-    <string name="selfie_summary">Необходимо, чтобы мастера лучше опозновали вас</string>
-</resources>

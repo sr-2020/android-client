@@ -1,8 +1,8 @@
 <resources>
-    <string name="logout">Logout</string>
-    <string name="logout_summary">This option stops app serwices and logging out you from app</string>
-    <string name="name_def_summary">name is absent</string>
-    <string name="name_title">You realy full name</string>
-    <string name="selfie_summary">It\'s that the techs better identify you</string>
-    <string name="selfie_title">Make selfie</string>
+    <string name="logout">Выход</string>
+    <string name="logout_summary">Этот пункт меню остановит работу приложения и выбросит вас на экран авторизации.</string>
+    <string name="name_def_summary">имя не заполнено</string>
+    <string name="name_title">ФИО игрока</string>
+    <string name="selfie_title">Сделать свою фотографию</string>
+    <string name="selfie_summary">Необходимо, чтобы мастера лучше опозновали вас</string>
 </resources>
