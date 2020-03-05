@@ -1,3 +1,5 @@
 <resources>
-
+    <string name="confirmation_message">Данное действие внесет необратимые изменения в профиль личности вашего персонажа. Продолжить?</string>
+    <string name="confirm_change">Да</string>
+    <string name="cancel_change">Нет</string>
 </resources>

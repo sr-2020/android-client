@@ -16,6 +16,7 @@ internal class ViewModel : ViewModel() {
 
     suspend fun refresh() = mRepository.refresh()
 
-    suspend fun postEvent(eventType: String, data: HashMap<String, Any> = hashMapOf()): CharacterResponse? =
-        mRepository.sendEvent(Event(eventType, data))
+    suspend fun ethicTrigger(id: String) {
+        mRepository.sendEvent(Event("ethicTrigger", hashMapOf(("id" to id))))
+    }
 }

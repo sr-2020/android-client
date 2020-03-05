@@ -1,5 +1,6 @@
 package org.shadowrunrussia2020.android.ethics
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,9 +11,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.zxing.BarcodeFormat
 import com.journeyapps.barcodescanner.BarcodeEncoder
 import kotlinx.android.synthetic.main.ethics_screen.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.shadowrunrussia2020.android.common.di.MainActivityScope
+import org.shadowrunrussia2020.android.common.models.EthicTrigger
 import org.shadowrunrussia2020.android.common.utils.encode
 import org.shadowrunrussia2020.android.common.utils.qrData
+import org.shadowrunrussia2020.android.common.utils.showErrorMessage
 import org.shadowrunrussia2020.android.view.universal_list.*
 
 class Fragment : Fragment() {
@@ -33,14 +40,10 @@ class Fragment : Fragment() {
                 universalAdapter.clear()
 
                 // TODO(aeremin) Demonstrate states also
-
                 universalAdapter.appendList(
-                    character.ethicTrigger.map { EthicTriggerItem(it) {
-                        // TODO(aeremin): Activate ethics trigger
-                    }})
+                    character.ethicTrigger.map { EthicTriggerItem(it) { onTriggerActivated(it) }})
 
                 universalAdapter.apply()
-
             }
         }
 
@@ -48,7 +51,23 @@ class Fragment : Fragment() {
         ethicTriggersList.layoutManager = LinearLayoutManager(requireContext())
     }
 
-
+    private fun onTriggerActivated(trigger: EthicTrigger) {
+        val builder = AlertDialog.Builder(activity)
+        builder.setMessage(R.string.confirmation_message)
+            .setPositiveButton(R.string.confirm_change
+            ) { _, _ ->
+                try {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        viewModel.ethicTrigger(trigger.id)
+                    }
+                } catch (e: Exception) {
+                    showErrorMessage(requireActivity(), "${e.message}")
+                }
+            }
+            .setNegativeButton(R.string.cancel_change) {_, _ -> }
+        // Create the AlertDialog object and return it
+        builder.create().show()
+    }
 
 }
 
