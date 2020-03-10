@@ -15,7 +15,7 @@ class EthicTriggerItem(
     private val trigger: EthicTrigger,
     private val onClick: (() -> Unit)? = null
 ) : UniversalViewData() {
-    override val groupID = R.id.ethic_trigger_item
+    override val groupID = R.id.ethic_3_trigger_item
     override val isHeader = false
     override fun createViewHolder(parent: ViewGroup): RecyclerView.ViewHolder = EthicTriggerViewHolder(parent)
     override fun bindHolder(holder: RecyclerView.ViewHolder) = (holder as EthicTriggerViewHolder).bindView(trigger, onClick, hide)

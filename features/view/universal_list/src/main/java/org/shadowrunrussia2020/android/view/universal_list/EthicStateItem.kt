@@ -11,7 +11,7 @@ import org.shadowrunrussia2020.android.common.models.EthicState
 class EthicStateItem(
     private val state: EthicState
 ) : UniversalViewData() {
-    override val groupID = R.id.ethic_state_item
+    override val groupID = R.id.ethic_1_state_item
     override val isHeader = false
     override fun createViewHolder(parent: ViewGroup): RecyclerView.ViewHolder =
         EthicStateViewHolder(parent)

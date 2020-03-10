@@ -34,5 +34,5 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation group: 'androidx.preference', name: 'preference', version: preferenceVersion
-
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
 }

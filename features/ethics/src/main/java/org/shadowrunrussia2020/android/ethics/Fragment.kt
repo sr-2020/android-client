@@ -2,6 +2,7 @@ package org.shadowrunrussia2020.android.ethics
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.text.format.Time
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,17 +11,21 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.zxing.BarcodeFormat
 import com.journeyapps.barcodescanner.BarcodeEncoder
+import io.reactivex.Observable
 import kotlinx.android.synthetic.main.ethics_screen.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.shadowrunrussia2020.android.common.di.MainActivityScope
+import org.shadowrunrussia2020.android.common.models.EthicState
 import org.shadowrunrussia2020.android.common.models.EthicTrigger
 import org.shadowrunrussia2020.android.common.utils.encode
 import org.shadowrunrussia2020.android.common.utils.qrData
 import org.shadowrunrussia2020.android.common.utils.showErrorMessage
 import org.shadowrunrussia2020.android.view.universal_list.*
+import java.sql.Date
+import java.util.concurrent.TimeUnit
 
 class Fragment : Fragment() {
 
@@ -44,17 +49,36 @@ class Fragment : Fragment() {
                         .sortedBy { it.scale }
                         .map { EthicStateItem(it) })
 
-                universalAdapter.appendList(
-                    character.ethicTrigger
-                        .filter { it.kind == "principle" }
-                        .sortedBy { it.description }
+                if (character.ethicLockedUntil > System.currentTimeMillis()) {
+                    universalAdapter.appendList(
+                        character.ethicTrigger
+                            .filter { it.kind == "crysis" }
+                            .sortedBy { it.description }
+                            .map { EthicTriggerItem(it) { onTriggerActivated(it) } })
+                    universalAdapter.appendList(
+                        listOf(
+                            EthicCooldownItem(character.ethicLockedUntil) {
+                                try {
+                                    CoroutineScope(Dispatchers.IO).launch { viewModel.refresh() }
+                                } catch (e: Exception) {
+                                    showErrorMessage(requireContext(), "Ошибка. ${e.message}")
+                                }
+                            }
+                        )
+                    )
+                } else {
+                    universalAdapter.appendList(
+                        character.ethicTrigger
+                            .filter { it.kind == "principle" }
+                            .sortedBy { it.description }
                         .map { EthicTriggerItem(it) { onTriggerActivated(it) }})
 
-                universalAdapter.appendList(
-                    character.ethicTrigger
-                        .filter { it.kind != "principle" }
-                        .sortedBy { it.description }
+                    universalAdapter.appendList(
+                        character.ethicTrigger
+                            .filter { it.kind != "principle" }
+                            .sortedBy { it.description }
                         .map { EthicTriggerItem(it) { onTriggerActivated(it) }})
+                }
 
                 universalAdapter.apply()
             }
