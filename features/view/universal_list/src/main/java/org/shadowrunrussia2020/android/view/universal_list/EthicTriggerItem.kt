@@ -3,6 +3,7 @@ package org.shadowrunrussia2020.android.view.universal_list
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.extensions.LayoutContainer
@@ -27,6 +28,14 @@ private class EthicTriggerViewHolder private constructor(override val containerV
 
     fun bindView(trigger: EthicTrigger, onClick: (() -> Unit)?, hide: Boolean) {
         containerView.mainText.text = trigger.description
+        containerView.mainText.setTextColor(ContextCompat.getColor(itemView.context,
+            when (trigger.kind) {
+                "crysis" -> android.R.color.holo_red_dark
+                "principle" -> android.R.color.holo_blue_dark
+                else -> android.R.color.holo_green_dark
+            }
+        )
+        )
         containerView.subText.text = if (trigger.kind == "principle") "Нажми, если нарушил" else "Нажми, если выполнил"
         containerView.setOnClickListener { onClick?.invoke() }
     }
