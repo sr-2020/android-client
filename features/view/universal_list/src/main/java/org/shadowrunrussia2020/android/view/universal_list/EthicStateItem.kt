@@ -24,7 +24,7 @@ private class EthicStateViewHolder private constructor(override val containerVie
     RecyclerView.ViewHolder(containerView), LayoutContainer {
     constructor(parent: ViewGroup)
             : this(
-        LayoutInflater.from(parent.context).inflate(R.layout.ethic_trigger_item, parent, false)
+        LayoutInflater.from(parent.context).inflate(R.layout.ethic_state_item, parent, false)
     )
 
     fun bindView(state: EthicState, hide: Boolean) {

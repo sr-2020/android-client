@@ -33,7 +33,7 @@ private class EthicCooldownHolder private constructor(override val containerView
 
     constructor(parent: ViewGroup)
             : this(
-        LayoutInflater.from(parent.context).inflate(R.layout.ethic_trigger_item, parent, false)
+        LayoutInflater.from(parent.context).inflate(R.layout.ethic_cooldown_item, parent, false)
     )
 
     fun bindView(disposer: CompositeDisposable, lockedUntil: Long, onCooldownEnd: (() -> Unit)) {
