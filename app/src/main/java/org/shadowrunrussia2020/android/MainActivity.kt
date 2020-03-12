@@ -22,7 +22,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.onNavDestinationSelected
@@ -165,6 +164,9 @@ class MainActivity : AppCompatActivity(), IMainActivityDi {
                 toolbar.visibility = View.VISIBLE
                 drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
             }
+
+            toolbar.menu.findItem(R.id.action_help)?.isVisible =
+                destination.id == R.id.ethicsFragment
         }
     }
 

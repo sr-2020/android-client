@@ -202,7 +202,16 @@
     <fragment
         android:id="@+id/ethicsFragment"
         android:name="org.shadowrunrussia2020.android.ethics.Fragment"
-        android:label="Этика" />
+        android:label="Этика">
+        <action
+            android:id="@+id/action_help"
+            app:destination="@id/ethicsHelp" />
+    </fragment>
     <action android:id="@+id/action_global_ethics" app:destination="@id/ethicsFragment" app:launchSingleTop="true" />
+
+    <fragment
+        android:id="@+id/ethicsHelp"
+        android:name="org.shadowrunrussia2020.android.ethics.HelpFragment"
+        android:label="Помощь: этика"/>
 
 </navigation>
