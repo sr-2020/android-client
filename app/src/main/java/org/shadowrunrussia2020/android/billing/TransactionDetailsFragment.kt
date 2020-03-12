@@ -24,8 +24,8 @@ class TransactionDetailsFragment : Fragment() {
         val t = args.transaction
         valueId.text = t.id.toString()
         valueDate.text = t.operationTime.toString()
-        //valueFrom.text = t.sin_from.toString()
-        //valueTo.text = t.sin_to.toString()
+        valueFrom.text = t.from
+        valueTo.text = t.to
         valueAmount.text = t.amount.absoluteValue.toString()
         valueComment.text = t.comment
     }

@@ -26,8 +26,8 @@ data class Transaction(
     @PrimaryKey(autoGenerate = true)
     var id: Int,
     var operationTime: Date,
-    //var sin_from: Int,
-    //var sin_to: Int,
+    val from: String,
+    val to: String,
     var amount: Int,
     var comment: String?,
     var transferType: String
