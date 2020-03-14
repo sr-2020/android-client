@@ -1,6 +1,5 @@
 package org.shadowrunrussia2020.android.view.universal_list
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +16,7 @@ class EthicCooldownItem(
     private val lockedUntil: Long,
     private val onCooldownEnd: (() -> Unit)
 ) : UniversalViewData() {
-    val disposer = CompositeDisposable()
+    private val disposer = CompositeDisposable()
     override val groupID = R.id.ethic_2_cooldown_item
     override val isHeader = false
     override fun createViewHolder(parent: ViewGroup): RecyclerView.ViewHolder =
