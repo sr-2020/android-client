@@ -51,18 +51,5 @@ class AllPositionsFragment : Fragment() {
                 })
             })
         availableSpellsView.adapter = adapter
-
-        swipeRefreshLayout.setOnRefreshListener { refreshData() }
-    }
-
-    private fun refreshData() {
-        CoroutineScope(Dispatchers.Main).launch {
-            try {
-                withContext(CoroutineScope(Dispatchers.IO).coroutineContext) { mModel.refresh() }
-            } catch (e: Exception) {
-                showErrorMessage(requireContext(), "Ошибка. ${e.message}")
-            }
-            swipeRefreshLayout?.isRefreshing = false
-        }
     }
 }

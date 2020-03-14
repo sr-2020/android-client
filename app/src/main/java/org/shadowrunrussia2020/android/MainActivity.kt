@@ -27,7 +27,6 @@ import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.CoroutineScope
@@ -99,6 +98,8 @@ class MainActivity : AppCompatActivity(), IMainActivityDi {
                 }
             }
         })
+
+        swipeRefreshLayout.setOnRefreshListener { refreshData() }
 
         nav_view.setupWithNavController(navController)
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration)
@@ -276,6 +277,24 @@ class MainActivity : AppCompatActivity(), IMainActivityDi {
             else -> return item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(
                 item
             )
+        }
+    }
+
+    fun setPullToRefreshEnabled(on: Boolean) {
+        swipeRefreshLayout.isEnabled = on
+    }
+
+    private fun refreshData() {
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
+                    characterViewModel.refresh()
+                    billingViewModel.refresh()
+                }
+            } catch (e: Exception) {
+                showErrorMessage(this@MainActivity, "${e.message}")
+            }
+            swipeRefreshLayout.isRefreshing = false
         }
     }
 

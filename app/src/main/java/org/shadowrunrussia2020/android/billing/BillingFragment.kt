@@ -9,12 +9,8 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
 import kotlinx.android.synthetic.main.fragment_billing.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import org.shadowrunrussia2020.android.MainActivity
 import org.shadowrunrussia2020.android.R
-import org.shadowrunrussia2020.android.common.utils.showErrorMessage
 
 
 class BillingFragment : Fragment() {
@@ -29,10 +25,6 @@ class BillingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         mModel = ViewModelProviders.of(activity!!).get(BillingViewModel::class.java)
-
-        refreshData()
-
-        swipeRefreshLayout.setOnRefreshListener { refreshData() }
 
         tabLayout.setupWithViewPager(viewPager)
 
@@ -52,20 +44,9 @@ class BillingFragment : Fragment() {
         // Based on https://stackoverflow.com/a/35825488/11167405
         viewPager.addOnPageChangeListener(object: ViewPager.SimpleOnPageChangeListener() {
             override fun onPageScrollStateChanged(state: Int) {
-                swipeRefreshLayout.isEnabled = state == ViewPager.SCROLL_STATE_IDLE;
+                val activity = activity as MainActivity?
+                activity?.setPullToRefreshEnabled(state == ViewPager.SCROLL_STATE_IDLE)
             }
         })
     }
-
-    private fun refreshData() {
-        CoroutineScope(Dispatchers.Main).launch {
-            try {
-                withContext(CoroutineScope(Dispatchers.IO).coroutineContext) { mModel.refresh() }
-            } catch (e: Exception) {
-                showErrorMessage(requireContext(), "Ошибка. ${e.message}")
-            }
-            swipeRefreshLayout?.isRefreshing = false
-        }
-    }
 }
-

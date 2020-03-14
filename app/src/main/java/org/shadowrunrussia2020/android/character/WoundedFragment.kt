@@ -49,8 +49,6 @@ class WoundedFragment : Fragment() {
             Observer { data: Character? -> if (data != null) onCharacterUpdate(data) }
         )
 
-        swipeRefreshLayout.setOnRefreshListener { refreshData() }
-
         buttonDebugSelfRevive.setOnClickListener {
             CoroutineScope(Dispatchers.Main).launch {
                 try {
@@ -61,17 +59,6 @@ class WoundedFragment : Fragment() {
                     showErrorMessage(requireActivity(), "${e.message}")
                 }
             }
-        }
-    }
-
-    private fun refreshData() {
-        CoroutineScope(Dispatchers.Main).launch {
-            try {
-                withContext(CoroutineScope(Dispatchers.IO).coroutineContext) { mModel.refresh() }
-            } catch (e: Exception) {
-                showErrorMessage(requireContext(), "${e.message}")
-            }
-            swipeRefreshLayout.isRefreshing = false
         }
     }
 

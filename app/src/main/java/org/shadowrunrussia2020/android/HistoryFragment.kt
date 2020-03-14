@@ -43,18 +43,5 @@ class HistoryFragment : Fragment() {
         mModel.getHistory().observe(this,
             Observer { data: List<HistoryRecord>? -> if (data != null) adapter.setData(data) })
         characterHistoryView.adapter = adapter
-
-        swipeRefreshLayout.setOnRefreshListener { refreshData() }
-    }
-
-    private fun refreshData() {
-        CoroutineScope(Dispatchers.Main).launch {
-            try {
-                withContext(CoroutineScope(Dispatchers.IO).coroutineContext) { mModel.refresh() }
-            } catch (e: Exception) {
-                showErrorMessage(requireContext(), "${e.message}")
-            }
-            swipeRefreshLayout.isRefreshing = false
-        }
     }
 }
