@@ -13,7 +13,6 @@ import androidx.navigation.fragment.findNavController
 import com.google.zxing.BarcodeFormat
 import com.journeyapps.barcodescanner.BarcodeEncoder
 import kotlinx.android.synthetic.main.activity_show_qr.qrCodeImage
-import kotlinx.android.synthetic.main.fragment_character_overview.swipeRefreshLayout
 import kotlinx.android.synthetic.main.fragment_wounded.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
