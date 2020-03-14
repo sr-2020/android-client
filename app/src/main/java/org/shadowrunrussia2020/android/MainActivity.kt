@@ -179,18 +179,7 @@ class MainActivity : AppCompatActivity(), IMainActivityDi {
             return exit()
         }
 
-        CoroutineScope(Dispatchers.Main).launch {
-            try {
-                withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
-                    characterViewModel.refresh()
-                    billingViewModel.refresh()
-                }
-            } catch (e: Exception) {
-                showErrorMessage(this@MainActivity, "Ошибка. ${e.message}")
-                exit()
-            }
-        }
-
+        refreshData(false)
         checkEverythingEnabled()
         startService(Intent(this, BeaconsScanner::class.java))
     }
