@@ -28,6 +28,8 @@ import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.iid.FirebaseInstanceId
+import io.reactivex.Observable
+import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -40,16 +42,14 @@ import org.shadowrunrussia2020.android.common.di.MainActivityScope
 import org.shadowrunrussia2020.android.common.models.Character
 import org.shadowrunrussia2020.android.common.models.HistoryRecord
 import org.shadowrunrussia2020.android.common.models.Position
-import org.shadowrunrussia2020.android.common.utils.Data
-import org.shadowrunrussia2020.android.common.utils.Type
-import org.shadowrunrussia2020.android.common.utils.showErrorMessage
-import org.shadowrunrussia2020.android.common.utils.showSuccessMessage
+import org.shadowrunrussia2020.android.common.utils.*
 import org.shadowrunrussia2020.android.di.IMainActivityDi
 import org.shadowrunrussia2020.android.magic.SpellDetailsFragmentDirections
 import org.shadowrunrussia2020.android.magic.cast.SpellCastFragment
 import org.shadowrunrussia2020.android.positioning.BeaconsScanner
 import org.shadowrunrussia2020.android.positioning.PositionsViewModel
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 
 class MainActivity : AppCompatActivity(), IMainActivityDi {
@@ -84,6 +84,8 @@ class MainActivity : AppCompatActivity(), IMainActivityDi {
     private val positionsViewModel by lazy {
         ViewModelProviders.of(this).get(PositionsViewModel::class.java)
     }
+
+    private val disposer = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -129,6 +131,10 @@ class MainActivity : AppCompatActivity(), IMainActivityDi {
             true
         }
 
+        disposer += Observable.interval(0, 60, TimeUnit.SECONDS)
+            .observeOn(MainThreadSchedulers.androidUiScheduler)
+            .subscribe { refreshData(false) }
+
         characterViewModel.getCharacter().observe(this,
             Observer { data: Character? ->
                 if (data != null && data.healthState != "healthy" &&
@@ -164,6 +170,11 @@ class MainActivity : AppCompatActivity(), IMainActivityDi {
             toolbar.menu.findItem(R.id.action_help)?.isVisible =
                 destination.id == R.id.ethicsFragment
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        disposer.clear()
     }
 
     override fun onStart() {
@@ -322,5 +333,4 @@ class MainActivity : AppCompatActivity(), IMainActivityDi {
             )
         }
     }
-
 }
