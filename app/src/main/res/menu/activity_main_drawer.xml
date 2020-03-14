@@ -57,12 +57,6 @@
                     />
 
             <item
-                    android:id="@+id/action_global_character_legacy"
-                    android:icon="@android:drawable/ic_menu_myplaces"
-                    android:iconTint="@android:color/holo_red_dark"
-                    android:title="Старый экран персонажа"/>
-
-            <item
                     android:id="@+id/action_global_spellbook"
                     android:icon="@drawable/menu_manage"
                     android:title="Старый вариант книги заклинаний"/>

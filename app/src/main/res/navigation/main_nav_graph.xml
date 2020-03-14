@@ -10,11 +10,6 @@
         <action android:id="@+id/action_transaction_details"
                 app:destination="@id/transactionDetailsFragment"/>
     </fragment>
-    <fragment android:id="@+id/characterFragmentLegacy"
-              android:name="org.shadowrunrussia2020.android.character.CharacterOverviewFragment"
-              tools:layout="@layout/fragment_character_overview"
-              android:label="Персонаж">
-    </fragment>
     <fragment android:id="@+id/spellbookFragment"
               android:name="org.shadowrunrussia2020.android.magic.SpellbookFragment"
               android:label="Книга заклинаний"
@@ -23,7 +18,6 @@
                 app:destination="@id/spellDetailsFragment"/>
     </fragment>
     <action android:id="@+id/action_global_billing" app:destination="@id/billingFragment"/>
-    <action android:id="@+id/action_global_character_legacy" app:destination="@id/characterFragmentLegacy"/>
     <action android:id="@+id/action_global_show_qr" app:destination="@id/showQrActivity"/>
     <action android:id="@+id/action_global_spellbook" app:destination="@id/spellbookFragment"/>
     <activity android:id="@+id/showQrActivity" android:name="org.shadowrunrussia2020.android.qr.ShowQrActivity"
