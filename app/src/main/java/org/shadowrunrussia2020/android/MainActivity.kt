@@ -91,11 +91,6 @@ class MainActivity : AppCompatActivity(), IMainActivityDi {
 
         setSupportActionBar(toolbar)
 
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
-
         drawer_layout.addDrawerListener(object : DrawerLayout.SimpleDrawerListener() {
             override fun onDrawerStateChanged(newState: Int) {
                 val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
