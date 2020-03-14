@@ -43,6 +43,7 @@ import org.shadowrunrussia2020.android.common.models.Position
 import org.shadowrunrussia2020.android.common.utils.Data
 import org.shadowrunrussia2020.android.common.utils.Type
 import org.shadowrunrussia2020.android.common.utils.showErrorMessage
+import org.shadowrunrussia2020.android.common.utils.showSuccessMessage
 import org.shadowrunrussia2020.android.di.IMainActivityDi
 import org.shadowrunrussia2020.android.magic.SpellDetailsFragmentDirections
 import org.shadowrunrussia2020.android.magic.cast.SpellCastFragment
@@ -99,7 +100,7 @@ class MainActivity : AppCompatActivity(), IMainActivityDi {
             }
         })
 
-        swipeRefreshLayout.setOnRefreshListener { refreshData() }
+        swipeRefreshLayout.setOnRefreshListener { refreshData(true) }
 
         nav_view.setupWithNavController(navController)
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration)
@@ -284,12 +285,15 @@ class MainActivity : AppCompatActivity(), IMainActivityDi {
         swipeRefreshLayout.isEnabled = on
     }
 
-    private fun refreshData() {
+    private fun refreshData(interactive: Boolean) {
         CoroutineScope(Dispatchers.Main).launch {
             try {
                 withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
                     characterViewModel.refresh()
                     billingViewModel.refresh()
+                }
+                if (interactive) {
+                    showSuccessMessage(this@MainActivity, "Данные успешно обновлены.")
                 }
             } catch (e: Exception) {
                 showErrorMessage(this@MainActivity, "${e.message}")
