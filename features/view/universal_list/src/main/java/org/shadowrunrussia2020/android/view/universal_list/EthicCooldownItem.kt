@@ -16,26 +16,26 @@ class EthicCooldownItem(
     private val lockedUntil: Long,
     private val onCooldownEnd: (() -> Unit)
 ) : UniversalViewData() {
-    private val disposer = CompositeDisposable()
     override val groupID = R.id.ethic_2_cooldown_item
     override val isHeader = false
     override fun createViewHolder(parent: ViewGroup): RecyclerView.ViewHolder =
         EthicCooldownHolder(parent)
 
     override fun bindHolder(holder: RecyclerView.ViewHolder) =
-        (holder as EthicCooldownHolder).bindView(disposer, lockedUntil, onCooldownEnd)
+        (holder as EthicCooldownHolder).bindView(lockedUntil, onCooldownEnd)
 }
 
 private class EthicCooldownHolder private constructor(override val containerView: View) :
     RecyclerView.ViewHolder(containerView), LayoutContainer {
-
+    private val disposer = CompositeDisposable()
 
     constructor(parent: ViewGroup)
             : this(
         LayoutInflater.from(parent.context).inflate(R.layout.ethic_cooldown_item, parent, false)
     )
 
-    fun bindView(disposer: CompositeDisposable, lockedUntil: Long, onCooldownEnd: (() -> Unit)) {
+    fun bindView(lockedUntil: Long, onCooldownEnd: (() -> Unit)) {
+        disposer.clear()
         disposer += Observable.interval(0, 1, TimeUnit.SECONDS)
             .observeOn(MainThreadSchedulers.androidUiScheduler)
             .subscribe {
