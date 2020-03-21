@@ -11,10 +11,6 @@ import java.util.*
 enum class Type {
     UNKNOWN,
     REWRITABLE,
-    ALCHEMY_REAGENT,
-    CRAFTED_ITEM,
-    ENCHANTED_ITEM,
-    ALCHEMY_POTION,
     PAYMENT_REQUEST_SIMPLE,
     PAYMENT_REQUEST_WITH_PRICE,
     SHOP_BILL,
@@ -32,6 +28,15 @@ val Character.qrData: Data
         validUntil = (Date().time / 1000).toInt() + 3600,
         payload = this.modelId
     )
+
+val Character.mentalQrData: Data
+    get() = Data(
+        type = Type.REWRITABLE,
+        kind = 0,
+        validUntil = (Date().time / 1000).toInt() + 3600,
+        payload = this.mentalQrId.toString()
+    )
+
 
 class FormatException: Exception()
 class ValidationException: Exception()

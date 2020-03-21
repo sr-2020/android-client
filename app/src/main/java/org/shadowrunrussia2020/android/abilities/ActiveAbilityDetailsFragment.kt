@@ -6,9 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.zxing.BarcodeFormat
+import com.journeyapps.barcodescanner.BarcodeEncoder
 import kotlinx.android.synthetic.main.fragment_active_ability_details.*
 import kotlinx.android.synthetic.main.fragment_spell_details.textAbilityDescription
 import kotlinx.android.synthetic.main.fragment_spell_details.textAbilityName
@@ -20,9 +23,8 @@ import org.ocpsoft.prettytime.PrettyTime
 import org.shadowrunrussia2020.android.R
 import org.shadowrunrussia2020.android.character.CharacterViewModel
 import org.shadowrunrussia2020.android.common.models.ActiveAbility
-import org.shadowrunrussia2020.android.common.utils.Data
-import org.shadowrunrussia2020.android.common.utils.Type
-import org.shadowrunrussia2020.android.common.utils.showErrorMessage
+import org.shadowrunrussia2020.android.common.models.TargetType
+import org.shadowrunrussia2020.android.common.utils.*
 import org.shadowrunrussia2020.android.qr.QrDataOrError
 import org.shadowrunrussia2020.android.qr.QrViewModel
 import java.util.*
@@ -57,7 +59,22 @@ class ActiveAbilityDetailsFragment : Fragment() {
         if (validUntil != null) {
             textValidUntil.text = "Закончится " + PrettyTime(Locale("ru")).format(Date(validUntil))
         }
-        useAbility.setOnClickListener { if (ability.hasTarget) chooseTarget() else castOnSelf() }
+        useAbility.setOnClickListener {
+            when (ability.target) {
+                TargetType.none -> castOnSelf()
+                TargetType.scan -> chooseTarget()
+                TargetType.show -> useAndShowQr()
+            }
+        }
+
+        mModel.getCharacter().observe(this, Observer {
+            val barcodeEncoder = BarcodeEncoder()
+            val bitmap =
+                barcodeEncoder.encodeBitmap(
+                    encode(it.mentalQrData), BarcodeFormat.QR_CODE, 400, 400
+                )
+            qrCodeImage.setImageBitmap(bitmap)
+        })
     }
 
     private fun castOnSelf() {
@@ -66,10 +83,23 @@ class ActiveAbilityDetailsFragment : Fragment() {
                 withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
                     mModel.useAbility(ability.id)
                 }
+                findNavController().popBackStack()
             } catch (e: Exception) {
                 showErrorMessage(requireContext(), "Ошибка. ${e.message}")
             }
-            findNavController().popBackStack()
+        }
+    }
+
+    private fun useAndShowQr() {
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
+                    mModel.useAbility(ability.id)
+                }
+                qrCodeImage.visibility = View.VISIBLE
+            } catch (e: Exception) {
+                showErrorMessage(requireContext(), "Ошибка. ${e.message}")
+            }
         }
     }
 

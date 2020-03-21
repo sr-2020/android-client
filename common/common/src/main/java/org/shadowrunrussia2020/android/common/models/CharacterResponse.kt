@@ -14,12 +14,14 @@ data class Spell(
     val hasTarget: Boolean
 ) : Parcelable
 
+enum class TargetType { none, show, scan }
+
 @Parcelize
 data class ActiveAbility(
     val id: String,
     val humanReadableName: String,
     val description: String,
-    val hasTarget: Boolean,
+    val target: TargetType,
     val validUntil: Long?
 ) : Parcelable
 
@@ -77,7 +79,7 @@ data class Character(
     val maxHp: Int,
     val magic: Int,
     val magicPowerBonus: Int,
-    val spellsCasted: Int,
+    val mentalQrId: Int,
     val spells: List<Spell>,
     val activeAbilities: List<ActiveAbility>,
     val passiveAbilities: List<PassiveAbility>,

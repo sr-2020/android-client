@@ -6,11 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import org.shadowrunrussia2020.android.common.Converters
-import org.shadowrunrussia2020.android.common.models.AccountOverview
-import org.shadowrunrussia2020.android.common.models.Transaction
-import org.shadowrunrussia2020.android.common.models.Character
-import org.shadowrunrussia2020.android.common.models.HistoryRecord
-import org.shadowrunrussia2020.android.common.models.Position
+import org.shadowrunrussia2020.android.common.models.*
 import org.shadowrunrussia2020.android.model.billing.BillingDao
 import org.shadowrunrussia2020.android.model.charter.CharacterDao
 import org.shadowrunrussia2020.android.model.positions.PositionsDao
@@ -23,7 +19,7 @@ import org.shadowrunrussia2020.android.model.positions.PositionsDao
         HistoryRecord::class,
         Position::class
     ],
-    version = 11
+    version = 12
 )
 @TypeConverters(Converters::class)
 internal abstract class CacheDatabase : RoomDatabase() {
