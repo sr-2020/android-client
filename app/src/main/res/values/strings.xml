@@ -61,5 +61,6 @@
     <string name="location">Местоположение</string>
     <string name="generateQR">Генерация QR-кода</string>
     <string name="settings">Настройки</string>
+    <string name="implants">Импланты</string>
 
 </resources>

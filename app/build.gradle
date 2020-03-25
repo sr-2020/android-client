@@ -40,6 +40,7 @@ dependencies {
     implementation project(':main_screen')
     implementation project(':magic')
     implementation project(':ethics')
+    implementation project(':implants')
 
     kapt "androidx.lifecycle:lifecycle-compiler:$androidArchLifecycle"
     kapt "androidx.room:room-compiler:$roomVersion"
