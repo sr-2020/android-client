@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import kotlinx.android.synthetic.main.fragment_spell_cast.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -20,7 +19,6 @@ import org.shadowrunrussia2020.android.common.CommonHostViewModel
 import org.shadowrunrussia2020.android.common.di.MainActivityScope
 import org.shadowrunrussia2020.android.common.models.Character
 import org.shadowrunrussia2020.android.common.models.HistoryRecord
-import org.shadowrunrussia2020.android.common.models.Spell
 import org.shadowrunrussia2020.android.common.utils.Data
 import org.shadowrunrussia2020.android.common.utils.Type
 import org.shadowrunrussia2020.android.common.utils.showErrorMessage
