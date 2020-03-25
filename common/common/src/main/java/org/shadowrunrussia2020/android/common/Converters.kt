@@ -77,4 +77,14 @@ class Converters {
     fun ethicStateToJson(value: List<EthicState>): String {
         return Gson().toJson(value)
     }
+
+    @TypeConverter
+    fun jsonToImplants(value: String): List<Implant> {
+        return Gson().fromJson(value, object : TypeToken<List<Implant>>() {}.type)
+    }
+
+    @TypeConverter
+    fun implantsToJson(value: List<Implant>): String {
+        return Gson().toJson(value)
+    }
 }

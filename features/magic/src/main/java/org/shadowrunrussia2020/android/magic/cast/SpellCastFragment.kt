@@ -102,7 +102,7 @@ class SpellCastFragment : Fragment() {
         viewModel.character
             .observe(this, Observer { data: Character? ->
                 if (data != null) {
-                    seekBarSpellPower.max = data.magic + data.magicPowerBonus
+                    seekBarSpellPower.max = data.magic
                 }
             })
     }

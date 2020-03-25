@@ -33,11 +33,9 @@ class MainFragment : Fragment() {
             ch?.let { character ->
                 textHp.text = "%s♥".format(character.maxHp)
                 textMana.text = "%s✡".format(character.magic)
-                textPowerBonus.text = "%s⚔".format(character.magicPowerBonus)
 
                 fullTextHP.text = "Максимальные хиты: %s♡".format(character.maxHp)
                 fullTextMana.text = "Текущее значение маны: %s✡".format(character.magic)
-                fullTextPover.text = "Бонус к мощи: %s⚔".format(character.magicPowerBonus)
 
                 uinversalAdapter.clear()
                 uinversalAdapter.appendList(

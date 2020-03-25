@@ -53,6 +53,15 @@ data class EthicTrigger(
 ) : Parcelable
 
 @Parcelize
+data class Implant(
+    val id: String,
+    val name: String,
+    val description: String,
+    val slot: String,
+    val grade: String
+) : Parcelable
+
+@Parcelize
 @Entity
 data class HistoryRecord(
     @PrimaryKey val id: String,
@@ -67,6 +76,7 @@ data class SpellTrace(
     val timestamp: Long,
     val spellName: String,
     val casterAura: String,
+    val metarace: String,
     val power: Int,
     val magicFeedback: Int
 ) : Parcelable
@@ -75,16 +85,23 @@ data class SpellTrace(
 data class Character(
     @PrimaryKey val modelId: String,
     val timestamp: Long,
-    val healthState: String,
     val maxHp: Int,
-    val magic: Int,
-    val magicPowerBonus: Int,
+    val healthState: String,
+    val metarace: String,
+    val body: Int,
+    val intelligence: Int,
+    val charisma: Int,
     val mentalQrId: Int,
+    val magic: Int,
+    val resonance: Int,
+    val matrixHp: Int,
+    val maxTimeInVr: Int,
     val spells: List<Spell>,
     val activeAbilities: List<ActiveAbility>,
     val passiveAbilities: List<PassiveAbility>,
     val ethicState: List<EthicState>,
     val ethicTrigger: List<EthicTrigger>,
+    val implants: List<Implant>,
     val ethicLockedUntil: Long,
     val history: List<HistoryRecord>
 )
