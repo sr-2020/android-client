@@ -28,4 +28,26 @@ tools:context=".DetailsFragment" android:id="@+id/frameLayout">
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textImplantName" />
+
+    <TextView
+        android:id="@+id/textImplantSlot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textImplantDescription"
+        tools:text="Слот: Голова" />
+
+    <TextView
+        android:id="@+id/textImplantGrade"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textImplantDescription"
+        tools:text="Грейд: альфа" />
 </androidx.constraintlayout.widget.ConstraintLayout>

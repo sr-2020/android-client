@@ -52,13 +52,16 @@ data class EthicTrigger(
     val description: String
 ) : Parcelable
 
+enum class ImplantSlot { body, arm, head, rcc }
+enum class ImplantGrade { alpha, beta, gamma, delta, bio }
+
 @Parcelize
 data class Implant(
     val id: String,
     val name: String,
     val description: String,
-    val slot: String,
-    val grade: String
+    val slot: ImplantSlot,
+    val grade: ImplantGrade
 ) : Parcelable
 
 @Parcelize

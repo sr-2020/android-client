@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import kotlinx.android.synthetic.main.fragment_implant_details.*
 import org.shadowrunrussia2020.android.common.models.Implant
+import org.shadowrunrussia2020.android.common.utils.russianGradeName
+import org.shadowrunrussia2020.android.common.utils.russianSlotName
 
 class DetailsFragment : Fragment() {
     private val args: DetailsFragmentArgs by navArgs()
@@ -25,5 +27,11 @@ class DetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         textImplantName.text = implant.name
         textImplantDescription.text = implant.description
+        textImplantSlot.text = "Слот: ${russianSlotName(
+            (implant.slot)
+        )}"
+        textImplantGrade.text = "Грейд: ${russianGradeName(
+            implant.grade
+        )}"
     }
 }

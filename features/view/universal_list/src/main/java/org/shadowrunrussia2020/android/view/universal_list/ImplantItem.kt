@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.implant_item.view.*
 import org.shadowrunrussia2020.android.common.models.Implant
+import org.shadowrunrussia2020.android.common.utils.russianGradeName
+import org.shadowrunrussia2020.android.common.utils.russianSlotName
 
 class ImplantItem(
     private val implant: Implant,
@@ -24,7 +26,11 @@ private class ImplantViewHolder private constructor(override val containerView: 
 
     fun bindView(implant: Implant, onClick: (() -> Unit)?, hide: Boolean) {
         containerView.implantName.text = implant.name
-        containerView.implantSlotAndGrade.text = "${implant.slot} ${implant.grade}"
+        containerView.implantSlotAndGrade.text = "Слот: ${russianSlotName(
+            (implant.slot)
+        )} Грейд: ${russianGradeName(
+            implant.grade
+        )}"
         containerView.setOnClickListener { onClick?.invoke() }
     }
 }
