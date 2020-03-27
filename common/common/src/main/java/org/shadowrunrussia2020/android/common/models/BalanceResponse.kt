@@ -13,7 +13,8 @@ data class AccountOverview (
     var characterId: Int,
     var currentBalance: Int,
     var currentScoring: Int,
-    var lifeStyle: String
+    var lifeStyle: String,
+    var forecastLifeStyle: String
 )
 
 data class BalanceResponse(

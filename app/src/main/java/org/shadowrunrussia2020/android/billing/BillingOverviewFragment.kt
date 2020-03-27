@@ -36,6 +36,9 @@ class BillingOverviewFragment : Fragment() {
             if (it != null) {
                 textViewBalance.text = it.currentBalance.toString()
                 textViewSin.text = it.characterId.toString()
+                textViewLifestyle.text = it.lifeStyle
+                textViewLifestyleForecast.text = it.forecastLifeStyle
+                textViewScoring.text = it.currentScoring.toString()
             }
         })
 
