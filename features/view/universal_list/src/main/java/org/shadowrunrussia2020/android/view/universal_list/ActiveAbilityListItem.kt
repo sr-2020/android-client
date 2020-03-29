@@ -12,7 +12,7 @@ import java.util.*
 
 fun createActiveAbilityHeader(list:Collection<UniversalViewData>) = HeaderItem(R.id.active_ability_item, "Активируемые способности", R.drawable.statement, list)
 
-class ActiveAbilitySpellItem(
+class ActiveAbilityListItem(
     private val activeAbility: ActiveAbility,
     private val onClick: (() -> Unit)? = null
 ) : UniversalViewData() {

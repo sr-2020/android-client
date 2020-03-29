@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.fragment_passive_abilities.*
 import org.shadowrunrussia2020.android.R
 import org.shadowrunrussia2020.android.character.CharacterViewModel
 import org.shadowrunrussia2020.android.common.models.Character
-import org.shadowrunrussia2020.android.view.universal_list.PassiveAbilitySpellItem
+import org.shadowrunrussia2020.android.view.universal_list.PassiveAbilityListItem
 import org.shadowrunrussia2020.android.view.universal_list.UniversalAdapter
 
 class PassiveAbilitiesFragment : Fragment() {
@@ -41,7 +41,7 @@ class PassiveAbilitiesFragment : Fragment() {
                     universalAdapter.appendList(
                         character.passiveAbilities
                             .map {
-                                PassiveAbilitySpellItem(it) {
+                                PassiveAbilityListItem(it) {
                                     findNavController().navigate(
                                         PassiveAbilitiesFragmentDirections.actionSelectPassiveAbility(it)
                                     )

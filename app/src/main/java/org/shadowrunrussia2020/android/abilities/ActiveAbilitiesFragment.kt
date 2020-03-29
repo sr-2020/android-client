@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.fragment_active_abilities.*
 import org.shadowrunrussia2020.android.R
 import org.shadowrunrussia2020.android.character.CharacterViewModel
 import org.shadowrunrussia2020.android.common.models.Character
-import org.shadowrunrussia2020.android.view.universal_list.ActiveAbilitySpellItem
+import org.shadowrunrussia2020.android.view.universal_list.ActiveAbilityListItem
 import org.shadowrunrussia2020.android.view.universal_list.UniversalAdapter
 
 class ActiveAbilitiesFragment : Fragment() {
@@ -39,7 +39,7 @@ class ActiveAbilitiesFragment : Fragment() {
                     universalAdapter.appendList(
                         character.activeAbilities
                             .map {
-                                ActiveAbilitySpellItem(it) {
+                                ActiveAbilityListItem(it) {
                                     findNavController().navigate(
                                         ActiveAbilitiesFragmentDirections.actionSelectActiveAbility(it)
                                     )

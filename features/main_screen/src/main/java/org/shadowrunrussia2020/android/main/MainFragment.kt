@@ -47,13 +47,13 @@ class MainFragment : Fragment() {
                 )
 
                 uinversalAdapter.appendList(
-                    character.passiveAbilities.map { PassiveAbilitySpellItem(it) as UniversalViewData }.let {
+                    character.passiveAbilities.map { PassiveAbilityListItem(it) as UniversalViewData }.let {
                         if(it.isNotEmpty()) it.plus(createPassiveAbilityHeader(it)) else it
                     }
                 )
 
                 uinversalAdapter.appendList(
-                    character.activeAbilities.map { ActiveAbilitySpellItem(it) as UniversalViewData }.let {
+                    character.activeAbilities.map { ActiveAbilityListItem(it) as UniversalViewData }.let {
                         if(it.isNotEmpty()) it.plus(createActiveAbilityHeader(it)) else it
                     }
                 )

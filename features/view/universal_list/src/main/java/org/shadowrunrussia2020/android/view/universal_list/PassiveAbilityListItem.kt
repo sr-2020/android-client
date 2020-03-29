@@ -12,7 +12,7 @@ import java.util.*
 
 fun createPassiveAbilityHeader(list:Collection<UniversalViewData>) = HeaderItem(R.id.passive_ability_item, "Пассивные способности", R.drawable.power, list)
 
-class PassiveAbilitySpellItem(
+class PassiveAbilityListItem(
     private val passiveAbility: PassiveAbility,
     private val onClick: (() -> Unit)? = null
 ) : UniversalViewData() {
