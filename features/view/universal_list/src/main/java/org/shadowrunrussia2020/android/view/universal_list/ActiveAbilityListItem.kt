@@ -3,11 +3,12 @@ package org.shadowrunrussia2020.android.view.universal_list
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.simple_header_text.view.*
+import kotlinx.android.synthetic.main.generic_recycler_view_item.view.*
+import org.ocpsoft.prettytime.PrettyTime
 import org.shadowrunrussia2020.android.common.models.ActiveAbility
+import java.util.*
 
 fun createActiveAbilityHeader(list:Collection<UniversalViewData>) = HeaderItem(R.id.active_ability_item, "Активируемые способности", R.drawable.statement, list)
 
@@ -23,11 +24,19 @@ class ActiveAbilitySpellItem(
 
 private class ActiveAbilityViewHolder private constructor(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
     constructor(parent: ViewGroup)
-            : this(LayoutInflater.from(parent.context).inflate(R.layout.simple_header_text, parent, false))
+            : this(LayoutInflater.from(parent.context).inflate(R.layout.generic_recycler_view_item, parent, false))
 
     fun bindView(activeAbility: ActiveAbility, onClick: (() -> Unit)?, hide: Boolean) {
-        containerView.textHeader.text = activeAbility.humanReadableName
-        containerView.textSource.text = activeAbility.description
-        containerView.setOnClickListener { onClick?.invoke() }
+        containerView.mainText.text = activeAbility.humanReadableName
+        containerView.subText.text = activeAbility.description
+        val validUntil = activeAbility.validUntil
+        if (validUntil != null) {
+            containerView.time.text =
+                "Закончится " + PrettyTime(Locale("ru")).format(Date(validUntil))
+        }
+
+        containerView.setOnClickListener {
+            onClick?.invoke()
+        }
     }
 }
