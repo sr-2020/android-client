@@ -22,7 +22,9 @@ data class ActiveAbility(
     val humanReadableName: String,
     val description: String,
     val target: TargetType,
-    val validUntil: Long?
+    val validUntil: Long?,
+    val cooldownMinutesval: Int,
+    val cooldownUntil: Long
 ) : Parcelable
 
 @Parcelize
