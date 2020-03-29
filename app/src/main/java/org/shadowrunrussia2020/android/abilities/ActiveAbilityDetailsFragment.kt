@@ -12,6 +12,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.zxing.BarcodeFormat
 import com.journeyapps.barcodescanner.BarcodeEncoder
+import io.reactivex.Observable
+import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_active_ability_details.*
 import kotlinx.android.synthetic.main.fragment_spell_details.textAbilityDescription
 import kotlinx.android.synthetic.main.fragment_spell_details.textAbilityName
@@ -28,10 +30,13 @@ import org.shadowrunrussia2020.android.common.utils.*
 import org.shadowrunrussia2020.android.qr.QrDataOrError
 import org.shadowrunrussia2020.android.qr.QrViewModel
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 class ActiveAbilityDetailsFragment : Fragment() {
     private val args: ActiveAbilityDetailsFragmentArgs by navArgs()
     private val ability: ActiveAbility by lazy { args.ability }
+    private val disposer = CompositeDisposable()
+
     private val mModel by lazy {
         ViewModelProviders.of(requireActivity()).get(CharacterViewModel::class.java)
     }
@@ -55,10 +60,24 @@ class ActiveAbilityDetailsFragment : Fragment() {
 
         textAbilityName.text = ability.humanReadableName
         textAbilityDescription.text = ability.description
-        val validUntil = ability.validUntil
-        if (validUntil != null) {
-            textValidUntil.text = "Закончится " + PrettyTime(Locale("ru")).format(Date(validUntil))
-        }
+
+        disposer += Observable.interval(0, 10, TimeUnit.SECONDS)
+            .observeOn(MainThreadSchedulers.androidUiScheduler)
+            .subscribe {
+                val currentTimestamp = System.currentTimeMillis()
+                val validUntil = ability.validUntil
+                if (validUntil != null) {
+                    textValidUntil.text =
+                        "Закончится " + PrettyTime(Locale("ru")).format(Date(validUntil))
+                } else if (ability.cooldownUntil >= currentTimestamp) {
+                    textValidUntil.text =
+                        "Доступно " + PrettyTime(Locale("ru")).format(Date(ability.cooldownUntil))
+                    useAbility.isEnabled = false
+                } else {
+                    textValidUntil.text = ""
+                }
+            }
+
         useAbility.setOnClickListener {
             when (ability.target) {
                 TargetType.none -> castOnSelf()
@@ -75,6 +94,11 @@ class ActiveAbilityDetailsFragment : Fragment() {
                 )
             qrCodeImage.setImageBitmap(bitmap)
         })
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        disposer.clear()
     }
 
     private fun castOnSelf() {
@@ -97,6 +121,7 @@ class ActiveAbilityDetailsFragment : Fragment() {
                     mModel.useAbility(ability.id)
                 }
                 qrCodeImage.visibility = View.VISIBLE
+                useAbility.isEnabled = false
             } catch (e: Exception) {
                 showErrorMessage(requireContext(), "Ошибка. ${e.message}")
             }
