@@ -87,4 +87,14 @@ class Converters {
     fun implantsToJson(value: List<Implant>): String {
         return Gson().toJson(value)
     }
+
+    @TypeConverter
+    fun jsonToModifiers(value: String): List<Modifier> {
+        return Gson().fromJson(value, object : TypeToken<List<Modifier>>() {}.type)
+    }
+
+    @TypeConverter
+    fun modifiersToJson(value: List<Modifier>): String {
+        return Gson().toJson(value)
+    }
 }

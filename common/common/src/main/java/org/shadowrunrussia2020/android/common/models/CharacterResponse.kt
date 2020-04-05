@@ -86,6 +86,12 @@ data class SpellTrace(
     val magicFeedback: Int
 ) : Parcelable
 
+@Parcelize
+data class Modifier(
+    val mID: String,
+    val enabled: Boolean
+) : Parcelable
+
 @Entity
 data class Character(
     @PrimaryKey val modelId: String,
@@ -108,7 +114,8 @@ data class Character(
     val ethicTrigger: List<EthicTrigger>,
     val implants: List<Implant>,
     val ethicLockedUntil: Long,
-    val history: List<HistoryRecord>
+    val history: List<HistoryRecord>,
+    val modifiers: List<Modifier>
 )
 
 data class CharacterResponse(val workModel: Character, val tableResponse: List<SpellTrace>?)

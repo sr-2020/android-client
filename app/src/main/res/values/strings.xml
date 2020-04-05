@@ -63,4 +63,15 @@
     <string name="settings">Настройки</string>
     <string name="implants">Импланты</string>
 
+    <string name="wounded_title">Тяжелое ранение</string>
+    <string name="wounded_subtitle_medkit_enabled">Имплант МедКит автоматически вылечит вас через 10 минут после ранения, ждите.</string>
+    <string name="wounded_subtitle_medkit_cooldown">К сожалению, МедКит на кулдауне. Клиническая смерть наступит через полчаса после ранения.</string>
+    <string name="wounded_subtitle_no_medkit">Клиническая смерть наступит через полчаса после ранения.</string>
+
+    <string name="clinical_death_title">Клиническая смерть</string>
+    <string name="clinical_death_subtitle">За вами приедет МЧС. Возможно.</string>
+
+    <string name="absolute_death_title">Абсолютная смерть</string>
+    <string name="absolute_death_subtitle">Вам уже ничего не поможет. Дайте поиграть с вашим телом и идите в мертвятник.</string>
+
 </resources>
