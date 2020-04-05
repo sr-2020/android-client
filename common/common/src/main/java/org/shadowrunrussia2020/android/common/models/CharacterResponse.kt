@@ -23,7 +23,7 @@ data class ActiveAbility(
     val description: String,
     val target: TargetType,
     val validUntil: Long?,
-    val cooldownMinutesval: Int,
+    val cooldownMinutes: Int,
     val cooldownUntil: Long
 ) : Parcelable
 
