@@ -1,4 +1,4 @@
-package org.shadowrunrussia2020.android.qr
+package org.shadowrunrussia2020.android.common.qr
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

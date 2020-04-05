@@ -1,5 +1,4 @@
-package org.shadowrunrussia2020.android.qr
-
+package org.shadowrunrussia2020.android.common.qr
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,8 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.google.zxing.integration.android.IntentIntegrator
-import org.shadowrunrussia2020.android.R
 import org.shadowrunrussia2020.android.common.utils.maybeProcessActivityResult
+import org.shadowrunrussia2020.common.R
 
 class ScanQrFragment : Fragment() {
     private val viewModel by lazy { ViewModelProviders.of(requireActivity()).get(QrViewModel::class.java) }

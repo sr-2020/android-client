@@ -24,8 +24,8 @@ import org.shadowrunrussia2020.android.common.models.Spell
 import org.shadowrunrussia2020.android.common.utils.Data
 import org.shadowrunrussia2020.android.common.utils.Type
 import org.shadowrunrussia2020.android.common.utils.showErrorMessage
-import org.shadowrunrussia2020.android.qr.QrDataOrError
-import org.shadowrunrussia2020.android.qr.QrViewModel
+import org.shadowrunrussia2020.android.common.qr.QrDataOrError
+import org.shadowrunrussia2020.android.common.qr.QrViewModel
 
 class SpellDetailsFragment : Fragment() {
     private val args: SpellDetailsFragmentArgs by navArgs()
