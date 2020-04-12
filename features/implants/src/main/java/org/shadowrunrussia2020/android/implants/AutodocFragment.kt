@@ -1,5 +1,6 @@
 package org.shadowrunrussia2020.android.implants
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -44,9 +45,18 @@ class AutodocFragment : Fragment() {
                     implants
                         .sortedBy { it.slot }
                         .map { ImplantItem(it) {
-                            autodocViewModel.implantToRemove = it.id
-                            autodocViewModel.state = AutoDocViewModel.State.WAITING_FOR_EMPTY_QR_SCAN
-                            scanQr(getString(R.string.scan_qr_rewritable))
+                            AlertDialog.Builder(requireContext())
+                                .setTitle("Удаление импланта")
+                                .setMessage("Вы действительно хотите удалить ${it.name}?")
+                                .setPositiveButton(
+                                    "ОК"
+                                ) { _, _ ->
+                                    autodocViewModel.implantToRemove = it.id
+                                    autodocViewModel.state = AutoDocViewModel.State.WAITING_FOR_EMPTY_QR_SCAN
+                                    scanQr(getString(R.string.scan_qr_rewritable))
+                                }
+                                .setNegativeButton("Отмена", null)
+                                .show()
                         } })
 
                 universalAdapter.apply()
