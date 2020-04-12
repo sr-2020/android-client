@@ -56,7 +56,7 @@ class ActiveAbilityDetailsFragment : Fragment() {
         val qrData = qrViewModel.data.qrData;
         qrViewModel.data = QrDataOrError(null, false)
 
-        if (qrData != null) castOnTarget(qrData)
+        if (qrData != null) useOnTarget(qrData)
 
         textAbilityName.text = ability.humanReadableName
         textAbilityDescription.text = ability.description
@@ -80,7 +80,7 @@ class ActiveAbilityDetailsFragment : Fragment() {
 
         useAbility.setOnClickListener {
             when (ability.target) {
-                TargetType.none -> castOnSelf()
+                TargetType.none -> useOnSelf()
                 TargetType.scan -> chooseTarget()
                 TargetType.show -> useAndShowQr()
             }
@@ -101,7 +101,7 @@ class ActiveAbilityDetailsFragment : Fragment() {
         disposer.clear()
     }
 
-    private fun castOnSelf() {
+    private fun useOnSelf() {
         CoroutineScope(Dispatchers.Main).launch {
             try {
                 withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
@@ -132,7 +132,7 @@ class ActiveAbilityDetailsFragment : Fragment() {
         findNavController().navigate(ActiveAbilityDetailsFragmentDirections.actionChooseAbilityTarget())
     }
 
-    private fun castOnTarget(qrData: Data) {
+    private fun useOnTarget(qrData: Data) {
         val eventData: HashMap<String, Any> = when {
             qrData.type == Type.DIGITAL_SIGNATURE || qrData.type == Type.WOUNDED_BODY -> hashMapOf(
                 "targetCharacterId" to qrData.payload.toInt()
