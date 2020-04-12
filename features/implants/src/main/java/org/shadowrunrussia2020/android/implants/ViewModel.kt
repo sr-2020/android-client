@@ -42,4 +42,31 @@ internal class ViewModel : ViewModel() {
             )
         )
     }
+
+    suspend fun disconnectFromBody(): CharacterResponse? {
+        return mRepository.sendEvent(
+            Event(
+                "disconnectFromBody",
+                hashMapOf()
+            )
+        )
+    }
+
+    suspend fun installImplant(targetCharacterId: String, qrCode: Int): CharacterResponse? {
+        return mRepository.sendEvent(
+            Event(
+                "riggerInstallImplant",
+                hashMapOf("targetCharacterId" to targetCharacterId, "qrCode" to qrCode)
+            )
+        )
+    }
+
+    suspend fun uninstallImplant(targetCharacterId: String, implantId: String, qrCode: Int): CharacterResponse? {
+        return mRepository.sendEvent(
+            Event(
+                "riggerUninstallImplant",
+                hashMapOf("targetCharacterId" to targetCharacterId, "implantId" to implantId, "qrCode" to qrCode)
+            )
+        )
+    }
 }

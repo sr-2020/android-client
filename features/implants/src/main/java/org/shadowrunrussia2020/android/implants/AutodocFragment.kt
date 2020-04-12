@@ -1,5 +1,6 @@
 package org.shadowrunrussia2020.android.implants
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,49 +9,45 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.rigger_autodoc_screen.*
 import org.shadowrunrussia2020.android.common.models.HealthState
-import org.shadowrunrussia2020.android.common.qr.QrDataOrError
-import org.shadowrunrussia2020.android.common.qr.QrViewModel
-import org.shadowrunrussia2020.android.common.utils.launchAsync
-import org.shadowrunrussia2020.android.common.utils.russianHealthState
+import org.shadowrunrussia2020.android.common.utils.*
 import org.shadowrunrussia2020.android.view.universal_list.ImplantItem
 import org.shadowrunrussia2020.android.view.universal_list.UniversalAdapter
 
-class AutodocFragment: Fragment() {
+class AutodocFragment : Fragment() {
     private val universalAdapter by lazy { UniversalAdapter() }
-    private val viewModel by lazy { ViewModelProviders.of(this)[ViewModel::class.java] }
-    private lateinit var targetCharacterId: String
+    private val characterViewModel by lazy { ViewModelProviders.of(this)[ViewModel::class.java] }
+    private val autodocViewModel by lazy { ViewModelProviders.of(this)[AutoDocViewModel::class.java] }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? =
         inflater.inflate(R.layout.rigger_autodoc_screen, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val qrViewModel = ViewModelProviders.of(requireActivity()).get(QrViewModel::class.java)
-        val qrData = qrViewModel.data?.qrData;
-        qrViewModel.data = QrDataOrError(null, false)
-
-        if (qrData == null) {
-            findNavController().navigate(AutodocFragmentDirections.actionConnectToBody())
-            return
-        } else {
-            launchAsync(requireActivity()) {
-                viewModel.analyzeBody(qrData.payload)
-                targetCharacterId = qrData.payload
-            }
+        if (autodocViewModel.state == AutoDocViewModel.State.WAITING_FOR_BODY_SCAN) {
+            scanQr(getString(R.string.scan_qr_patient))
         }
 
-        viewModel.character.observe({ this.lifecycle }) { ch ->
-            ch?. let { character ->
+        characterViewModel.character.observe({ this.lifecycle }) { ch ->
+            ch?.let { character ->
                 val analyzedBody = character.analyzedBody ?: return@let
                 universalAdapter.clear()
                 val implants = analyzedBody.implants
                 universalAdapter.appendList(
                     implants
                         .sortedBy { it.slot }
-                        .map { ImplantItem(it) {} })
+                        .map { ImplantItem(it) {
+                            autodocViewModel.implantToRemove = it.id
+                            autodocViewModel.state = AutoDocViewModel.State.WAITING_FOR_EMPTY_QR_SCAN
+                            scanQr(getString(R.string.scan_qr_rewritable))
+                        } })
 
                 universalAdapter.apply()
 
@@ -65,11 +62,94 @@ class AutodocFragment: Fragment() {
         implantsList.layoutManager = LinearLayoutManager(requireContext())
 
         buttonHeal.setOnClickListener {
-            launchAsync(requireActivity()) { viewModel.riggerHeal(targetCharacterId) }
+            launchAsync(requireActivity()) {
+                autodocViewModel.targetCharacterId?.let {
+                    characterViewModel.riggerHeal(
+                        it
+                    )
+                }
+            }
         }
 
         buttonRevive.setOnClickListener {
-            launchAsync(requireActivity()) { viewModel.riggerRevive(targetCharacterId) }
+            launchAsync(requireActivity()) {
+                autodocViewModel.targetCharacterId?.let {
+                    characterViewModel.riggerRevive(
+                        it
+                    )
+                }
+            }
+        }
+
+        buttonInstallImplant.setOnClickListener {
+            autodocViewModel.state = AutoDocViewModel.State.WAITING_FOR_IMPLANT_QR_SCAN
+            scanQr(getString(R.string.scan_qr_implant))
+        }
+    }
+
+    private fun scanQr(message: String) {
+        IntentIntegrator.forSupportFragment(this)
+            .setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
+            .setPrompt("$message ${getString(R.string.scan_qr_generic)}")
+            .setBeepEnabled(false)
+            .initiateScan()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        val qrData = maybeProcessActivityResult(activity!!, requestCode, resultCode, data)
+        if (qrData == null) {
+            if (autodocViewModel.state == AutoDocViewModel.State.WAITING_FOR_BODY_SCAN) {
+                findNavController().popBackStack()
+            }
+        } else {
+            when (autodocViewModel.state) {
+                AutoDocViewModel.State.WAITING_FOR_BODY_SCAN -> {
+                    launchAsync(requireActivity()) {
+                        characterViewModel.analyzeBody(qrData.payload)
+                    }
+                    autodocViewModel.targetCharacterId = qrData.payload
+                    autodocViewModel.state = AutoDocViewModel.State.IDLE
+                }
+                AutoDocViewModel.State.WAITING_FOR_EMPTY_QR_SCAN -> {
+                    if (qrData.type == Type.REWRITABLE) {
+                        val targetCharacterId = autodocViewModel.targetCharacterId
+                        val implantToRemove = autodocViewModel.implantToRemove
+                        if (targetCharacterId != null && implantToRemove != null) {
+                            launchAsync(requireActivity()) {
+                                characterViewModel.uninstallImplant(
+                                    targetCharacterId,
+                                    implantToRemove,
+                                    qrData.payload.toInt()
+                                )
+                            }
+                        }
+                    } else {
+                        showErrorMessage(
+                            requireActivity(),
+                            "Отсканированный код не является пустышкой"
+                        )
+                    }
+                    autodocViewModel.state = AutoDocViewModel.State.IDLE
+                    autodocViewModel.implantToRemove = null
+                }
+                AutoDocViewModel.State.WAITING_FOR_IMPLANT_QR_SCAN -> {
+                    if (qrData.type == Type.REWRITABLE) {
+                        autodocViewModel.targetCharacterId?.let {
+                            launchAsync(requireActivity()) {
+                                characterViewModel.installImplant(it, qrData.payload.toInt())
+                            }
+                        }
+                    } else {
+                        showErrorMessage(
+                            requireActivity(),
+                            "Отсканированный код не является имплантом"
+                        )
+                    }
+                    autodocViewModel.state = AutoDocViewModel.State.IDLE
+                }
+                AutoDocViewModel.State.IDLE -> {
+                }
+            }
         }
     }
 }

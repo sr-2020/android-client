@@ -69,6 +69,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewEssence" />
 
+    <Button
+        android:id="@+id/buttonInstallImplant"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Установить имплант"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonHeal" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/implantsList"
         android:layout_width="0dp"
@@ -77,7 +87,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonHeal"
-        tools:listitem="@layout/implant_item" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonInstallImplant"
+        tools:listitem="@layout/implant_item">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
