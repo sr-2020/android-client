@@ -212,7 +212,7 @@ class MainActivity : AppCompatActivity(), IMainActivityDi {
     }
 
     private fun checkBluetoothEnabled() {
-        if (!BluetoothAdapter.getDefaultAdapter().isEnabled) {
+        if (BluetoothAdapter.getDefaultAdapter() != null && !BluetoothAdapter.getDefaultAdapter().isEnabled) {
             val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
             startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT)
         }
