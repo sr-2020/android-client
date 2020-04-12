@@ -62,6 +62,7 @@
     <string name="generateQR">Генерация QR-кода</string>
     <string name="settings">Настройки</string>
     <string name="implants">Импланты</string>
+    <string name="autodoc">Автодок</string>
 
     <string name="wounded_title">Тяжелое ранение</string>
     <string name="wounded_subtitle_medkit_enabled">Имплант МедКит автоматически вылечит вас через 10 минут после ранения, ждите.</string>

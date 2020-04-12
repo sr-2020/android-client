@@ -103,4 +103,16 @@ class Converters {
     fun modifiersToJson(value: List<Modifier>): String {
         return Gson().toJson(value)
     }
+
+    @TypeConverter
+    fun jsonToAnalyzedBody(value: String?): AnalyzedBody? {
+        if (value == null) return null;
+        return Gson().fromJson(value, object : TypeToken<AnalyzedBody>() {}.type)
+    }
+
+    @TypeConverter
+    fun analyzedBodyToJson(value: AnalyzedBody?): String? {
+        if (value == null) return null;
+        return Gson().toJson(value)
+    }
 }

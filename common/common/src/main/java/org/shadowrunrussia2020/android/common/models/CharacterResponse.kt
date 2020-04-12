@@ -93,6 +93,13 @@ data class Modifier(
     val enabled: Boolean
 ) : Parcelable
 
+@Parcelize
+data class AnalyzedBody(
+    val healthState: HealthState,
+    val essence: Int,
+    val implants: List<Implant>
+) : Parcelable
+
 @Entity
 data class Character(
     @PrimaryKey val modelId: String,
@@ -116,7 +123,8 @@ data class Character(
     val implants: List<Implant>,
     val ethicLockedUntil: Long,
     val history: List<HistoryRecord>,
-    val modifiers: List<Modifier>
+    val modifiers: List<Modifier>,
+    val analyzedBody: AnalyzedBody?
 )
 
 data class CharacterResponse(val workModel: Character, val tableResponse: List<SpellTrace>?)

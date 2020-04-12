@@ -1,10 +1,17 @@
 package org.shadowrunrussia2020.android.common.utils
 
+import android.app.Activity
 import android.os.Handler
 import android.os.Looper
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.shadowrunrussia2020.android.common.utils.executors.HandlerExecutorServiceImpl
-import java.util.concurrent.*
+import java.util.concurrent.BlockingQueue
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.LinkedBlockingQueue
 
 /**
  * @author Dmitry Subbotenko
@@ -55,3 +62,14 @@ class UIExecutor(
     private fun isUiThread() = Thread.currentThread() === Looper.getMainLooper().thread
 }
 
+fun launchAsync(activity: Activity, f: (suspend () -> Unit)) {
+    CoroutineScope(Dispatchers.Main).launch {
+        try {
+            withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
+                f();
+            }
+        } catch (e: Exception) {
+            showErrorMessage(activity, "${e.message}")
+        }
+    }
+}
