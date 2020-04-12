@@ -2,30 +2,22 @@ package org.shadowrunrussia2020.android.ethics
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.text.format.Time
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.zxing.BarcodeFormat
-import com.journeyapps.barcodescanner.BarcodeEncoder
-import io.reactivex.Observable
 import kotlinx.android.synthetic.main.ethics_screen.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import org.shadowrunrussia2020.android.common.di.MainActivityScope
-import org.shadowrunrussia2020.android.common.models.EthicState
 import org.shadowrunrussia2020.android.common.models.EthicTrigger
-import org.shadowrunrussia2020.android.common.utils.encode
-import org.shadowrunrussia2020.android.common.utils.qrData
 import org.shadowrunrussia2020.android.common.utils.showErrorMessage
-import org.shadowrunrussia2020.android.view.universal_list.*
-import java.sql.Date
-import java.util.concurrent.TimeUnit
+import org.shadowrunrussia2020.android.view.universal_list.EthicCooldownItem
+import org.shadowrunrussia2020.android.view.universal_list.EthicStateItem
+import org.shadowrunrussia2020.android.view.universal_list.EthicTriggerItem
+import org.shadowrunrussia2020.android.view.universal_list.UniversalAdapter
 
 class Fragment : Fragment() {
 
