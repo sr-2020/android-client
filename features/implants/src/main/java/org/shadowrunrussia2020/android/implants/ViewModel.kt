@@ -33,4 +33,13 @@ internal class ViewModel : ViewModel() {
             )
         )
     }
+
+    suspend fun analyzeBody(targetCharacterId: String): CharacterResponse? {
+        return mRepository.sendEvent(
+            Event(
+                "analyzeBody",
+                hashMapOf("targetCharacterId" to targetCharacterId)
+            )
+        )
+    }
 }
