@@ -40,6 +40,7 @@ import org.shadowrunrussia2020.android.character.CharacterViewModel
 import org.shadowrunrussia2020.android.common.di.ApplicationSingletonScope
 import org.shadowrunrussia2020.android.common.di.MainActivityScope
 import org.shadowrunrussia2020.android.common.models.Character
+import org.shadowrunrussia2020.android.common.models.HealthState
 import org.shadowrunrussia2020.android.common.models.HistoryRecord
 import org.shadowrunrussia2020.android.common.models.Position
 import org.shadowrunrussia2020.android.common.utils.*
@@ -138,7 +139,7 @@ class MainActivity : AppCompatActivity(), IMainActivityDi {
 
         characterViewModel.getCharacter().observe(this,
             Observer { data: Character? ->
-                if (data != null && data.healthState != "healthy" &&
+                if (data != null && data.healthState != HealthState.healthy &&
                     navController.currentDestination?.id != R.id.woundedFragment
                 ) {
                     navController.navigate(MainNavGraphDirections.actionGlobalWounded())

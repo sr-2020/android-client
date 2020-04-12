@@ -21,6 +21,7 @@ import kotlinx.coroutines.withContext
 import org.shadowrunrussia2020.android.MainNavGraphDirections
 import org.shadowrunrussia2020.android.R
 import org.shadowrunrussia2020.android.common.models.Character
+import org.shadowrunrussia2020.android.common.models.HealthState
 import org.shadowrunrussia2020.android.common.utils.Data
 import org.shadowrunrussia2020.android.common.utils.Type
 import org.shadowrunrussia2020.android.common.utils.encode
@@ -62,12 +63,12 @@ class WoundedFragment : Fragment() {
         }
     }
     private fun onCharacterUpdate(character: Character) {
-        if (character.healthState == "healthy") {
+        if (character.healthState == HealthState.healthy) {
             findNavController().navigate(
                 MainNavGraphDirections.actionGlobalCharacter(),
                 NavOptions.Builder().setPopUpTo(R.id.main_nav_graph, true).build()
             )
-        } else if (character.healthState == "wounded") {
+        } else if (character.healthState == HealthState.wounded) {
             textViewTitle.text = getString(R.string.wounded_title)
             val medkit = character.modifiers.find { it.mID == "medkit-revive-modifier" }
             if (medkit != null) {
@@ -79,10 +80,10 @@ class WoundedFragment : Fragment() {
             } else {
                 textViewSubtitle.text = getString(R.string.wounded_subtitle_no_medkit)
             }
-        } else if (character.healthState == "clinically_dead") {
+        } else if (character.healthState == HealthState.clinically_dead) {
             textViewTitle.text = getString(R.string.clinical_death_title)
             textViewSubtitle.text = getString(R.string.clinical_death_subtitle)
-        } else if (character.healthState == "biologically_dead") {
+        } else if (character.healthState == HealthState.biologically_dead) {
             textViewTitle.text = getString(R.string.absolute_death_title)
             textViewSubtitle.text = getString(R.string.absolute_death_subtitle)
         }

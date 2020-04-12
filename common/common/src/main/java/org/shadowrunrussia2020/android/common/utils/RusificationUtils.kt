@@ -1,5 +1,6 @@
 package org.shadowrunrussia2020.android.common.utils
 
+import org.shadowrunrussia2020.android.common.models.HealthState
 import org.shadowrunrussia2020.android.common.models.ImplantGrade
 import org.shadowrunrussia2020.android.common.models.ImplantSlot
 
@@ -19,5 +20,14 @@ fun russianGradeName(grade: ImplantGrade): String {
         ImplantGrade.gamma -> "Гамма"
         ImplantGrade.delta -> "Дельта"
         ImplantGrade.bio -> "Биовар"
+    }
+}
+
+fun russianHealthState(state: HealthState): String {
+    return when (state) {
+        HealthState.healthy -> "Здоров"
+        HealthState.wounded -> "Тяжело ранен"
+        HealthState.clinically_dead -> "КС"
+        HealthState.biologically_dead -> "АС"
     }
 }
