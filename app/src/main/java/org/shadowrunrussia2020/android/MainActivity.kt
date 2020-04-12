@@ -49,7 +49,6 @@ import org.shadowrunrussia2020.android.magic.SpellDetailsFragmentDirections
 import org.shadowrunrussia2020.android.magic.cast.SpellCastFragment
 import org.shadowrunrussia2020.android.positioning.BeaconsScanner
 import org.shadowrunrussia2020.android.positioning.PositionsViewModel
-import java.util.*
 import java.util.concurrent.TimeUnit
 
 
@@ -116,12 +115,7 @@ class MainActivity : AppCompatActivity(), IMainActivityDi {
                     if (character != null) {
                         characterData.removeObserver(this)
                         val action = MainNavGraphDirections.actionGlobalShowQr(
-                            Data(
-                                Type.DIGITAL_SIGNATURE,
-                                0,
-                                (Date().time / 1000).toInt() + 3600,
-                                character.modelId
-                            )
+                            character.qrData
                         )
                         navController.navigate(action)
                         drawer_layout.closeDrawer(GravityCompat.START)

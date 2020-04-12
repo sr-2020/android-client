@@ -70,7 +70,7 @@ class EncodeUtilTest {
     fun decode_IsCorrect2() {
         assertEquals(
             Data(
-                Type.WOUNDED_BODY,
+                Type.BIOLOGICALLY_DEAD_BODY,
                 0,
                 1700000000,
                 "123,1267,abc"

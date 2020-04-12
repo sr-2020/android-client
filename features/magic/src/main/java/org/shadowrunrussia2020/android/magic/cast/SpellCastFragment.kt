@@ -150,7 +150,7 @@ class SpellCastFragment : Fragment() {
                 "power" to seekBarSpellPower.progress,
                 "locationId" to "1"
             )
-            qrData.type == Type.DIGITAL_SIGNATURE || qrData.type == Type.WOUNDED_BODY -> hashMapOf(
+            qrData.type == Type.HEALTHY_BODY || qrData.type == Type.WOUNDED_BODY -> hashMapOf(
                 "targetCharacterId" to qrData.payload,
                 "power" to seekBarSpellPower.progress,
                 "locationId" to "1"

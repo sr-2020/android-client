@@ -26,9 +26,9 @@ import org.shadowrunrussia2020.android.R
 import org.shadowrunrussia2020.android.character.CharacterViewModel
 import org.shadowrunrussia2020.android.common.models.ActiveAbility
 import org.shadowrunrussia2020.android.common.models.TargetType
-import org.shadowrunrussia2020.android.common.utils.*
 import org.shadowrunrussia2020.android.common.qr.QrDataOrError
 import org.shadowrunrussia2020.android.common.qr.QrViewModel
+import org.shadowrunrussia2020.android.common.utils.*
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -134,10 +134,11 @@ class ActiveAbilityDetailsFragment : Fragment() {
 
     private fun useOnTarget(qrData: Data) {
         val eventData: HashMap<String, Any> = when {
-            qrData.type == Type.DIGITAL_SIGNATURE || qrData.type == Type.WOUNDED_BODY -> hashMapOf(
+            qrData.type == Type.HEALTHY_BODY || qrData.type == Type.WOUNDED_BODY -> hashMapOf(
                 "targetCharacterId" to qrData.payload.toInt()
             )
             else -> {
+                // TODO(aeremin): Support abilities having other kinds of target
                 showErrorMessage(requireContext(), "Ошибка. Неожиданный QR-код."); return
             }
         }

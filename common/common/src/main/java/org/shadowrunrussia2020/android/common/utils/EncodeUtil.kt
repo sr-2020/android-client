@@ -14,16 +14,18 @@ enum class Type {
     PAYMENT_REQUEST_SIMPLE,
     PAYMENT_REQUEST_WITH_PRICE,
     SHOP_BILL,
-    DIGITAL_SIGNATURE,
-    PASSPORT,
+    HEALTHY_BODY,
     WOUNDED_BODY,
+    BIOLOGICALLY_DEAD_BODY,
+    ABSOLUTELY_DEAD_BODY,
+    ASTRAL_BODY,
 }
 
 @Parcelize data class Data(val type: Type, val kind: Byte, val validUntil: Int, val payload: String) : Parcelable
 
 val Character.qrData: Data
     get() = Data(
-        type = Type.DIGITAL_SIGNATURE,
+        type = Type.HEALTHY_BODY,
         kind = 0,
         validUntil = (Date().time / 1000).toInt() + 3600,
         payload = this.modelId
