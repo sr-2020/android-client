@@ -61,7 +61,7 @@ class EncodeUtilTest {
     @Test
     fun decode_IsCorrect() {
         assertEquals(
-            Data(Type.CRAFTED_ITEM, 13, 1893456000, "Hello"),
+            Data(Type.PAYMENT_REQUEST_WITH_PRICE, 13, 1893456000, "Hello"),
             decode("6263Aw2A2NtwHello")
         )
     }
@@ -70,7 +70,7 @@ class EncodeUtilTest {
     fun decode_IsCorrect2() {
         assertEquals(
             Data(
-                Type.PAYMENT_REQUEST_WITH_PRICE,
+                Type.WOUNDED_BODY,
                 0,
                 1700000000,
                 "123,1267,abc"
@@ -85,7 +85,7 @@ class EncodeUtilTest {
             "6263Aw2A2NtwHello",
             encode(
                 Data(
-                    Type.CRAFTED_ITEM,
+                    Type.PAYMENT_REQUEST_WITH_PRICE,
                     13,
                     1893456000,
                     "Hello"
@@ -96,7 +96,7 @@ class EncodeUtilTest {
 
     @Test
     fun encode_WorksWithCyrillicCharacters() {
-        val data = Data(Type.CRAFTED_ITEM, 13, 1893456000, "Рыба")
+        val data = Data(Type.REWRITABLE, 13, 1893456000, "Рыба")
         assertEquals(decode(encode(data)), data)
     }
 }

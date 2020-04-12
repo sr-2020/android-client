@@ -62,7 +62,6 @@ internal fun signature(packedData: ByteArray, data: String): String {
         }
     }
     //md.update(packedData)
-    val a = (data + salt).toByteArray()
     md.update(data.toByteArray())
     md.update(salt.toByteArray())
     val md5hash = md.digest()
