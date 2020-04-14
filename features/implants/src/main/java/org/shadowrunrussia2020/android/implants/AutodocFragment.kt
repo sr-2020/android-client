@@ -114,11 +114,19 @@ class AutodocFragment : Fragment() {
         } else {
             when (autodocViewModel.state) {
                 AutoDocViewModel.State.WAITING_FOR_BODY_SCAN -> {
-                    launchAsync(requireActivity()) {
-                        characterViewModel.analyzeBody(qrData.payload)
+                    if (qrData.type == Type.WOUNDED_BODY || qrData.type == Type.HEALTHY_BODY) {
+                        launchAsync(requireActivity()) {
+                            characterViewModel.analyzeBody(qrData.payload)
+                        }
+                        autodocViewModel.targetCharacterId = qrData.payload
+                        autodocViewModel.state = AutoDocViewModel.State.IDLE
+                    } else {
+                        showErrorMessage(
+                            requireActivity(),
+                            "Отсканированный код не является кодом мясного тела"
+                        )
+                        findNavController().popBackStack()
                     }
-                    autodocViewModel.targetCharacterId = qrData.payload
-                    autodocViewModel.state = AutoDocViewModel.State.IDLE
                 }
                 AutoDocViewModel.State.WAITING_FOR_EMPTY_QR_SCAN -> {
                     if (qrData.type == Type.REWRITABLE) {
