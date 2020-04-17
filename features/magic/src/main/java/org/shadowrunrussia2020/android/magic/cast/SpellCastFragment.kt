@@ -114,10 +114,7 @@ class SpellCastFragment : Fragment() {
             try {
                 val response = withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
                     viewModel.castSpell(
-                        spellId, hashMapOf(
-                            "power" to seekBarSpellPower.progress,
-                            "locationId" to "1"
-                        )
+                        spellId, hashMapOf("power" to seekBarSpellPower.progress)
                     )
                 }
 
@@ -145,15 +142,13 @@ class SpellCastFragment : Fragment() {
 
     private fun castOnTarget(qrData: Data) {
         val eventData = when {
-            qrData.type == Type.REWRITABLE -> hashMapOf(
+            qrData.type == Type.REWRITABLE -> hashMapOf<String, Any>(
                 "qrCode" to qrData.payload.toInt(),
-                "power" to seekBarSpellPower.progress,
-                "locationId" to "1"
+                "power" to seekBarSpellPower.progress
             )
-            qrData.type == Type.HEALTHY_BODY || qrData.type == Type.WOUNDED_BODY -> hashMapOf(
+            qrData.type == Type.HEALTHY_BODY || qrData.type == Type.WOUNDED_BODY -> hashMapOf<String, Any>(
                 "targetCharacterId" to qrData.payload,
-                "power" to seekBarSpellPower.progress,
-                "locationId" to "1"
+                "power" to seekBarSpellPower.progress
             )
             else -> {
                 showErrorMessage(requireContext(), "Ошибка. Неожиданный QR-код."); return
