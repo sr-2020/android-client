@@ -28,6 +28,7 @@ class SpellCastViewModel(application: Application) : AndroidViewModel(applicatio
 
     suspend fun castSpell(spellId: String, data: HashMap<String, Any> = hashMapOf()): CharacterResponse? {
         data["id"] = spellId
+        data["locationId"] = "1"
         return postEvent("castSpell", data)
     }
 
