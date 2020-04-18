@@ -32,10 +32,10 @@ class MainFragment : Fragment() {
         viewModel.character.observe({ this.lifecycle }) { ch ->
             ch?.let { character ->
                 textHp.text = "%s♥".format(character.maxHp)
-                textMana.text = "%s✡".format(character.magic)
+                textEssence.text = "%s✡".format(character.essence / 100)
 
                 fullTextHP.text = "Максимальные хиты: %s♡".format(character.maxHp)
-                fullTextMana.text = "Текущее значение маны: %s✡".format(character.magic)
+                fullTextEssence.text = "Эссенс: %s✡".format(character.essence / 100)
 
                 uinversalAdapter.clear()
                 uinversalAdapter.appendList(

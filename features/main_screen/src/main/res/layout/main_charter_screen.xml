@@ -24,7 +24,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textColor="#f00"
-                    app:layout_constraintBottom_toTopOf="@+id/fullTextMana"
+                    app:layout_constraintBottom_toTopOf="@+id/fullTextEssence"
                     app:layout_constraintEnd_toStartOf="@+id/qrDataView"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
@@ -32,16 +32,16 @@
                     tools:text="Максимальные хиты: 15♡" />
 
             <TextView
-                    android:id="@+id/fullTextMana"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:textColor="#00f"
-                    app:layout_constraintBottom_toTopOf="@+id/fullTextPover"
-                    app:layout_constraintEnd_toStartOf="@+id/qrDataView"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/fullTextHP"
-                    tools:text="Текущее значение маны: 15✡" />
+                android:id="@+id/fullTextEssence"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="#00f"
+                app:layout_constraintBottom_toTopOf="@+id/fullTextPover"
+                app:layout_constraintEnd_toStartOf="@+id/qrDataView"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fullTextHP"
+                tools:text="Эссенс: 15✡" />
 
             <TextView
                 android:id="@+id/fullTextPover"
@@ -52,7 +52,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/qrDataView"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fullTextMana" />
+                app:layout_constraintTop_toBottomOf="@+id/fullTextEssence" />
 
 
             <ImageView
@@ -70,7 +70,7 @@
                 android:layout_height="60dp">
 
             <TextView
-                    android:id="@+id/textMana"
+                    android:id="@+id/textEssence"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"

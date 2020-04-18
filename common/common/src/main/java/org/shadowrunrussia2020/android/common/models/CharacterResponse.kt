@@ -110,6 +110,7 @@ data class Character(
     val body: Int,
     val intelligence: Int,
     val charisma: Int,
+    val essence: Int,
     val mentalQrId: Int,
     val magic: Int,
     val resonance: Int,
