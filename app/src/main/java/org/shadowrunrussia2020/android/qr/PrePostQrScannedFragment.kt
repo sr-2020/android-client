@@ -1,6 +1,7 @@
 package org.shadowrunrussia2020.android.qr
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.pre_post_qr_scanned.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -21,76 +23,77 @@ import org.shadowrunrussia2020.android.character.CharacterViewModel
 import org.shadowrunrussia2020.android.common.models.Transfer
 import org.shadowrunrussia2020.android.common.utils.showErrorMessage
 import org.shadowrunrussia2020.android.common.utils.showInfoMessage
-import org.shadowrunrussia2020.android.model.qr.QrDataOrError
-import org.shadowrunrussia2020.android.model.qr.QrViewModel
+import org.shadowrunrussia2020.android.model.qr.FullQrData
 import org.shadowrunrussia2020.android.model.qr.Type
+import org.shadowrunrussia2020.android.model.qr.maybeProcessActivityResult
 import org.shadowrunrussia2020.android.model.qr.retrieveQrData
 
 
 class PrePostQrScannedFragment : Fragment() {
-    private val viewModel by lazy { ViewModelProviders.of(requireActivity()).get(QrViewModel::class.java) }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.pre_post_qr_scanned, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         progressLoader.visibility = View.INVISIBLE
+        scanQr()
+    }
 
-        val vmData = viewModel.data
-        viewModel.data = QrDataOrError(qrData = null, error = false)
-
-        if (vmData.error) {
-            findNavController().popBackStack()
-            return
-        }
-
-        val qrData = vmData.qrData
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        val qrData = maybeProcessActivityResult(activity!!, requestCode, resultCode, data)
         if (qrData == null) {
-            findNavController().navigate(PrePostQrScannedFragmentDirections.actionStartScan())
-            return
-        }
-
-        CoroutineScope(Dispatchers.IO).launch {
-            val d = retrieveQrData(qrData)
-            Log.w("QR", "name = ${d.name}, type = ${d.type}, id = ${d.modelId}")
-        }
-
-        when (qrData.type) {
-            Type.PAYMENT_REQUEST_WITH_PRICE -> {
+            findNavController().popBackStack()
+        } else {
+            CoroutineScope(Dispatchers.Main).launch {
                 try {
-                    val parts = qrData.payload.split(',', limit = 3)
-                    askForTransfer(Transfer(sin_to = parts[0].toInt(), amount = parts[1].toInt(), comment = parts[2]))
-                    return
+                    val fullQrData = withContext(Dispatchers.IO) { retrieveQrData(qrData) }
+                    Log.i("QR", "name = ${fullQrData.name}, type = ${fullQrData.type}, id = ${fullQrData.modelId}")
+                    onQr(fullQrData)
                 } catch (e: Exception) {
-                    showErrorMessage(requireContext(), "Ошибка. Неожиданный QR-код.")
+                    showErrorMessage(requireActivity(), "${e.message}")
                 }
             }
-            Type.REWRITABLE -> {
-                try {
-                    consume(qrData.payload.toInt())
-                    return
-                } catch (e: Exception) {
-                    showErrorMessage(requireContext(), "Ошибка. Неожиданный QR-код.")
-                }
-            }
-            Type.WOUNDED_BODY -> {
-                try {
-                    findNavController().navigate(
-                        PrePostQrScannedFragmentDirections.actionInteractWithBody(
-                            qrData.payload.toInt()
+        }
+    }
+
+    private suspend fun onQr(qrData: FullQrData) {
+        try {
+            when (qrData.type) {
+                Type.PAYMENT_REQUEST_WITH_PRICE -> {
+                    val parts = qrData.modelId.split(',', limit = 3)
+                    askForTransfer(
+                        Transfer(
+                            sin_to = parts[0].toInt(),
+                            amount = parts[1].toInt(),
+                            comment = parts[2]
                         )
                     )
-                    return
-                } catch (e: Exception) {
-                    showErrorMessage(requireContext(), "Ошибка. Неожиданный QR-код.")
+                }
+                Type.pill -> consume(qrData.modelId.toInt())
+                Type.food -> consume(qrData.modelId.toInt())
+                Type.ability -> consume(qrData.modelId.toInt())
+                Type.WOUNDED_BODY -> {
+                    findNavController().navigate(
+                        PrePostQrScannedFragmentDirections.actionInteractWithBody(
+                            qrData.modelId.toInt()
+                        )
+                    )
+                }
+                else -> {
+                    showInfoMessage(
+                        requireContext(),
+                        "Содержимое QR-кода: ${qrData.type}, ${qrData.modelId}"
+                    )
+                    findNavController().popBackStack()
                 }
             }
-            else -> {
-                showInfoMessage(requireContext(), "Содержимое QR-кода: ${qrData.type}, ${qrData.payload}")
-                findNavController().popBackStack()
-            }
+        } catch (e: Exception) {
+            showErrorMessage(requireContext(), "Ошибка. Неожиданный QR-код.")
         }
     }
 
@@ -118,17 +121,22 @@ class PrePostQrScannedFragment : Fragment() {
             .create().show()
     }
 
-    private fun consume(qrId: Int) {
-        CoroutineScope(Dispatchers.Main).launch {
-            val m = ViewModelProviders.of(activity!!).get(CharacterViewModel::class.java)
-            progressLoader.visibility = View.VISIBLE
-            try {
-                withContext(CoroutineScope(Dispatchers.IO).coroutineContext)
-                { m.postEvent("scanQr", hashMapOf("qrCode" to qrId)) }
-            } catch (e: Exception) {
-                showErrorMessage(requireContext(), e.message ?: "Неожиданная ошибка сервера")
-            }
-            findNavController().popBackStack()
+    private suspend fun consume(qrId: Int) {
+        val m = ViewModelProviders.of(activity!!).get(CharacterViewModel::class.java)
+        progressLoader.visibility = View.VISIBLE
+        try {
+            withContext(Dispatchers.IO) { m.postEvent("scanQr", hashMapOf("qrCode" to qrId)) }
+        } catch (e: Exception) {
+            showErrorMessage(requireContext(), e.message ?: "Неожиданная ошибка сервера")
         }
+        findNavController().popBackStack()
+    }
+
+    private fun scanQr() {
+        IntentIntegrator.forSupportFragment(this)
+            .setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
+            .setPrompt(getString(org.shadowrunrussia2020.android.implants.R.string.scan_qr_generic))
+            .setBeepEnabled(false)
+            .initiateScan()
     }
 }
