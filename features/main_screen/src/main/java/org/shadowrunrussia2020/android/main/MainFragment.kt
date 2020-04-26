@@ -9,13 +9,10 @@ import androidx.lifecycle.ViewModelProviders
 import com.google.zxing.BarcodeFormat
 import com.journeyapps.barcodescanner.BarcodeEncoder
 import kotlinx.android.synthetic.main.main_charter_screen.*
-import org.shadowrunrussia2020.android.common.di.MainActivityScope
 import org.shadowrunrussia2020.android.common.utils.encode
 import org.shadowrunrussia2020.android.common.utils.qrData
 
 class MainFragment : Fragment() {
-
-    private val router by lazy { (activity as MainActivityScope).router }
 
     private val viewModel by lazy { ViewModelProviders.of(this)[MainViewModel::class.java] }
 

@@ -46,7 +46,6 @@ import org.shadowrunrussia2020.android.common.models.Position
 import org.shadowrunrussia2020.android.common.utils.*
 import org.shadowrunrussia2020.android.di.IMainActivityDi
 import org.shadowrunrussia2020.android.magic.SpellDetailsFragmentDirections
-import org.shadowrunrussia2020.android.magic.cast.SpellCastFragment
 import org.shadowrunrussia2020.android.positioning.BeaconsScanner
 import org.shadowrunrussia2020.android.positioning.PositionsViewModel
 import java.util.concurrent.TimeUnit
@@ -313,20 +312,5 @@ class MainActivity : AppCompatActivity(), IMainActivityDi {
         // https://medium.com/google-developer-experts/using-navigation-architecture-component-in-a-large-banking-app-ac84936a42c2
         startActivity(Intent(this, LoginActivity::class.java))
         finish()
-    }
-
-    override val router = object : MainActivityScope.Router {
-        override fun goToCastSpellScreen(spellId: String) {
-            navController.navigate(
-                R.id.action_cast_spell,
-                SpellCastFragment.createBundle(spellId)
-            )
-        }
-
-        override fun showSpellResult(records: Array<HistoryRecord>) {
-            navController.navigate(
-                SpellDetailsFragmentDirections.actionShowSpellResult(records)
-            )
-        }
     }
 }
