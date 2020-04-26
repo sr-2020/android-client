@@ -51,10 +51,6 @@
                 android:id="@+id/action_global_positions"
                 android:icon="@drawable/menu_manage"
                 android:title="@string/location"/>
-        <item
-                android:id="@+id/action_settings"
-                android:icon="@drawable/settings"
-                android:title="@string/action_settings"/>
 
     </group>
 
