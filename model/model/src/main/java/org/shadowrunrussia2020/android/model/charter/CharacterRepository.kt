@@ -2,11 +2,13 @@ package org.shadowrunrussia2020.android.model.charter
 
 import android.util.Log
 import androidx.lifecycle.LiveData
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import org.shadowrunrussia2020.android.common.declaration.repository.ICharacterRepository
 import org.shadowrunrussia2020.android.common.models.Character
 import org.shadowrunrussia2020.android.common.models.CharacterResponse
 import org.shadowrunrussia2020.android.common.models.Event
 import org.shadowrunrussia2020.android.common.models.HistoryRecord
-import org.shadowrunrussia2020.android.common.declaration.repository.ICharacterRepository
 import retrofit2.Response
 
 internal class CharacterRepository(private val mService: CharacterWebService, private val mDao: CharacterDao) :
@@ -24,7 +26,9 @@ internal class CharacterRepository(private val mService: CharacterWebService, pr
     }
 
     override suspend fun sendEvent(event: Event): CharacterResponse? {
-        return saveToDao(mService.postEvent(event).await())
+        return withContext(Dispatchers.IO) {
+            saveToDao(mService.postEvent(event).await())
+        }
     }
 
     override fun saveToDao(response: Response<CharacterResponse>): CharacterResponse? {

@@ -15,7 +15,6 @@ import kotlinx.android.synthetic.main.fragment_spell_details.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.shadowrunrussia2020.android.R
 import org.shadowrunrussia2020.android.character.CharacterViewModel
 import org.shadowrunrussia2020.android.common.models.Character
@@ -92,13 +91,11 @@ class SpellDetailsFragment : Fragment() {
     private fun castOnSelf() {
         CoroutineScope(Dispatchers.Main).launch {
             try {
-                val response = withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
-                    mCharacterModel.castSpell(
-                        spell.id, hashMapOf("power" to seekBarSpellPower.progress)
-                    )
-                }
+                val response = mCharacterModel.castSpell(
+                    spell.id, hashMapOf("power" to seekBarSpellPower.progress)
+                )
 
-             response?.tableResponse ?.let { tableResponse->
+                response?.tableResponse?.let { tableResponse ->
                     findNavController().navigate(
                         SpellDetailsFragmentDirections.actionShowSpellResult(
                             tableResponse.map {
@@ -139,9 +136,7 @@ class SpellDetailsFragment : Fragment() {
         }
         CoroutineScope(Dispatchers.Main).launch {
             try {
-                withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
-                    mCharacterModel.castSpell(spell.id, eventData)
-                }
+                mCharacterModel.castSpell(spell.id, eventData)
             } catch (e: Exception) {
                 showErrorMessage(requireContext(), "Ошибка. ${e.message}")
             }

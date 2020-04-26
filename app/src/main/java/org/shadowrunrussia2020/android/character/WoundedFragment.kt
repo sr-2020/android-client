@@ -17,7 +17,6 @@ import kotlinx.android.synthetic.main.fragment_wounded.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.shadowrunrussia2020.android.MainNavGraphDirections
 import org.shadowrunrussia2020.android.R
 import org.shadowrunrussia2020.android.common.models.Character
@@ -53,10 +52,8 @@ class WoundedFragment : Fragment() {
         buttonDebugSelfRevive.setOnClickListener {
             CoroutineScope(Dispatchers.Main).launch {
                 try {
-                    withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
-                        mModel.postEvent("revive")
-                    }
-                } catch (e: Exception) {
+                    mModel.postEvent("revive")
+                 } catch (e: Exception) {
                     showErrorMessage(requireActivity(), "${e.message}")
                 }
             }

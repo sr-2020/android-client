@@ -2,12 +2,12 @@ package org.shadowrunrussia2020.android.model.billing
 
 import android.util.Log
 import androidx.lifecycle.LiveData
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.shadowrunrussia2020.android.common.declaration.repository.IBillingRepository
 import org.shadowrunrussia2020.android.common.models.AccountOverview
-import org.shadowrunrussia2020.android.common.models.Empty
 import org.shadowrunrussia2020.android.common.models.Transaction
 import org.shadowrunrussia2020.android.common.models.Transfer
-import retrofit2.Response
 
 internal class BillingRepository(private val mService: BillingWebService, private val mBillingDao: BillingDao) :
     IBillingRepository {
@@ -32,9 +32,11 @@ internal class BillingRepository(private val mService: BillingWebService, privat
     override fun getAccountOverview(): LiveData<AccountOverview> {
         return mBillingDao.accountOverview()
     }
-    override suspend fun transferMoney(transfer: Transfer): Response<Empty> {
-        val result = mService.transfer(transfer).await()
-        refresh()
-        return result
+
+    override suspend fun transferMoney(transfer: Transfer) {
+        withContext(Dispatchers.IO) {
+            val result = mService.transfer(transfer).await()
+            refresh()
+        }
     }
 }

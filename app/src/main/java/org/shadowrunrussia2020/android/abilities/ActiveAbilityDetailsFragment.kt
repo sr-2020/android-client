@@ -20,13 +20,14 @@ import kotlinx.android.synthetic.main.fragment_spell_details.textAbilityName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.ocpsoft.prettytime.PrettyTime
 import org.shadowrunrussia2020.android.R
 import org.shadowrunrussia2020.android.character.CharacterViewModel
 import org.shadowrunrussia2020.android.common.models.ActiveAbility
 import org.shadowrunrussia2020.android.common.models.TargetType
-import org.shadowrunrussia2020.android.common.utils.*
+import org.shadowrunrussia2020.android.common.utils.MainThreadSchedulers
+import org.shadowrunrussia2020.android.common.utils.plusAssign
+import org.shadowrunrussia2020.android.common.utils.showErrorMessage
 import org.shadowrunrussia2020.android.model.qr.*
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -103,9 +104,7 @@ class ActiveAbilityDetailsFragment : Fragment() {
     private fun useOnSelf() {
         CoroutineScope(Dispatchers.Main).launch {
             try {
-                withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
-                    mModel.useAbility(ability.id)
-                }
+                mModel.useAbility(ability.id)
                 findNavController().popBackStack()
             } catch (e: Exception) {
                 showErrorMessage(requireContext(), "Ошибка. ${e.message}")
@@ -116,9 +115,7 @@ class ActiveAbilityDetailsFragment : Fragment() {
     private fun useAndShowQr() {
         CoroutineScope(Dispatchers.Main).launch {
             try {
-                withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
-                    mModel.useAbility(ability.id)
-                }
+                mModel.useAbility(ability.id)
                 qrCodeImage.visibility = View.VISIBLE
                 useAbility.isEnabled = false
             } catch (e: Exception) {
@@ -143,9 +140,7 @@ class ActiveAbilityDetailsFragment : Fragment() {
         }
         CoroutineScope(Dispatchers.Main).launch {
             try {
-                withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
-                    mModel.useAbility(ability.id, eventData)
-                }
+                mModel.useAbility(ability.id, eventData)
             } catch (e: Exception) {
                 showErrorMessage(requireContext(), "Ошибка. ${e.message}")
             }

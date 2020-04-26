@@ -14,7 +14,6 @@ import kotlinx.android.synthetic.main.fragment_billing_overview.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.shadowrunrussia2020.android.R
 import org.shadowrunrussia2020.android.common.utils.showErrorMessage
 import org.shadowrunrussia2020.android.common.utils.showSuccessMessage
@@ -67,7 +66,7 @@ class BillingOverviewFragment : Fragment() {
             buttonTransfer.isEnabled = false
             CoroutineScope(Dispatchers.Main).launch {
                 try {
-                    withContext(Dispatchers.IO) { mModel.transferMoney(Integer.parseInt(recipient), amount, comment) }
+                    mModel.transferMoney(Integer.parseInt(recipient), amount, comment)
                     showSuccessMessage(requireContext(), "Перевод осуществлен")
                     editTextRecipient.text!!.clear()
                     editTextAmount.text!!.clear()

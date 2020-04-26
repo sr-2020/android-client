@@ -108,10 +108,9 @@ class PrePostQrScannedFragment : Fragment() {
             )
             .setPositiveButton(R.string.ok) { _, _ ->
                 CoroutineScope(Dispatchers.Main).launch {
-                    val m = ViewModelProviders.of(activity!!).get(BillingViewModel::class.java)
                     progressLoader.visibility = View.VISIBLE
-                    withContext(CoroutineScope(Dispatchers.IO).coroutineContext)
-                    { m.transferMoney(receiver = t.sin_to, amount = t.amount, comment = t.comment) }
+                    ViewModelProviders.of(activity!!).get(BillingViewModel::class.java)
+                        .transferMoney(receiver = t.sin_to, amount = t.amount, comment = t.comment)
                     findNavController().popBackStack(R.id.prePostQrScannedFragment, true)
                 }
             }

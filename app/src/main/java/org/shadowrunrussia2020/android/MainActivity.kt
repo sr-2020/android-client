@@ -41,7 +41,10 @@ import org.shadowrunrussia2020.android.common.di.ApplicationSingletonScope
 import org.shadowrunrussia2020.android.common.models.Character
 import org.shadowrunrussia2020.android.common.models.HealthState
 import org.shadowrunrussia2020.android.common.models.Position
-import org.shadowrunrussia2020.android.common.utils.*
+import org.shadowrunrussia2020.android.common.utils.MainThreadSchedulers
+import org.shadowrunrussia2020.android.common.utils.plusAssign
+import org.shadowrunrussia2020.android.common.utils.showErrorMessage
+import org.shadowrunrussia2020.android.common.utils.showSuccessMessage
 import org.shadowrunrussia2020.android.di.IMainActivityDi
 import org.shadowrunrussia2020.android.model.qr.qrData
 import org.shadowrunrussia2020.android.positioning.BeaconsScanner
@@ -253,11 +256,7 @@ class MainActivity : AppCompatActivity(), IMainActivityDi {
             R.id.action_wound -> {
                 CoroutineScope(Dispatchers.Main).launch {
                     try {
-                        withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
-                            characterViewModel.postEvent(
-                                "wound"
-                            )
-                        }
+                        characterViewModel.postEvent("wound")
                     } catch (e: Exception) {
                         showErrorMessage(this@MainActivity, "${e.message}")
                     }
