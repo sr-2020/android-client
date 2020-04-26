@@ -61,7 +61,7 @@ class AutodocFragment : Fragment() {
 
                 universalAdapter.apply()
 
-                textViewEssence.text = "Эссенс: ${analyzedBody.essence}"
+                textViewEssence.text = "Эссенс: ${analyzedBody.essence / 100}"
                 textViewHealthState.text = russianHealthState(analyzedBody.healthState)
 
                 buttonRevive.isEnabled = analyzedBody.healthState == HealthState.wounded
