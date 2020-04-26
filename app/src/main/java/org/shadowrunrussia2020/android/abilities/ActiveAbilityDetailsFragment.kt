@@ -26,9 +26,8 @@ import org.shadowrunrussia2020.android.R
 import org.shadowrunrussia2020.android.character.CharacterViewModel
 import org.shadowrunrussia2020.android.common.models.ActiveAbility
 import org.shadowrunrussia2020.android.common.models.TargetType
-import org.shadowrunrussia2020.android.common.qr.QrDataOrError
-import org.shadowrunrussia2020.android.common.qr.QrViewModel
 import org.shadowrunrussia2020.android.common.utils.*
+import org.shadowrunrussia2020.android.model.qr.*
 import java.util.*
 import java.util.concurrent.TimeUnit
 

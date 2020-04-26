@@ -10,15 +10,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_spellbook.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.shadowrunrussia2020.android.R
 import org.shadowrunrussia2020.android.character.CharacterHistoryAdapter
 import org.shadowrunrussia2020.android.common.models.HistoryRecord
 import org.shadowrunrussia2020.android.common.models.Position
-import org.shadowrunrussia2020.android.common.utils.showErrorMessage
 
 class AllPositionsFragment : Fragment() {
     private val mModel by lazy {

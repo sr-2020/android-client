@@ -16,13 +16,13 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.shadowrunrussia2020.android.R
 import org.shadowrunrussia2020.android.billing.BillingViewModel
-import org.shadowrunrussia2020.android.common.models.Transfer
 import org.shadowrunrussia2020.android.character.CharacterViewModel
-import org.shadowrunrussia2020.android.common.qr.QrDataOrError
-import org.shadowrunrussia2020.android.common.qr.QrViewModel
-import org.shadowrunrussia2020.android.common.utils.Type
+import org.shadowrunrussia2020.android.common.models.Transfer
 import org.shadowrunrussia2020.android.common.utils.showErrorMessage
 import org.shadowrunrussia2020.android.common.utils.showInfoMessage
+import org.shadowrunrussia2020.android.model.qr.QrDataOrError
+import org.shadowrunrussia2020.android.model.qr.QrViewModel
+import org.shadowrunrussia2020.android.model.qr.Type
 
 
 class PrePostQrScannedFragment : Fragment() {

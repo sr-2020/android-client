@@ -38,14 +38,12 @@ import kotlinx.coroutines.withContext
 import org.shadowrunrussia2020.android.billing.BillingViewModel
 import org.shadowrunrussia2020.android.character.CharacterViewModel
 import org.shadowrunrussia2020.android.common.di.ApplicationSingletonScope
-import org.shadowrunrussia2020.android.common.di.MainActivityScope
 import org.shadowrunrussia2020.android.common.models.Character
 import org.shadowrunrussia2020.android.common.models.HealthState
-import org.shadowrunrussia2020.android.common.models.HistoryRecord
 import org.shadowrunrussia2020.android.common.models.Position
 import org.shadowrunrussia2020.android.common.utils.*
 import org.shadowrunrussia2020.android.di.IMainActivityDi
-import org.shadowrunrussia2020.android.magic.SpellDetailsFragmentDirections
+import org.shadowrunrussia2020.android.model.qr.qrData
 import org.shadowrunrussia2020.android.positioning.BeaconsScanner
 import org.shadowrunrussia2020.android.positioning.PositionsViewModel
 import java.util.concurrent.TimeUnit

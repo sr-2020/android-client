@@ -1,4 +1,4 @@
-package org.shadowrunrussia2020.android.common.utils
+package org.shadowrunrussia2020.android.model.qr
 
 import android.os.Parcelable
 import com.google.common.io.BaseEncoding

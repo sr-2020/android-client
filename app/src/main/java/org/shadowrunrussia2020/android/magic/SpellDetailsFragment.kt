@@ -21,11 +21,11 @@ import org.shadowrunrussia2020.android.character.CharacterViewModel
 import org.shadowrunrussia2020.android.common.models.Character
 import org.shadowrunrussia2020.android.common.models.HistoryRecord
 import org.shadowrunrussia2020.android.common.models.Spell
-import org.shadowrunrussia2020.android.common.qr.QrDataOrError
-import org.shadowrunrussia2020.android.common.qr.QrViewModel
-import org.shadowrunrussia2020.android.common.utils.Data
-import org.shadowrunrussia2020.android.common.utils.Type
 import org.shadowrunrussia2020.android.common.utils.showErrorMessage
+import org.shadowrunrussia2020.android.model.qr.Data
+import org.shadowrunrussia2020.android.model.qr.QrDataOrError
+import org.shadowrunrussia2020.android.model.qr.QrViewModel
+import org.shadowrunrussia2020.android.model.qr.Type
 
 class SpellDetailsFragment : Fragment() {
     private val args: SpellDetailsFragmentArgs by navArgs()

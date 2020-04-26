@@ -13,7 +13,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.rigger_autodoc_screen.*
 import org.shadowrunrussia2020.android.common.models.HealthState
-import org.shadowrunrussia2020.android.common.utils.*
+import org.shadowrunrussia2020.android.common.utils.launchAsync
+import org.shadowrunrussia2020.android.common.utils.russianHealthState
+import org.shadowrunrussia2020.android.common.utils.showErrorMessage
+import org.shadowrunrussia2020.android.model.qr.Type
+import org.shadowrunrussia2020.android.model.qr.maybeProcessActivityResult
 import org.shadowrunrussia2020.android.view.universal_list.ImplantItem
 import org.shadowrunrussia2020.android.view.universal_list.UniversalAdapter
 

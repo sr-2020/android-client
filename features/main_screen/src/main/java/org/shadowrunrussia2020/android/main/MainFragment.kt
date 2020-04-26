@@ -9,8 +9,8 @@ import androidx.lifecycle.ViewModelProviders
 import com.google.zxing.BarcodeFormat
 import com.journeyapps.barcodescanner.BarcodeEncoder
 import kotlinx.android.synthetic.main.main_charter_screen.*
-import org.shadowrunrussia2020.android.common.utils.encode
-import org.shadowrunrussia2020.android.common.utils.qrData
+import org.shadowrunrussia2020.android.model.qr.encode
+import org.shadowrunrussia2020.android.model.qr.qrData
 
 class MainFragment : Fragment() {
 

@@ -11,14 +11,9 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_history.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.shadowrunrussia2020.android.character.CharacterHistoryAdapter
 import org.shadowrunrussia2020.android.character.CharacterViewModel
 import org.shadowrunrussia2020.android.common.models.HistoryRecord
-import org.shadowrunrussia2020.android.common.utils.showErrorMessage
 
 class HistoryFragment : Fragment() {
     private val mModel by lazy {

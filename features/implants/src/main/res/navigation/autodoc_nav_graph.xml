@@ -13,6 +13,6 @@
     </fragment>
     <fragment
         android:id="@+id/scanQrFragment"
-        android:name="org.shadowrunrussia2020.android.common.qr.ScanQrFragment"
+        android:name="org.shadowrunrussia2020.android.model.qr.ScanQrFragment"
         android:label="ScanQrFragment" />
 </navigation>

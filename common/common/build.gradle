@@ -40,11 +40,4 @@ dependencies {
     kapt "androidx.lifecycle:lifecycle-compiler:$androidArchLifecycle"
 
     api group: 'io.reactivex.rxjava3', name: 'rxjava', version: '3.0.0-RC1'
-//    implementation group: 'com.facebook.fresco', name: 'fbcore', version: '2.1.0'
-
-    testImplementation 'junit:junit:4.12'
-    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
-    androidTestImplementation 'androidx.test:runner:1.1.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
-
 }
