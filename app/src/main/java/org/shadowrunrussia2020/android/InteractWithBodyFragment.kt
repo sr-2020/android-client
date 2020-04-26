@@ -61,7 +61,7 @@ class InteractWithBodyFragment : Fragment() {
 
         CoroutineScope(Dispatchers.Main).launch {
             try {
-                withContext(CoroutineScope(Dispatchers.IO).coroutineContext)
+                withContext(Dispatchers.IO)
                 {
                     mModel.postEvent(
                         "scanQr",
@@ -80,7 +80,7 @@ class InteractWithBodyFragment : Fragment() {
     private fun finishToClinicalDeath() {
         CoroutineScope(Dispatchers.Main).launch {
             try {
-                withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
+                withContext(Dispatchers.IO) {
                     mModel.postEvent(
                         "clinicalDeathOnTarget",
                         hashMapOf("targetCharacterId" to args.targetId)
