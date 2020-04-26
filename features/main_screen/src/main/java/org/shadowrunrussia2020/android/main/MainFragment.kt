@@ -6,18 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.zxing.BarcodeFormat
 import com.journeyapps.barcodescanner.BarcodeEncoder
 import kotlinx.android.synthetic.main.main_charter_screen.*
 import org.shadowrunrussia2020.android.common.di.MainActivityScope
 import org.shadowrunrussia2020.android.common.utils.encode
 import org.shadowrunrussia2020.android.common.utils.qrData
-import org.shadowrunrussia2020.android.view.universal_list.*
 
 class MainFragment : Fragment() {
-
-    private val uinversalAdapter by lazy { UniversalAdapter() }
 
     private val router by lazy { (activity as MainActivityScope).router }
 
@@ -37,40 +33,11 @@ class MainFragment : Fragment() {
                 fullTextHP.text = "Максимальные хиты: %s♡".format(character.maxHp)
                 fullTextEssence.text = "Эссенс: %s✡".format(character.essence / 100)
 
-                uinversalAdapter.clear()
-                uinversalAdapter.appendList(
-                    character.spells.map { MagicSpellItem(it) {
-                        router.goToCastSpellScreen(it.id)
-                    } as UniversalViewData }.let {
-                        if(it.isNotEmpty()) it.plus(createMagicBookHeader(it)) else it
-                    }
-                )
-
-                uinversalAdapter.appendList(
-                    character.passiveAbilities.map { PassiveAbilityListItem(it) as UniversalViewData }.let {
-                        if(it.isNotEmpty()) it.plus(createPassiveAbilityHeader(it)) else it
-                    }
-                )
-
-                uinversalAdapter.appendList(
-                    character.activeAbilities.map { ActiveAbilityListItem(it) as UniversalViewData }.let {
-                        if(it.isNotEmpty()) it.plus(createActiveAbilityHeader(it)) else it
-                    }
-                )
-
-
-                uinversalAdapter.apply()
-
                 val barcodeEncoder = BarcodeEncoder()
                 val bitmap = barcodeEncoder.encodeBitmap(encode(character.qrData), BarcodeFormat.QR_CODE, 400, 400)
                 qrDataView.setImageBitmap(bitmap)
             }
         }
-
-        activeAbilityList.adapter = uinversalAdapter
-        activeAbilityList.layoutManager = LinearLayoutManager(requireContext())
     }
-
-
 }
 
