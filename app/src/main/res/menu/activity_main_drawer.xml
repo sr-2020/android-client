@@ -14,7 +14,7 @@
                 android:title="@string/charter"/>
 
         <item
-                android:id="@+id/action_global_spellbook_new"
+                android:id="@+id/action_global_spellbook"
                 android:icon="@drawable/magic_book"
                 android:title="Книга заклинаний"/>
 
@@ -61,11 +61,6 @@
                     android:icon="@drawable/generate_id_qr_code"
                     android:title="@string/generateQR"
                     />
-
-            <item
-                    android:id="@+id/action_global_spellbook"
-                    android:icon="@drawable/menu_manage"
-                    android:title="Старый вариант книги заклинаний"/>
         </menu>
     </item>
 
