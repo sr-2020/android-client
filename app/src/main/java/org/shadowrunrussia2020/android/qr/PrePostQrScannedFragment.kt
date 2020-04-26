@@ -2,6 +2,7 @@ package org.shadowrunrussia2020.android.qr
 
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +24,7 @@ import org.shadowrunrussia2020.android.common.utils.showInfoMessage
 import org.shadowrunrussia2020.android.model.qr.QrDataOrError
 import org.shadowrunrussia2020.android.model.qr.QrViewModel
 import org.shadowrunrussia2020.android.model.qr.Type
+import org.shadowrunrussia2020.android.model.qr.retrieveQrData
 
 
 class PrePostQrScannedFragment : Fragment() {
@@ -48,6 +50,11 @@ class PrePostQrScannedFragment : Fragment() {
         if (qrData == null) {
             findNavController().navigate(PrePostQrScannedFragmentDirections.actionStartScan())
             return
+        }
+
+        CoroutineScope(Dispatchers.IO).launch {
+            val d = retrieveQrData(qrData)
+            Log.w("QR", "name = ${d.name}, type = ${d.type}, id = ${d.modelId}")
         }
 
         when (qrData.type) {

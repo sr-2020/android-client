@@ -1,27 +1,11 @@
 package org.shadowrunrussia2020.android.model.qr
 
-import android.os.Parcelable
 import com.google.common.io.BaseEncoding
-import kotlinx.android.parcel.Parcelize
 import okio.Buffer
+import org.shadowrunrussia2020.android.common.di.ApplicationSingletonScope
 import org.shadowrunrussia2020.android.common.models.Character
 import java.security.MessageDigest
 import java.util.*
-
-enum class Type {
-    UNKNOWN,
-    REWRITABLE,
-    PAYMENT_REQUEST_SIMPLE,
-    PAYMENT_REQUEST_WITH_PRICE,
-    SHOP_BILL,
-    HEALTHY_BODY,
-    WOUNDED_BODY,
-    CLINICALLY_DEAD_BODY,
-    ABSOLUTELY_DEAD_BODY,
-    ASTRAL_BODY,
-}
-
-@Parcelize data class Data(val type: Type, val kind: Byte, val validUntil: Int, val payload: String) : Parcelable
 
 val Character.qrData: Data
     get() = Data(
@@ -38,6 +22,37 @@ val Character.mentalQrData: Data
         validUntil = (Date().time / 1000).toInt() + 3600,
         payload = this.mentalQrId.toString()
     )
+
+private suspend fun downloadRewritableQrData(id: String): FullQrData {
+    val d: ApplicationSingletonScope.Dependency = ApplicationSingletonScope.DependencyProvider.provideDependency()
+    val qrService = d.qrRetrofit.create(QrWebService::class.java)
+    val response = qrService.get(id).await()
+    return response.body()!!.workModel
+}
+
+suspend fun retrieveQrData(data: Data): FullQrData {
+    when (data.type) {
+        Type.UNKNOWN -> TODO()
+        Type.REWRITABLE ->
+            return downloadRewritableQrData(data.payload)
+        Type.PAYMENT_REQUEST_WITH_PRICE ->
+            return FullQrData(data.type, "Запрос о переводе", "Запрос о переводе с указанием цены", 1, "");
+        Type.PAYMENT_REQUEST_SIMPLE -> TODO()
+        Type.SHOP_BILL ->
+            return FullQrData(data.type, "Магазинный ценник", "Позволяет оплатить товар", 1, "");
+        Type.HEALTHY_BODY ->
+            return FullQrData(data.type, "Мясное тело", "Мясное тело. Здорово или легко ранено.", 1, data.payload);
+        Type.WOUNDED_BODY ->
+            return FullQrData(data.type, "Мясное тело", "Мясное тело. Тяжело ранено.", 1, data.payload);
+        Type.CLINICALLY_DEAD_BODY ->
+            return FullQrData(data.type, "Мясное тело", "Мясное тело. В состоянии клинической смерти.", 1, data.payload);
+        Type.ABSOLUTELY_DEAD_BODY ->
+            return FullQrData(data.type, "Мясное тело", "Мясное тело. Абсолютно мертво.", 1, data.payload);
+        Type.ASTRAL_BODY ->
+            return FullQrData(data.type, "Астральное тело", "", 1, data.payload);
+        else -> TODO()
+    }
+}
 
 
 class FormatException: Exception()

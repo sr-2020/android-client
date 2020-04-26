@@ -25,6 +25,7 @@
     <string name="ok">Oк</string>
 
     <string name="backend_url">http://gateway.evarun.ru/api/v1/</string>
+    <string name="qr_backend_url">https://models-manager.evarun.ru/qr/model/</string>
     <string name="token_preference_key">backend_token</string>
     <string name="backend_url_key">backend_url</string>
     <string name="action_logout">Выход</string>

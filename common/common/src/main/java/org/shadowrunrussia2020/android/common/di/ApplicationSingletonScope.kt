@@ -4,7 +4,6 @@ import android.content.Context
 import org.shadowrunrussia2020.android.common.Session
 import org.shadowrunrussia2020.android.common.di.components.IModelSingletonComponent
 import retrofit2.Retrofit
-import java.lang.RuntimeException
 import java.lang.ref.WeakReference
 
 interface ApplicationSingletonScope {
@@ -12,8 +11,8 @@ interface ApplicationSingletonScope {
     val component: Components
 
     interface Dependency {
-
         val retrofit: Retrofit
+        val qrRetrofit: Retrofit
         val session: Session
     }
 

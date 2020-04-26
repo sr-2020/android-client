@@ -30,6 +30,7 @@ class ApplicationDependency(val applicationProvider: WeakReference<Application>)
 
     override val session by lazy { Session(getGlobalSharedPreferences()) }
     override val retrofit: Retrofit by lazy { createRetrofit() }
+    override val qrRetrofit: Retrofit by lazy { createQrRetrofit() }
 
     val application: Application
         get() = applicationProvider.get()
@@ -49,6 +50,12 @@ class ApplicationDependency(val applicationProvider: WeakReference<Application>)
     private fun createRetrofit(): Retrofit {
         return baseRetrofitBuilder()
             .baseUrl(application.getString(R.string.backend_url))
+            .build()
+    }
+
+    private fun createQrRetrofit(): Retrofit {
+        return baseRetrofitBuilder()
+            .baseUrl(application.getString(R.string.qr_backend_url))
             .build()
     }
 
