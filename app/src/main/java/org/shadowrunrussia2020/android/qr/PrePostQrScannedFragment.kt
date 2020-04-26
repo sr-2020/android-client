@@ -51,7 +51,7 @@ class PrePostQrScannedFragment : Fragment() {
         } else {
             CoroutineScope(Dispatchers.Main).launch {
                 try {
-                    val fullQrData = withContext(Dispatchers.IO) { retrieveQrData(qrData) }
+                    val fullQrData = retrieveQrData(qrData)
                     Log.i("QR", "name = ${fullQrData.name}, type = ${fullQrData.type}, id = ${fullQrData.modelId}")
                     onQr(fullQrData)
                 } catch (e: Exception) {

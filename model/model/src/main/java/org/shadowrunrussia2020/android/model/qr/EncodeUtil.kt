@@ -1,6 +1,8 @@
 package org.shadowrunrussia2020.android.model.qr
 
 import com.google.common.io.BaseEncoding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import okio.Buffer
 import org.shadowrunrussia2020.android.common.di.ApplicationSingletonScope
 import org.shadowrunrussia2020.android.common.models.Character
@@ -24,10 +26,13 @@ val Character.mentalQrData: Data
     )
 
 private suspend fun downloadRewritableQrData(id: String): FullQrData {
-    val d: ApplicationSingletonScope.Dependency = ApplicationSingletonScope.DependencyProvider.provideDependency()
-    val qrService = d.qrRetrofit.create(QrWebService::class.java)
-    val response = qrService.get(id).await()
-    return response.body()!!.workModel
+    return withContext(Dispatchers.IO) {
+        val d: ApplicationSingletonScope.Dependency =
+            ApplicationSingletonScope.DependencyProvider.provideDependency()
+        val qrService = d.qrRetrofit.create(QrWebService::class.java)
+        val response = qrService.get(id).await()
+        response.body()!!.workModel
+    }
 }
 
 suspend fun retrieveQrData(data: Data): FullQrData {
