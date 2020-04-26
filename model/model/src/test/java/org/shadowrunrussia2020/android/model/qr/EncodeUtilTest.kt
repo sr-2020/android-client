@@ -75,7 +75,7 @@ class EncodeUtilTest {
     fun decode_IsCorrect2() {
         assertEquals(
             org.shadowrunrussia2020.android.model.qr.Data(
-                org.shadowrunrussia2020.android.model.qr.Type.BIOLOGICALLY_DEAD_BODY,
+                org.shadowrunrussia2020.android.model.qr.Type.CLINICALLY_DEAD_BODY,
                 0,
                 1700000000,
                 "123,1267,abc"
