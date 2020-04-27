@@ -1,7 +1,5 @@
 package org.shadowrunrussia2020.android.magic
 
-
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,19 +11,10 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import kotlinx.android.synthetic.main.fragment_spell_details.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import org.shadowrunrussia2020.android.R
 import org.shadowrunrussia2020.android.character.CharacterViewModel
 import org.shadowrunrussia2020.android.common.models.Character
-import org.shadowrunrussia2020.android.common.models.HistoryRecord
 import org.shadowrunrussia2020.android.common.models.Spell
-import org.shadowrunrussia2020.android.common.utils.showErrorMessage
-import org.shadowrunrussia2020.android.model.qr.FullQrData
-import org.shadowrunrussia2020.android.model.qr.Type
-import org.shadowrunrussia2020.android.model.qr.maybeQrScanned
-import org.shadowrunrussia2020.android.model.qr.startQrScan
 
 class SpellDetailsFragment : Fragment() {
     private val args: SpellDetailsFragmentArgs by navArgs()
@@ -55,7 +44,9 @@ class SpellDetailsFragment : Fragment() {
         updateEnableness(true)
 
         castSpell.setOnClickListener {
-            if (spell.hasTarget) chooseTarget() else castOnSelf()
+            findNavController().navigate(
+                SpellDetailsFragmentDirections.actionStartCast(spell, mModel.power)
+            )
         }
 
         seekBarSpellPower.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
@@ -76,66 +67,7 @@ class SpellDetailsFragment : Fragment() {
             })
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        maybeQrScanned(requireActivity(), requestCode, resultCode, data, {
-            seekBarSpellPower.progress = mModel.power
-            castOnTarget(it)
-        })
-    }
-
     private fun updateEnableness(enable: Boolean) {
         castSpell.isEnabled = enable
-    }
-
-    private fun castOnSelf() {
-        CoroutineScope(Dispatchers.Main).launch {
-            try {
-                val response = mCharacterModel.castSpell(
-                    spell.id, hashMapOf("power" to seekBarSpellPower.progress)
-                )
-
-                response?.tableResponse?.let { tableResponse ->
-                    findNavController().navigate(
-                        SpellDetailsFragmentDirections.actionShowSpellResult(
-                            tableResponse.map {
-                                HistoryRecord(
-                                    "", it.timestamp,
-                                    "${it.spellName}, мощь: ${it.power}, откат: ${it.magicFeedback}",
-                                    it.casterAura, ""
-                                )
-                            }.toTypedArray()
-                        )
-                    )
-                } ?: findNavController().popBackStack()
-
-            } catch (e: Exception) {
-                showErrorMessage(requireContext(), "Ошибка. ${e.message}")
-                findNavController().popBackStack()
-            }
-        }
-    }
-
-    private fun chooseTarget() {
-        startQrScan(this, "Выбор цели заклинания.")
-    }
-
-    private fun castOnTarget(qrData: FullQrData) {
-        val eventData = when (qrData.type) {
-            Type.HEALTHY_BODY, Type.WOUNDED_BODY -> hashMapOf<String, Any>(
-                "targetCharacterId" to qrData.modelId,
-                "power" to seekBarSpellPower.progress
-            )
-            else -> {
-                showErrorMessage(requireContext(), "Ошибка. Неожиданный QR-код."); return
-            }
-        }
-        CoroutineScope(Dispatchers.Main).launch {
-            try {
-                mCharacterModel.castSpell(spell.id, eventData)
-            } catch (e: Exception) {
-                showErrorMessage(requireContext(), "Ошибка. ${e.message}")
-            }
-            findNavController().popBackStack()
-        }
     }
 }
