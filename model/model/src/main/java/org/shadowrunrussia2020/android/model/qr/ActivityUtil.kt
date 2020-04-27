@@ -6,22 +6,22 @@ import com.google.zxing.integration.android.IntentIntegrator
 import org.shadowrunrussia2020.android.common.utils.showErrorMessage
 
 
-fun maybeProcessActivityResult(parent: Activity, requestCode: Int, resultCode: Int, data: Intent?): org.shadowrunrussia2020.android.model.qr.Data? {
+fun maybeProcessActivityResult(parent: Activity, requestCode: Int, resultCode: Int, data: Intent?): Data? {
     val contents = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)?.contents ?: return null
 
     try {
-        return org.shadowrunrussia2020.android.model.qr.decode(contents)
-    } catch (e: org.shadowrunrussia2020.android.model.qr.ValidationException) {
+        return decode(contents)
+    } catch (e: ValidationException) {
         showErrorMessage(
             parent,
             "Неподдерживаемый QR-код"
         )
-    } catch (e: org.shadowrunrussia2020.android.model.qr.FormatException) {
+    } catch (e: FormatException) {
         showErrorMessage(
             parent,
             "Неподдерживаемый QR-код"
         )
-    } catch (e: org.shadowrunrussia2020.android.model.qr.ExpiredException) {
+    } catch (e: ExpiredException) {
         showErrorMessage(
             parent,
             "Срок действия QR-кода истек"
