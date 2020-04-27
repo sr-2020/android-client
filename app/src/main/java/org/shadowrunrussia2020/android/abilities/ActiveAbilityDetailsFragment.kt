@@ -129,8 +129,8 @@ class ActiveAbilityDetailsFragment : Fragment() {
     }
 
     private fun useOnTarget(qrData: Data) {
-        val eventData: HashMap<String, Any> = when {
-            qrData.type == Type.HEALTHY_BODY || qrData.type == Type.WOUNDED_BODY -> hashMapOf(
+        val eventData: HashMap<String, Any> = when (qrData.type) {
+            Type.HEALTHY_BODY, Type.WOUNDED_BODY -> hashMapOf(
                 "targetCharacterId" to qrData.payload.toInt()
             )
             else -> {
