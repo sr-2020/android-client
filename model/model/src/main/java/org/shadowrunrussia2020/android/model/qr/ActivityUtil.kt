@@ -31,6 +31,7 @@ fun maybeQrScanned(parent: Activity, requestCode: Int, resultCode: Int, data: In
             val fullQrData = retrieveQrData(qrData)
             Log.i("QR", "name = ${fullQrData.name}, type = ${fullQrData.type}, id = ${fullQrData.modelId}")
             onQrScanned(fullQrData)
+            return@launch
         } catch (e: ValidationException) {
             showErrorMessage(parent, "Неподдерживаемый QR-код")
         } catch (e: FormatException) {
