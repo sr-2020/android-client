@@ -73,9 +73,7 @@ class PrePostQrScannedFragment : Fragment() {
                         )
                     )
                 }
-                Type.pill -> consume(qrData.modelId.toInt())
-                Type.food -> consume(qrData.modelId.toInt())
-                Type.ability -> consume(qrData.modelId.toInt())
+                Type.pill, Type.food, Type.ability -> consume(qrData.modelId.toInt())
                 Type.WOUNDED_BODY -> {
                     findNavController().navigate(
                         PrePostQrScannedFragmentDirections.actionInteractWithBody(
