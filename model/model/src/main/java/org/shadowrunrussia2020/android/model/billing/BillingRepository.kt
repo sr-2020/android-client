@@ -38,7 +38,7 @@ internal class BillingRepository(private val mService: BillingWebService, privat
 
     override suspend fun transferMoney(transfer: Transfer) {
         withContext(Dispatchers.IO) {
-            val result = mService.transfer(transfer).await()
+            mService.transfer(transfer).await()
             refresh()
         }
     }
