@@ -85,11 +85,11 @@ class SpellCastFragment : Fragment() {
                             }.toTypedArray()
                         )
                     )
-                } ?: findNavController().popBackStack()
+                } ?: goBackToSpellbook()
 
             } catch (e: Exception) {
                 showErrorMessage(requireContext(), "Ошибка. ${e.message}")
-                findNavController().popBackStack()
+                goBackToSpellbook()
             }
         }
     }
@@ -114,7 +114,11 @@ class SpellCastFragment : Fragment() {
             } catch (e: Exception) {
                 showErrorMessage(requireContext(), "Ошибка. ${e.message}")
             }
-            findNavController().popBackStack()
+            goBackToSpellbook()
         }
+    }
+
+    private fun goBackToSpellbook() {
+        findNavController().popBackStack(R.id.spellbookFragment, false)
     }
 }
