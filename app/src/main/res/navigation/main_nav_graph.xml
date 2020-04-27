@@ -149,19 +149,6 @@
             android:label="@string/charter" />
     <action android:id="@+id/action_global_character" app:destination="@id/charterMainFragment" app:launchSingleTop="true" />
 
-    <!--    Magic-->
-    <fragment
-            android:id="@+id/magicFragment"
-            android:name="org.shadowrunrussia2020.android.magic.MagicFragment"
-            android:label="Книга заклинаний" />
-    <action android:id="@+id/action_global_spellbook_new" app:destination="@id/magicFragment" app:launchSingleTop="true" />
-
-    <fragment
-            android:id="@+id/castSpellFragment"
-            android:name="org.shadowrunrussia2020.android.magic.cast.SpellCastFragment"
-            android:label="Использовать магию" />
-    <action android:id="@+id/action_cast_spell" app:destination="@id/castSpellFragment" app:launchSingleTop="true"/>
-
     <!-- Ethics -->
     <fragment
         android:id="@+id/ethicsFragment"
