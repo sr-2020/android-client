@@ -61,16 +61,13 @@ class InteractWithBodyFragment : Fragment() {
 
         CoroutineScope(Dispatchers.Main).launch {
             try {
-                withContext(Dispatchers.IO)
-                {
-                    mModel.postEvent(
-                        "scanQr",
-                        hashMapOf(
-                            "qrCode" to data.payload.toInt(),
-                            "targetCharacterId" to args.targetId
-                        )
+                mModel.postEvent(
+                    "scanQr",
+                    hashMapOf(
+                        "qrCode" to data.payload.toInt(),
+                        "targetCharacterId" to args.targetId
                     )
-                }
+                )
             } catch (e: Exception) {
                 showErrorMessage(requireContext(), e.message ?: "Неожиданная ошибка сервера")
             }

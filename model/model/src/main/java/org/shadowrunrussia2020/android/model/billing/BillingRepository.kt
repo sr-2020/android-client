@@ -11,17 +11,20 @@ import org.shadowrunrussia2020.android.common.models.Transfer
 
 internal class BillingRepository(private val mService: BillingWebService, private val mBillingDao: BillingDao) :
     IBillingRepository {
+
     override suspend fun refresh() {
-        val responseBalance = mService.balance().await()
-        val responseHistory = mService.transfers().await()
-        val accountInfo = responseBalance.body()
-        val accountHistory = responseHistory.body()
-        if (accountInfo == null || accountHistory == null) {
-            Log.e("BillingRepository", "Invalid server response - body is empty")
-        } else {
-            mBillingDao.deleteTransactions()
-            mBillingDao.insertTransactions(accountHistory.data.map { it })
-            mBillingDao.setAccountOverview(accountInfo.data)
+        withContext(Dispatchers.IO) {
+            val responseBalance = mService.balance().await()
+            val responseHistory = mService.transfers().await()
+            val accountInfo = responseBalance.body()
+            val accountHistory = responseHistory.body()
+            if (accountInfo == null || accountHistory == null) {
+                Log.e("BillingRepository", "Invalid server response - body is empty")
+            } else {
+                mBillingDao.deleteTransactions()
+                mBillingDao.insertTransactions(accountHistory.data.map { it })
+                mBillingDao.setAccountOverview(accountInfo.data)
+            }
         }
     }
 

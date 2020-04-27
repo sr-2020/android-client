@@ -65,7 +65,7 @@ class UIExecutor(
 fun launchAsync(activity: Activity, f: (suspend () -> Unit)) {
     CoroutineScope(Dispatchers.Main).launch {
         try {
-            withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
+            withContext(Dispatchers.IO) {
                 f();
             }
         } catch (e: Exception) {

@@ -276,10 +276,8 @@ class MainActivity : AppCompatActivity(), IMainActivityDi {
     private fun refreshData(interactive: Boolean) {
         CoroutineScope(Dispatchers.Main).launch {
             try {
-                withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
-                    characterViewModel.refresh()
-                    billingViewModel.refresh()
-                }
+                characterViewModel.refresh()
+                billingViewModel.refresh()
                 if (interactive) {
                     showSuccessMessage(this@MainActivity, "Данные успешно обновлены.")
                 }
@@ -294,7 +292,7 @@ class MainActivity : AppCompatActivity(), IMainActivityDi {
         ApplicationSingletonScope.DependencyProvider.dependency.session.invalidate()
         this.stopService(Intent(this, BeaconsScanner::class.java))
         CoroutineScope(Dispatchers.Main).launch {
-            withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
+            withContext(Dispatchers.IO) {
                 ApplicationSingletonScope.ComponentProvider.components.clearAllTables()
                 FirebaseInstanceId.getInstance().deleteInstanceId()
             }

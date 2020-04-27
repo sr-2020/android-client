@@ -16,7 +16,6 @@ import kotlinx.android.synthetic.main.pre_post_qr_scanned.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.shadowrunrussia2020.android.R
 import org.shadowrunrussia2020.android.billing.BillingViewModel
 import org.shadowrunrussia2020.android.character.CharacterViewModel
@@ -124,7 +123,7 @@ class PrePostQrScannedFragment : Fragment() {
         val m = ViewModelProviders.of(activity!!).get(CharacterViewModel::class.java)
         progressLoader.visibility = View.VISIBLE
         try {
-            withContext(Dispatchers.IO) { m.postEvent("scanQr", hashMapOf("qrCode" to qrId)) }
+            m.postEvent("scanQr", hashMapOf("qrCode" to qrId))
         } catch (e: Exception) {
             showErrorMessage(requireContext(), e.message ?: "Неожиданная ошибка сервера")
         }

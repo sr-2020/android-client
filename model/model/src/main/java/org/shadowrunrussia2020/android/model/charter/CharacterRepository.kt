@@ -13,8 +13,11 @@ import retrofit2.Response
 
 internal class CharacterRepository(private val mService: CharacterWebService, private val mDao: CharacterDao) :
     ICharacterRepository {
+
     override suspend fun refresh() {
-        saveToDao(mService.get().await())
+        withContext(Dispatchers.IO) {
+            saveToDao(mService.get().await())
+        }
     }
 
     override fun getCharacter(): LiveData<Character> {
