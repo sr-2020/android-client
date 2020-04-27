@@ -163,8 +163,12 @@
     <include app:graph="@navigation/implants_nav_graph" />
     <action android:id="@+id/action_global_implants" app:destination="@id/implants_nav_graph" app:launchSingleTop="true" />
 
-    <include app:graph="@navigation/autodoc_nav_graph" />
-    <action android:id="@+id/action_global_autodoc" app:destination="@id/autodoc_nav_graph" app:launchSingleTop="true" />
+    <fragment
+        android:id="@+id/autodocFragment"
+        android:name="org.shadowrunrussia2020.android.implants.AutodocFragment"
+        android:label="Импланты"/>
+    <action android:id="@+id/action_global_autodoc" app:destination="@id/autodocFragment" app:launchSingleTop="true" />
+
 
     <fragment
         android:id="@+id/ethicsHelp"
