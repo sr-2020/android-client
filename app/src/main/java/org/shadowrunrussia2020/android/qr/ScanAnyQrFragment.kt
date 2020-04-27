@@ -26,7 +26,7 @@ import org.shadowrunrussia2020.android.model.qr.maybeQrScanned
 import org.shadowrunrussia2020.android.model.qr.startQrScan
 
 
-class PrePostQrScannedFragment : Fragment() {
+class ScanAnyQrFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -65,7 +65,7 @@ class PrePostQrScannedFragment : Fragment() {
                 Type.pill, Type.food, Type.ability -> consume(qrData.modelId.toInt())
                 Type.WOUNDED_BODY -> {
                     findNavController().navigate(
-                        PrePostQrScannedFragmentDirections.actionInteractWithBody(
+                        ScanAnyQrFragmentDirections.actionInteractWithBody(
                             qrData.modelId.toInt()
                         )
                     )
@@ -97,7 +97,7 @@ class PrePostQrScannedFragment : Fragment() {
                     progressLoader.visibility = View.VISIBLE
                     ViewModelProviders.of(activity!!).get(BillingViewModel::class.java)
                         .transferMoney(receiver = t.sin_to, amount = t.amount, comment = t.comment)
-                    findNavController().popBackStack(R.id.prePostQrScannedFragment, true)
+                    findNavController().popBackStack(R.id.scanAnyQrFragment, true)
                 }
             }
             .setNegativeButton(R.string.cancel) { _, _ ->
