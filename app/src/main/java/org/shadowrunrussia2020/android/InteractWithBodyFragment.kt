@@ -18,7 +18,7 @@ import org.shadowrunrussia2020.android.character.CharacterViewModel
 import org.shadowrunrussia2020.android.common.utils.showErrorMessage
 import org.shadowrunrussia2020.android.model.qr.Data
 import org.shadowrunrussia2020.android.model.qr.Type
-import org.shadowrunrussia2020.android.model.qr.maybeProcessActivityResult
+import org.shadowrunrussia2020.android.model.qr.maybeQrScanned
 import org.shadowrunrussia2020.android.model.qr.startQrScan
 
 class InteractWithBodyFragment : Fragment() {
@@ -45,11 +45,9 @@ class InteractWithBodyFragment : Fragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        val qrData = maybeProcessActivityResult(activity!!, requestCode, resultCode, data)
-        if (qrData != null) {
-            // TODO(aeremin) Retrieve FullQrData
-            injectMedication(qrData)
-        }
+        maybeQrScanned(requireActivity(), requestCode, resultCode, data, {
+            injectMedication(it)
+        })
     }
 
     private fun chooseMedication() {

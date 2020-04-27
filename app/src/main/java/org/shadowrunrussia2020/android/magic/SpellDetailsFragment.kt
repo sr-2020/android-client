@@ -24,7 +24,7 @@ import org.shadowrunrussia2020.android.common.models.Spell
 import org.shadowrunrussia2020.android.common.utils.showErrorMessage
 import org.shadowrunrussia2020.android.model.qr.Data
 import org.shadowrunrussia2020.android.model.qr.Type
-import org.shadowrunrussia2020.android.model.qr.maybeProcessActivityResult
+import org.shadowrunrussia2020.android.model.qr.maybeQrScanned
 import org.shadowrunrussia2020.android.model.qr.startQrScan
 
 class SpellDetailsFragment : Fragment() {
@@ -77,12 +77,10 @@ class SpellDetailsFragment : Fragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        val qrData = maybeProcessActivityResult(activity!!, requestCode, resultCode, data)
-        if (qrData != null) {
-            // TODO(aeremin) Retrieve FullQrData
+        maybeQrScanned(requireActivity(), requestCode, resultCode, data, {
             seekBarSpellPower.progress = mModel.power
-            castOnTarget(qrData)
-        }
+            castOnTarget(it)
+        })
     }
 
     private fun updateEnableness(enable: Boolean) {

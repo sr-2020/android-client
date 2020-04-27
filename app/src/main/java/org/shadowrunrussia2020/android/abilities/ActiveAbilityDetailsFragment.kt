@@ -144,10 +144,8 @@ class ActiveAbilityDetailsFragment : Fragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        val qrData = maybeProcessActivityResult(activity!!, requestCode, resultCode, data)
-        if (qrData != null) {
-            // TODO(aeremin) Retrieve FullQrData
-            useOnTarget(qrData)
-        }
+        maybeQrScanned(requireActivity(), requestCode, resultCode, data, {
+            useOnTarget(it)
+        })
     }
 }

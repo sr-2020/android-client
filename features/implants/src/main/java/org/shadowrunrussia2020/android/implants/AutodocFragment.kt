@@ -15,8 +15,9 @@ import org.shadowrunrussia2020.android.common.models.HealthState
 import org.shadowrunrussia2020.android.common.utils.launchAsync
 import org.shadowrunrussia2020.android.common.utils.russianHealthState
 import org.shadowrunrussia2020.android.common.utils.showErrorMessage
+import org.shadowrunrussia2020.android.model.qr.Data
 import org.shadowrunrussia2020.android.model.qr.Type
-import org.shadowrunrussia2020.android.model.qr.maybeProcessActivityResult
+import org.shadowrunrussia2020.android.model.qr.maybeQrScanned
 import org.shadowrunrussia2020.android.model.qr.startQrScan
 import org.shadowrunrussia2020.android.view.universal_list.ImplantItem
 import org.shadowrunrussia2020.android.view.universal_list.UniversalAdapter
@@ -102,12 +103,7 @@ class AutodocFragment : Fragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        val qrData = maybeProcessActivityResult(activity!!, requestCode, resultCode, data)
-        if (qrData == null) {
-            if (autodocViewModel.state == AutoDocViewModel.State.WAITING_FOR_BODY_SCAN) {
-                findNavController().popBackStack()
-            }
-        } else {
+        maybeQrScanned(requireActivity(), requestCode, resultCode, data, onQrScanned = {qrData: Data ->
             when (autodocViewModel.state) {
                 AutoDocViewModel.State.WAITING_FOR_BODY_SCAN -> {
                     if (qrData.type == Type.WOUNDED_BODY || qrData.type == Type.HEALTHY_BODY) {
@@ -164,6 +160,10 @@ class AutodocFragment : Fragment() {
                 AutoDocViewModel.State.IDLE -> {
                 }
             }
-        }
+        }, onScanCancelled = {
+            if (autodocViewModel.state == AutoDocViewModel.State.WAITING_FOR_BODY_SCAN) {
+                findNavController().popBackStack()
+            }
+        })
     }
 }

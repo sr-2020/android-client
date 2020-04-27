@@ -15,26 +15,21 @@ fun startQrScan(parent: Fragment, message: String) {
         .initiateScan()
 }
 
-fun maybeProcessActivityResult(parent: Activity, requestCode: Int, resultCode: Int, data: Intent?): Data? {
-    val contents = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)?.contents ?: return null
+fun maybeQrScanned(parent: Activity, requestCode: Int, resultCode: Int, data: Intent?,
+                   onQrScanned: (d: Data) -> Unit,
+                   onScanCancelled: () -> Unit = {}) {
+    val contents = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)?.contents
+        ?: return onScanCancelled()
 
     try {
-        return decode(contents)
+        val qrData = decode(contents)
+        return onQrScanned(qrData)
     } catch (e: ValidationException) {
-        showErrorMessage(
-            parent,
-            "Неподдерживаемый QR-код"
-        )
+        showErrorMessage(parent, "Неподдерживаемый QR-код")
     } catch (e: FormatException) {
-        showErrorMessage(
-            parent,
-            "Неподдерживаемый QR-код"
-        )
+        showErrorMessage(parent, "Неподдерживаемый QR-код")
     } catch (e: ExpiredException) {
-        showErrorMessage(
-            parent,
-            "Срок действия QR-кода истек"
-        )
+        showErrorMessage(parent,"Срок действия QR-кода истек")
     }
-    return null
+    return onScanCancelled()
 }

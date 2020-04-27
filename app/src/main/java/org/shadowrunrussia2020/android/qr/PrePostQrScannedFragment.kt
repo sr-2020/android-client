@@ -40,20 +40,19 @@ class PrePostQrScannedFragment : Fragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        val qrData = maybeProcessActivityResult(activity!!, requestCode, resultCode, data)
-        if (qrData == null) {
-            findNavController().popBackStack()
-        } else {
+        maybeQrScanned(requireActivity(), requestCode, resultCode, data, onQrScanned = {
             CoroutineScope(Dispatchers.Main).launch {
                 try {
-                    val fullQrData = retrieveQrData(qrData)
+                    val fullQrData = retrieveQrData(it)
                     Log.i("QR", "name = ${fullQrData.name}, type = ${fullQrData.type}, id = ${fullQrData.modelId}")
                     onQr(fullQrData)
                 } catch (e: Exception) {
                     showErrorMessage(requireActivity(), "${e.message}")
                 }
             }
-        }
+        }, onScanCancelled = {
+            findNavController().popBackStack()
+        })
     }
 
     private suspend fun onQr(qrData: FullQrData) {
