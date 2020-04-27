@@ -1,6 +1,7 @@
 package org.shadowrunrussia2020.android.abilities
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.zxing.BarcodeFormat
+import com.google.zxing.integration.android.IntentIntegrator
 import com.journeyapps.barcodescanner.BarcodeEncoder
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
@@ -51,12 +53,6 @@ class ActiveAbilityDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val qrViewModel = ViewModelProviders.of(requireActivity()).get(QrViewModel::class.java)
-        val qrData = qrViewModel.data.qrData;
-        qrViewModel.data = QrDataOrError(null, false)
-
-        if (qrData != null) useOnTarget(qrData)
 
         textAbilityName.text = ability.humanReadableName
         textAbilityDescription.text = ability.description
@@ -125,7 +121,11 @@ class ActiveAbilityDetailsFragment : Fragment() {
     }
 
     private fun chooseTarget() {
-        findNavController().navigate(ActiveAbilityDetailsFragmentDirections.actionChooseAbilityTarget())
+        IntentIntegrator.forSupportFragment(this)
+            .setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
+            .setPrompt("Выбор цели способности. " + getString(org.shadowrunrussia2020.android.implants.R.string.scan_qr_generic))
+            .setBeepEnabled(false)
+            .initiateScan()
     }
 
     private fun useOnTarget(qrData: Data) {
@@ -145,6 +145,14 @@ class ActiveAbilityDetailsFragment : Fragment() {
                 showErrorMessage(requireContext(), "Ошибка. ${e.message}")
             }
             findNavController().popBackStack()
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        val qrData = maybeProcessActivityResult(activity!!, requestCode, resultCode, data)
+        if (qrData != null) {
+            // TODO(aeremin) Retrieve FullQrData
+            useOnTarget(qrData)
         }
     }
 }
