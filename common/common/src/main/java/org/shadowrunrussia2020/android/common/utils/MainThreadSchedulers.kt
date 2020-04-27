@@ -7,7 +7,6 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.shadowrunrussia2020.android.common.utils.executors.HandlerExecutorServiceImpl
 import java.util.concurrent.BlockingQueue
 import java.util.concurrent.ExecutorService
@@ -65,9 +64,7 @@ class UIExecutor(
 fun launchAsync(activity: Activity, f: (suspend () -> Unit)) {
     CoroutineScope(Dispatchers.Main).launch {
         try {
-            withContext(Dispatchers.IO) {
-                f();
-            }
+           f();
         } catch (e: Exception) {
             showErrorMessage(activity, "${e.message}")
         }
