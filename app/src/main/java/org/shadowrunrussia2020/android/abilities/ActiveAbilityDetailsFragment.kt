@@ -28,7 +28,6 @@ import org.shadowrunrussia2020.android.character.CharacterViewModel
 import org.shadowrunrussia2020.android.common.models.ActiveAbility
 import org.shadowrunrussia2020.android.common.models.TargetType
 import org.shadowrunrussia2020.android.common.utils.MainThreadSchedulers
-import org.shadowrunrussia2020.android.common.utils.launchAsync
 import org.shadowrunrussia2020.android.common.utils.plusAssign
 import org.shadowrunrussia2020.android.common.utils.showErrorMessage
 import org.shadowrunrussia2020.android.model.qr.*
@@ -140,7 +139,11 @@ class ActiveAbilityDetailsFragment : Fragment() {
             }
         }
         CoroutineScope(Dispatchers.Main).launch {
-            launchAsync(requireActivity()) { mModel.useAbility(ability.id, eventData) }
+            try {
+                mModel.useAbility(ability.id, eventData)
+            } catch (e: Exception) {
+                showErrorMessage(requireContext(), "Ошибка. ${e.message}")
+            }
             findNavController().popBackStack()
         }
     }
