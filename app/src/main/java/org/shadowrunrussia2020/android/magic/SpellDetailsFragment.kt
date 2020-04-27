@@ -1,6 +1,7 @@
 package org.shadowrunrussia2020.android.magic
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.fragment_spell_details.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -21,10 +23,7 @@ import org.shadowrunrussia2020.android.common.models.Character
 import org.shadowrunrussia2020.android.common.models.HistoryRecord
 import org.shadowrunrussia2020.android.common.models.Spell
 import org.shadowrunrussia2020.android.common.utils.showErrorMessage
-import org.shadowrunrussia2020.android.model.qr.Data
-import org.shadowrunrussia2020.android.model.qr.QrDataOrError
-import org.shadowrunrussia2020.android.model.qr.QrViewModel
-import org.shadowrunrussia2020.android.model.qr.Type
+import org.shadowrunrussia2020.android.model.qr.*
 
 class SpellDetailsFragment : Fragment() {
     private val args: SpellDetailsFragmentArgs by navArgs()
@@ -47,15 +46,6 @@ class SpellDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val qrViewModel = ViewModelProviders.of(requireActivity()).get(QrViewModel::class.java)
-        val qrData = qrViewModel.data.qrData;
-        qrViewModel.data = QrDataOrError(null, false)
-
-        if (qrData != null) {
-            seekBarSpellPower.progress = mModel.power
-            castOnTarget(qrData)
-        }
 
         textAbilityName.text = spell.humanReadableName
         textAbilityDescription.text = spell.description
@@ -82,6 +72,15 @@ class SpellDetailsFragment : Fragment() {
                     seekBarSpellPower.max = data.magic
                 }
             })
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        val qrData = maybeProcessActivityResult(activity!!, requestCode, resultCode, data)
+        if (qrData != null) {
+            // TODO(aeremin) Retrieve FullQrData
+            seekBarSpellPower.progress = mModel.power
+            castOnTarget(qrData)
+        }
     }
 
     private fun updateEnableness(enable: Boolean) {
@@ -117,7 +116,11 @@ class SpellDetailsFragment : Fragment() {
     }
 
     private fun chooseTarget() {
-        findNavController().navigate(SpellDetailsFragmentDirections.actionChooseSpellTarget())
+        IntentIntegrator.forSupportFragment(this)
+            .setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
+            .setPrompt("Выбор цели заклинания. " + getString(org.shadowrunrussia2020.android.implants.R.string.scan_qr_generic))
+            .setBeepEnabled(false)
+            .initiateScan()
     }
 
     private fun castOnTarget(qrData: Data) {
