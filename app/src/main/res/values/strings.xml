@@ -75,5 +75,6 @@
 
     <string name="absolute_death_title">Абсолютная смерть</string>
     <string name="absolute_death_subtitle">Вам уже ничего не поможет. Дайте поиграть с вашим телом и идите в мертвятник.</string>
+    <string name="consume">Употребить</string>
 
 </resources>

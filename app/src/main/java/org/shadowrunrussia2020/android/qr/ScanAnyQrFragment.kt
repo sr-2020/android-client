@@ -19,7 +19,6 @@ import org.shadowrunrussia2020.android.billing.BillingViewModel
 import org.shadowrunrussia2020.android.character.CharacterViewModel
 import org.shadowrunrussia2020.android.common.models.Transfer
 import org.shadowrunrussia2020.android.common.utils.showErrorMessage
-import org.shadowrunrussia2020.android.common.utils.showInfoMessage
 import org.shadowrunrussia2020.android.model.qr.FullQrData
 import org.shadowrunrussia2020.android.model.qr.Type
 import org.shadowrunrussia2020.android.model.qr.maybeQrScanned
@@ -62,7 +61,8 @@ class ScanAnyQrFragment : Fragment() {
                         )
                     )
                 }
-                Type.pill, Type.food, Type.ability -> consume(qrData.modelId.toInt())
+                Type.pill, Type.food -> showConsumableQrInfo(qrData)
+                Type.ability -> consume(qrData.modelId.toInt())
                 Type.WOUNDED_BODY -> {
                     findNavController().navigate(
                         ScanAnyQrFragmentDirections.actionInteractWithBody(
@@ -70,13 +70,7 @@ class ScanAnyQrFragment : Fragment() {
                         )
                     )
                 }
-                else -> {
-                    showInfoMessage(
-                        requireContext(),
-                        "Содержимое QR-кода: ${qrData.type}, ${qrData.modelId}"
-                    )
-                    findNavController().popBackStack()
-                }
+                else -> showQrInfo(qrData)
             }
         } catch (e: Exception) {
             showErrorMessage(requireContext(), "Ошибка. Неожиданный QR-код.")
@@ -105,6 +99,30 @@ class ScanAnyQrFragment : Fragment() {
             }
             .create().show()
     }
+
+    private fun showQrInfo(qr: FullQrData) {
+        AlertDialog.Builder(requireActivity())
+            .setTitle(qr.name)
+            .setMessage(qr.description)
+            .setPositiveButton(R.string.ok) { _, _ ->
+                findNavController().popBackStack()
+            }
+            .create().show()
+    }
+
+    private fun showConsumableQrInfo(qr: FullQrData) {
+        AlertDialog.Builder(requireActivity())
+            .setTitle(qr.name)
+            .setMessage(qr.description)
+            .setNegativeButton(R.string.cancel) { _, _ ->
+                findNavController().popBackStack()
+            }
+            .setPositiveButton(getString(R.string.consume)) { _, _ ->
+                CoroutineScope(Dispatchers.Main).launch { consume(qr.modelId.toInt()) }
+            }
+            .create().show()
+    }
+
 
     private suspend fun consume(qrId: Int) {
         val m = ViewModelProviders.of(activity!!).get(CharacterViewModel::class.java)
