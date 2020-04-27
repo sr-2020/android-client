@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.shadowrunrussia2020.android.character.CharacterViewModel
 import org.shadowrunrussia2020.android.common.utils.showErrorMessage
-import org.shadowrunrussia2020.android.model.qr.Data
+import org.shadowrunrussia2020.android.model.qr.FullQrData
 import org.shadowrunrussia2020.android.model.qr.Type
 import org.shadowrunrussia2020.android.model.qr.maybeQrScanned
 import org.shadowrunrussia2020.android.model.qr.startQrScan
@@ -54,9 +54,9 @@ class InteractWithBodyFragment : Fragment() {
         startQrScan(this,"Выбор препарата.")
     }
 
-    private fun injectMedication(data: Data) {
-        if (data.type != Type.REWRITABLE) {
-            showErrorMessage(requireContext(), "Ошибка. Неожиданный QR-код.")
+    private fun injectMedication(data: FullQrData) {
+        if (data.type != Type.pill) {
+            showErrorMessage(requireContext(), "Ошибка. QR-код не является препаратом.")
             return
         }
 
@@ -65,7 +65,7 @@ class InteractWithBodyFragment : Fragment() {
                 mModel.postEvent(
                     "scanQr",
                     hashMapOf(
-                        "qrCode" to data.payload.toInt(),
+                        "qrCode" to data.modelId.toInt(),
                         "targetCharacterId" to args.targetId
                     )
                 )

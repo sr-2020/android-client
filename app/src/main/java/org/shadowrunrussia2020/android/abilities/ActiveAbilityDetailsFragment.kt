@@ -123,10 +123,10 @@ class ActiveAbilityDetailsFragment : Fragment() {
         startQrScan(this, "Выбор цели способности.")
     }
 
-    private fun useOnTarget(qrData: Data) {
+    private fun useOnTarget(qrData: FullQrData) {
         val eventData: HashMap<String, Any> = when (qrData.type) {
             Type.HEALTHY_BODY, Type.WOUNDED_BODY -> hashMapOf(
-                "targetCharacterId" to qrData.payload.toInt()
+                "targetCharacterId" to qrData.modelId.toInt()
             )
             else -> {
                 // TODO(aeremin): Support abilities having other kinds of target

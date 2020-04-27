@@ -3,7 +3,6 @@ package org.shadowrunrussia2020.android.qr
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,7 +20,10 @@ import org.shadowrunrussia2020.android.character.CharacterViewModel
 import org.shadowrunrussia2020.android.common.models.Transfer
 import org.shadowrunrussia2020.android.common.utils.showErrorMessage
 import org.shadowrunrussia2020.android.common.utils.showInfoMessage
-import org.shadowrunrussia2020.android.model.qr.*
+import org.shadowrunrussia2020.android.model.qr.FullQrData
+import org.shadowrunrussia2020.android.model.qr.Type
+import org.shadowrunrussia2020.android.model.qr.maybeQrScanned
+import org.shadowrunrussia2020.android.model.qr.startQrScan
 
 
 class PrePostQrScannedFragment : Fragment() {
@@ -41,15 +43,7 @@ class PrePostQrScannedFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         maybeQrScanned(requireActivity(), requestCode, resultCode, data, onQrScanned = {
-            CoroutineScope(Dispatchers.Main).launch {
-                try {
-                    val fullQrData = retrieveQrData(it)
-                    Log.i("QR", "name = ${fullQrData.name}, type = ${fullQrData.type}, id = ${fullQrData.modelId}")
-                    onQr(fullQrData)
-                } catch (e: Exception) {
-                    showErrorMessage(requireActivity(), "${e.message}")
-                }
-            }
+            onQr(it)
         }, onScanCancelled = {
             findNavController().popBackStack()
         })

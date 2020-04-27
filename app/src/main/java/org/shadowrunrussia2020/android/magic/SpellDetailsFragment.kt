@@ -22,7 +22,7 @@ import org.shadowrunrussia2020.android.common.models.Character
 import org.shadowrunrussia2020.android.common.models.HistoryRecord
 import org.shadowrunrussia2020.android.common.models.Spell
 import org.shadowrunrussia2020.android.common.utils.showErrorMessage
-import org.shadowrunrussia2020.android.model.qr.Data
+import org.shadowrunrussia2020.android.model.qr.FullQrData
 import org.shadowrunrussia2020.android.model.qr.Type
 import org.shadowrunrussia2020.android.model.qr.maybeQrScanned
 import org.shadowrunrussia2020.android.model.qr.startQrScan
@@ -119,14 +119,10 @@ class SpellDetailsFragment : Fragment() {
         startQrScan(this, "Выбор цели заклинания.")
     }
 
-    private fun castOnTarget(qrData: Data) {
-        val eventData = when {
-            qrData.type == Type.REWRITABLE -> hashMapOf<String, Any>(
-                "qrCode" to qrData.payload.toInt(),
-                "power" to seekBarSpellPower.progress
-            )
-            qrData.type == Type.HEALTHY_BODY || qrData.type == Type.WOUNDED_BODY -> hashMapOf<String, Any>(
-                "targetCharacterId" to qrData.payload,
+    private fun castOnTarget(qrData: FullQrData) {
+        val eventData = when (qrData.type) {
+            Type.HEALTHY_BODY, Type.WOUNDED_BODY -> hashMapOf<String, Any>(
+                "targetCharacterId" to qrData.modelId,
                 "power" to seekBarSpellPower.progress
             )
             else -> {

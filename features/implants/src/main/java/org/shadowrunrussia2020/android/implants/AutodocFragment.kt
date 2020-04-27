@@ -15,7 +15,7 @@ import org.shadowrunrussia2020.android.common.models.HealthState
 import org.shadowrunrussia2020.android.common.utils.launchAsync
 import org.shadowrunrussia2020.android.common.utils.russianHealthState
 import org.shadowrunrussia2020.android.common.utils.showErrorMessage
-import org.shadowrunrussia2020.android.model.qr.Data
+import org.shadowrunrussia2020.android.model.qr.FullQrData
 import org.shadowrunrussia2020.android.model.qr.Type
 import org.shadowrunrussia2020.android.model.qr.maybeQrScanned
 import org.shadowrunrussia2020.android.model.qr.startQrScan
@@ -103,14 +103,14 @@ class AutodocFragment : Fragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        maybeQrScanned(requireActivity(), requestCode, resultCode, data, onQrScanned = {qrData: Data ->
+        maybeQrScanned(requireActivity(), requestCode, resultCode, data, onQrScanned = {qrData: FullQrData ->
             when (autodocViewModel.state) {
                 AutoDocViewModel.State.WAITING_FOR_BODY_SCAN -> {
                     if (qrData.type == Type.WOUNDED_BODY || qrData.type == Type.HEALTHY_BODY) {
                         launchAsync(requireActivity()) {
-                            characterViewModel.analyzeBody(qrData.payload)
+                            characterViewModel.analyzeBody(qrData.modelId)
                         }
-                        autodocViewModel.targetCharacterId = qrData.payload
+                        autodocViewModel.targetCharacterId = qrData.modelId
                         autodocViewModel.state = AutoDocViewModel.State.IDLE
                     } else {
                         showErrorMessage(
@@ -121,7 +121,7 @@ class AutodocFragment : Fragment() {
                     }
                 }
                 AutoDocViewModel.State.WAITING_FOR_EMPTY_QR_SCAN -> {
-                    if (qrData.type == Type.REWRITABLE) {
+                    if (qrData.type == Type.empty) {
                         val targetCharacterId = autodocViewModel.targetCharacterId
                         val implantToRemove = autodocViewModel.implantToRemove
                         if (targetCharacterId != null && implantToRemove != null) {
@@ -129,7 +129,7 @@ class AutodocFragment : Fragment() {
                                 characterViewModel.uninstallImplant(
                                     targetCharacterId,
                                     implantToRemove,
-                                    qrData.payload.toInt()
+                                    qrData.modelId.toInt()
                                 )
                             }
                         }
@@ -143,10 +143,10 @@ class AutodocFragment : Fragment() {
                     autodocViewModel.implantToRemove = null
                 }
                 AutoDocViewModel.State.WAITING_FOR_IMPLANT_QR_SCAN -> {
-                    if (qrData.type == Type.REWRITABLE) {
+                    if (qrData.type == Type.implant) {
                         autodocViewModel.targetCharacterId?.let {
                             launchAsync(requireActivity()) {
-                                characterViewModel.installImplant(it, qrData.payload.toInt())
+                                characterViewModel.installImplant(it, qrData.modelId.toInt())
                             }
                         }
                     } else {
