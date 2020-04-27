@@ -12,7 +12,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.fragment_spell_details.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -23,7 +22,10 @@ import org.shadowrunrussia2020.android.common.models.Character
 import org.shadowrunrussia2020.android.common.models.HistoryRecord
 import org.shadowrunrussia2020.android.common.models.Spell
 import org.shadowrunrussia2020.android.common.utils.showErrorMessage
-import org.shadowrunrussia2020.android.model.qr.*
+import org.shadowrunrussia2020.android.model.qr.Data
+import org.shadowrunrussia2020.android.model.qr.Type
+import org.shadowrunrussia2020.android.model.qr.maybeProcessActivityResult
+import org.shadowrunrussia2020.android.model.qr.startQrScan
 
 class SpellDetailsFragment : Fragment() {
     private val args: SpellDetailsFragmentArgs by navArgs()
@@ -116,11 +118,7 @@ class SpellDetailsFragment : Fragment() {
     }
 
     private fun chooseTarget() {
-        IntentIntegrator.forSupportFragment(this)
-            .setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
-            .setPrompt("Выбор цели заклинания. " + getString(org.shadowrunrussia2020.android.implants.R.string.scan_qr_generic))
-            .setBeepEnabled(false)
-            .initiateScan()
+        startQrScan(this, "Выбор цели заклинания.")
     }
 
     private fun castOnTarget(qrData: Data) {

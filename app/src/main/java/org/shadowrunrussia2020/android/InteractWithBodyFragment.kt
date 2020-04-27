@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
-import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.fragment_interact_with_body.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -20,6 +19,7 @@ import org.shadowrunrussia2020.android.common.utils.showErrorMessage
 import org.shadowrunrussia2020.android.model.qr.Data
 import org.shadowrunrussia2020.android.model.qr.Type
 import org.shadowrunrussia2020.android.model.qr.maybeProcessActivityResult
+import org.shadowrunrussia2020.android.model.qr.startQrScan
 
 class InteractWithBodyFragment : Fragment() {
     private val args: InteractWithBodyFragmentArgs by navArgs()
@@ -53,11 +53,7 @@ class InteractWithBodyFragment : Fragment() {
     }
 
     private fun chooseMedication() {
-        IntentIntegrator.forSupportFragment(this)
-            .setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
-            .setPrompt("Выбор препарата. " + getString(org.shadowrunrussia2020.android.implants.R.string.scan_qr_generic))
-            .setBeepEnabled(false)
-            .initiateScan()
+        startQrScan(this,"Выбор препарата.")
     }
 
     private fun injectMedication(data: Data) {

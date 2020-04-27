@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.rigger_autodoc_screen.*
 import org.shadowrunrussia2020.android.common.models.HealthState
 import org.shadowrunrussia2020.android.common.utils.launchAsync
@@ -18,6 +17,7 @@ import org.shadowrunrussia2020.android.common.utils.russianHealthState
 import org.shadowrunrussia2020.android.common.utils.showErrorMessage
 import org.shadowrunrussia2020.android.model.qr.Type
 import org.shadowrunrussia2020.android.model.qr.maybeProcessActivityResult
+import org.shadowrunrussia2020.android.model.qr.startQrScan
 import org.shadowrunrussia2020.android.view.universal_list.ImplantItem
 import org.shadowrunrussia2020.android.view.universal_list.UniversalAdapter
 
@@ -37,7 +37,7 @@ class AutodocFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (autodocViewModel.state == AutoDocViewModel.State.WAITING_FOR_BODY_SCAN) {
-            scanQr(getString(R.string.scan_qr_patient))
+            startQrScan(this, getString(R.string.scan_qr_patient))
         }
 
         characterViewModel.character.observe({ this.lifecycle }) { ch ->
@@ -57,7 +57,7 @@ class AutodocFragment : Fragment() {
                                 ) { _, _ ->
                                     autodocViewModel.implantToRemove = it.id
                                     autodocViewModel.state = AutoDocViewModel.State.WAITING_FOR_EMPTY_QR_SCAN
-                                    scanQr(getString(R.string.scan_qr_rewritable))
+                                    startQrScan(this, getString(R.string.scan_qr_rewritable))
                                 }
                                 .setNegativeButton("Отмена", null)
                                 .show()
@@ -97,16 +97,8 @@ class AutodocFragment : Fragment() {
 
         buttonInstallImplant.setOnClickListener {
             autodocViewModel.state = AutoDocViewModel.State.WAITING_FOR_IMPLANT_QR_SCAN
-            scanQr(getString(R.string.scan_qr_implant))
+            startQrScan(this, getString(R.string.scan_qr_implant))
         }
-    }
-
-    private fun scanQr(message: String) {
-        IntentIntegrator.forSupportFragment(this)
-            .setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
-            .setPrompt("$message ${getString(R.string.scan_qr_generic)}")
-            .setBeepEnabled(false)
-            .initiateScan()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

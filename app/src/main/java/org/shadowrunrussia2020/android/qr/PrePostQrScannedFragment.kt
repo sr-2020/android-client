@@ -11,7 +11,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
-import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.pre_post_qr_scanned.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -22,10 +21,7 @@ import org.shadowrunrussia2020.android.character.CharacterViewModel
 import org.shadowrunrussia2020.android.common.models.Transfer
 import org.shadowrunrussia2020.android.common.utils.showErrorMessage
 import org.shadowrunrussia2020.android.common.utils.showInfoMessage
-import org.shadowrunrussia2020.android.model.qr.FullQrData
-import org.shadowrunrussia2020.android.model.qr.Type
-import org.shadowrunrussia2020.android.model.qr.maybeProcessActivityResult
-import org.shadowrunrussia2020.android.model.qr.retrieveQrData
+import org.shadowrunrussia2020.android.model.qr.*
 
 
 class PrePostQrScannedFragment : Fragment() {
@@ -129,10 +125,6 @@ class PrePostQrScannedFragment : Fragment() {
     }
 
     private fun scanQr() {
-        IntentIntegrator.forSupportFragment(this)
-            .setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
-            .setPrompt(getString(org.shadowrunrussia2020.android.implants.R.string.scan_qr_generic))
-            .setBeepEnabled(false)
-            .initiateScan()
+        startQrScan(this, "Сканирование QR-кода.")
     }
 }

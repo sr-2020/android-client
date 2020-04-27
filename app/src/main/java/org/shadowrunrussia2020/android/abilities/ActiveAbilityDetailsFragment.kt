@@ -12,7 +12,6 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.zxing.BarcodeFormat
-import com.google.zxing.integration.android.IntentIntegrator
 import com.journeyapps.barcodescanner.BarcodeEncoder
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
@@ -121,11 +120,7 @@ class ActiveAbilityDetailsFragment : Fragment() {
     }
 
     private fun chooseTarget() {
-        IntentIntegrator.forSupportFragment(this)
-            .setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
-            .setPrompt("Выбор цели способности. " + getString(org.shadowrunrussia2020.android.implants.R.string.scan_qr_generic))
-            .setBeepEnabled(false)
-            .initiateScan()
+        startQrScan(this, "Выбор цели способности.")
     }
 
     private fun useOnTarget(qrData: Data) {
