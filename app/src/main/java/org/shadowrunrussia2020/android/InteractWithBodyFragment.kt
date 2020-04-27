@@ -17,7 +17,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.shadowrunrussia2020.android.character.CharacterViewModel
 import org.shadowrunrussia2020.android.common.utils.showErrorMessage
-import org.shadowrunrussia2020.android.model.qr.*
+import org.shadowrunrussia2020.android.model.qr.Data
+import org.shadowrunrussia2020.android.model.qr.Type
+import org.shadowrunrussia2020.android.model.qr.maybeProcessActivityResult
 
 class InteractWithBodyFragment : Fragment() {
     private val args: InteractWithBodyFragmentArgs by navArgs()

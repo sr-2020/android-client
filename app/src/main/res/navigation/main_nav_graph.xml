@@ -32,32 +32,11 @@
     <fragment android:id="@+id/spellDetailsFragment"
               android:name="org.shadowrunrussia2020.android.magic.SpellDetailsFragment"
               tools:layout="@layout/fragment_spell_details" android:label="Описание заклинания">
-        <action android:id="@+id/action_choose_spell_target" app:destination="@id/scanQrFragmentSpell"/>
         <argument android:name="spell" app:argType="org.shadowrunrussia2020.android.common.models.Spell"/>
         <action
                 android:id="@+id/action_show_spell_result"
                 app:destination="@id/genericListFragment" />
     </fragment>
-    <fragment
-            android:id="@+id/scanQrFragmentSpell"
-            android:name="org.shadowrunrussia2020.android.model.qr.ScanQrFragment"
-            android:label="fragment_scan_qr_spell"
-            tools:layout="@layout/fragment_scan_qr" />
-    <fragment
-            android:id="@+id/scanQrFragmentAbility"
-            android:name="org.shadowrunrussia2020.android.model.qr.ScanQrFragment"
-            android:label="fragment_scan_qr_spell"
-            tools:layout="@layout/fragment_scan_qr" />
-    <fragment
-            android:id="@+id/scanQrFragmentMedication"
-            android:name="org.shadowrunrussia2020.android.model.qr.ScanQrFragment"
-            android:label="fragment_scan_qr_medication"
-            tools:layout="@layout/fragment_scan_qr" />
-    <fragment
-            android:id="@+id/scanQrFragment"
-            android:name="org.shadowrunrussia2020.android.model.qr.ScanQrFragment"
-            android:label="Сканирование QR-кода"
-            tools:layout="@layout/fragment_scan_qr" />
     <fragment
             android:id="@+id/woundedFragment"
             android:name="org.shadowrunrussia2020.android.character.WoundedFragment"
@@ -74,9 +53,6 @@
             android:label="Сканирование QR-кода"
             tools:layout="@layout/pre_post_qr_scanned" >
         <action
-                android:id="@+id/action_start_scan"
-                app:destination="@+id/scanQrFragment" />
-        <action
                 android:id="@+id/action_interact_with_body"
                 app:destination="@id/interactWithBodyFragment"
                 app:popUpTo="@+id/prePostQrScannedFragment"
@@ -91,9 +67,6 @@
         <argument
                 android:name="targetId"
                 app:argType="integer" />
-        <action
-                android:id="@+id/action_choose_medication"
-                app:destination="@id/scanQrFragmentMedication" />
     </fragment>
     <fragment
             android:id="@+id/historyFragment"
@@ -130,9 +103,6 @@
         <argument
                 android:name="ability"
                 app:argType="org.shadowrunrussia2020.android.common.models.ActiveAbility" />
-        <action
-                android:id="@+id/action_choose_ability_target"
-                app:destination="@id/scanQrFragmentAbility" />
     </fragment>
     <fragment
             android:id="@+id/passiveAbilityDetailsFragment"

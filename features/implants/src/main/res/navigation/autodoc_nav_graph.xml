@@ -6,13 +6,5 @@
     <fragment
         android:id="@+id/autodocFragment"
         android:name="org.shadowrunrussia2020.android.implants.AutodocFragment"
-        android:label="Импланты">
-        <action
-            android:id="@+id/action_connect_to_body"
-            app:destination="@id/scanQrFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/scanQrFragment"
-        android:name="org.shadowrunrussia2020.android.model.qr.ScanQrFragment"
-        android:label="ScanQrFragment" />
+        android:label="Импланты"/>
 </navigation>
