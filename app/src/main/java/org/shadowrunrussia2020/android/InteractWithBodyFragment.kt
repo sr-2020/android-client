@@ -1,14 +1,15 @@
 package org.shadowrunrussia2020.android
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.fragment_interact_with_body.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -16,10 +17,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.shadowrunrussia2020.android.character.CharacterViewModel
 import org.shadowrunrussia2020.android.common.utils.showErrorMessage
-import org.shadowrunrussia2020.android.model.qr.Data
-import org.shadowrunrussia2020.android.model.qr.QrDataOrError
-import org.shadowrunrussia2020.android.model.qr.QrViewModel
-import org.shadowrunrussia2020.android.model.qr.Type
+import org.shadowrunrussia2020.android.model.qr.*
 
 class InteractWithBodyFragment : Fragment() {
     private val args: InteractWithBodyFragmentArgs by navArgs()
@@ -38,19 +36,26 @@ class InteractWithBodyFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val qrViewModel = ViewModelProviders.of(requireActivity()).get(QrViewModel::class.java)
-        val qrData = qrViewModel.data.qrData;
-        qrViewModel.data = QrDataOrError(null, false)
-        if (qrData != null) injectMedication(qrData)
-
         textViewTitle.text = "Это тело #${args.targetId}"
 
         buttonMedication.setOnClickListener { chooseMedication() }
         buttonKill.setOnClickListener { finishToClinicalDeath() }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        val qrData = maybeProcessActivityResult(activity!!, requestCode, resultCode, data)
+        if (qrData != null) {
+            // TODO(aeremin) Retrieve FullQrData
+            injectMedication(qrData)
+        }
+    }
+
     private fun chooseMedication() {
-        findNavController().navigate(InteractWithBodyFragmentDirections.actionChooseMedication())
+        IntentIntegrator.forSupportFragment(this)
+            .setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
+            .setPrompt("Выбор препарата. " + getString(org.shadowrunrussia2020.android.implants.R.string.scan_qr_generic))
+            .setBeepEnabled(false)
+            .initiateScan()
     }
 
     private fun injectMedication(data: Data) {
