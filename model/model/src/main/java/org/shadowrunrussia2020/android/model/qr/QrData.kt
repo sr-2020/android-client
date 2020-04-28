@@ -14,6 +14,7 @@ enum class Type {
     CLINICALLY_DEAD_BODY,
     ABSOLUTELY_DEAD_BODY,
     ASTRAL_BODY,
+    ROBOT_BODY,
     empty,
     pill,
     implant,
