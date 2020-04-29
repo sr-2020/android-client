@@ -14,7 +14,7 @@ data class Spell(
     val hasTarget: Boolean
 ) : Parcelable
 
-enum class TargetType { none, show, scan }
+enum class TargetType { show, scan }
 
 @Parcelize
 data class TargetSignature(
