@@ -17,7 +17,7 @@ import kotlinx.coroutines.withContext
 import org.shadowrunrussia2020.android.character.CharacterViewModel
 import org.shadowrunrussia2020.android.common.utils.showErrorMessage
 import org.shadowrunrussia2020.android.common.models.FullQrData
-import org.shadowrunrussia2020.android.common.models.Type
+import org.shadowrunrussia2020.android.common.models.QrType
 import org.shadowrunrussia2020.android.model.qr.maybeQrScanned
 import org.shadowrunrussia2020.android.model.qr.startQrScan
 
@@ -55,7 +55,7 @@ class InteractWithBodyFragment : Fragment() {
     }
 
     private fun injectMedication(data: FullQrData) {
-        if (data.type != Type.pill) {
+        if (data.type != QrType.pill) {
             showErrorMessage(requireContext(), "Ошибка. QR-код не является препаратом.")
             return
         }

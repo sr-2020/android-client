@@ -6,23 +6,23 @@ import kotlinx.coroutines.withContext
 import okio.Buffer
 import org.shadowrunrussia2020.android.common.di.ApplicationSingletonScope
 import org.shadowrunrussia2020.android.common.models.Character
-import org.shadowrunrussia2020.android.common.models.Data
+import org.shadowrunrussia2020.android.common.models.SimpleQrData
 import org.shadowrunrussia2020.android.common.models.FullQrData
-import org.shadowrunrussia2020.android.common.models.Type
+import org.shadowrunrussia2020.android.common.models.QrType
 import java.security.MessageDigest
 import java.util.*
 
-val Character.qrData: Data
-    get() = Data(
-        type = Type.HEALTHY_BODY,
+val Character.qrData: SimpleQrData
+    get() = SimpleQrData(
+        type = QrType.HEALTHY_BODY,
         kind = 0,
         validUntil = (Date().time / 1000).toInt() + 3600,
         payload = this.modelId
     )
 
-val Character.mentalQrData: Data
-    get() = Data(
-        type = Type.REWRITABLE,
+val Character.mentalQrData: SimpleQrData
+    get() = SimpleQrData(
+        type = QrType.REWRITABLE,
         kind = 0,
         validUntil = (Date().time / 1000).toInt() + 3600,
         payload = this.mentalQrId.toString()
@@ -38,25 +38,25 @@ private suspend fun downloadRewritableQrData(id: String): FullQrData {
     }
 }
 
-suspend fun retrieveQrData(data: Data): FullQrData {
+suspend fun retrieveQrData(data: SimpleQrData): FullQrData {
     when (data.type) {
-        Type.UNKNOWN -> TODO()
-        Type.REWRITABLE ->
+        QrType.UNKNOWN -> TODO()
+        QrType.REWRITABLE ->
             return downloadRewritableQrData(data.payload)
-        Type.PAYMENT_REQUEST_WITH_PRICE ->
+        QrType.PAYMENT_REQUEST_WITH_PRICE ->
             return FullQrData(data.type, "Запрос о переводе", "Запрос о переводе с указанием цены", 1, "");
-        Type.PAYMENT_REQUEST_SIMPLE -> TODO()
-        Type.SHOP_BILL ->
+        QrType.PAYMENT_REQUEST_SIMPLE -> TODO()
+        QrType.SHOP_BILL ->
             return FullQrData(data.type, "Магазинный ценник", "Позволяет оплатить товар", 1, "");
-        Type.HEALTHY_BODY ->
+        QrType.HEALTHY_BODY ->
             return FullQrData(data.type, "Мясное тело", "Мясное тело. Здорово или легко ранено.", 1, data.payload);
-        Type.WOUNDED_BODY ->
+        QrType.WOUNDED_BODY ->
             return FullQrData(data.type, "Мясное тело", "Мясное тело. Тяжело ранено.", 1, data.payload);
-        Type.CLINICALLY_DEAD_BODY ->
+        QrType.CLINICALLY_DEAD_BODY ->
             return FullQrData(data.type, "Мясное тело", "Мясное тело. В состоянии клинической смерти.", 1, data.payload);
-        Type.ABSOLUTELY_DEAD_BODY ->
+        QrType.ABSOLUTELY_DEAD_BODY ->
             return FullQrData(data.type, "Мясное тело", "Мясное тело. Абсолютно мертво.", 1, data.payload);
-        Type.ASTRAL_BODY ->
+        QrType.ASTRAL_BODY ->
             return FullQrData(data.type, "Астральное тело", "", 1, data.payload);
         else -> TODO()
     }
@@ -93,7 +93,7 @@ internal fun signature(packedData: ByteArray, data: String): String {
     return BaseEncoding.base16().lowerCase().encode(md5hash.sliceArray(IntRange(0, 1)))
 }
 
-fun encode(data: Data): String {
+fun encode(data: SimpleQrData): String {
     var packedData = Buffer()
         .writeByte(data.type.ordinal)
         .writeByte(data.kind.toInt())
@@ -111,7 +111,7 @@ internal fun parseHeader(content: String): ByteArray {
     }
 }
 
-fun decode(content: String): Data {
+fun decode(content: String): SimpleQrData {
     if (content.length < 12)
         throw FormatException()
 
@@ -128,5 +128,5 @@ fun decode(content: String): Data {
         throw ExpiredException()
 
     val payload = content.slice(IntRange(12, content.length - 1))
-    return Data(Type.values()[type.toInt()], kind, validUntil, payload)
+    return SimpleQrData(QrType.values()[type.toInt()], kind, validUntil, payload)
 }

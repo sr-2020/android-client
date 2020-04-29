@@ -20,7 +20,7 @@ import org.shadowrunrussia2020.android.character.CharacterViewModel
 import org.shadowrunrussia2020.android.common.models.Transfer
 import org.shadowrunrussia2020.android.common.utils.showErrorMessage
 import org.shadowrunrussia2020.android.common.models.FullQrData
-import org.shadowrunrussia2020.android.common.models.Type
+import org.shadowrunrussia2020.android.common.models.QrType
 import org.shadowrunrussia2020.android.model.qr.maybeQrScanned
 import org.shadowrunrussia2020.android.model.qr.startQrScan
 
@@ -51,7 +51,7 @@ class ScanAnyQrFragment : Fragment() {
     private suspend fun onQr(qrData: FullQrData) {
         try {
             when (qrData.type) {
-                Type.PAYMENT_REQUEST_WITH_PRICE -> {
+                QrType.PAYMENT_REQUEST_WITH_PRICE -> {
                     val parts = qrData.modelId.split(',', limit = 3)
                     askForTransfer(
                         Transfer(
@@ -61,9 +61,9 @@ class ScanAnyQrFragment : Fragment() {
                         )
                     )
                 }
-                Type.pill, Type.food -> showConsumableQrInfo(qrData)
-                Type.ability -> consume(qrData.modelId.toInt())
-                Type.WOUNDED_BODY -> {
+                QrType.pill, QrType.food -> showConsumableQrInfo(qrData)
+                QrType.ability -> consume(qrData.modelId.toInt())
+                QrType.WOUNDED_BODY -> {
                     findNavController().navigate(
                         ScanAnyQrFragmentDirections.actionInteractWithBody(
                             qrData.modelId.toInt()

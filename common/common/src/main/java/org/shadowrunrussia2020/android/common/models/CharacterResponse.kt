@@ -19,7 +19,7 @@ enum class TargetType { none, show, scan }
 @Parcelize
 data class TargetSignature(
     val name: String,
-    val allowedTypes: List<Type>,
+    val allowedTypes: List<QrType>,
     val field: String
 ) : Parcelable
 

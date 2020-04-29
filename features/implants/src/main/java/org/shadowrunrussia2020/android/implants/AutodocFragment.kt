@@ -16,7 +16,7 @@ import org.shadowrunrussia2020.android.common.utils.launchAsync
 import org.shadowrunrussia2020.android.common.utils.russianHealthState
 import org.shadowrunrussia2020.android.common.utils.showErrorMessage
 import org.shadowrunrussia2020.android.common.models.FullQrData
-import org.shadowrunrussia2020.android.common.models.Type
+import org.shadowrunrussia2020.android.common.models.QrType
 import org.shadowrunrussia2020.android.model.qr.maybeQrScanned
 import org.shadowrunrussia2020.android.model.qr.startQrScan
 import org.shadowrunrussia2020.android.view.universal_list.ImplantItem
@@ -106,7 +106,7 @@ class AutodocFragment : Fragment() {
         maybeQrScanned(requireActivity(), requestCode, resultCode, data, onQrScanned = {qrData: FullQrData ->
             when (autodocViewModel.state) {
                 AutoDocViewModel.State.WAITING_FOR_BODY_SCAN -> {
-                    if (qrData.type == Type.WOUNDED_BODY || qrData.type == Type.HEALTHY_BODY) {
+                    if (qrData.type == QrType.WOUNDED_BODY || qrData.type == QrType.HEALTHY_BODY) {
                         launchAsync(requireActivity()) {
                             characterViewModel.analyzeBody(qrData.modelId)
                         }
@@ -121,7 +121,7 @@ class AutodocFragment : Fragment() {
                     }
                 }
                 AutoDocViewModel.State.WAITING_FOR_EMPTY_QR_SCAN -> {
-                    if (qrData.type == Type.empty) {
+                    if (qrData.type == QrType.empty) {
                         val targetCharacterId = autodocViewModel.targetCharacterId
                         val implantToRemove = autodocViewModel.implantToRemove
                         if (targetCharacterId != null && implantToRemove != null) {
@@ -143,7 +143,7 @@ class AutodocFragment : Fragment() {
                     autodocViewModel.implantToRemove = null
                 }
                 AutoDocViewModel.State.WAITING_FOR_IMPLANT_QR_SCAN -> {
-                    if (qrData.type == Type.implant) {
+                    if (qrData.type == QrType.implant) {
                         autodocViewModel.targetCharacterId?.let {
                             launchAsync(requireActivity()) {
                                 characterViewModel.installImplant(it, qrData.modelId.toInt())

@@ -27,7 +27,7 @@ import org.shadowrunrussia2020.android.character.CharacterViewModel
 import org.shadowrunrussia2020.android.common.models.ActiveAbility
 import org.shadowrunrussia2020.android.common.models.FullQrData
 import org.shadowrunrussia2020.android.common.models.TargetType
-import org.shadowrunrussia2020.android.common.models.Type
+import org.shadowrunrussia2020.android.common.models.QrType
 import org.shadowrunrussia2020.android.common.utils.MainThreadSchedulers
 import org.shadowrunrussia2020.android.common.utils.plusAssign
 import org.shadowrunrussia2020.android.common.utils.showErrorMessage
@@ -127,7 +127,7 @@ class ActiveAbilityDetailsFragment : Fragment() {
 
     private fun useOnTarget(qrData: FullQrData) {
         val eventData: HashMap<String, Any> = when (qrData.type) {
-            Type.HEALTHY_BODY, Type.WOUNDED_BODY -> hashMapOf(
+            QrType.HEALTHY_BODY, QrType.WOUNDED_BODY -> hashMapOf(
                 "targetCharacterId" to qrData.modelId.toInt()
             )
             else -> {

@@ -20,7 +20,7 @@ import org.shadowrunrussia2020.android.common.models.HistoryRecord
 import org.shadowrunrussia2020.android.common.models.Spell
 import org.shadowrunrussia2020.android.common.utils.showErrorMessage
 import org.shadowrunrussia2020.android.common.models.FullQrData
-import org.shadowrunrussia2020.android.common.models.Type
+import org.shadowrunrussia2020.android.common.models.QrType
 import org.shadowrunrussia2020.android.model.qr.maybeQrScanned
 import org.shadowrunrussia2020.android.model.qr.startQrScan
 
@@ -100,7 +100,7 @@ class SpellCastFragment : Fragment() {
 
     private fun castOnTarget(qrData: FullQrData) {
         val eventData = when (qrData.type) {
-            Type.HEALTHY_BODY, Type.WOUNDED_BODY -> hashMapOf<String, Any>(
+            QrType.HEALTHY_BODY, QrType.WOUNDED_BODY -> hashMapOf<String, Any>(
                 "targetCharacterId" to qrData.modelId,
                 "power" to castModel.power
             )

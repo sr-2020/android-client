@@ -3,7 +3,7 @@ package org.shadowrunrussia2020.android.common.models
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
-enum class Type {
+enum class QrType {
     UNKNOWN,
     REWRITABLE,
     PAYMENT_REQUEST_SIMPLE,
@@ -24,15 +24,15 @@ enum class Type {
     event,
 }
 
-@Parcelize data class Data(
-    val type: Type,
+@Parcelize data class SimpleQrData(
+    val type: QrType,
     val kind: Byte,
     val validUntil: Int,
     val payload: String): Parcelable
 
 @Parcelize
 data class FullQrData(
-    val type: Type,
+    val type: QrType,
     val name: String,
     val description: String,
     val usesLeft: Int,
