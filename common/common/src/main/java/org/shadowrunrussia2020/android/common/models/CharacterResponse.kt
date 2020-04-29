@@ -17,11 +17,19 @@ data class Spell(
 enum class TargetType { none, show, scan }
 
 @Parcelize
+data class TargetSignature(
+    val name: String,
+    val allowedTypes: List<String>,
+    val field: String
+) : Parcelable
+
+@Parcelize
 data class ActiveAbility(
     val id: String,
     val humanReadableName: String,
     val description: String,
     val target: TargetType,
+    val targetsSignature: List<TargetSignature>,
     val validUntil: Long?,
     val cooldownMinutes: Int,
     val cooldownUntil: Long
