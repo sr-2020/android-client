@@ -6,6 +6,9 @@ import kotlinx.coroutines.withContext
 import okio.Buffer
 import org.shadowrunrussia2020.android.common.di.ApplicationSingletonScope
 import org.shadowrunrussia2020.android.common.models.Character
+import org.shadowrunrussia2020.android.common.models.Data
+import org.shadowrunrussia2020.android.common.models.FullQrData
+import org.shadowrunrussia2020.android.common.models.Type
 import java.security.MessageDigest
 import java.util.*
 

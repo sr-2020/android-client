@@ -1,4 +1,4 @@
-package org.shadowrunrussia2020.android.model.qr
+package org.shadowrunrussia2020.android.common.models
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

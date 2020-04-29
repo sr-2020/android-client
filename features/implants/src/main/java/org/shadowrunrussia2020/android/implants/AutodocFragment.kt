@@ -15,8 +15,8 @@ import org.shadowrunrussia2020.android.common.models.HealthState
 import org.shadowrunrussia2020.android.common.utils.launchAsync
 import org.shadowrunrussia2020.android.common.utils.russianHealthState
 import org.shadowrunrussia2020.android.common.utils.showErrorMessage
-import org.shadowrunrussia2020.android.model.qr.FullQrData
-import org.shadowrunrussia2020.android.model.qr.Type
+import org.shadowrunrussia2020.android.common.models.FullQrData
+import org.shadowrunrussia2020.android.common.models.Type
 import org.shadowrunrussia2020.android.model.qr.maybeQrScanned
 import org.shadowrunrussia2020.android.model.qr.startQrScan
 import org.shadowrunrussia2020.android.view.universal_list.ImplantItem

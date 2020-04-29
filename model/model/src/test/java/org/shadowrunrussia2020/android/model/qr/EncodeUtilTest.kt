@@ -1,6 +1,8 @@
 package org.shadowrunrussia2020.android.model.qr
 
 import org.junit.Test
+import org.shadowrunrussia2020.android.common.models.Data
+import org.shadowrunrussia2020.android.common.models.Type
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 

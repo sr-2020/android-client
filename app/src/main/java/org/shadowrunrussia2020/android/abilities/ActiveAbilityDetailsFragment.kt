@@ -25,7 +25,9 @@ import org.ocpsoft.prettytime.PrettyTime
 import org.shadowrunrussia2020.android.R
 import org.shadowrunrussia2020.android.character.CharacterViewModel
 import org.shadowrunrussia2020.android.common.models.ActiveAbility
+import org.shadowrunrussia2020.android.common.models.FullQrData
 import org.shadowrunrussia2020.android.common.models.TargetType
+import org.shadowrunrussia2020.android.common.models.Type
 import org.shadowrunrussia2020.android.common.utils.MainThreadSchedulers
 import org.shadowrunrussia2020.android.common.utils.plusAssign
 import org.shadowrunrussia2020.android.common.utils.showErrorMessage

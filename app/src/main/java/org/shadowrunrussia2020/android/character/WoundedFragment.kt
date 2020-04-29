@@ -22,8 +22,8 @@ import org.shadowrunrussia2020.android.R
 import org.shadowrunrussia2020.android.common.models.Character
 import org.shadowrunrussia2020.android.common.models.HealthState
 import org.shadowrunrussia2020.android.common.utils.showErrorMessage
-import org.shadowrunrussia2020.android.model.qr.Data
-import org.shadowrunrussia2020.android.model.qr.Type
+import org.shadowrunrussia2020.android.common.models.Data
+import org.shadowrunrussia2020.android.common.models.Type
 import org.shadowrunrussia2020.android.model.qr.encode
 import java.util.concurrent.TimeUnit
 

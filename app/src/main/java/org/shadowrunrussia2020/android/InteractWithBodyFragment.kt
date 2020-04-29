@@ -16,8 +16,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.shadowrunrussia2020.android.character.CharacterViewModel
 import org.shadowrunrussia2020.android.common.utils.showErrorMessage
-import org.shadowrunrussia2020.android.model.qr.FullQrData
-import org.shadowrunrussia2020.android.model.qr.Type
+import org.shadowrunrussia2020.android.common.models.FullQrData
+import org.shadowrunrussia2020.android.common.models.Type
 import org.shadowrunrussia2020.android.model.qr.maybeQrScanned
 import org.shadowrunrussia2020.android.model.qr.startQrScan
 

@@ -22,7 +22,7 @@
     <action android:id="@+id/action_global_spellbook" app:destination="@id/spellbookFragment"/>
     <activity android:id="@+id/showQrActivity" android:name="org.shadowrunrussia2020.android.qr.ShowQrActivity"
               android:label="activity_show_qr" tools:layout="@layout/activity_show_qr" app:action="show_qr">
-        <argument android:name="qrData" app:argType="org.shadowrunrussia2020.android.model.qr.Data"/>
+        <argument android:name="qrData" app:argType="org.shadowrunrussia2020.android.common.models.Data"/>
     </activity>
     <fragment android:id="@+id/transactionDetailsFragment"
               android:name="org.shadowrunrussia2020.android.billing.TransactionDetailsFragment"
