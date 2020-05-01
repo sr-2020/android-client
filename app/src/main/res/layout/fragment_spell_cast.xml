@@ -24,10 +24,9 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
     <LinearLayout
-        android:id="@+id/targetButtons"
+        android:id="@+id/castOptions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -35,10 +34,37 @@
         app:layout_constraintTop_toBottomOf="@+id/textAbilityDescription">
 
         <Button
+            android:id="@+id/addReagent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_weight="1"
+            android:text="Реагент" />
+
+        <Button
+            android:id="@+id/addRitualMember"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_weight="1"
+            android:text="Участник ритуала" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/targetButtons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/castOptions">
+
+        <Button
             android:id="@+id/castSpell"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Применить" />
+            android:text="Приступить" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
