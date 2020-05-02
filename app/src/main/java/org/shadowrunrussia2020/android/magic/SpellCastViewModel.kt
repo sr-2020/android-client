@@ -10,7 +10,6 @@ enum class QrReason {
 }
 
 class SpellCastViewModel(application: Application) : AndroidViewModel(application) {
-    var secondsLeft = 0
     var id = ""
     var power = 0
     var reagentIds = mutableSetOf<String>()

@@ -12,6 +12,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import io.reactivex.Observable
+import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_spell_cast.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -22,15 +24,19 @@ import org.shadowrunrussia2020.android.common.models.FullQrData
 import org.shadowrunrussia2020.android.common.models.HistoryRecord
 import org.shadowrunrussia2020.android.common.models.QrType
 import org.shadowrunrussia2020.android.common.models.Spell
+import org.shadowrunrussia2020.android.common.utils.MainThreadSchedulers
+import org.shadowrunrussia2020.android.common.utils.plusAssign
 import org.shadowrunrussia2020.android.common.utils.russianQrType
 import org.shadowrunrussia2020.android.common.utils.showErrorMessage
 import org.shadowrunrussia2020.android.model.qr.maybeQrScanned
 import org.shadowrunrussia2020.android.model.qr.startQrScan
+import java.util.concurrent.TimeUnit
 
 class SpellCastFragment : Fragment() {
     private val args: SpellCastFragmentArgs by navArgs()
     private val spell: Spell by lazy { args.spell }
     private val power: Int by lazy { args.power }
+    private val disposer = CompositeDisposable()
 
     private val mCharacterModel by lazy {
         ViewModelProviders.of(requireActivity()).get(CharacterViewModel::class.java)
@@ -66,10 +72,22 @@ class SpellCastFragment : Fragment() {
         updateButtonLabels()
 
         castSpell.setOnClickListener {
-            if (spell.hasTarget) {
-                castModel.qrReason = QrReason.TARGET
-                startQrScan(this, "Выбор цели заклинания.")
-            } else cast()
+            setButtonsEnabled(false)
+
+            val delay = (10..15).random()
+            disposer += Observable.interval(0, 1, TimeUnit.SECONDS)
+                .observeOn(MainThreadSchedulers.androidUiScheduler)
+                .subscribe { sinceStart ->
+                    if (delay > sinceStart) {
+                        castSpell.text = "Подготовка. Осталось ${delay-sinceStart} секунд."
+                    } else {
+                        disposer.clear()
+                        if (spell.hasTarget) {
+                            castModel.qrReason = QrReason.TARGET
+                            startQrScan(this, "Выбор цели заклинания.")
+                        } else cast()
+                    }
+                }
         }
 
         addReagent.setOnClickListener {
@@ -83,6 +101,17 @@ class SpellCastFragment : Fragment() {
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        disposer.clear()
+    }
+
+    private fun setButtonsEnabled(on: Boolean) {
+        castSpell.isEnabled = on
+        addRitualMember.isEnabled = on
+        addReagent.isEnabled = on
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         maybeQrScanned(requireActivity(), requestCode, resultCode, data, {
             when (castModel.qrReason) {
@@ -93,6 +122,13 @@ class SpellCastFragment : Fragment() {
             }
             updateButtonLabels()
             castModel.qrReason = null
+        }, {
+          if (castModel.qrReason == QrReason.TARGET) {
+              // User was stupid enough to cancel picking the target after the delay...
+              // Let's force them wait once again!
+              setButtonsEnabled(true)
+              castSpell.text = "Приступить"
+          }
         })
     }
 
