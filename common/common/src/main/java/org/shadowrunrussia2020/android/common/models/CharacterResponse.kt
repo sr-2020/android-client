@@ -2,6 +2,7 @@ package org.shadowrunrussia2020.android.common.models
 
 import android.os.Parcelable
 import androidx.recyclerview.widget.DiffUtil
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
@@ -108,6 +109,12 @@ data class AnalyzedBody(
     val implants: List<Implant>
 ) : Parcelable
 
+data class Ethic(
+    val state: List<EthicState>,
+    val trigger: List<EthicTrigger>,
+    val lockedUntil: Long
+)
+
 @Entity
 data class Character(
     @PrimaryKey val modelId: String,
@@ -127,13 +134,12 @@ data class Character(
     val spells: List<Spell>,
     val activeAbilities: List<ActiveAbility>,
     val passiveAbilities: List<PassiveAbility>,
-    val ethicState: List<EthicState>,
-    val ethicTrigger: List<EthicTrigger>,
     val implants: List<Implant>,
-    val ethicLockedUntil: Long,
     val history: List<HistoryRecord>,
     val modifiers: List<Modifier>,
-    val analyzedBody: AnalyzedBody?
+    val analyzedBody: AnalyzedBody?,
+    @Embedded
+    val ethic: Ethic
 )
 
 data class CharacterResponse(val workModel: Character, val tableResponse: List<SpellTrace>?)

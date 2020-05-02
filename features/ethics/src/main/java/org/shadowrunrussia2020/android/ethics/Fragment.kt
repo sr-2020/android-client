@@ -37,19 +37,19 @@ class Fragment : Fragment() {
                 universalAdapter.clear()
 
                 universalAdapter.appendList(
-                    character.ethicState
+                    character. ethic.state
                         .sortedBy { it.scale }
                         .map { EthicStateItem(it) })
 
-                if (character.ethicLockedUntil > System.currentTimeMillis()) {
+                if (character.ethic.lockedUntil > System.currentTimeMillis()) {
                     universalAdapter.appendList(
-                        character.ethicTrigger
+                        character.ethic.trigger
                             .filter { it.kind == "crysis" }
                             .sortedBy { it.description }
                             .map { EthicTriggerItem(it) { onTriggerActivated(it) } })
                     universalAdapter.appendList(
                         listOf(
-                            EthicCooldownItem(character.ethicLockedUntil) {
+                            EthicCooldownItem(character.ethic.lockedUntil) {
                                 try {
                                     CoroutineScope(Dispatchers.IO).launch { viewModel.refresh() }
                                 } catch (e: Exception) {
@@ -60,13 +60,13 @@ class Fragment : Fragment() {
                     )
                 } else {
                     universalAdapter.appendList(
-                        character.ethicTrigger
+                        character.ethic.trigger
                             .filter { it.kind == "principle" }
                             .sortedBy { it.description }
                         .map { EthicTriggerItem(it) { onTriggerActivated(it) }})
 
                     universalAdapter.appendList(
-                        character.ethicTrigger
+                        character.ethic.trigger
                             .filter { it.kind != "principle" }
                             .sortedBy { it.description }
                         .map { EthicTriggerItem(it) { onTriggerActivated(it) }})
