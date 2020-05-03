@@ -56,5 +56,6 @@ fun russianQrType(type: QrType): String {
         QrType.event -> "Событие"
         QrType.reagent -> "Реагент"
         QrType.locus -> "Локус этической группы"
+        QrType.locus_charge -> "Заряд для локуса"
     }
 }

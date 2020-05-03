@@ -23,7 +23,8 @@ enum class QrType {
     artifact,
     event,
     reagent,
-    locus
+    locus,
+    locus_charge,
 }
 
 @Parcelize data class SimpleQrData(
