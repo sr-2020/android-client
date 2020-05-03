@@ -11,12 +11,12 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.rigger_autodoc_screen.*
+import org.shadowrunrussia2020.android.common.models.FullQrData
 import org.shadowrunrussia2020.android.common.models.HealthState
+import org.shadowrunrussia2020.android.common.models.QrType
 import org.shadowrunrussia2020.android.common.utils.launchAsync
 import org.shadowrunrussia2020.android.common.utils.russianHealthState
 import org.shadowrunrussia2020.android.common.utils.showErrorMessage
-import org.shadowrunrussia2020.android.common.models.FullQrData
-import org.shadowrunrussia2020.android.common.models.QrType
 import org.shadowrunrussia2020.android.model.qr.maybeQrScanned
 import org.shadowrunrussia2020.android.model.qr.startQrScan
 import org.shadowrunrussia2020.android.view.universal_list.ImplantItem
@@ -129,7 +129,7 @@ class AutodocFragment : Fragment() {
                                 characterViewModel.uninstallImplant(
                                     targetCharacterId,
                                     implantToRemove,
-                                    qrData.modelId.toInt()
+                                    qrData.modelId
                                 )
                             }
                         }
@@ -146,7 +146,7 @@ class AutodocFragment : Fragment() {
                     if (qrData.type == QrType.implant) {
                         autodocViewModel.targetCharacterId?.let {
                             launchAsync(requireActivity()) {
-                                characterViewModel.installImplant(it, qrData.modelId.toInt())
+                                characterViewModel.installImplant(it, qrData.modelId)
                             }
                         }
                     } else {

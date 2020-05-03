@@ -63,12 +63,10 @@ class ScanAnyQrFragment : Fragment() {
                     )
                 }
                 QrType.pill, QrType.food -> showConsumableQrInfo(qrData)
-                QrType.ability -> consume(qrData.modelId.toInt())
+                QrType.ability -> consume(qrData.modelId)
                 QrType.WOUNDED_BODY -> {
                     findNavController().navigate(
-                        ScanAnyQrFragmentDirections.actionInteractWithBody(
-                            qrData.modelId.toInt()
-                        )
+                        ScanAnyQrFragmentDirections.actionInteractWithBody(qrData.modelId)
                     )
                 }
                 else -> showQrInfo(qrData)
@@ -119,13 +117,13 @@ class ScanAnyQrFragment : Fragment() {
                 findNavController().popBackStack()
             }
             .setPositiveButton(getString(R.string.consume)) { _, _ ->
-                CoroutineScope(Dispatchers.Main).launch { consume(qr.modelId.toInt()) }
+                CoroutineScope(Dispatchers.Main).launch { consume(qr.modelId) }
             }
             .create().show()
     }
 
 
-    private suspend fun consume(qrId: Int) {
+    private suspend fun consume(qrId: String) {
         val m = ViewModelProviders.of(activity!!).get(CharacterViewModel::class.java)
         progressLoader.visibility = View.VISIBLE
         try {

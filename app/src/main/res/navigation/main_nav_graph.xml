@@ -76,7 +76,7 @@
             tools:layout="@layout/fragment_interact_with_body" >
         <argument
                 android:name="targetId"
-                app:argType="integer" />
+                app:argType="string" />
     </fragment>
     <fragment
             android:id="@+id/historyFragment"

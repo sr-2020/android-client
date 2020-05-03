@@ -52,7 +52,7 @@ internal class ViewModel : ViewModel() {
         )
     }
 
-    suspend fun installImplant(targetCharacterId: String, qrCode: Int): CharacterResponse? {
+    suspend fun installImplant(targetCharacterId: String, qrCode: String): CharacterResponse? {
         return mRepository.sendEvent(
             Event(
                 "riggerInstallImplant",
@@ -61,7 +61,7 @@ internal class ViewModel : ViewModel() {
         )
     }
 
-    suspend fun uninstallImplant(targetCharacterId: String, implantId: String, qrCode: Int): CharacterResponse? {
+    suspend fun uninstallImplant(targetCharacterId: String, implantId: String, qrCode: String): CharacterResponse? {
         return mRepository.sendEvent(
             Event(
                 "riggerUninstallImplant",
