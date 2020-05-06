@@ -25,6 +25,7 @@ enum class QrType {
     reagent,
     locus,
     locus_charge,
+    box,
 }
 
 @Parcelize data class SimpleQrData(
