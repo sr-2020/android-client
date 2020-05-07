@@ -58,5 +58,12 @@ fun russianQrType(type: QrType): String {
         QrType.locus -> "Локус этической группы"
         QrType.locus_charge -> "Заряд для локуса"
         QrType.box -> "Коробка"
+        QrType.body_storage -> "Телохранилище"
+        QrType.drone -> "Дрон"
+        QrType.drone_mod -> "Мод для дрона"
+        QrType.sprite -> "Спрайт"
+        QrType.cyberdeck -> "Кибердека"
+        QrType.cyberdeck_mod -> "Мод для кибердеки"
+        QrType.foundation_node -> "Нода основания"
     }
 }

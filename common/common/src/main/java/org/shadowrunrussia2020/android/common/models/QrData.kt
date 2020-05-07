@@ -26,6 +26,13 @@ enum class QrType {
     locus,
     locus_charge,
     box,
+    body_storage,
+    drone,
+    drone_mod,
+    sprite,
+    cyberdeck,
+    cyberdeck_mod,
+    foundation_node,
 }
 
 @Parcelize data class SimpleQrData(
