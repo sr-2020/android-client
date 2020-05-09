@@ -6,9 +6,9 @@ import kotlinx.coroutines.withContext
 import okio.Buffer
 import org.shadowrunrussia2020.android.common.di.ApplicationSingletonScope
 import org.shadowrunrussia2020.android.common.models.Character
-import org.shadowrunrussia2020.android.common.models.SimpleQrData
 import org.shadowrunrussia2020.android.common.models.FullQrData
 import org.shadowrunrussia2020.android.common.models.QrType
+import org.shadowrunrussia2020.android.common.models.SimpleQrData
 import java.security.MessageDigest
 import java.util.*
 
@@ -71,22 +71,7 @@ internal fun signature(packedData: ByteArray, data: String): String {
     // TODO(aeremin): get salt from environment variable during build
     val salt = "do you like ponies?"
     val md = MessageDigest.getInstance("MD5")
-    for (b in packedData) {
-        // This is awful hack. "Golden" implementation (https://github.com/alice-larp/alice-larp-sdk/blob/master/packages/alice-qr-lib/qr.ts)
-        // is kinda broken. It can add invalid (in UTF-8 sense) character in the string, which then gets converted to
-        // the [239, 191, 189] triplet. See e.g.
-        // 1) https://haacked.com/archive/2012/01/30/hazards-of-converting-binary-data-to-a-string.aspx/
-        // 2) https://stackoverflow.com/questions/43918055/why-redis-returns-a-239-191-189-response-buffer
-        // As we (at least for now) want to be compatible with "golden" implementation, we mimic such behaviour.
-        if (b >= 0) {
-            md.update(b)
-        } else {
-            md.update(239.toByte())
-            md.update(191.toByte())
-            md.update(189.toByte())
-        }
-    }
-    //md.update(packedData)
+    md.update(packedData)
     md.update(data.toByteArray())
     md.update(salt.toByteArray())
     val md5hash = md.digest()
@@ -112,6 +97,15 @@ internal fun parseHeader(content: String): ByteArray {
 }
 
 fun decode(content: String): SimpleQrData {
+    val d = decodeNoTimeCheck(content)
+
+    if (d.validUntil < Date().time / 1000)
+        throw ExpiredException()
+
+    return d
+}
+
+fun decodeNoTimeCheck(content: String): SimpleQrData {
     if (content.length < 12)
         throw FormatException()
 
@@ -123,10 +117,6 @@ fun decode(content: String): SimpleQrData {
     val expectedSignature = signature(bufCopy.readByteArray(), content.slice(IntRange(12, content.length - 1)))
     if (content.slice(IntRange(0, 3)) != expectedSignature)
         throw ValidationException()
-
-    if (validUntil < Date().time / 1000)
-        throw ExpiredException()
-
     val payload = content.slice(IntRange(12, content.length - 1))
     return SimpleQrData(QrType.values()[type.toInt()], kind, validUntil, payload)
 }

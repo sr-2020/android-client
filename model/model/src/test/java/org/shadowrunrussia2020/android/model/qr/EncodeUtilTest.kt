@@ -1,98 +1,122 @@
 package org.shadowrunrussia2020.android.model.qr
 
 import org.junit.Test
+import org.shadowrunrussia2020.android.common.models.QrType
+import org.shadowrunrussia2020.android.common.models.SimpleQrData
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 class EncodeUtilTest {
     @Test
     fun decode_ThrowsFormatExceptionIfTooShort() {
-        assertFailsWith(org.shadowrunrussia2020.android.model.qr.FormatException::class) {
-            org.shadowrunrussia2020.android.model.qr.decode("6263Aw2A2Nt")
+        assertFailsWith(FormatException::class) {
+            decode("EQ1ybkhZksI")
         }
     }
 
+    val validContent = "92c2EQ1ybkhZHello"
+
+    @Test
+    fun decodable() {
+        decodeNoTimeCheck(validContent)
+    }
+
+
     @Test
     fun decode_ChangingAnySymbolFailsSignatureCheck() {
-        val validString = "92c2EQ1ybkhZHello"
-        for (i in 0 until validString.length) {
-            assertFailsWith(org.shadowrunrussia2020.android.model.qr.ValidationException::class, message = i.toString()) {
-                val invalidString = validString.slice(IntRange(0, i - 1)) + "B" + validString.slice(
+        for (i in validContent.indices) {
+            assertFailsWith(ValidationException::class, message = i.toString()) {
+                val invalidString = validContent.slice(IntRange(0, i - 1)) + "B" + validContent.slice(
                     IntRange(
                         i + 1,
-                        validString.length - 1
+                        validContent.length - 1
                     )
                 )
-                org.shadowrunrussia2020.android.model.qr.decode(invalidString)
+                decode(invalidString)
             }
         }
     }
 
     @Test
     fun decode_InvalidSymbolInSignatureLeadToValidationError() {
-        assertFailsWith(org.shadowrunrussia2020.android.model.qr.ValidationException::class) {
-            org.shadowrunrussia2020.android.model.qr.decode("X263Aw2A2NtwHello") // Symbol X is not hex symbol
+        assertFailsWith(ValidationException::class) {
+            decode("X2c2EQ1ybkhZHello") // Symbol X is not hex symbol
         }
     }
 
     @Test
     fun decode_InvalidSymbolsInHeaderLeadToException() {
-        val validString = "6263Aw2A2NtwHello"
         for (i in 4 until 4 + 8) {
-            assertFailsWith(org.shadowrunrussia2020.android.model.qr.FormatException::class) {
-                val invalidString = validString.slice(IntRange(0, i - 1)) + "?" + validString.slice(
+            assertFailsWith(FormatException::class) {
+                val invalidString = validContent.slice(IntRange(0, i - 1)) + "?" + validContent.slice(
                     IntRange(
                         i + 1,
-                        validString.length - 1
+                        validContent.length - 1
                     )
                 )
-                org.shadowrunrussia2020.android.model.qr.decode(invalidString)
+                decode(invalidString)
             }
         }
     }
 
     @Test
     fun decode_TimeUntilInPastLeadsToException() {
-        assertFailsWith(org.shadowrunrussia2020.android.model.qr.ExpiredException::class) {
-            org.shadowrunrussia2020.android.model.qr.decode("d810Aw1ybkhZHello")
+        assertFailsWith(ExpiredException::class) {
+            decode("d810Aw1ybkhZHello")
         }
     }
 
     @Test
     fun decode_IsCorrect() {
         assertEquals(
-            org.shadowrunrussia2020.android.model.qr.Data(
-                org.shadowrunrussia2020.android.model.qr.Type.PAYMENT_REQUEST_WITH_PRICE,
+            SimpleQrData(
+                QrType.PAYMENT_REQUEST_WITH_PRICE,
                 13,
-                1893456000,
+                1497919090,
                 "Hello"
             ),
-            org.shadowrunrussia2020.android.model.qr.decode("6263Aw2A2NtwHello")
+            decodeNoTimeCheck("d810Aw1ybkhZHello")
         )
     }
 
     @Test
     fun decode_IsCorrect2() {
         assertEquals(
-            org.shadowrunrussia2020.android.model.qr.Data(
-                org.shadowrunrussia2020.android.model.qr.Type.CLINICALLY_DEAD_BODY,
+            SimpleQrData(
+                QrType.CLINICALLY_DEAD_BODY,
                 0,
                 1700000000,
                 "123,1267,abc"
             ),
-            org.shadowrunrussia2020.android.model.qr.decode("ca7fBwAA8VNl123,1267,abc")
+            decodeNoTimeCheck("5472BwAA8VNl123,1267,abc")
+        )
+    }
+
+    @Test
+    fun decode_IsCorrect3() {
+        assertEquals(
+            "178",
+            decodeNoTimeCheck("9447AQDQvrZe178").payload
+        )
+    }
+
+    @Test
+    fun decode_IsCorrect4() {
+        assertEquals(
+            "178",
+            decodeNoTimeCheck("c112AQCIyrZe178").payload
         )
     }
 
     @Test
     fun encode_IsCorrect() {
         assertEquals(
-            "6263Aw2A2NtwHello",
-            org.shadowrunrussia2020.android.model.qr.encode(
-                org.shadowrunrussia2020.android.model.qr.Data(
-                    org.shadowrunrussia2020.android.model.qr.Type.PAYMENT_REQUEST_WITH_PRICE,
+            "d810Aw1ybkhZHello",
+            encode(
+                SimpleQrData(
+                    QrType.PAYMENT_REQUEST_WITH_PRICE,
                     13,
-                    1893456000,
+                    1497919090,
                     "Hello"
                 )
             )
@@ -100,16 +124,31 @@ class EncodeUtilTest {
     }
 
     @Test
+    fun encode_IsCorrect2() {
+        assertEquals(
+            "5472BwAA8VNl123,1267,abc",
+            encode(
+                SimpleQrData(
+                    QrType.CLINICALLY_DEAD_BODY,
+                    0,
+                    1700000000,
+                    "123,1267,abc"
+                )
+            )
+        )
+    }
+
+    @Test
     fun encode_WorksWithCyrillicCharacters() {
-        val data = org.shadowrunrussia2020.android.model.qr.Data(
-            org.shadowrunrussia2020.android.model.qr.Type.REWRITABLE,
+        val data = SimpleQrData(
+            QrType.REWRITABLE,
             13,
             1893456000,
             "Рыба"
         )
         assertEquals(
-            org.shadowrunrussia2020.android.model.qr.decode(
-                org.shadowrunrussia2020.android.model.qr.encode(data)
+            decode(
+                encode(data)
             ), data)
     }
 }
