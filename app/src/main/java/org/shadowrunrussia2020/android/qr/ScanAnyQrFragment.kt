@@ -111,7 +111,7 @@ class ScanAnyQrFragment : Fragment() {
 
     private fun showConsumableQrInfo(qr: FullQrData) {
         AlertDialog.Builder(requireActivity())
-            .setTitle(qr.name)
+            .setTitle(russianQrType(qr.type))
             .setMessage(qr.description)
             .setNegativeButton(R.string.cancel) { _, _ ->
                 findNavController().popBackStack()
