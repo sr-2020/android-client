@@ -144,8 +144,8 @@ class ActiveAbilityDetailsFragment : Fragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        val buttons = listOf(chooseTarget1, chooseTarget2, chooseTarget3)
         maybeQrScanned(requireActivity(), requestCode, resultCode, data, { fullQrData ->
-            val buttons = listOf(chooseTarget1, chooseTarget2, chooseTarget3)
             val currentTargetInd = abilityUseModel.data.size
             val currentSignature = ability.targetsSignature[currentTargetInd]
             val b = buttons[currentTargetInd]
@@ -169,6 +169,9 @@ class ActiveAbilityDetailsFragment : Fragment() {
             } else {
                 buttons[currentTargetInd + 1].isEnabled = true
             }
+        }, {
+            val currentTargetInd = abilityUseModel.data.size
+            buttons[currentTargetInd].isEnabled = true
         })
     }
 
