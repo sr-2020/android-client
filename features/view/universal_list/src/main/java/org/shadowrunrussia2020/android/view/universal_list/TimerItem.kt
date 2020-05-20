@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.generic_recycler_view_item.view.*
+import kotlinx.android.synthetic.main.timer_item.view.*
 import org.ocpsoft.prettytime.PrettyTime
 import org.shadowrunrussia2020.android.common.models.Timer
 import org.shadowrunrussia2020.android.common.utils.MainThreadSchedulers
@@ -30,7 +30,7 @@ private class TimerViewHolder private constructor(override val containerView: Vi
     private val disposer = CompositeDisposable()
 
     constructor(parent: ViewGroup)
-            : this(LayoutInflater.from(parent.context).inflate(R.layout.generic_recycler_view_item, parent, false))
+            : this(LayoutInflater.from(parent.context).inflate(R.layout.timer_item, parent, false))
 
     fun bindView(timer: Timer, modelTimestamp: Long, onClick: (() -> Unit)?, hide: Boolean) {
         disposer.clear()
