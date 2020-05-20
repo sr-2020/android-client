@@ -33,6 +33,8 @@ enum class QrType {
     cyberdeck,
     cyberdeck_mod,
     foundation_node,
+    reanimate_capsule,
+    ai_symbol,
 }
 
 @Parcelize data class SimpleQrData(
