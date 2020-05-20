@@ -38,6 +38,7 @@ class TimersFragment : Fragment() {
 
                     universalAdapter.appendList(
                         character.timers
+                            .sortedBy { it.miliseconds }
                             .map { TimerListItem(character.timestamp, it) })
 
                     universalAdapter.apply()
