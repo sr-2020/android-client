@@ -5,6 +5,7 @@
                                                    android:layout_width="match_parent"
                                                    android:layout_height="match_parent"
                                                    tools:context=".magic.SpellDetailsFragment" android:id="@+id/frameLayout">
+
     <TextView
             android:text="Абракадабра"
             android:layout_width="0dp"
@@ -49,4 +50,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:id="@+id/castSpell" android:layout_weight="1"/>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/textCurrentMagic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="Текущее значение магии: 5" />
 </androidx.constraintlayout.widget.ConstraintLayout>

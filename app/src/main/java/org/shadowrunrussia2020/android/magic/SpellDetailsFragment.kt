@@ -63,6 +63,7 @@ class SpellDetailsFragment : Fragment() {
             .observe(this, Observer { data: Character? ->
                 if (data != null) {
                     seekBarSpellPower.max = data.magic
+                    textCurrentMagic.text = data.magic.toString()
                 }
             })
     }
