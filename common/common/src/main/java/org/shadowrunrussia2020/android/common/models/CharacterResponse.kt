@@ -103,6 +103,12 @@ data class Modifier(
 ) : Parcelable
 
 @Parcelize
+data class Timer(
+    val description: String,
+    val miliseconds: Long
+) : Parcelable
+
+@Parcelize
 data class AnalyzedBody(
     val healthState: HealthState,
     val essence: Int,
@@ -137,6 +143,7 @@ data class Character(
     val implants: List<Implant>,
     val history: List<HistoryRecord>,
     val modifiers: List<Modifier>,
+    val timers: List<Timer>,
     val analyzedBody: AnalyzedBody?,
     @Embedded
     val ethic: Ethic

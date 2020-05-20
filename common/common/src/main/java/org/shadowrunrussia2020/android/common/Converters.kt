@@ -4,6 +4,7 @@ import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import org.shadowrunrussia2020.android.common.models.*
+import org.shadowrunrussia2020.android.common.models.Timer
 import java.util.*
 
 
@@ -101,6 +102,16 @@ class Converters {
 
     @TypeConverter
     fun modifiersToJson(value: List<Modifier>): String {
+        return Gson().toJson(value)
+    }
+
+    @TypeConverter
+    fun jsonToTimers(value: String): List<Timer> {
+        return Gson().fromJson(value, object : TypeToken<List<Timer>>() {}.type)
+    }
+
+    @TypeConverter
+    fun timersToJson(value: List<Timer>): String {
         return Gson().toJson(value)
     }
 

@@ -48,6 +48,11 @@
                 android:title="@string/history"/>
 
         <item
+            android:id="@+id/action_global_timers"
+            android:icon="@drawable/menu_manage"
+            android:title="@string/timers"/>
+
+        <item
                 android:id="@+id/action_global_positions"
                 android:icon="@drawable/menu_manage"
                 android:title="@string/location"/>

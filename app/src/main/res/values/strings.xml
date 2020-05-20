@@ -59,6 +59,7 @@
     <string name="skills">Пассивные способности</string>
     <string name="ethics">Этика</string>
     <string name="history">История</string>
+    <string name="timers">Таймеры</string>
     <string name="location">Местоположение</string>
     <string name="generateQR">Генерация QR-кода</string>
     <string name="settings">Настройки</string>

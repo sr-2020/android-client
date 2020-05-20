@@ -6,5 +6,6 @@
     <item name="ethic_1_state_item" type="id"/>
     <item name="ethic_2_cooldown_item" type="id"/>
     <item name="ethic_3_trigger_item" type="id"/>
+    <item name="timer_item" type="id"/>
     <item name="implant_item" type="id"/>
 </resources>

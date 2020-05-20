@@ -88,6 +88,15 @@
                 app:destination="@id/historyRecordDetailsFragment" />
     </fragment>
     <action android:id="@+id/action_global_history" app:destination="@id/historyFragment" />
+
+    <fragment
+        android:id="@+id/timersFragment"
+        android:name="org.shadowrunrussia2020.android.TimersFragment"
+        android:label="Таймеры"
+        tools:layout="@layout/fragment_timers" >
+    </fragment>
+    <action android:id="@+id/action_global_timers" app:destination="@id/timersFragment" />
+
     <fragment
             android:id="@+id/activeAbilitiesFragment"
             android:name="org.shadowrunrussia2020.android.abilities.ActiveAbilitiesFragment"

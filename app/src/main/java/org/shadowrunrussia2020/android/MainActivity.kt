@@ -65,6 +65,7 @@ class MainActivity : AppCompatActivity(), IMainActivityDi {
                 R.id.spellbookFragment,
                 R.id.implantsFragment,
                 R.id.historyFragment,
+                R.id.timersFragment,
                 R.id.allPositionsFragment
             )
         )
