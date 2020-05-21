@@ -66,7 +66,7 @@ class SpellCastFragment : Fragment() {
         mCharacterModel.getCharacter().observe(this, Observer{character ->
             if (character != null) {
                 addRitualMember.isVisible = character.passiveAbilities.any { it.id.contains("ritual-magic") }
-                textCurrentMagic.text = character.magic.toString()
+                textCurrentMagic.text = "Текущее значение магии: ${character.magic.toString()}"
             }
         })
 
