@@ -147,17 +147,10 @@ class MainActivity : AppCompatActivity(), IMainActivityDi {
                     header.findViewById<TextView>(R.id.headerTitle).text = "Персонаж #${data.modelId}"
                     header.findViewById<TextView>(R.id.headerSubtitle).text = ""
 
-                    if (data.currentBody == BodyType.drone) {
-                        drawer_layout.nav_view.menu.findItem(R.id.action_global_billing).isVisible = false
-                        drawer_layout.nav_view.menu.findItem(R.id.action_global_spellbook).isVisible = false
-                        drawer_layout.nav_view.menu.findItem(R.id.action_global_implants).isVisible = false
-                        drawer_layout.nav_view.menu.findItem(R.id.action_global_autodoc).isVisible = false
-                    } else {
-                        drawer_layout.nav_view.menu.findItem(R.id.action_global_billing).isVisible = true
-                        drawer_layout.nav_view.menu.findItem(R.id.action_global_spellbook).isVisible = true
-                        drawer_layout.nav_view.menu.findItem(R.id.action_global_implants).isVisible = true
-                        drawer_layout.nav_view.menu.findItem(R.id.action_global_autodoc).isVisible = true
-                    }
+                    drawer_layout.nav_view.menu.findItem(R.id.action_global_billing).isVisible = data.currentBody != BodyType.drone
+                    drawer_layout.nav_view.menu.findItem(R.id.action_global_spellbook).isVisible = data.currentBody != BodyType.drone
+                    drawer_layout.nav_view.menu.findItem(R.id.action_global_implants).isVisible = data.currentBody != BodyType.drone
+                    drawer_layout.nav_view.menu.findItem(R.id.action_global_autodoc).isVisible = data.currentBody != BodyType.drone
                 }
             })
 
