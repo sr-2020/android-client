@@ -26,6 +26,12 @@ class Converters {
     fun fromHealthState(value: HealthState) = value.ordinal
 
     @TypeConverter
+    fun toBodyType(value: Int) = enumValues<BodyType>()[value]
+
+    @TypeConverter
+    fun fromBodyType(value: BodyType) = value.ordinal
+
+    @TypeConverter
     fun jsonToSpells(value: String): List<Spell> {
         return Gson().fromJson(value, object : TypeToken<List<Spell>>() {}.type)
     }

@@ -31,6 +31,7 @@ import com.google.firebase.iid.FirebaseInstanceId
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -38,6 +39,7 @@ import kotlinx.coroutines.withContext
 import org.shadowrunrussia2020.android.billing.BillingViewModel
 import org.shadowrunrussia2020.android.character.CharacterViewModel
 import org.shadowrunrussia2020.android.common.di.ApplicationSingletonScope
+import org.shadowrunrussia2020.android.common.models.BodyType
 import org.shadowrunrussia2020.android.common.models.Character
 import org.shadowrunrussia2020.android.common.models.HealthState
 import org.shadowrunrussia2020.android.common.models.Position
@@ -144,6 +146,18 @@ class MainActivity : AppCompatActivity(), IMainActivityDi {
                     val header = findViewById<NavigationView>(R.id.nav_view).getHeaderView(0);
                     header.findViewById<TextView>(R.id.headerTitle).text = "Персонаж #${data.modelId}"
                     header.findViewById<TextView>(R.id.headerSubtitle).text = ""
+
+                    if (data.currentBody == BodyType.drone) {
+                        drawer_layout.nav_view.menu.findItem(R.id.action_global_billing).isVisible = false
+                        drawer_layout.nav_view.menu.findItem(R.id.action_global_spellbook).isVisible = false
+                        drawer_layout.nav_view.menu.findItem(R.id.action_global_implants).isVisible = false
+                        drawer_layout.nav_view.menu.findItem(R.id.action_global_autodoc).isVisible = false
+                    } else {
+                        drawer_layout.nav_view.menu.findItem(R.id.action_global_billing).isVisible = true
+                        drawer_layout.nav_view.menu.findItem(R.id.action_global_spellbook).isVisible = true
+                        drawer_layout.nav_view.menu.findItem(R.id.action_global_implants).isVisible = true
+                        drawer_layout.nav_view.menu.findItem(R.id.action_global_autodoc).isVisible = true
+                    }
                 }
             })
 
