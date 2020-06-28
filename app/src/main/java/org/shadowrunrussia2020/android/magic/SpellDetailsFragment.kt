@@ -62,7 +62,7 @@ class SpellDetailsFragment : Fragment() {
         mCharacterModel.getCharacter()
             .observe(this, Observer { data: Character? ->
                 if (data != null) {
-                    seekBarSpellPower.max = data.magic
+                    seekBarSpellPower.max = data.magic + data.magicStats.maxPowerBonus
                     textCurrentMagic.text = "Текущее значение магии: ${data.magic.toString()}"
                 }
             })

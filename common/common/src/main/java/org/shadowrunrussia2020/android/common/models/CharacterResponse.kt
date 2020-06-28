@@ -122,6 +122,10 @@ data class Ethic(
     val lockedUntil: Long
 )
 
+data class MagicStats(
+    val maxPowerBonus: Int
+)
+
 @Entity
 data class Character(
     @PrimaryKey val modelId: String,
@@ -148,7 +152,9 @@ data class Character(
     val timers: List<Timer>,
     val analyzedBody: AnalyzedBody?,
     @Embedded
-    val ethic: Ethic
+    val ethic: Ethic,
+    @Embedded
+    val magicStats: MagicStats
 )
 
 data class CharacterResponse(val workModel: Character, val tableResponse: List<SpellTrace>?)
