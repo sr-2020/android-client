@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.google.zxing.BarcodeFormat
 import com.journeyapps.barcodescanner.BarcodeEncoder
 import kotlinx.android.synthetic.main.main_charter_screen.*
+import org.shadowrunrussia2020.android.common.models.BodyType
 import org.shadowrunrussia2020.android.model.qr.encode
 import org.shadowrunrussia2020.android.model.qr.qrData
 
@@ -24,11 +25,15 @@ class MainFragment : Fragment() {
 
         viewModel.character.observe({ this.lifecycle }) { ch ->
             ch?.let { character ->
+                val showEssence = character.currentBody != BodyType.drone
+
                 textHp.text = "%s♥".format(character.maxHp)
                 textEssence.text = "%s✡".format(character.essence / 100)
+                textEssence.visibility = if (showEssence) View.VISIBLE else View.INVISIBLE
 
                 fullTextHP.text = "Максимальные хиты: %s♡".format(character.maxHp)
                 fullTextEssence.text = "Эссенс: %s✡".format(character.essence / 100)
+                fullTextEssence.visibility = if (showEssence) View.VISIBLE else View.INVISIBLE
 
                 val barcodeEncoder = BarcodeEncoder()
                 val bitmap = barcodeEncoder.encodeBitmap(encode(character.qrData), BarcodeFormat.QR_CODE, 400, 400)
