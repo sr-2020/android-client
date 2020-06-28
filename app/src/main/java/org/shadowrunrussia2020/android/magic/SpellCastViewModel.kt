@@ -6,6 +6,7 @@ import androidx.lifecycle.AndroidViewModel
 enum class QrReason {
     REAGENT,
     RITUAL_MEMBER,
+    RITUAL_VICTIM,
     TARGET,
 }
 
@@ -14,6 +15,7 @@ class SpellCastViewModel(application: Application) : AndroidViewModel(applicatio
     var power = 0
     var reagentIds = mutableSetOf<String>()
     var ritualMembersIds = mutableSetOf<String>()
+    var ritualVictimIds = mutableSetOf<String>()
     var focusId: String? = null
     var targetCharacterId: String? = null
     var qrReason: QrReason? = null

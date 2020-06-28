@@ -24,7 +24,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
     <LinearLayout
-        android:id="@+id/castOptions"
+        android:id="@+id/reagents"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -37,28 +37,46 @@
             android:id="@+id/addReagent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
             android:layout_weight="1"
             android:text="Реагент" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ritualOptions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reagents">
 
         <Button
             android:id="@+id/addRitualMember"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:layout_weight="1"
             android:text="Участник ритуала" />
+
+        <Button
+            android:id="@+id/addRitualVictim"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_weight="1"
+            android:text="Жертва ритуала" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/targetButtons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="64dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/castOptions">
+        app:layout_constraintTop_toBottomOf="@+id/ritualOptions">
 
         <Button
             android:id="@+id/castSpell"

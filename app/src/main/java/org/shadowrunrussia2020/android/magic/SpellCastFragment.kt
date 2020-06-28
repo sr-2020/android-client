@@ -66,6 +66,7 @@ class SpellCastFragment : Fragment() {
         mCharacterModel.getCharacter().observe(this, Observer{character ->
             if (character != null) {
                 addRitualMember.isVisible = character.passiveAbilities.any { it.id.contains("ritual-magic") }
+                addRitualVictim.isVisible = character.passiveAbilities.any { it.id == "bathory-charger" }
                 textCurrentMagic.text = "Текущее значение магии: ${character.magic.toString()}"
             }
         })
@@ -100,6 +101,11 @@ class SpellCastFragment : Fragment() {
             castModel.qrReason = QrReason.RITUAL_MEMBER
             startQrScan(this, "Добавление участника ритуала.")
         }
+
+        addRitualVictim.setOnClickListener {
+            castModel.qrReason = QrReason.RITUAL_VICTIM
+            startQrScan(this, "Добавление жертвы ритуала.")
+        }
     }
 
     override fun onDestroyView() {
@@ -118,6 +124,7 @@ class SpellCastFragment : Fragment() {
             when (castModel.qrReason) {
                 QrReason.REAGENT -> onAddReagent(it)
                 QrReason.RITUAL_MEMBER -> onAddRitualMember(it)
+                QrReason.RITUAL_VICTIM -> onAddRitualVictim(it)
                 QrReason.TARGET -> onTargetPicked(it)
                 null -> {}
             }
@@ -151,6 +158,15 @@ class SpellCastFragment : Fragment() {
         castModel.ritualMembersIds.add(fullQrData.modelId)
     }
 
+    private fun onAddRitualVictim(fullQrData: FullQrData) {
+        if (fullQrData.type != QrType.WOUNDED_BODY) {
+            showErrorMessage(requireContext(), "Неожиданный QR-код: ${russianQrType(fullQrData.type)}. Подходящие: тяжело раненное физическое тело.");
+            return
+        }
+
+        castModel.ritualVictimIds.add(fullQrData.modelId)
+    }
+
     private fun onTargetPicked(fullQrData: FullQrData) {
         if (fullQrData.type != QrType.HEALTHY_BODY && fullQrData.type != QrType.WOUNDED_BODY) {
             showErrorMessage(requireContext(), "Неожиданный QR-код: ${russianQrType(fullQrData.type)}. Подходящие: Живое физическое тело.");
@@ -167,6 +183,7 @@ class SpellCastFragment : Fragment() {
                 val data: HashMap<String, Any> = hashMapOf(
                     "power" to castModel.power,
                     "ritualMembersIds" to castModel.ritualMembersIds.toList(),
+                    "ritualVictimIds" to castModel.ritualVictimIds.toList(),
                     "reagentIds" to castModel.reagentIds.toList()
                 )
                 if (castModel.targetCharacterId != null) {
