@@ -218,5 +218,6 @@ class SpellCastFragment : Fragment() {
     private fun updateButtonLabels() {
         addReagent.text = "Реагент (${castModel.reagentIds.size})"
         addRitualMember.text = "Участник ритуала (${castModel.ritualMembersIds.size})"
+        addRitualVictim.text = "Жертва ритуала (${castModel.ritualMembersIds.size})"
     }
 }
