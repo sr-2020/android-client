@@ -64,7 +64,6 @@ class MainActivity : AppCompatActivity(), IMainActivityDi {
                 R.id.activeAbilitiesFragment,
                 R.id.passiveAbilitiesFragment,
                 R.id.ethicsFragment,
-                R.id.spellbookFragment,
                 R.id.implantsFragment,
                 R.id.historyFragment,
                 R.id.timersFragment,
