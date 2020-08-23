@@ -58,7 +58,7 @@ suspend fun retrieveQrData(data: SimpleQrData): FullQrData {
             return FullQrData(data.type, "Запрос о переводе", "Запрос о переводе с указанием цены", 1, "");
         QrType.PAYMENT_REQUEST_SIMPLE -> TODO()
         QrType.SHOP_BILL ->
-            return FullQrData(data.type, "Магазинный ценник", "Позволяет оплатить товар", 1, "");
+            return FullQrData(data.type, "Магазинный ценник", "Позволяет оплатить товар", 1, data.payload);
         QrType.HEALTHY_BODY ->
             return FullQrData(data.type, "Мясное тело", "Мясное тело. Здорово или легко ранено.", 1, data.payload);
         QrType.WOUNDED_BODY ->

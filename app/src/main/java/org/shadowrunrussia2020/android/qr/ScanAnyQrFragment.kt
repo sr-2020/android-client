@@ -2,6 +2,7 @@ package org.shadowrunrussia2020.android.qr
 
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -68,6 +69,11 @@ class ScanAnyQrFragment : Fragment() {
                     findNavController().navigate(
                         ScanAnyQrFragmentDirections.actionInteractWithBody(qrData.modelId)
                     )
+                }
+                QrType.SHOP_BILL -> {
+                    val browserIntent =
+                        Intent(Intent.ACTION_VIEW, Uri.parse("https://rc-web.evarun.ru/shop/offer/${qrData.modelId}"))
+                    startActivity(browserIntent)
                 }
                 else -> showQrInfo(qrData)
             }
