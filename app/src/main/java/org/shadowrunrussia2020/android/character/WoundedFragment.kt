@@ -22,10 +22,8 @@ import org.shadowrunrussia2020.android.R
 import org.shadowrunrussia2020.android.common.models.Character
 import org.shadowrunrussia2020.android.common.models.HealthState
 import org.shadowrunrussia2020.android.common.utils.showErrorMessage
-import org.shadowrunrussia2020.android.common.models.SimpleQrData
-import org.shadowrunrussia2020.android.common.models.QrType
 import org.shadowrunrussia2020.android.model.qr.encode
-import java.util.concurrent.TimeUnit
+import org.shadowrunrussia2020.android.model.qr.qrData
 
 
 class WoundedFragment : Fragment() {
@@ -91,16 +89,8 @@ class WoundedFragment : Fragment() {
     private fun regenerateBodyQr(character: Character) {
         val barcodeEncoder = BarcodeEncoder()
         val bitmap =
-            barcodeEncoder.encodeBitmap(
-                encode(
-                    SimpleQrData(
-                        QrType.WOUNDED_BODY,
-                        0,
-                        (TimeUnit.MILLISECONDS.toSeconds(character.timestamp) + TimeUnit.HOURS.toSeconds(1)).toInt(),
-                        character.modelId
-                    )
-                ), BarcodeFormat.QR_CODE, 400, 400
-            )
+            barcodeEncoder.encodeBitmap(encode(character.qrData),
+                BarcodeFormat.QR_CODE, 400, 400)
         qrCodeImage.setImageBitmap(bitmap)
     }
 }

@@ -5,20 +5,31 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okio.Buffer
 import org.shadowrunrussia2020.android.common.di.ApplicationSingletonScope
-import org.shadowrunrussia2020.android.common.models.Character
-import org.shadowrunrussia2020.android.common.models.FullQrData
-import org.shadowrunrussia2020.android.common.models.QrType
-import org.shadowrunrussia2020.android.common.models.SimpleQrData
+import org.shadowrunrussia2020.android.common.models.*
 import java.security.MessageDigest
 import java.util.*
+import java.util.concurrent.TimeUnit
+
+fun getQrType(character: Character): QrType {
+    return when (character.currentBody) {
+        BodyType.astral -> QrType.ASTRAL_BODY
+        BodyType.drone -> QrType.ROBOT_BODY
+        BodyType.physical -> when (character.healthState) {
+            HealthState.healthy -> QrType.HEALTHY_BODY
+            HealthState.wounded -> QrType.WOUNDED_BODY
+            HealthState.clinically_dead -> QrType.CLINICALLY_DEAD_BODY
+            HealthState.biologically_dead -> QrType.ABSOLUTELY_DEAD_BODY
+        }
+    }
+}
 
 val Character.qrData: SimpleQrData
     get() = SimpleQrData(
-        type = QrType.HEALTHY_BODY,
-        kind = 0,
-        validUntil = (Date().time / 1000).toInt() + 3600,
-        payload = this.modelId
-    )
+            type = getQrType(this),
+            kind = 0,
+            validUntil = (TimeUnit.MILLISECONDS.toSeconds(this.timestamp) + TimeUnit.HOURS.toSeconds(1)).toInt(),
+            payload = this.modelId
+        )
 
 val Character.mentalQrData: SimpleQrData
     get() = SimpleQrData(
