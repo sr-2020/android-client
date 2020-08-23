@@ -146,6 +146,11 @@ class SpellCastFragment : Fragment() {
             return
         }
 
+        if (castModel.reagentIds.contains(fullQrData.modelId)) {
+            showErrorMessage(requireContext(), "Этот реагент уже добавлен.");
+            return
+        }
+
         castModel.reagentIds.add(fullQrData.modelId)
     }
 
@@ -155,12 +160,22 @@ class SpellCastFragment : Fragment() {
             return
         }
 
+        if (castModel.ritualMembersIds.contains(fullQrData.modelId)) {
+            showErrorMessage(requireContext(), "Этот член ритуала уже добавлен.");
+            return
+        }
+
         castModel.ritualMembersIds.add(fullQrData.modelId)
     }
 
     private fun onAddRitualVictim(fullQrData: FullQrData) {
         if (fullQrData.type != QrType.WOUNDED_BODY) {
             showErrorMessage(requireContext(), "Неожиданный QR-код: ${russianQrType(fullQrData.type)}. Подходящие: тяжело раненное физическое тело.");
+            return
+        }
+
+        if (castModel.ritualVictimIds.contains(fullQrData.modelId)) {
+            showErrorMessage(requireContext(), "Эта жертва ритуала уже добавлена.");
             return
         }
 
