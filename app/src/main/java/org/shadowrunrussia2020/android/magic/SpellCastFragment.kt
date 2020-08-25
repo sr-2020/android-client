@@ -18,16 +18,16 @@ import kotlinx.android.synthetic.main.fragment_spell_cast.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.shadowrunrussia2020.android.R
 import org.shadowrunrussia2020.android.character.CharacterViewModel
-import org.shadowrunrussia2020.android.common.models.FullQrData
-import org.shadowrunrussia2020.android.common.models.HistoryRecord
-import org.shadowrunrussia2020.android.common.models.QrType
-import org.shadowrunrussia2020.android.common.models.Spell
+import org.shadowrunrussia2020.android.common.di.ApplicationSingletonScope
+import org.shadowrunrussia2020.android.common.models.*
 import org.shadowrunrussia2020.android.common.utils.MainThreadSchedulers
 import org.shadowrunrussia2020.android.common.utils.plusAssign
 import org.shadowrunrussia2020.android.common.utils.russianQrType
 import org.shadowrunrussia2020.android.common.utils.showErrorMessage
+import org.shadowrunrussia2020.android.model.ModelEngineWebService
 import org.shadowrunrussia2020.android.model.qr.maybeQrScanned
 import org.shadowrunrussia2020.android.model.qr.startQrScan
 import java.util.concurrent.TimeUnit
@@ -37,6 +37,10 @@ class SpellCastFragment : Fragment() {
     private val spell: Spell by lazy { args.spell }
     private val power: Int by lazy { args.power }
     private val disposer = CompositeDisposable()
+    private val service = ApplicationSingletonScope.DependencyProvider.provideDependency<ApplicationSingletonScope.Dependency>()
+        .modelEngineRetrofit.create(ModelEngineWebService::class.java)
+    private lateinit var reagents: List<Reagent>
+
 
     private val mCharacterModel by lazy {
         ViewModelProviders.of(requireActivity()).get(CharacterViewModel::class.java)
@@ -106,6 +110,12 @@ class SpellCastFragment : Fragment() {
             castModel.qrReason = QrReason.RITUAL_VICTIM
             startQrScan(this, "Добавление жертвы ритуала.")
         }
+
+        addReagent.isEnabled = false;
+        CoroutineScope(Dispatchers.IO).launch {
+            reagents = service.reagents().await().body()!!
+            withContext(Dispatchers.Main) { addReagent.isEnabled = true }
+        }
     }
 
     override fun onDestroyView() {
@@ -150,6 +160,13 @@ class SpellCastFragment : Fragment() {
             showErrorMessage(requireContext(), "Этот реагент уже добавлен.");
             return
         }
+
+        val reagent = reagents.find { it.name == fullQrData.name }
+        if (reagent != null) {
+            castModel.reagentContent = castModel.reagentContent + reagent.content
+        }
+
+        reagentsContent.text = castModel.reagentContent.stringify()
 
         castModel.reagentIds.add(fullQrData.modelId)
     }

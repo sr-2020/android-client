@@ -2,6 +2,7 @@ package org.shadowrunrussia2020.android.magic
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import org.shadowrunrussia2020.android.common.models.ReagentContent
 
 enum class QrReason {
     REAGENT,
@@ -19,4 +20,5 @@ class SpellCastViewModel(application: Application) : AndroidViewModel(applicatio
     var focusId: String? = null
     var targetCharacterId: String? = null
     var qrReason: QrReason? = null
+    var reagentContent: ReagentContent = ReagentContent()
 }

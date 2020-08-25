@@ -12,6 +12,7 @@ interface ApplicationSingletonScope {
 
     interface Dependency {
         val retrofit: Retrofit
+        val modelEngineRetrofit: Retrofit
         val qrRetrofit: Retrofit
         val session: Session
     }
