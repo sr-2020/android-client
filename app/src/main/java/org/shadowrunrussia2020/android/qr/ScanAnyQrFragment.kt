@@ -72,7 +72,7 @@ class ScanAnyQrFragment : Fragment() {
                 }
                 QrType.SHOP_BILL -> {
                     val browserIntent =
-                        Intent(Intent.ACTION_VIEW, Uri.parse("https://rc-web.evarun.ru/shop/offer/${qrData.modelId}"))
+                        Intent(Intent.ACTION_VIEW, Uri.parse("https://marketplace.evarun.ru/offer/${qrData.modelId}"))
                     startActivity(browserIntent)
                 }
                 else -> showQrInfo(qrData)
