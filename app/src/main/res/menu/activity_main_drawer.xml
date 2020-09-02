@@ -37,10 +37,10 @@
             android:icon="@drawable/menu_manage"
             android:title="@string/autodoc"/>
 
-        <item
+        <!-- <item
             android:id="@+id/action_global_ethics"
             android:icon="@drawable/menu_manage"
-            android:title="@string/ethics"/>
+            android:title="@string/ethics"/> -->
 
         <item
                 android:id="@+id/action_global_history"
