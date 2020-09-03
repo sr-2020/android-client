@@ -8,7 +8,7 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Настройки</string>
 
-    <string name="prompt_email">e-mail</string>
+    <string name="prompt_login">ID персонажа</string>
     <string name="prompt_name">Имя</string>
     <string name="prompt_password">Пароль</string>
     <string name="prompt_password_repeat">Пароль (еще раз)</string>
