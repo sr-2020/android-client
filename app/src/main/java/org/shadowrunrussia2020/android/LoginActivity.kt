@@ -8,8 +8,6 @@ import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.widget.Button
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.iid.FirebaseInstanceId
@@ -23,14 +21,6 @@ import org.shadowrunrussia2020.android.common.models.LoginRequest
 import org.shadowrunrussia2020.android.common.models.LoginResponse
 import org.shadowrunrussia2020.android.common.utils.showErrorMessage
 import java.io.IOException
-
-val loginsMap = listOf(
-    Pair("t1@foo.bar", "1"),
-    Pair("t2@foo.bar", "1"),
-    Pair("t3@foo.bar", "1"),
-    Pair("t52@foo.bar", "1"),
-    Pair("t54@foo.bar", "1")
-)
 
 class LoginActivity : AppCompatActivity() {
     private val TAG = "SR2020-LoginActivity"
@@ -59,18 +49,6 @@ class LoginActivity : AppCompatActivity() {
         }
 
         version.text = "v%s.%d".format(BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE)
-
-        loginsMap.forEach { (login, pass) ->
-            logins.addView(Button(this).apply {
-
-                layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-                text = login
-                setOnClickListener {
-                    attemptLogin(login, pass)
-                }
-            })
-        }
-
     }
 
     private fun attemptLogin(email: String, password: String) {
