@@ -12,7 +12,7 @@ data class AccountOverview (
     var id: Int,
     var characterId: Int,
     var currentBalance: Int,
-    var currentScoring: Int,
+    var currentScoring: Float,
     var lifeStyle: String,
     var forecastLifeStyle: String
 )
