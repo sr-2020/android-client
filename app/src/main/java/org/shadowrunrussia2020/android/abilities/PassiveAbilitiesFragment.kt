@@ -1,3 +1,4 @@
+
 package org.shadowrunrussia2020.android.abilities
 
 
@@ -14,6 +15,7 @@ import kotlinx.android.synthetic.main.fragment_passive_abilities.*
 import org.shadowrunrussia2020.android.R
 import org.shadowrunrussia2020.android.character.CharacterViewModel
 import org.shadowrunrussia2020.android.common.models.Character
+import org.shadowrunrussia2020.android.common.models.PassiveAbility
 import org.shadowrunrussia2020.android.view.universal_list.PassiveAbilityListItem
 import org.shadowrunrussia2020.android.view.universal_list.UniversalAdapter
 
@@ -38,15 +40,28 @@ class PassiveAbilitiesFragment : Fragment() {
                 if (character != null) {
                     universalAdapter.clear()
 
+                    val transform: (PassiveAbility) -> PassiveAbilityListItem = {
+                        PassiveAbilityListItem(it) {
+                            findNavController().navigate(
+                                PassiveAbilitiesFragmentDirections.actionSelectPassiveAbility(it)
+                            )
+                        }
+                    }
+
                     universalAdapter.appendList(
-                        character.passiveAbilities
-                            .map {
-                                PassiveAbilityListItem(it) {
-                                    findNavController().navigate(
-                                        PassiveAbilitiesFragmentDirections.actionSelectPassiveAbility(it)
-                                    )
-                                }
-                            })
+                        character.passiveAbilities.filter { it -> it.id.startsWith("meta-") }
+                            .map(transform)
+                    )
+
+                    universalAdapter.appendList(
+                        character.passiveAbilities.filter { it -> it.id.startsWith("arch-") }
+                            .map(transform)
+                    )
+
+                    universalAdapter.appendList(
+                        character.passiveAbilities.filter { it -> !it.id.startsWith("meta-") && !it.id.startsWith("arch-") }
+                            .map(transform)
+                    )
 
                     universalAdapter.apply()
                 }
