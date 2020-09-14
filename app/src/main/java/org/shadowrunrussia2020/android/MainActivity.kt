@@ -281,6 +281,11 @@ class MainActivity : AppCompatActivity(), IMainActivityDi {
     }
 
     private fun refreshData(interactive: Boolean) {
+        if (ApplicationSingletonScope.DependencyProvider.dependency.session.getToken() == null) {
+            goToLoginScreen()
+            return
+        }
+
         CoroutineScope(Dispatchers.Main).launch {
             try {
                 characterViewModel.refresh()
