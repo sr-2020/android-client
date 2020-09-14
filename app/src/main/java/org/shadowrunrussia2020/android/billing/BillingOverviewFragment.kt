@@ -57,7 +57,7 @@ class BillingOverviewFragment : Fragment() {
                 return@setOnClickListener
             }
             val amount = Integer.parseInt(amountString)
-            if (amount > accountOverview.value?.currentBalance ?:  0) {
+            if (amount + 0.0 > accountOverview.value?.currentBalance ?:  0f) {
                 editTextAmount.error = getString(R.string.insufficient_money)
                 editTextAmount.requestFocus()
                 return@setOnClickListener
