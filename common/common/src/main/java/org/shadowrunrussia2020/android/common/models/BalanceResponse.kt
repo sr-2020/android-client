@@ -29,7 +29,7 @@ data class Transaction(
     var operationTime: Date,
     val from: String,
     val to: String,
-    var amount: Int,
+    var amount: Float,
     var comment: String?,
     var transferType: String
 ) : Parcelable
