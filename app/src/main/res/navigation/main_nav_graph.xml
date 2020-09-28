@@ -9,6 +9,9 @@
               android:label="Экономика">
         <action android:id="@+id/action_transaction_details"
                 app:destination="@id/transactionDetailsFragment"/>
+        <action
+            android:id="@+id/action_rent_details"
+            app:destination="@id/rentDetailsFragment" />
     </fragment>
     <fragment android:id="@+id/spellbookFragment"
               android:name="org.shadowrunrussia2020.android.magic.SpellbookFragment"
@@ -28,6 +31,11 @@
               android:name="org.shadowrunrussia2020.android.billing.TransactionDetailsFragment"
               android:label="Подробности операции" tools:layout="@layout/fragment_transaction_details">
         <argument android:name="transaction" app:argType="org.shadowrunrussia2020.android.common.models.Transaction"/>
+    </fragment>
+    <fragment android:id="@+id/rentDetailsFragment"
+        android:name="org.shadowrunrussia2020.android.billing.RentDetailsFragment"
+        android:label="Подробности ренты" tools:layout="@layout/fragment_rent_details">
+        <argument android:name="rent" app:argType="org.shadowrunrussia2020.android.common.models.Rent"/>
     </fragment>
     <fragment android:id="@+id/spellDetailsFragment"
         android:name="org.shadowrunrussia2020.android.magic.SpellDetailsFragment"

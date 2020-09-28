@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".billing.RentDetailsFragment" android:orientation="vertical">
+    <TextView
+        android:text='Идентификатор'
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:id="@+id/labelId"/>
+    <TextView
+        tools:text="2516"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:id="@+id/valueId"/>
+    <TextView
+        android:text='Дата и время'
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:id="@+id/labelDate"/>
+    <TextView
+        tools:text="25.05.2090"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:id="@+id/valueDate"/>
+    <TextView
+        android:text='Номенклатура'
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:id="@+id/labelNomenklatura"/>
+    <TextView
+        tools:text="Something"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:id="@+id/valueNomenklatura"/>
+    <TextView
+        android:text='Корпорация'
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:id="@+id/labelCorporation"/>
+    <TextView
+        tools:text="Gazon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:id="@+id/valueCorporation"/>
+    <TextView
+        android:text='Магазин'
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:id="@+id/labelShop"/>
+    <TextView
+        tools:text="5chka"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:id="@+id/valueShop"/>
+    <TextView
+        android:text='Цена'
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:id="@+id/labelPrice"/>
+    <TextView
+        tools:text="45"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:id="@+id/valuePrice"/>
+</LinearLayout>

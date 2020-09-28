@@ -8,4 +8,5 @@
     <item name="ethic_3_trigger_item" type="id"/>
     <item name="timer_item" type="id"/>
     <item name="implant_item" type="id"/>
+    <item name="rent_item" type="id"/>
 </resources>

@@ -1,10 +1,7 @@
 package org.shadowrunrussia2020.android.model.billing
 
 import kotlinx.coroutines.Deferred
-import org.shadowrunrussia2020.android.common.models.BalanceResponse
-import org.shadowrunrussia2020.android.common.models.Empty
-import org.shadowrunrussia2020.android.common.models.Transfer
-import org.shadowrunrussia2020.android.common.models.TransfersResponse
+import org.shadowrunrussia2020.android.common.models.*
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -19,6 +16,9 @@ internal interface BillingWebService {
 
     @GET("billing/transfers")
     fun transfers(): Deferred<Response<TransfersResponse>>
+
+    @GET("billing/api/billing/info/getrentas")
+    fun rents(): Deferred<Response<RentsResponse>>
 }
 
 

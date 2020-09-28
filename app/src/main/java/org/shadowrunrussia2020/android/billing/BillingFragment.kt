@@ -29,13 +29,23 @@ class BillingFragment : Fragment() {
         tabLayout.setupWithViewPager(viewPager)
 
         viewPager.adapter = object : FragmentPagerAdapter(childFragmentManager) {
-            override fun getCount(): Int = 2
+            override fun getCount(): Int = 3
             override fun getItem(position: Int): Fragment {
-                return if (position == 0) BillingOverviewFragment() else BillingHistoryFragment()
+                return when (position) {
+                    0 -> BillingOverviewFragment()
+                    1 -> BillingHistoryFragment()
+                    2 -> BillingRentsFragment()
+                    else -> throw Error();
+                }
             }
 
             override fun getPageTitle(position: Int): CharSequence? {
-                return if (position == 0) "Обзор" else "История"
+                return when (position) {
+                    0 -> "Обзор"
+                    1 -> "История"
+                    2 -> "Ренты"
+                    else -> throw Error();
+                }
             }
         }
 

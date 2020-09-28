@@ -15,11 +15,12 @@ import org.shadowrunrussia2020.android.model.positions.PositionsDao
     entities = [
         AccountOverview::class,
         Transaction::class,
+        Rent::class,
         Character::class,
         HistoryRecord::class,
         Position::class
     ],
-    version = 27
+    version = 28
 )
 @TypeConverters(Converters::class)
 internal abstract class CacheDatabase : RoomDatabase() {

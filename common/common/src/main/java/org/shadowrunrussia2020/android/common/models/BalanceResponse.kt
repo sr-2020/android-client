@@ -44,3 +44,21 @@ data class Transfer(
     var amount: Int,
     var comment: String?
 ) : Parcelable
+
+@Parcelize
+@Entity
+data class Rent (
+    @PrimaryKey
+    var rentaId: Int,
+    var finalPrice: Float,
+    var productType: String,
+    var nomenklaturaName: String,
+    var skuName: String,
+    var corporation: String,
+    var shop: String,
+    var dateCreated: Date
+) : Parcelable
+
+data class RentsResponse (
+    var data: List<Rent>
+)
