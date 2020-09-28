@@ -14,7 +14,7 @@ class TransactionListItem(
     private val transaction: Transaction,
     private val onClick: (() -> Unit)? = null
 ) : UniversalViewData() {
-    override val groupID = R.id.rent_item
+    override val groupID = R.id.billing_history_item
     override val isHeader = false
     override fun createViewHolder(parent: ViewGroup): RecyclerView.ViewHolder = TransactionViewHolder(parent)
     override fun bindHolder(holder: RecyclerView.ViewHolder) = (holder as TransactionViewHolder).bindView(transaction, onClick, hide)

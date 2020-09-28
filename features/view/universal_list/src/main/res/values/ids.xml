@@ -9,4 +9,5 @@
     <item name="timer_item" type="id"/>
     <item name="implant_item" type="id"/>
     <item name="rent_item" type="id"/>
+    <item name="billing_history_item" type="id"/>
 </resources>
