@@ -16,7 +16,6 @@
           android:visibility="visible"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toTopOf="parent"
-          app:srcCompat="@drawable/menu_send"
           tools:src="@tools:sample/avatars"
           tools:visibility="visible" />
 

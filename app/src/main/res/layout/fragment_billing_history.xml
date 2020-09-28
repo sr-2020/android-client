@@ -8,6 +8,6 @@
             android:layout_height="match_parent"
             android:id="@+id/transactionHistoryView"
             tools:itemCount="10"
-            tools:listitem="@layout/billing_recycler_view_item"/>
+            tools:listitem="@layout/transaction_item"/>
 
 </LinearLayout>
