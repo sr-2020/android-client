@@ -9,10 +9,12 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_history.*
-import org.shadowrunrussia2020.android.character.CharacterHistoryAdapter
+import org.shadowrunrussia2020.android.view.universal_list.GenericListItem
+import org.shadowrunrussia2020.android.view.universal_list.UniversalAdapter
 
 class GenericListFragment : Fragment() {
     private val args: GenericListFragmentArgs by navArgs()
+    private val universalAdapter by lazy { UniversalAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,10 +26,16 @@ class GenericListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        characterHistoryView.setHasFixedSize(true)
-        characterHistoryView.layoutManager = LinearLayoutManager(activity!!)
-        val adapter = CharacterHistoryAdapter {}
-        adapter.setData(args.records.toList())
-        characterHistoryView.adapter = adapter
+        universalAdapter.clear()
+
+        universalAdapter.appendList(
+            args.records.toList().map {
+                GenericListItem(it)
+            })
+
+        universalAdapter.apply()
+
+        characterHistoryView.adapter = universalAdapter
+        characterHistoryView.layoutManager = LinearLayoutManager(requireContext())
     }
 }

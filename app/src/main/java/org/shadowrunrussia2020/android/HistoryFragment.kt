@@ -11,14 +11,16 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_history.*
-import org.shadowrunrussia2020.android.character.CharacterHistoryAdapter
 import org.shadowrunrussia2020.android.character.CharacterViewModel
 import org.shadowrunrussia2020.android.common.models.HistoryRecord
+import org.shadowrunrussia2020.android.view.universal_list.GenericListItem
+import org.shadowrunrussia2020.android.view.universal_list.UniversalAdapter
 
 class HistoryFragment : Fragment() {
     private val mModel by lazy {
         ViewModelProviders.of(activity!!).get(CharacterViewModel::class.java)
     }
+    private val universalAdapter by lazy { UniversalAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,13 +32,27 @@ class HistoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        characterHistoryView.setHasFixedSize(true)
-        characterHistoryView.layoutManager = LinearLayoutManager(activity!!)
-        val adapter = CharacterHistoryAdapter {
-            findNavController().navigate(HistoryFragmentDirections.actionSelectHistoryRecord(it))
-        }
         mModel.getHistory().observe(this,
-            Observer { data: List<HistoryRecord>? -> if (data != null) adapter.setData(data) })
-        characterHistoryView.adapter = adapter
+            Observer { history: List<HistoryRecord>? ->
+                if (history != null) {
+                    universalAdapter.clear()
+
+                    universalAdapter.appendList(
+                        history.map {
+                            GenericListItem(it) {
+                                findNavController().navigate(
+                                    HistoryFragmentDirections.actionSelectHistoryRecord(
+                                        it
+                                    )
+                                )
+                            }
+                        })
+
+                    universalAdapter.apply()
+                }
+            })
+
+        characterHistoryView.adapter = universalAdapter
+        characterHistoryView.layoutManager = LinearLayoutManager(requireContext())
     }
 }

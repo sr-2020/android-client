@@ -11,14 +11,16 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_spellbook.*
 import org.shadowrunrussia2020.android.R
-import org.shadowrunrussia2020.android.character.CharacterHistoryAdapter
 import org.shadowrunrussia2020.android.common.models.HistoryRecord
 import org.shadowrunrussia2020.android.common.models.Position
+import org.shadowrunrussia2020.android.view.universal_list.GenericListItem
+import org.shadowrunrussia2020.android.view.universal_list.UniversalAdapter
 
 class AllPositionsFragment : Fragment() {
     private val mModel by lazy {
         ViewModelProviders.of(activity!!).get(PositionsViewModel::class.java)
     }
+    private val universalAdapter by lazy { UniversalAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,21 +32,27 @@ class AllPositionsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        availableSpellsView.setHasFixedSize(true)
-        availableSpellsView.layoutManager = LinearLayoutManager(activity!!)
-        val adapter = CharacterHistoryAdapter({})
         mModel.positions().observe(this,
-            Observer { data: List<Position>? ->
-                if (data != null) adapter.setData(data.map {
-                    HistoryRecord(
-                        "",
-                        it.date.time,
-                        it.username,
-                        it.location,
-                        ""
-                    )
-                })
+            Observer { positions: List<Position>? ->
+                if (positions != null) {
+                    universalAdapter.clear()
+
+                    universalAdapter.appendList(
+                        positions.map {
+                            GenericListItem(HistoryRecord(
+                                "",
+                                it.date.time,
+                                it.username,
+                                it.location,
+                                ""
+                            ))
+                        })
+
+                    universalAdapter.apply()
+                }
             })
-        availableSpellsView.adapter = adapter
+
+        availableSpellsView.adapter = universalAdapter
+        availableSpellsView.layoutManager = LinearLayoutManager(requireContext())
     }
 }
