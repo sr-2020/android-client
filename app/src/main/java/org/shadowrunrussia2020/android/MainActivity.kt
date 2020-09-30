@@ -135,22 +135,21 @@ class MainActivity : AppCompatActivity(), IMainActivityDi {
 
         characterViewModel.getCharacter().observe(this,
             Observer { data: Character? ->
-                if (data != null && data.healthState != HealthState.healthy &&
+                if (data == null) return@Observer
+                if (data.healthState != HealthState.healthy &&
                     navController.currentDestination?.id != R.id.woundedFragment
                 ) {
                     navController.navigate(MainNavGraphDirections.actionGlobalWounded())
                 }
 
-                if (data != null) {
-                    val header = findViewById<NavigationView>(R.id.nav_view).getHeaderView(0);
-                    header.findViewById<TextView>(R.id.headerTitle).text = "Персонаж #${data.modelId}"
-                    header.findViewById<TextView>(R.id.headerSubtitle).text = ""
+                val header = findViewById<NavigationView>(R.id.nav_view).getHeaderView(0);
+                header.findViewById<TextView>(R.id.headerTitle).text = "Персонаж #${data.modelId}"
+                header.findViewById<TextView>(R.id.headerSubtitle).text = ""
 
-                    drawer_layout.nav_view.menu.findItem(R.id.action_global_billing).isVisible = data.currentBody != BodyType.drone
-                    drawer_layout.nav_view.menu.findItem(R.id.action_global_spellbook).isVisible = data.currentBody != BodyType.drone
-                    drawer_layout.nav_view.menu.findItem(R.id.action_global_implants).isVisible = data.currentBody != BodyType.drone
-                    drawer_layout.nav_view.menu.findItem(R.id.action_global_autodoc).isVisible = data.currentBody != BodyType.drone
-                }
+                drawer_layout.nav_view.menu.findItem(R.id.action_global_billing).isVisible = data.currentBody != BodyType.drone
+                drawer_layout.nav_view.menu.findItem(R.id.action_global_spellbook).isVisible = data.currentBody != BodyType.drone
+                drawer_layout.nav_view.menu.findItem(R.id.action_global_implants).isVisible = data.currentBody != BodyType.drone
+                drawer_layout.nav_view.menu.findItem(R.id.action_global_autodoc).isVisible = data.currentBody != BodyType.drone
             })
 
         positionsViewModel.positions().observe(this,
