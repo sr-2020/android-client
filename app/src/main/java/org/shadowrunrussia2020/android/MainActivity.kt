@@ -136,10 +136,15 @@ class MainActivity : AppCompatActivity(), IMainActivityDi {
         characterViewModel.getCharacter().observe(this,
             Observer { data: Character? ->
                 if (data == null) return@Observer
-                if (data.healthState != HealthState.healthy &&
-                    navController.currentDestination?.id != R.id.woundedFragment
-                ) {
-                    navController.navigate(MainNavGraphDirections.actionGlobalWounded())
+                if (data.healthState == HealthState.healthy) {
+                    if (navController.currentDestination?.id == R.id.woundedFragment) {
+                        navController.navigate(MainNavGraphDirections.actionGlobalCharacter())
+                    }
+                } else {
+                    if (navController.currentDestination?.id != R.id.woundedFragment) {
+                        navController.navigate(MainNavGraphDirections.actionGlobalWounded())
+                    }
+                }
                 }
 
                 val header = findViewById<NavigationView>(R.id.nav_view).getHeaderView(0);
