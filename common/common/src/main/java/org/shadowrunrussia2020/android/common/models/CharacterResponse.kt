@@ -143,6 +143,7 @@ data class Character(
     val resonance: Int,
     val matrixHp: Int,
     val maxTimeInVr: Int,
+    val paused: Boolean,
     val spells: List<Spell>,
     val activeAbilities: List<ActiveAbility>,
     val passiveAbilities: List<PassiveAbility>,

@@ -145,16 +145,32 @@ class MainActivity : AppCompatActivity(), IMainActivityDi {
                         navController.navigate(MainNavGraphDirections.actionGlobalWounded())
                     }
                 }
+
+                val passiveDestinations = hashSetOf(
+                    R.id.charterMainFragment,
+                    R.id.implantsFragment,
+                    R.id.passiveAbilitiesFragment,
+                    R.id.historyFragment,
+                    R.id.timersFragment,
+                    R.id.allPositionsFragment
+                )
+
+                if (data.paused && !passiveDestinations.contains(navController.currentDestination?.id)) {
+                    navController.navigate(MainNavGraphDirections.actionGlobalCharacter())
                 }
 
                 val header = findViewById<NavigationView>(R.id.nav_view).getHeaderView(0);
                 header.findViewById<TextView>(R.id.headerTitle).text = "Персонаж #${data.modelId}"
                 header.findViewById<TextView>(R.id.headerSubtitle).text = ""
 
-                drawer_layout.nav_view.menu.findItem(R.id.action_global_billing).isVisible = data.currentBody != BodyType.drone
-                drawer_layout.nav_view.menu.findItem(R.id.action_global_spellbook).isVisible = data.currentBody != BodyType.drone
+                drawer_layout.nav_view.menu.findItem(R.id.action_global_billing).isVisible = data.currentBody != BodyType.drone && !data.paused
+                drawer_layout.nav_view.menu.findItem(R.id.action_global_spellbook).isVisible = data.currentBody != BodyType.drone && !data.paused
+                drawer_layout.nav_view.menu.findItem(R.id.action_global_active_abilities).isVisible = !data.paused
                 drawer_layout.nav_view.menu.findItem(R.id.action_global_implants).isVisible = data.currentBody != BodyType.drone
-                drawer_layout.nav_view.menu.findItem(R.id.action_global_autodoc).isVisible = data.currentBody != BodyType.drone
+                drawer_layout.nav_view.menu.findItem(R.id.action_global_autodoc).isVisible = data.currentBody != BodyType.drone && !data.paused
+
+                toolbar.menu.findItem(R.id.action_wound)?.isVisible = !data.paused
+                toolbar.menu.findItem(R.id.action_global_scan_qr)?.isVisible = !data.paused
             })
 
         positionsViewModel.positions().observe(this,
