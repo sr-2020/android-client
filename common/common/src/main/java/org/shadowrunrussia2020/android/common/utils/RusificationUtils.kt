@@ -1,9 +1,6 @@
 package org.shadowrunrussia2020.android.common.utils
 
-import org.shadowrunrussia2020.android.common.models.HealthState
-import org.shadowrunrussia2020.android.common.models.ImplantGrade
-import org.shadowrunrussia2020.android.common.models.ImplantSlot
-import org.shadowrunrussia2020.android.common.models.QrType
+import org.shadowrunrussia2020.android.common.models.*
 
 fun russianSlotName(slot: ImplantSlot): String {
     return when (slot) {
@@ -67,5 +64,17 @@ fun russianQrType(type: QrType): String {
         QrType.foundation_node -> "Нода основания"
         QrType.reanimate_capsule -> "Воскрешательная капсула"
         QrType.ai_symbol -> "Символ ИИ"
+        QrType.focus -> "Магический фокус"
+    }
+}
+
+fun russianSpellSphere(sphere: SpellSphere): String {
+    return when (sphere) {
+        SpellSphere.healing -> "Лечение"
+        SpellSphere.fighting -> "Боевая"
+        SpellSphere.protection -> "Защита"
+        SpellSphere.astral -> "Анализ астрала"
+        SpellSphere.aura -> "Анализ ауры"
+        SpellSphere.stats -> "Влияние на характеристики"
     }
 }

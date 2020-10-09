@@ -1,5 +1,6 @@
 package org.shadowrunrussia2020.android.magic
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,13 +9,18 @@ import android.widget.SeekBar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import kotlinx.android.synthetic.main.fragment_spell_details.*
 import org.shadowrunrussia2020.android.R
 import org.shadowrunrussia2020.android.character.CharacterViewModel
 import org.shadowrunrussia2020.android.common.models.Character
+import org.shadowrunrussia2020.android.common.models.QrType
 import org.shadowrunrussia2020.android.common.models.Spell
+import org.shadowrunrussia2020.android.common.utils.russianQrType
+import org.shadowrunrussia2020.android.common.utils.russianSpellSphere
+import org.shadowrunrussia2020.android.common.utils.showErrorMessage
+import org.shadowrunrussia2020.android.model.qr.maybeQrScanned
+import org.shadowrunrussia2020.android.model.qr.startQrScan
 
 class SpellDetailsFragment : Fragment() {
     private val args: SpellDetailsFragmentArgs by navArgs()
@@ -40,13 +46,12 @@ class SpellDetailsFragment : Fragment() {
 
         textAbilityName.text = spell.humanReadableName
         textAbilityDescription.text = spell.description
+        textAbilitySphere.text = russianSpellSphere(spell.sphere)
 
         updateEnableness(true)
 
-        castSpell.setOnClickListener {
-            findNavController().navigate(
-                SpellDetailsFragmentDirections.actionStartCast(spell, mModel.power)
-            )
+        addFocus.setOnClickListener {
+            startQrScan(this, "Указание фокуса.")
         }
 
         seekBarSpellPower.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
@@ -62,7 +67,7 @@ class SpellDetailsFragment : Fragment() {
         mCharacterModel.getCharacter()
             .observe(this, Observer { data: Character? ->
                 if (data != null) {
-                    seekBarSpellPower.max = data.magic + data.magicStats.maxPowerBonus
+                    seekBarSpellPower.max = data.magic + data.magicStats.maxPowerBonus + mModel.focusBonus
                     textCurrentMagic.text = "Текущее значение магии: ${data.magic.toString()}"
                 }
             })
@@ -70,5 +75,36 @@ class SpellDetailsFragment : Fragment() {
 
     private fun updateEnableness(enable: Boolean) {
         castSpell.isEnabled = enable
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        maybeQrScanned(requireActivity(), requestCode, resultCode, data, { fullQrData ->
+            if (fullQrData.type != QrType.focus) {
+                showErrorMessage(requireContext(), "Неожиданный QR-код: ${russianQrType(fullQrData.type)}. Подходящие: Фокус.");
+                return@maybeQrScanned
+            }
+
+            val sphere = fullQrData.data.sphere
+            val bonus = fullQrData.data.amount
+
+            if (sphere == null || bonus == null) {
+                showErrorMessage(requireContext(), "Некорректный фокус");
+                return@maybeQrScanned
+            }
+
+            if (fullQrData.data.sphere != spell.sphere) {
+                showErrorMessage(requireContext(), "Этот фокус не подходит к данному заклинанию");
+                return@maybeQrScanned
+            }
+
+            mModel.focusBonus = bonus
+            val character = mCharacterModel.getCharacter().value
+            if (character != null) {
+                seekBarSpellPower.max =
+                    character.magic + character.magicStats.maxPowerBonus + mModel.focusBonus
+            }
+
+            addFocus.text = "Фокус (${bonus})"
+        })
     }
 }

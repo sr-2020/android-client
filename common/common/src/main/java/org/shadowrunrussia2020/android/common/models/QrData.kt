@@ -35,6 +35,7 @@ enum class QrType {
     foundation_node,
     reanimate_capsule,
     ai_symbol,
+    focus
 }
 
 @Parcelize data class SimpleQrData(
@@ -43,12 +44,18 @@ enum class QrType {
     val validUntil: Int,
     val payload: String): Parcelable
 
+@Parcelize data class InternalQrData(
+    val sphere: SpellSphere? = null,
+    val amount: Int? = null
+): Parcelable
+
 @Parcelize
 data class FullQrData(
     val type: QrType,
     val name: String,
     val description: String,
     val usesLeft: Int,
-    val modelId: String): Parcelable
+    val modelId: String,
+    val data: InternalQrData = InternalQrData()): Parcelable
 
 data class QrResponse(val workModel: FullQrData)

@@ -7,12 +7,15 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
 
+enum class SpellSphere { healing, fighting, protection, astral, aura, stats }
+
 @Parcelize
 data class Spell(
     val id: String,
     val humanReadableName: String,
     val description: String,
-    val hasTarget: Boolean
+    val hasTarget: Boolean,
+    val sphere: SpellSphere
 ) : Parcelable
 
 enum class TargetType { show, scan }
