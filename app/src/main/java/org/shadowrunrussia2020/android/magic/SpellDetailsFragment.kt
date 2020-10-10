@@ -9,6 +9,7 @@ import android.widget.SeekBar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import kotlinx.android.synthetic.main.fragment_spell_details.*
 import org.shadowrunrussia2020.android.R
@@ -49,6 +50,12 @@ class SpellDetailsFragment : Fragment() {
         textAbilitySphere.text = russianSpellSphere(spell.sphere)
 
         updateEnableness(true)
+
+        castSpell.setOnClickListener {
+            findNavController().navigate(
+                SpellDetailsFragmentDirections.actionStartCast(spell, mModel.power)
+            )
+        }
 
         addFocus.setOnClickListener {
             startQrScan(this, "Указание фокуса.")
