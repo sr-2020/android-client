@@ -31,7 +31,7 @@ class SpellDetailsFragment : Fragment() {
     }
 
     private val mModel by lazy {
-        ViewModelProviders.of(requireActivity()).get(SpellDetailsViewModel::class.java)
+        ViewModelProviders.of(this).get(SpellDetailsViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -74,9 +74,10 @@ class SpellDetailsFragment : Fragment() {
         mCharacterModel.getCharacter()
             .observe(this, Observer { data: Character? ->
                 if (data != null) {
-                    seekBarSpellPower.max = data.magic + data.magicStats.maxPowerBonus + mModel.focusBonus
+                    mModel.maxPower = data.magic + data.magicStats.maxPowerBonus
                     textCurrentMagic.text = "Текущее значение магии: ${data.magic.toString()}"
                 }
+                seekBarSpellPower.max = mModel.maxPower + mModel.focusBonus
             })
     }
 
@@ -105,12 +106,7 @@ class SpellDetailsFragment : Fragment() {
             }
 
             mModel.focusBonus = bonus
-            val character = mCharacterModel.getCharacter().value
-            if (character != null) {
-                seekBarSpellPower.max =
-                    character.magic + character.magicStats.maxPowerBonus + mModel.focusBonus
-            }
-
+            textCurrentMagic.text = "Текущее значение магии: ${mModel.maxPower + mModel.focusBonus}"
             addFocus.text = "Фокус (${bonus})"
         })
     }

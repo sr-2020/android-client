@@ -5,5 +5,6 @@ import androidx.lifecycle.AndroidViewModel
 
 class SpellDetailsViewModel(application: Application) : AndroidViewModel(application) {
     var power = 1
+    var maxPower = 0
     var focusBonus = 0
 }
