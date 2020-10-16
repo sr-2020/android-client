@@ -129,6 +129,12 @@ data class MagicStats(
     val maxPowerBonus: Int
 )
 
+data class Karma(
+    val available: Float,
+    val spent: Float,
+    val cycleLimit: Float
+)
+
 @Entity
 data class Character(
     @PrimaryKey val modelId: String,
@@ -158,7 +164,9 @@ data class Character(
     @Embedded
     val ethic: Ethic,
     @Embedded
-    val magicStats: MagicStats
+    val magicStats: MagicStats,
+    @Embedded
+    val karma: Karma
 )
 
 data class CharacterResponse(val workModel: Character, val tableResponse: List<SpellTrace>?)

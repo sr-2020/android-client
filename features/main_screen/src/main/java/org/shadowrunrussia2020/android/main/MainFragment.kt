@@ -35,6 +35,8 @@ class MainFragment : Fragment() {
                 fullTextEssence.text = "Эссенс: %s✡".format(character.essence / 100)
                 fullTextEssence.visibility = if (showEssence) View.VISIBLE else View.INVISIBLE
 
+                fullTextKarma.text = "Кармы доступно: %s".format(character.karma.available)
+
                 val barcodeEncoder = BarcodeEncoder()
                 val bitmap = barcodeEncoder.encodeBitmap(encode(character.qrData), BarcodeFormat.QR_CODE, 400, 400)
                 qrDataView.setImageBitmap(bitmap)

@@ -36,7 +36,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textColor="#00f"
-                app:layout_constraintBottom_toTopOf="@+id/fullTextPover"
+                app:layout_constraintBottom_toTopOf="@+id/fullTextKarma"
                 app:layout_constraintEnd_toStartOf="@+id/qrDataView"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
@@ -44,7 +44,7 @@
                 tools:text="Эссенс: 15✡" />
 
             <TextView
-                android:id="@+id/fullTextPover"
+                android:id="@+id/fullTextKarma"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textColor="#000"
@@ -52,7 +52,8 @@
                 app:layout_constraintEnd_toStartOf="@+id/qrDataView"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fullTextEssence" />
+                app:layout_constraintTop_toBottomOf="@+id/fullTextEssence"
+                tools:text="Карма: 10" />
 
 
             <ImageView
