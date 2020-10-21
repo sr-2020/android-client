@@ -11,4 +11,5 @@
     <item name="rent_item" type="id"/>
     <item name="billing_history_item" type="id"/>
     <item name="generic_item" type="id"/>
+    <item name="buyable_feature_item" type="id"/>
 </resources>

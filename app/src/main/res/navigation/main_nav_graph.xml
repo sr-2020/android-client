@@ -155,6 +155,17 @@
                 android:name="records"
                 app:argType="org.shadowrunrussia2020.android.common.models.HistoryRecord[]" />
     </fragment>
+
+    <fragment
+        android:id="@+id/buyForKarmaFragment"
+        android:name="org.shadowrunrussia2020.android.abilities.BuyForKarmaFragment"
+        android:label="Карма" >
+        <!-- <action
+            android:id="@+id/action_buy_for_karma"
+            app:destination="@id/passiveAbilityDetailsFragment" /> -->
+    </fragment>
+    <action android:id="@+id/action_global_buy_for_karma" app:destination="@id/buyForKarmaFragment" />
+
     <fragment
             android:id="@+id/allPositionsFragment"
             android:name="org.shadowrunrussia2020.android.positioning.AllPositionsFragment"

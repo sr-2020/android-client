@@ -58,6 +58,7 @@
     <string name="spellBoock">Книга заклинаний</string>
     <string name="spells">Активируемые способности</string>
     <string name="skills">Пассивные способности</string>
+    <string name="buy_for_karma">Карма</string>
     <string name="ethics">Этика</string>
     <string name="history">История</string>
     <string name="timers">Таймеры</string>
