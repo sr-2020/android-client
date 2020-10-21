@@ -14,6 +14,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.shadowrunrussia2020.android.R
 import org.shadowrunrussia2020.android.common.di.ApplicationSingletonScope
+import org.shadowrunrussia2020.android.common.utils.showErrorMessage
 import org.shadowrunrussia2020.android.model.charter.CharacterWebService
 import org.shadowrunrussia2020.android.view.universal_list.BuyableFeatureItem
 import org.shadowrunrussia2020.android.view.universal_list.UniversalAdapter
@@ -34,16 +35,22 @@ class BuyForKarmaFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         CoroutineScope(Dispatchers.IO).launch {
-            val features = service.availableFeatures().await().body()!!
-            withContext(Dispatchers.Main) {
-                universalAdapter.clear()
+            try {
+                val features = service.availableFeatures().await().body()!!
+                withContext(Dispatchers.Main) {
+                    universalAdapter.clear()
 
-                universalAdapter.appendList(
-                    features.map {
-                        BuyableFeatureItem(it)
-                    })
+                    universalAdapter.appendList(
+                        features.map {
+                            BuyableFeatureItem(it)
+                        })
 
-                universalAdapter.apply()
+                    universalAdapter.apply()
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    showErrorMessage(requireContext(), "Ошибка сервера при получении списка доступных способностей.")
+                }
             }
         }
 
