@@ -22,6 +22,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.get
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.onNavDestinationSelected
@@ -156,7 +157,7 @@ class MainActivity : AppCompatActivity(), IMainActivityDi {
                     R.id.allPositionsFragment
                 )
 
-                if (data.paused && !passiveDestinations.contains(navController.currentDestination?.id)) {
+                if (data.paused && !passiveDestinations.contains(navController.graph.get(navController.currentDestination!!.id).id)) {
                     navController.navigate(MainNavGraphDirections.actionGlobalCharacter())
                 }
 

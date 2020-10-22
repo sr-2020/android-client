@@ -34,6 +34,12 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         return postEvent("useAbility", data)
     }
 
+    suspend fun buyFeatureForKarma(featureId: String): CharacterResponse? {
+        val data: HashMap<String, Any> = hashMapOf()
+        data["id"] = featureId
+        return postEvent("buyFeatureForKarma", data)
+    }
+
     suspend fun postEvent(eventType: String, data: HashMap<String, Any> = hashMapOf()): CharacterResponse? {
         return mRepository.sendEvent(Event(eventType, data))
     }

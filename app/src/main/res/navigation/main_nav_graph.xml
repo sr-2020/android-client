@@ -160,11 +160,19 @@
         android:id="@+id/buyForKarmaFragment"
         android:name="org.shadowrunrussia2020.android.abilities.BuyForKarmaFragment"
         android:label="Карма" >
-        <!-- <action
+        <action
             android:id="@+id/action_buy_for_karma"
-            app:destination="@id/passiveAbilityDetailsFragment" /> -->
+            app:destination="@id/buyForKarmaDetailsFragment" />
     </fragment>
     <action android:id="@+id/action_global_buy_for_karma" app:destination="@id/buyForKarmaFragment" />
+    <fragment
+        android:id="@+id/buyForKarmaDetailsFragment"
+        android:name="org.shadowrunrussia2020.android.abilities.BuyForKarmaDetailsFragment"
+        android:label="Подробности" >
+        <argument
+            android:name="feature"
+            app:argType="org.shadowrunrussia2020.android.common.models.Feature" />
+    </fragment>
 
     <fragment
             android:id="@+id/allPositionsFragment"

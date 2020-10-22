@@ -9,7 +9,8 @@ import kotlinx.android.synthetic.main.buyable_feature_list_item.view.*
 import org.shadowrunrussia2020.android.common.models.Feature
 
 class BuyableFeatureItem(
-    private val feature: Feature
+    private val feature: Feature,
+    private val onClick: (() -> Unit)? = null
 ) : UniversalViewData() {
     override val groupID = R.id.buyable_feature_item
     override val isHeader = false
@@ -17,7 +18,7 @@ class BuyableFeatureItem(
         BuyableFeatureViewHolder(parent)
 
     override fun bindHolder(holder: RecyclerView.ViewHolder) =
-        (holder as BuyableFeatureViewHolder).bindView(feature, hide)
+        (holder as BuyableFeatureViewHolder).bindView(feature, onClick, hide)
 }
 
 private class BuyableFeatureViewHolder private constructor(override val containerView: View) :
@@ -27,9 +28,12 @@ private class BuyableFeatureViewHolder private constructor(override val containe
         LayoutInflater.from(parent.context).inflate(R.layout.buyable_feature_list_item, parent, false)
     )
 
-    fun bindView(feature: Feature, hide: Boolean) {
+    fun bindView(feature: Feature,  onClick: (() -> Unit)? = null, hide: Boolean) {
         containerView.mainText.text = feature.humanReadableName
         containerView.subText.text = feature.description
         containerView.price.text = feature.karmaCost.toString()
+        containerView.setOnClickListener {
+            onClick?.invoke()
+        }
     }
 }

@@ -171,10 +171,11 @@ data class Character(
 
 data class CharacterResponse(val workModel: Character, val tableResponse: List<SpellTrace>?)
 
+@Parcelize
 data class Feature (
     val id: String,
     val humanReadableName: String,
     val description: String,
     val prerequisites: List<String>,
     val karmaCost: Float
-)
+): Parcelable
