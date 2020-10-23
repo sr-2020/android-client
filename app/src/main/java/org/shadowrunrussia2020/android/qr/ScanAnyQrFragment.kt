@@ -65,6 +65,7 @@ class ScanAnyQrFragment : Fragment() {
                 }
                 QrType.pill, QrType.food -> showConsumableQrInfo(qrData)
                 QrType.ability -> consume(qrData.modelId)
+                QrType.feature_to_buy -> showBuyableFeatureInfo(qrData)
                 QrType.WOUNDED_BODY -> {
                     findNavController().navigate(
                         ScanAnyQrFragmentDirections.actionInteractWithBody(qrData.modelId)
@@ -128,6 +129,18 @@ class ScanAnyQrFragment : Fragment() {
             .create().show()
     }
 
+    private fun showBuyableFeatureInfo(qr: FullQrData) {
+        AlertDialog.Builder(requireActivity())
+            .setTitle(qr.name)
+            .setMessage(qr.description)
+            .setNegativeButton(R.string.cancel) { _, _ ->
+                findNavController().popBackStack()
+            }
+            .setPositiveButton(getString(R.string.learn)) { _, _ ->
+                CoroutineScope(Dispatchers.Main).launch { consume(qr.modelId) }
+            }
+            .create().show()
+    }
 
     private suspend fun consume(qrId: String) {
         val m = ViewModelProviders.of(activity!!).get(CharacterViewModel::class.java)

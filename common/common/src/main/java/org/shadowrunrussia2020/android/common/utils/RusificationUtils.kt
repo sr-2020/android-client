@@ -49,6 +49,7 @@ fun russianQrType(type: QrType): String {
         QrType.implant -> "Имплант"
         QrType.food -> "Еда"
         QrType.ability -> "Способность"
+        QrType.feature_to_buy -> "Способность для покупки"
         QrType.artifact -> "Артефакт"
         QrType.event -> "Событие"
         QrType.reagent -> "Реагент"

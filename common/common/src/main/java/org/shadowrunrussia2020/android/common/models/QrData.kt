@@ -20,6 +20,7 @@ enum class QrType {
     implant,
     food,
     ability,
+    feature_to_buy,
     artifact,
     event,
     reagent,
