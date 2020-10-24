@@ -13,7 +13,6 @@ import kotlinx.android.synthetic.main.fragment_interact_with_body.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.shadowrunrussia2020.android.character.CharacterViewModel
 import org.shadowrunrussia2020.android.common.models.FullQrData
 import org.shadowrunrussia2020.android.common.models.QrType
@@ -41,7 +40,6 @@ class InteractWithBodyFragment : Fragment() {
         textViewTitle.text = "Это тело #${args.targetId}"
 
         buttonMedication.setOnClickListener { chooseMedication() }
-        buttonKill.setOnClickListener { finishToClinicalDeath() }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -71,21 +69,6 @@ class InteractWithBodyFragment : Fragment() {
                 )
             } catch (e: Exception) {
                 showErrorMessage(requireContext(), e.message ?: "Неожиданная ошибка сервера")
-            }
-        }
-    }
-
-    private fun finishToClinicalDeath() {
-        CoroutineScope(Dispatchers.Main).launch {
-            try {
-                withContext(Dispatchers.IO) {
-                    mModel.postEvent(
-                        "clinicalDeathOnTarget",
-                        hashMapOf("targetCharacterId" to args.targetId)
-                    )
-                }
-            } catch (e: Exception) {
-                showErrorMessage(requireContext(), "Ошибка. ${e.message}")
             }
         }
     }
