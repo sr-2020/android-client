@@ -64,7 +64,7 @@ class ScanAnyQrFragment : Fragment() {
                     )
                 }
                 QrType.pill, QrType.food -> showConsumableQrInfo(qrData)
-                QrType.ability -> consume(qrData.modelId)
+                QrType.ability, QrType.event -> consume(qrData.modelId)
                 QrType.feature_to_buy -> showBuyableFeatureInfo(qrData)
                 QrType.WOUNDED_BODY -> {
                     findNavController().navigate(
