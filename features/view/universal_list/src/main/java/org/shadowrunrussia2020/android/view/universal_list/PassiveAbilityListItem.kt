@@ -52,6 +52,8 @@ private class PassiveAbilityViewHolder private constructor(override val containe
                 if (validUntil != null) {
                     containerView.time.text =
                         "Закончится " + PrettyTime(Locale("ru")).format(Date(validUntil))
+                } else {
+                    containerView.time.text = ""
                 }
             }
     }
