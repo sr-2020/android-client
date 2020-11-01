@@ -50,7 +50,7 @@ class WoundedFragment : Fragment() {
         buttonDebugSelfRevive.setOnClickListener {
             CoroutineScope(Dispatchers.Main).launch {
                 try {
-                    mModel.postEvent("revive")
+                    mModel.postEvent("debugReviveAbsolute")
                  } catch (e: Exception) {
                     showErrorMessage(requireActivity(), "${e.message}")
                 }
