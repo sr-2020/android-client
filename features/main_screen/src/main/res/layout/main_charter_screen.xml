@@ -41,7 +41,7 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/fullTextHP"
-                tools:text="Эссенс: 15✡" />
+                tools:text="Эссенс: 15✽" />
 
             <TextView
                 android:id="@+id/fullTextKarma"
@@ -71,14 +71,14 @@
                 android:layout_height="60dp">
 
             <TextView
-                    android:id="@+id/textEssence"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:textColor="#00f"
-                    android:textSize="25sp"
-                    tools:text="15✡" />
+                android:id="@+id/textEssence"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:textColor="#00f"
+                android:textSize="25sp"
+                tools:text="15✽" />
 
 
             <View

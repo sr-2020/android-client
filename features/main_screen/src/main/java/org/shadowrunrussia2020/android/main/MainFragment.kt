@@ -28,11 +28,11 @@ class MainFragment : Fragment() {
                 val showEssence = character.currentBody != BodyType.drone
 
                 textHp.text = "%s♥".format(character.maxHp)
-                textEssence.text = "%s✡".format(character.essence / 100)
+                textEssence.text = "%s✽".format(character.essence / 100)
                 textEssence.visibility = if (showEssence) View.VISIBLE else View.INVISIBLE
 
                 fullTextHP.text = "Максимальные хиты: %s♡".format(character.maxHp)
-                fullTextEssence.text = "Эссенс: %s✡".format(character.essence / 100)
+                fullTextEssence.text = "Эссенс: %s✽".format(character.essence / 100)
                 fullTextEssence.visibility = if (showEssence) View.VISIBLE else View.INVISIBLE
 
                 fullTextKarma.text = "Кармы доступно: %s".format(character.karma.available)
