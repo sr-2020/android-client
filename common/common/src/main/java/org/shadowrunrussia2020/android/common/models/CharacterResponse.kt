@@ -150,6 +150,7 @@ data class Character(
     val mentalQrId: Int,
     val magic: Int,
     val resonance: Int,
+    val strength: Int,
     val matrixHp: Int,
     val maxTimeInVr: Int,
     val paused: Boolean,

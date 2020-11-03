@@ -37,6 +37,13 @@ class MainFragment : Fragment() {
 
                 fullTextKarma.text = "Кармы доступно: %s".format(character.karma.available)
 
+                fullTextBody.text = "Тело: ${character.body}"
+                fullTextIntelligence.text = "Интеллект: ${character.intelligence}"
+                fullTextCharisma.text = "Харизма: ${character.charisma}"
+                fullTextResonance.text = "Резонанс: ${character.resonance}"
+                fullTextStrength.text = "Сила: ${character.strength}"
+                fullTextMagic.text = "Магия: ${character.magic}"
+
                 val barcodeEncoder = BarcodeEncoder()
                 val bitmap = barcodeEncoder.encodeBitmap(encode(character.qrData), BarcodeFormat.QR_CODE, 400, 400)
                 qrDataView.setImageBitmap(bitmap)

@@ -48,13 +48,85 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textColor="#000"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/fullTextBody"
                 app:layout_constraintEnd_toStartOf="@+id/qrDataView"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/fullTextEssence"
                 tools:text="Карма: 10" />
 
+
+            <TextView
+                android:id="@+id/fullTextBody"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                app:layout_constraintBottom_toTopOf="@+id/fullTextIntelligence"
+                app:layout_constraintEnd_toStartOf="@+id/qrDataView"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fullTextKarma"
+                tools:text="Тело: 1" />
+
+            <TextView
+                android:id="@+id/fullTextIntelligence"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                app:layout_constraintBottom_toTopOf="@+id/fullTextCharisma"
+                app:layout_constraintEnd_toStartOf="@+id/qrDataView"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fullTextBody"
+                tools:text="Интеллект: 1" />
+
+            <TextView
+                android:id="@+id/fullTextCharisma"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                app:layout_constraintBottom_toTopOf="@+id/fullTextResonance"
+                app:layout_constraintEnd_toStartOf="@+id/qrDataView"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fullTextIntelligence"
+                tools:text="Харизма: 1" />
+
+            <TextView
+                android:id="@+id/fullTextResonance"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                app:layout_constraintBottom_toTopOf="@+id/fullTextStrength"
+                app:layout_constraintEnd_toStartOf="@+id/qrDataView"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fullTextCharisma"
+                tools:text="Резонанс: 1" />
+
+            <TextView
+                android:id="@+id/fullTextStrength"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                app:layout_constraintBottom_toTopOf="@+id/fullTextMagic"
+                app:layout_constraintEnd_toStartOf="@+id/qrDataView"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fullTextResonance"
+                tools:text="Сила: 1" />
+
+            <TextView
+                android:id="@+id/fullTextMagic"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/qrDataView"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fullTextStrength"
+                tools:text="Магия: 1" />
 
             <ImageView
                     android:id="@+id/qrDataView"
