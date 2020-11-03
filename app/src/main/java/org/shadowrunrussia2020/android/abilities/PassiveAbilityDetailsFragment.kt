@@ -29,7 +29,7 @@ class PassiveAbilityDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        textAbilityName.text = ability.name
+        textAbilityName.text = ability.humanReadableName
         textAbilityDescription.text = ability.description
         val validUntil = ability.validUntil
         if (validUntil != null) {

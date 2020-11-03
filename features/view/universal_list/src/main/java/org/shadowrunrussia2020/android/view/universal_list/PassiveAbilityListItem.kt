@@ -36,7 +36,7 @@ private class PassiveAbilityViewHolder private constructor(override val containe
     fun bindView(passiveAbility: PassiveAbility, onClick: (() -> Unit)?, hide: Boolean) {
         disposer.clear()
 
-        containerView.mainText.text = passiveAbility.name
+        containerView.mainText.text = passiveAbility.humanReadableName
         containerView.subText.text = passiveAbility.description
 
 
