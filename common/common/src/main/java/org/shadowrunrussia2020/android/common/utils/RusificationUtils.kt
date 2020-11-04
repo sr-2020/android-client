@@ -62,6 +62,7 @@ fun russianQrType(type: QrType): String {
         QrType.sprite -> "Спрайт"
         QrType.cyberdeck -> "Кибердека"
         QrType.cyberdeck_mod -> "Мод для кибердеки"
+        QrType.software -> "Софт"
         QrType.foundation_node -> "Нода основания"
         QrType.reanimate_capsule -> "Воскрешательная капсула"
         QrType.ai_symbol -> "Символ ИИ"
