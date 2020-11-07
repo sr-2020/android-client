@@ -22,7 +22,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import androidx.navigation.get
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.onNavDestinationSelected
@@ -157,7 +156,7 @@ class MainActivity : AppCompatActivity(), IMainActivityDi {
                     R.id.allPositionsFragment
                 )
 
-                if (data.paused && !passiveDestinations.contains(navController.graph.get(navController.currentDestination!!.id).id)) {
+                if (data.paused && !passiveDestinations.contains(navController.currentDestination!!.id)) {
                     navController.navigate(MainNavGraphDirections.actionGlobalCharacter())
                 }
 
@@ -178,7 +177,7 @@ class MainActivity : AppCompatActivity(), IMainActivityDi {
         positionsViewModel.positions().observe(this,
             Observer { data: List<Position>? ->
                 val myPosition = data?.find { it.id == ApplicationSingletonScope.DependencyProvider.dependency.session.getCharacterId() }
-                if (myPosition != null) {
+                if (myPosition != null && navController.currentDestination!!.id != R.id.buyForKarmaFragment) {
                     toolbar.subtitle = myPosition.location
                 }
             })
