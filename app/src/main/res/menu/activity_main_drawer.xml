@@ -57,10 +57,10 @@
             android:icon="@drawable/menu_manage"
             android:title="@string/timers"/>
 
-        <item
+        <!-- <item
                 android:id="@+id/action_global_positions"
                 android:icon="@drawable/menu_manage"
-                android:title="@string/location"/>
+                android:title="@string/location"/> -->
 
     </group>
 
