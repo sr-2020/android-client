@@ -1,6 +1,7 @@
 package org.shadowrunrussia2020.android.character
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,13 +18,16 @@ import kotlinx.android.synthetic.main.fragment_wounded.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.shadowrunrussia2020.android.LoginActivity
 import org.shadowrunrussia2020.android.MainNavGraphDirections
 import org.shadowrunrussia2020.android.R
+import org.shadowrunrussia2020.android.common.di.ApplicationSingletonScope
 import org.shadowrunrussia2020.android.common.models.Character
 import org.shadowrunrussia2020.android.common.models.HealthState
 import org.shadowrunrussia2020.android.common.utils.showErrorMessage
 import org.shadowrunrussia2020.android.model.qr.encode
 import org.shadowrunrussia2020.android.model.qr.qrData
+import org.shadowrunrussia2020.android.positioning.BeaconsScanner
 
 
 class WoundedFragment : Fragment() {
@@ -55,6 +59,16 @@ class WoundedFragment : Fragment() {
                     showErrorMessage(requireActivity(), "${e.message}")
                 }
             }
+        }
+
+        buttonLogout.setOnClickListener {
+            ApplicationSingletonScope.DependencyProvider.dependency.session.invalidate()
+            // We don't use Android's Navigation Component here because it somehow messes with back stack no matter what
+            // we do (i.e. pressing "back" on login screen tries to go to the main screen).
+            // Current implementation is taken from
+            // https://medium.com/google-developer-experts/using-navigation-architecture-component-in-a-large-banking-app-ac84936a42c2
+            requireActivity().stopService(Intent(activity, BeaconsScanner::class.java))
+            startActivity(Intent(activity, LoginActivity::class.java))
         }
     }
     private fun onCharacterUpdate(character: Character) {
