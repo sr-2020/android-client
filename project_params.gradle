@@ -9,7 +9,7 @@
 project.ext {
 
     minSdkVersion = 21
-    compileSdkVersion = 28
+    compileSdkVersion = 29
     targetSdkVersion = compileSdkVersion
     buildToolsVersion = "29.0.3"
 
