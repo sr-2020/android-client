@@ -323,6 +323,7 @@ class MainActivity : AppCompatActivity(), IMainActivityDi {
 
     override fun exit() {
         ApplicationSingletonScope.DependencyProvider.dependency.session.invalidate()
+        this.stopService(Intent(this, BeaconsScanner::class.java))
         CoroutineScope(Dispatchers.Main).launch {
             withContext(Dispatchers.IO) {
                 ApplicationSingletonScope.ComponentProvider.components.clearAllTables()
