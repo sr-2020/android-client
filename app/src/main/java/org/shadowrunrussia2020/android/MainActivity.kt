@@ -39,7 +39,6 @@ import kotlinx.coroutines.withContext
 import org.shadowrunrussia2020.android.billing.BillingViewModel
 import org.shadowrunrussia2020.android.character.CharacterViewModel
 import org.shadowrunrussia2020.android.common.di.ApplicationSingletonScope
-import org.shadowrunrussia2020.android.common.models.BodyType
 import org.shadowrunrussia2020.android.common.models.Character
 import org.shadowrunrussia2020.android.common.models.HealthState
 import org.shadowrunrussia2020.android.common.models.Position
@@ -137,6 +136,11 @@ class MainActivity : AppCompatActivity(), IMainActivityDi {
         characterViewModel.getCharacter().observe(this,
             Observer { data: Character? ->
                 if (data == null) return@Observer
+
+                val header = findViewById<NavigationView>(R.id.nav_view).getHeaderView(0);
+                header.findViewById<TextView>(R.id.headerTitle).text = "Персонаж #${data.modelId}"
+                header.findViewById<TextView>(R.id.headerSubtitle).text = ""
+
                 if (data.healthState == HealthState.healthy) {
                     if (navController.currentDestination?.id == R.id.woundedFragment) {
                         navController.navigate(MainNavGraphDirections.actionGlobalCharacter())
@@ -147,31 +151,47 @@ class MainActivity : AppCompatActivity(), IMainActivityDi {
                     }
                 }
 
-                val passiveDestinations = hashSetOf(
-                    R.id.charterMainFragment,
-                    R.id.implantsFragment,
-                    R.id.passiveAbilitiesFragment,
-                    R.id.historyFragment,
-                    R.id.timersFragment,
-                    R.id.allPositionsFragment
+                val drawerActionToAvailability = mapOf(
+                    R.id.action_global_billing to data.screens.billing,
+                    R.id.action_global_spellbook to data.screens.spellbook,
+                    R.id.action_global_active_abilities to data.screens.activeAbilities,
+                    R.id.action_global_passive_abilities to data.screens.passiveAbilities,
+                    R.id.action_global_buy_for_karma to data.screens.karma,
+                    R.id.action_global_implants to data.screens.implants,
+                    R.id.action_global_autodoc to data.screens.autodoc,
+                    R.id.action_global_ethics to data.screens.ethics,
+                    R.id.action_global_positions to data.screens.location
                 )
 
-                if (data.paused && !passiveDestinations.contains(navController.currentDestination!!.id)) {
+                val fragmentToAction = mapOf(
+                    R.id.billingFragment to R.id.action_global_billing,
+                    R.id.spellbookFragment to R.id.action_global_spellbook,
+                    R.id.activeAbilitiesFragment to R.id.action_global_active_abilities,
+                    R.id.passiveAbilitiesFragment to R.id.action_global_passive_abilities,
+                    R.id.buyForKarmaFragment to R.id.action_global_buy_for_karma,
+                    R.id.implantsFragment to R.id.action_global_implants,
+                    R.id.autodocFragment to R.id.action_global_autodoc,
+                    R.id.ethicsFragment to R.id.action_global_ethics,
+                    R.id.allPositionsFragment to R.id.action_global_positions
+                )
+
+                val toolbarActionToAvailability = mapOf(
+                    R.id.action_wound to data.screens.wound,
+                    R.id.action_global_scan_qr to data.screens.scanQr
+                )
+
+                val currentDestination = navController.currentDestination!!.id
+                if (fragmentToAction.containsKey(currentDestination) && !drawerActionToAvailability[fragmentToAction.get(currentDestination)]!!) {
                     navController.navigate(MainNavGraphDirections.actionGlobalCharacter())
                 }
 
-                val header = findViewById<NavigationView>(R.id.nav_view).getHeaderView(0);
-                header.findViewById<TextView>(R.id.headerTitle).text = "Персонаж #${data.modelId}"
-                header.findViewById<TextView>(R.id.headerSubtitle).text = ""
+                for (entry in drawerActionToAvailability) {
+                    drawer_layout.nav_view.menu.findItem(entry.key)?.isVisible = entry.value
+                }
 
-                drawer_layout.nav_view.menu.findItem(R.id.action_global_billing).isVisible = data.currentBody != BodyType.drone && !data.paused
-                drawer_layout.nav_view.menu.findItem(R.id.action_global_spellbook).isVisible = data.currentBody != BodyType.drone && !data.paused
-                drawer_layout.nav_view.menu.findItem(R.id.action_global_active_abilities).isVisible = !data.paused
-                drawer_layout.nav_view.menu.findItem(R.id.action_global_implants).isVisible = data.currentBody != BodyType.drone
-                drawer_layout.nav_view.menu.findItem(R.id.action_global_autodoc).isVisible = data.currentBody != BodyType.drone && !data.paused
-
-                toolbar.menu.findItem(R.id.action_wound)?.isVisible = !data.paused
-                toolbar.menu.findItem(R.id.action_global_scan_qr)?.isVisible = !data.paused
+                for (entry in toolbarActionToAvailability) {
+                    toolbar.menu.findItem(entry.key)?.isVisible = entry.value
+                }
             })
 
         positionsViewModel.positions().observe(this,

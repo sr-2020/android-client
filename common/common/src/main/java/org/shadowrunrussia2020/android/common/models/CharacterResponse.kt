@@ -135,6 +135,20 @@ data class Karma(
     val cycleLimit: Float
 )
 
+data class Screens(
+    val billing: Boolean,
+    val spellbook: Boolean,
+    val activeAbilities: Boolean,
+    val passiveAbilities: Boolean,
+    val karma: Boolean,
+    val implants: Boolean,
+    val autodoc: Boolean,
+    val ethics: Boolean,
+    val location: Boolean,
+    val wound: Boolean,
+    val scanQr: Boolean
+)
+
 @Entity
 data class Character(
     @PrimaryKey val modelId: String,
@@ -153,7 +167,6 @@ data class Character(
     val strength: Int,
     val matrixHp: Int,
     val maxTimeInVr: Int,
-    val paused: Boolean,
     val spells: List<Spell>,
     val activeAbilities: List<ActiveAbility>,
     val passiveAbilities: List<PassiveAbility>,
@@ -167,7 +180,9 @@ data class Character(
     @Embedded
     val magicStats: MagicStats,
     @Embedded
-    val karma: Karma
+    val karma: Karma,
+    @Embedded(prefix = "screens")
+    val screens: Screens
 )
 
 data class CharacterResponse(val workModel: Character, val tableResponse: List<SpellTrace>?)
