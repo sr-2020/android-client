@@ -143,6 +143,7 @@ data class Screens(
     val karma: Boolean,
     val implants: Boolean,
     val autodoc: Boolean,
+    val autodocImplantRemoval: Boolean,
     val ethics: Boolean,
     val location: Boolean,
     val wound: Boolean,

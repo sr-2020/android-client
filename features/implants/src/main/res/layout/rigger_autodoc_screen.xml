@@ -79,6 +79,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonHeal" />
 
+    <TextView
+        android:id="@+id/implantsListLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Список имлантов (доступно удаление)"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintBottom_toTopOf="@+id/implantsList"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonInstallImplant" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/implantsList"
         android:layout_width="0dp"
@@ -87,7 +99,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonInstallImplant"
+        app:layout_constraintTop_toBottomOf="@+id/implantsListLabel"
         tools:listitem="@layout/implant_item">
 
     </androidx.recyclerview.widget.RecyclerView>

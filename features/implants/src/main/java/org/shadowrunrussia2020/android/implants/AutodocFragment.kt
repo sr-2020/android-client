@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.rigger_autodoc_screen.*
 import org.shadowrunrussia2020.android.common.models.FullQrData
 import org.shadowrunrussia2020.android.common.models.HealthState
+import org.shadowrunrussia2020.android.common.models.Implant
 import org.shadowrunrussia2020.android.common.models.QrType
 import org.shadowrunrussia2020.android.common.utils.launchAsync
 import org.shadowrunrussia2020.android.common.utils.russianHealthState
@@ -41,6 +42,29 @@ class AutodocFragment : Fragment() {
             startQrScan(this, getString(R.string.scan_qr_patient))
         }
 
+        val implantRemovalLambda = {implant: Implant ->
+            AlertDialog.Builder(requireContext())
+                .setTitle("Удаление импланта")
+                .setMessage("Вы действительно хотите удалить ${implant.name}?")
+                .setPositiveButton(
+                    "ОК"
+                ) { _, _ ->
+                    autodocViewModel.implantToRemove = implant.id
+                    autodocViewModel.state = AutoDocViewModel.State.WAITING_FOR_EMPTY_QR_SCAN
+                    startQrScan(this, getString(R.string.scan_qr_rewritable))
+                }
+                .setNegativeButton("Отмена", null)
+                .show()
+        }
+
+        val implantInfoLambda = { implant: Implant ->
+                AlertDialog.Builder(requireContext())
+                    .setTitle("Имплант ${implant.name}")
+                    .setMessage("${implant.description}. Недостаточно навыков для удаления.")
+                    .setNegativeButton("Ок", null)
+                    .show()
+        }
+
         characterViewModel.character.observe({ this.lifecycle }) { ch ->
             ch?.let { character ->
                 val analyzedBody = character.analyzedBody ?: return@let
@@ -50,24 +74,19 @@ class AutodocFragment : Fragment() {
                     implants
                         .sortedBy { it.slot }
                         .map { ImplantItem(it) {
-                            AlertDialog.Builder(requireContext())
-                                .setTitle("Удаление импланта")
-                                .setMessage("Вы действительно хотите удалить ${it.name}?")
-                                .setPositiveButton(
-                                    "ОК"
-                                ) { _, _ ->
-                                    autodocViewModel.implantToRemove = it.id
-                                    autodocViewModel.state = AutoDocViewModel.State.WAITING_FOR_EMPTY_QR_SCAN
-                                    startQrScan(this, getString(R.string.scan_qr_rewritable))
-                                }
-                                .setNegativeButton("Отмена", null)
-                                .show()
-                        } })
+                            if (character.screens.autodocImplantRemoval) {
+                                implantRemovalLambda(it);
+                            } else {
+                                implantInfoLambda(it);
+                            }
+                        }  })
 
                 universalAdapter.apply()
 
                 textViewEssence.text = "Эссенс: ${analyzedBody.essence / 100}"
                 textViewHealthState.text = russianHealthState(analyzedBody.healthState)
+
+                implantsListLabel.text = if (character.screens.autodocImplantRemoval) "Список имплантов (доступно удаление)" else "Список имплантов"
 
                 buttonRevive.isEnabled = analyzedBody.healthState == HealthState.wounded
             }
