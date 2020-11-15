@@ -24,6 +24,7 @@ import org.ocpsoft.prettytime.PrettyTime
 import org.shadowrunrussia2020.android.R
 import org.shadowrunrussia2020.android.character.CharacterViewModel
 import org.shadowrunrussia2020.android.common.models.ActiveAbility
+import org.shadowrunrussia2020.android.common.models.HistoryRecord
 import org.shadowrunrussia2020.android.common.models.TargetType
 import org.shadowrunrussia2020.android.common.utils.MainThreadSchedulers
 import org.shadowrunrussia2020.android.common.utils.plusAssign
@@ -130,16 +131,7 @@ class ActiveAbilityDetailsFragment : Fragment() {
     private fun useUntargeted() {
         chooseTarget1.isEnabled = false
         CoroutineScope(Dispatchers.Main).launch {
-            try {
-                mModel.useAbility(ability.id)
-                if (ability.target == TargetType.show) {
-                    qrCodeImage.visibility = View.VISIBLE
-                } else {
-                    findNavController().popBackStack()
-                }
-            } catch (e: Exception) {
-                showErrorMessage(requireContext(), "Ошибка. ${e.message}")
-            }
+            useAbilityWithAccumulatedData()
         }
     }
 
@@ -160,12 +152,7 @@ class ActiveAbilityDetailsFragment : Fragment() {
             abilityUseModel.data[currentSignature.field] = fullQrData.modelId
 
             if (abilityUseModel.data.size == totalTargets()) {
-                try {
-                    mModel.useAbility(ability.id, abilityUseModel.data)
-                } catch (e: Exception) {
-                    showErrorMessage(requireContext(), "Ошибка. ${e.message}")
-                }
-                findNavController().popBackStack()
+                useAbilityWithAccumulatedData()
             } else {
                 buttons[currentTargetInd + 1].isEnabled = true
             }
@@ -173,6 +160,34 @@ class ActiveAbilityDetailsFragment : Fragment() {
             val currentTargetInd = abilityUseModel.data.size
             buttons[currentTargetInd].isEnabled = true
         })
+    }
+
+    private suspend fun useAbilityWithAccumulatedData() {
+        try {
+            val response = mModel.useAbility(ability.id, abilityUseModel.data)
+            val tableResponse = response?.tableResponse
+            when {
+                tableResponse != null -> {
+                    findNavController().navigate(
+                        ActiveAbilityDetailsFragmentDirections.actionShowAbilityResult(
+                            tableResponse.map {
+                                HistoryRecord(
+                                    "", it.timestamp, it.spellName, "", ""
+                                )
+                            }.toTypedArray()
+                        )
+                    )
+                }
+                ability.target == TargetType.show -> {
+                    qrCodeImage.visibility = View.VISIBLE
+                }
+                else -> {
+                    findNavController().popBackStack()
+                }
+            }
+        } catch (e: Exception) {
+            showErrorMessage(requireContext(), "Ошибка. ${e.message}")
+        }
     }
 
     private fun totalTargets(): Int {

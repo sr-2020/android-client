@@ -130,6 +130,9 @@
         <argument
                 android:name="ability"
                 app:argType="org.shadowrunrussia2020.android.common.models.ActiveAbility" />
+        <action
+            android:id="@+id/action_show_ability_result"
+            app:destination="@id/genericListFragment" />
     </fragment>
     <fragment
             android:id="@+id/passiveAbilityDetailsFragment"
@@ -148,12 +151,12 @@
                 app:argType="org.shadowrunrussia2020.android.common.models.HistoryRecord" />
     </fragment>
     <fragment
-            android:id="@+id/genericListFragment"
-            android:name="org.shadowrunrussia2020.android.GenericListFragment"
-            android:label="Результат заклинания">
+        android:id="@+id/genericListFragment"
+        android:name="org.shadowrunrussia2020.android.GenericListFragment"
+        android:label="Результат">
         <argument
-                android:name="records"
-                app:argType="org.shadowrunrussia2020.android.common.models.HistoryRecord[]" />
+            android:name="records"
+            app:argType="org.shadowrunrussia2020.android.common.models.HistoryRecord[]" />
     </fragment>
 
     <fragment
