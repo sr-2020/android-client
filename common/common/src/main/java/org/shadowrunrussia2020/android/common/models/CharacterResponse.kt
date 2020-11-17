@@ -35,7 +35,7 @@ data class ActiveAbility(
     val target: TargetType,
     val targetsSignature: List<TargetSignature>,
     val validUntil: Long?,
-    val cooldownMinutes: Int,
+    val cooldownMinutes: Float,
     val cooldownUntil: Long
 ) : Parcelable
 
