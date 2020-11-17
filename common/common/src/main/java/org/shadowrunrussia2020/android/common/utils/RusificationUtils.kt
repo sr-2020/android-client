@@ -57,6 +57,7 @@ fun russianQrType(type: QrType): String {
         QrType.locus_charge -> "Заряд для локуса"
         QrType.box -> "Коробка"
         QrType.body_storage -> "Телохранилище"
+        QrType.spirit -> "Дух"
         QrType.drone -> "Дрон"
         QrType.drone_mod -> "Мод для дрона"
         QrType.sprite -> "Спрайт"

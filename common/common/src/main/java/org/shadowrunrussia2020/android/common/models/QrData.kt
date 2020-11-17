@@ -28,6 +28,7 @@ enum class QrType {
     locus_charge,
     box,
     body_storage,
+    spirit,
     drone,
     drone_mod,
     sprite,
