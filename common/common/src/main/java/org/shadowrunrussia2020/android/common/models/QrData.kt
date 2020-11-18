@@ -15,6 +15,7 @@ enum class QrType {
     ABSOLUTELY_DEAD_BODY,
     ASTRAL_BODY,
     ROBOT_BODY,
+    ECTOPLASM_BODY,
     empty,
     pill,
     implant,
