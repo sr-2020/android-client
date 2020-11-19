@@ -10,5 +10,9 @@ class PositionsResponse(
     var user_id: Int
 )
 
+class ManaLevelResponse(
+    var manaLevel: Int
+)
+
 class BeaconDataModel(var ssid: String, var bssid: String, var level: Int)
 

@@ -12,14 +12,20 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import kotlinx.android.synthetic.main.fragment_spell_details.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.shadowrunrussia2020.android.R
 import org.shadowrunrussia2020.android.character.CharacterViewModel
+import org.shadowrunrussia2020.android.common.di.ApplicationSingletonScope
 import org.shadowrunrussia2020.android.common.models.Character
 import org.shadowrunrussia2020.android.common.models.QrType
 import org.shadowrunrussia2020.android.common.models.Spell
 import org.shadowrunrussia2020.android.common.utils.russianQrType
 import org.shadowrunrussia2020.android.common.utils.russianSpellSphere
 import org.shadowrunrussia2020.android.common.utils.showErrorMessage
+import org.shadowrunrussia2020.android.model.positions.PositionsWebService
 import org.shadowrunrussia2020.android.model.qr.maybeQrScanned
 import org.shadowrunrussia2020.android.model.qr.startQrScan
 
@@ -74,15 +80,34 @@ class SpellDetailsFragment : Fragment() {
         mCharacterModel.getCharacter()
             .observe(this, Observer { data: Character? ->
                 if (data != null) {
-                    mModel.maxPower = data.magic + data.magicStats.maxPowerBonus
+                    mModel.maxCharacterPower = data.magic + data.magicStats.maxPowerBonus
                     textCurrentMagic.text = "Текущее значение магии: ${data.magic.toString()}"
                 }
-                seekBarSpellPower.max = mModel.maxPower + mModel.focusBonus
+                updateMaxPower()
             })
+
+        CoroutineScope(Dispatchers.IO).launch {
+            val d: ApplicationSingletonScope.Dependency = ApplicationSingletonScope.DependencyProvider.provideDependency()
+            val service = d.retrofit.create(PositionsWebService::class.java)
+            try {
+                val response = service.manalevel().await()
+                var manaLevel = response.body()!!.manaLevel;
+                val levelToBonus = listOf(-2, -2, -1, 0, 1, 1, 2, 3, 4, 5, 6)
+                if (manaLevel >= levelToBonus.size) manaLevel = levelToBonus.size
+                mModel.powerLocationBonus = levelToBonus[manaLevel]
+                withContext(Dispatchers.Main) {
+                    updateMaxPower()
+                }
+            } catch (e: Error) {}
+        }
     }
 
     private fun updateEnableness(enable: Boolean) {
         castSpell.isEnabled = enable
+    }
+
+    private fun updateMaxPower() {
+        seekBarSpellPower.max = mModel.maxCharacterPower + mModel.powerFocusBonus + mModel.powerLocationBonus
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -105,9 +130,9 @@ class SpellDetailsFragment : Fragment() {
                 return@maybeQrScanned
             }
 
-            mModel.focusBonus = bonus
-            textCurrentMagic.text = "Текущее значение магии: ${mModel.maxPower + mModel.focusBonus}"
+            mModel.powerFocusBonus = bonus
             addFocus.text = "Фокус (${bonus})"
+            updateMaxPower()
         })
     }
 }
