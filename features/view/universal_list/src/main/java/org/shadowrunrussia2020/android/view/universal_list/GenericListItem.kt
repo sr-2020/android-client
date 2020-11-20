@@ -28,7 +28,11 @@ private class GenericHistoryViewHolder private constructor(override val containe
     fun bindView(record: HistoryRecord, onClick: (() -> Unit)?, hide: Boolean) {
         containerView.mainText.text = record.title
         containerView.subText.text = record.shortText
-        containerView.time.text = PrettyTime(Locale("ru")).format(Date(record.timestamp))
+        if (record.timestamp > 0) {
+            containerView.time.text = PrettyTime(Locale("ru")).format(Date(record.timestamp))
+        } else {
+            containerView.time.text = ""
+        }
 
         containerView.setOnClickListener {
             onClick?.invoke()
