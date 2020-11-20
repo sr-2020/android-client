@@ -69,23 +69,8 @@
             android:id="@+id/scanAnyQrFragment"
             android:name="org.shadowrunrussia2020.android.qr.ScanAnyQrFragment"
             android:label="Сканирование QR-кода"
-            tools:layout="@layout/pre_post_qr_scanned" >
-        <action
-                android:id="@+id/action_interact_with_body"
-                app:destination="@id/interactWithBodyFragment"
-                app:popUpTo="@+id/scanAnyQrFragment"
-                app:popUpToInclusive="true" />
-    </fragment>
+            tools:layout="@layout/pre_post_qr_scanned" />
     <action android:id="@+id/action_global_scan_qr" app:destination="@id/scanAnyQrFragment" />
-    <fragment
-            android:id="@+id/interactWithBodyFragment"
-            android:name="org.shadowrunrussia2020.android.InteractWithBodyFragment"
-            android:label="Взаимодействие с телом"
-            tools:layout="@layout/fragment_interact_with_body" >
-        <argument
-                android:name="targetId"
-                app:argType="string" />
-    </fragment>
     <fragment
             android:id="@+id/historyFragment"
             android:name="org.shadowrunrussia2020.android.HistoryFragment"

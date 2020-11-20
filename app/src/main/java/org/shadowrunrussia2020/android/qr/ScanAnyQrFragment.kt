@@ -66,11 +66,6 @@ class ScanAnyQrFragment : Fragment() {
                 QrType.pill, QrType.food -> showConsumableQrInfo(qrData)
                 QrType.ability, QrType.event -> consume(qrData.modelId)
                 QrType.feature_to_buy -> showBuyableFeatureInfo(qrData)
-                QrType.WOUNDED_BODY -> {
-                    findNavController().navigate(
-                        ScanAnyQrFragmentDirections.actionInteractWithBody(qrData.modelId)
-                    )
-                }
                 QrType.SHOP_BILL -> {
                     val browserIntent =
                         Intent(Intent.ACTION_VIEW, Uri.parse("https://marketplace.evarun.ru/offer/${qrData.modelId}"))
