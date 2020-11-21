@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.iid.FirebaseInstanceId
 import com.google.zxing.BarcodeFormat
 import com.journeyapps.barcodescanner.BarcodeEncoder
 import kotlinx.android.synthetic.main.activity_show_qr.qrCodeImage
@@ -18,6 +19,7 @@ import kotlinx.android.synthetic.main.fragment_wounded.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.shadowrunrussia2020.android.LoginActivity
 import org.shadowrunrussia2020.android.MainNavGraphDirections
 import org.shadowrunrussia2020.android.R
@@ -63,6 +65,12 @@ class WoundedFragment : Fragment() {
 
         buttonLogout.setOnClickListener {
             ApplicationSingletonScope.DependencyProvider.dependency.session.invalidate()
+            CoroutineScope(Dispatchers.Main).launch {
+                withContext(Dispatchers.IO) {
+                    ApplicationSingletonScope.ComponentProvider.components.clearAllTables()
+                    FirebaseInstanceId.getInstance().deleteInstanceId()
+                }
+            }
             // We don't use Android's Navigation Component here because it somehow messes with back stack no matter what
             // we do (i.e. pressing "back" on login screen tries to go to the main screen).
             // Current implementation is taken from
