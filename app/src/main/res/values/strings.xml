@@ -50,7 +50,7 @@
     <string name="inject_medication">Ввести препарат</string>
     <string name="qr">QR</string>
 
-    <string name="economy">Экономика</string>
+    <string name="economy">Экономика / SIN</string>
     <string name="charter">Персонаж</string>
     <string name="spellBoock">Книга заклинаний</string>
     <string name="spells">Активируемые способности</string>

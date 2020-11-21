@@ -14,7 +14,11 @@ data class AccountOverview (
     var currentBalance: Float,
     var currentScoring: Float,
     var lifeStyle: String,
-    var forecastLifeStyle: String
+    var forecastLifeStyle: String,
+    var metatype: String,
+    var citizenship: String,
+    var nationality: String,
+    var status: String
 )
 
 data class BalanceResponse(

@@ -29,12 +29,13 @@ class BillingFragment : Fragment() {
         tabLayout.setupWithViewPager(viewPager)
 
         viewPager.adapter = object : FragmentPagerAdapter(childFragmentManager) {
-            override fun getCount(): Int = 3
+            override fun getCount(): Int = 4
             override fun getItem(position: Int): Fragment {
                 return when (position) {
                     0 -> BillingOverviewFragment()
                     1 -> BillingHistoryFragment()
                     2 -> BillingRentsFragment()
+                    3 -> BillingPassportFragment()
                     else -> throw Error();
                 }
             }
@@ -44,6 +45,7 @@ class BillingFragment : Fragment() {
                     0 -> "Обзор"
                     1 -> "История"
                     2 -> "Ренты"
+                    3 -> "Паспорт"
                     else -> throw Error();
                 }
             }
