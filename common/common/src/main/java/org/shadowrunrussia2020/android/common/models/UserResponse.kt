@@ -7,7 +7,6 @@ import java.util.*
 
 class UserResponse(
     var id: Int,
-    var name: String?,
     var updated_at: String,
     var location_updated_at: String,
     var location: Location?
@@ -36,5 +35,5 @@ fun fromResponse(r: UserResponse): Position {
     val date =
         format.parse(if (r.location_updated_at.length > 0) r.location_updated_at else r.updated_at)
 
-    return Position(r.id, r.name ?: "Anonymous", location, date)
+    return Position(r.id, "Anonymous", location, date)
 }

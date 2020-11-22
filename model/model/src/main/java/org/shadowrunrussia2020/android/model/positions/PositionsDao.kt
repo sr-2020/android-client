@@ -12,7 +12,7 @@ internal interface PositionsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertPositions(transactions: List<Position>)
 
-    @Query("SELECT * FROM `Position` ORDER BY username DESC")
+    @Query("SELECT * FROM `Position` ORDER BY id DESC")
     fun positions(): LiveData<List<Position>>
 }
 

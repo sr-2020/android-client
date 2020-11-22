@@ -42,7 +42,7 @@ class AllPositionsFragment : Fragment() {
                             GenericListItem(HistoryRecord(
                                 "",
                                 it.date.time,
-                                it.username,
+                                it.id.toString(),
                                 it.location,
                                 ""
                             ))
