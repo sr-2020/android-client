@@ -88,7 +88,8 @@ class AutodocFragment : Fragment() {
 
                 implantsListLabel.text = if (character.screens.autodocImplantRemoval) "Список имплантов (доступно удаление)" else "Список имплантов"
 
-                buttonRevive.isEnabled = analyzedBody.healthState == HealthState.wounded
+                buttonRevive.isEnabled = analyzedBody.healthState == HealthState.wounded && character.screens.autodocWoundHeal
+                buttonInstallImplant.isEnabled = character.screens.autodocImplantInstall
             }
         }
 
