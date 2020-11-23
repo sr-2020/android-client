@@ -63,7 +63,7 @@ dependencies {
     api 'com.google.firebase:firebase-analytics:17.2.0'
     api 'com.crashlytics.sdk.android:crashlytics:2.10.1'
 
-    api 'org.altbeacon:android-beacon-library:2.15.4'
+    api 'org.altbeacon:android-beacon-library:2.17.1'
     api 'com.github.GrenderG:Toasty:1.4.2'
     api 'com.google.android.gms:play-services-location:17.0.0'
 

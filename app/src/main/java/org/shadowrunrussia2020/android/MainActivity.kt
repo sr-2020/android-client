@@ -76,6 +76,8 @@ class MainActivity : AppCompatActivity(), IMainActivityDi {
     private val navController: NavController by lazy { findNavController(R.id.nav_host_fragment) }
     private val PERMISSION_REQUEST_COARSE_LOCATION = 1
     private val REQUEST_ENABLE_BT = 2
+    private val PERMISSION_REQUEST_BACKGROUND_LOCATION = 3
+    private val PERMISSION_REQUEST_FINE_LOCATION = 4
 
     private val characterViewModel by lazy {
         ViewModelProviders.of(this).get(CharacterViewModel::class.java)
@@ -181,7 +183,10 @@ class MainActivity : AppCompatActivity(), IMainActivityDi {
                 )
 
                 val currentDestination = navController.currentDestination!!.id
-                if (fragmentToAction.containsKey(currentDestination) && !drawerActionToAvailability[fragmentToAction.get(currentDestination)]!!) {
+                if (fragmentToAction.containsKey(currentDestination) && !drawerActionToAvailability[fragmentToAction.get(
+                        currentDestination
+                    )]!!
+                ) {
                     navController.navigate(MainNavGraphDirections.actionGlobalCharacter())
                 }
 
@@ -196,7 +201,8 @@ class MainActivity : AppCompatActivity(), IMainActivityDi {
 
         positionsViewModel.positions().observe(this,
             Observer { data: List<Position>? ->
-                val myPosition = data?.find { it.id == ApplicationSingletonScope.DependencyProvider.dependency.session.getCharacterId() }
+                val myPosition =
+                    data?.find { it.id == ApplicationSingletonScope.DependencyProvider.dependency.session.getCharacterId() }
                 if (myPosition != null && navController.currentDestination!!.id != R.id.buyForKarmaFragment) {
                     toolbar.subtitle = myPosition.location
                 }
@@ -262,12 +268,83 @@ class MainActivity : AppCompatActivity(), IMainActivityDi {
 
     private fun checkLocationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            // Android M Permission check
-            if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(
-                    arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
-                    PERMISSION_REQUEST_COARSE_LOCATION
-                )
+            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED
+            ) {
+                if (checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED
+                ) {
+                    if (shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_BACKGROUND_LOCATION)) {
+                        val builder = AlertDialog.Builder(this)
+                        builder.setTitle("Нужен доступ к фоновому местоположению")
+                        builder.setMessage("Пожалуйста дайте доступ к фоновому определению местоположения, иначе приложение не сможет работать корректно.")
+                        builder.setPositiveButton(android.R.string.ok, null)
+                        builder.setOnDismissListener {
+                            requestPermissions(
+                                arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION),
+                                PERMISSION_REQUEST_BACKGROUND_LOCATION
+                            )
+                        }
+                        builder.show()
+                    } else {
+                        val builder = AlertDialog.Builder(this)
+                        builder.setTitle("Местоположение работать не будет")
+                        builder.setMessage("Доступ к фоновому местоположению не был выдан, поэтому приложение не будет видеть маяки. Пожалуйста, выдайте доступ к фоновому местоположению / background location в Настройки -> Приложения -> Разрешения / Settings -> Applications -> Permissions.")
+                        builder.setPositiveButton(android.R.string.ok, null)
+                        builder.setOnDismissListener { }
+                        builder.show()
+                    }
+                }
+            } else {
+                if (shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION)) {
+                    requestPermissions(
+                        arrayOf(
+                            Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                        ),
+                        PERMISSION_REQUEST_FINE_LOCATION
+                    )
+                } else {
+                    val builder = AlertDialog.Builder(this)
+                    builder.setTitle("Местоположение работать не будет")
+                    builder.setMessage("Доступ к местоположению не был выдан, поэтому приложение не будет видеть маяки. Пожалуйста, выдайте доступ к местоположению / location в Настройки -> Приложения -> Разрешения / Settings -> Applications -> Permissions.")
+                    builder.setPositiveButton(android.R.string.ok, null)
+                    builder.setOnDismissListener { }
+                    builder.show()
+                }
+            }
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        when (requestCode) {
+            PERMISSION_REQUEST_FINE_LOCATION -> {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                } else {
+                    val builder = AlertDialog.Builder(this)
+                    builder.setTitle("Местоположение работать не будет")
+                    builder.setMessage("Доступ к местоположению не был выдан, поэтому приложение не будет видеть маяки. Пожалуйста, выдайте доступ к местоположению / location в Настройки -> Приложения -> Разрешения / Settings -> Applications -> Permissions.")
+                    builder.setPositiveButton(android.R.string.ok, null)
+                    builder.setOnDismissListener { }
+                    builder.show()
+                }
+                return
+            }
+            PERMISSION_REQUEST_BACKGROUND_LOCATION -> {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                } else {
+                    val builder = AlertDialog.Builder(this)
+                    builder.setTitle("Местоположение работать не будет")
+                    builder.setMessage("Доступ к фоновому местоположению не был выдан, поэтому приложение не будет видеть маяки. Пожалуйста, выдайте доступ к фоновому местоположению / background location в Настройки -> Приложения -> Разрешения / Settings -> Applications -> Permissions.")
+                    builder.setPositiveButton(android.R.string.ok, null)
+                    builder.setOnDismissListener { }
+                    builder.show()
+                }
+                return
             }
         }
     }
