@@ -1,42 +1,30 @@
 package org.shadowrunrussia2020.android.positioning
 
-import android.app.*
-import android.content.Context
+import android.app.Service
 import android.content.Intent
-import android.os.Build
 import android.os.IBinder
 import android.os.RemoteException
 import android.util.Log
 import com.google.common.collect.EvictingQueue
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
-import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.altbeacon.beacon.*
-import org.shadowrunrussia2020.android.MainActivity
-import org.shadowrunrussia2020.android.R
 import org.shadowrunrussia2020.android.common.di.ApplicationSingletonScope
 import org.shadowrunrussia2020.android.common.models.BeaconDataModel
 import org.shadowrunrussia2020.android.common.models.PositionsRequest
-import org.shadowrunrussia2020.android.common.utils.MainThreadSchedulers
-import org.shadowrunrussia2020.android.common.utils.plusAssign
 import java.io.IOException
-import java.util.*
-import java.util.concurrent.TimeUnit
 
 
 class BeaconsScanner : Service(), BeaconConsumer {
     private val TAG = "ComConBeacons"
-    // private lateinit var mBackgroundPowerSaver: BackgroundPowerSaver
     private lateinit var mBeaconManager: BeaconManager
     private val positionsRepository by lazy { ApplicationSingletonScope.ComponentProvider.components.positionsRepository }
 
     val disposer = CompositeDisposable()
-
-    val notificationManager get() = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
     private val firestore = FirebaseFirestore.getInstance()
 
@@ -62,46 +50,10 @@ class BeaconsScanner : Service(), BeaconConsumer {
         mBeaconManager.beaconParsers.add(parser)
 
         // Run full cycle every minute
-        mBeaconManager.foregroundBetweenScanPeriod = 1000 // 1 second
+        mBeaconManager.foregroundBetweenScanPeriod = 7000 // 7 seconds
         mBeaconManager.foregroundScanPeriod = 3000 // 3 seconds
-        mBeaconManager.backgroundBetweenScanPeriod = 57000 // 57 seconds
-        mBeaconManager.backgroundScanPeriod = 3000 // 3 seconds
 
-        val intent = Intent(this, MainActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        val pendingIntent =
-            PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
-
-        val builder = Notification.Builder(this)
-            .setSmallIcon(R.drawable.abc_ic_star_black_48dp)
-            .setContentTitle("Приложение висит в фоне!")
-            .setContentIntent(pendingIntent)
-            .setGroup("beacons")
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(
-                "My Notification Channel ID",
-                "My Notification Name", NotificationManager.IMPORTANCE_DEFAULT
-            )
-            channel.description = "My Notification Channel Description"
-
-            notificationManager.createNotificationChannel(channel)
-            builder.setChannelId(channel.id)
-        }
-        val notification = builder.build()
-
-        disposer += Observable.interval(3, TimeUnit.SECONDS)
-            .observeOn(MainThreadSchedulers.androidUiScheduler)
-            .subscribe {
-                notification.contentView
-            }
-
-
-
-        mBeaconManager.enableForegroundServiceScanning(notification, 1713)
         mBeaconManager.bind(this)
-
-        // mBackgroundPowerSaver = BackgroundPowerSaver(this)
     }
 
     override fun onDestroy() {
