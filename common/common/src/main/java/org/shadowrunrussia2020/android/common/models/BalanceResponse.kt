@@ -11,6 +11,7 @@ data class AccountOverview (
     @PrimaryKey
     var id: Int,
     var characterId: Int,
+    var sin: String,
     var currentBalance: Float,
     var currentScoring: Float,
     var lifeStyle: String,

@@ -34,7 +34,7 @@ class BillingOverviewFragment : Fragment() {
         accountOverview.observe(this, Observer {
             if (it != null) {
                 textViewBalance.text = it.currentBalance.toString()
-                textViewSin.text = it.characterId.toString()
+                textViewSin.text = it.sin
                 textViewLifestyle.text = it.lifeStyle
                 textViewLifestyleForecast.text = it.forecastLifeStyle
                 textViewScoring.text = it.currentScoring.toString()
