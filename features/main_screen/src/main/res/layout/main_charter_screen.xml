@@ -1,23 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".MainFragment">
-
-    <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="#FFF">
+<com.google.android.material.appbar.AppBarLayout android:id="@+id/appBar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFF"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_scrollFlags="scroll|snap">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_scrollFlags="scroll|snap">
 
             <TextView
                 android:id="@+id/fullTextHP"
@@ -138,18 +133,18 @@
                 tools:text="Магия: 1" />
 
             <ImageView
-                    android:id="@+id/qrDataView"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    android:translationZ="4dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:srcCompat="@drawable/qr_code" />
+                android:id="@+id/qrDataView"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:translationZ="4dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@drawable/qr_code" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp">
+            android:layout_width="match_parent"
+            android:layout_height="60dp">
 
             <TextView
                 android:id="@+id/textEssence"
@@ -163,9 +158,9 @@
 
 
             <View
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
 
             <TextView
                 android:id="@+id/textPowerBonus"
@@ -177,23 +172,21 @@
 
 
             <View
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
 
 
             <TextView
-                    android:id="@+id/textHp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:textColor="#f00"
-                    android:textSize="25sp"
-                    tools:text="15♡" />
+                android:id="@+id/textHp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:textColor="#f00"
+                android:textSize="25sp"
+                tools:text="15♡" />
         </LinearLayout>
 
 
     </com.google.android.material.appbar.AppBarLayout>
 
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
