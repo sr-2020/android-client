@@ -104,6 +104,9 @@ class WoundedFragment : Fragment() {
             textViewTitle.text = getString(R.string.absolute_death_title)
             textViewSubtitle.text = getString(R.string.absolute_death_subtitle)
         }
+
+        textViewCharacterId.text = "Персонаж ${character.modelId}"
+
         // Needed to prevent code from being stale and thus invalid
         regenerateBodyQr(character)
     }
