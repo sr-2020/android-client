@@ -132,4 +132,15 @@ class Converters {
         if (value == null) return null;
         return Gson().toJson(value)
     }
+
+    @TypeConverter
+    fun stringsListToJson(value: List<String>): String {
+        return Gson().toJson(value)
+    }
+
+    @TypeConverter
+    fun jsonToStringsList(value: String): List<String> {
+        return Gson().fromJson(value, object : TypeToken<List<String>>() {}.type)
+    }
+
 }

@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_billing_rents.*
 import org.shadowrunrussia2020.android.R
+import org.shadowrunrussia2020.android.common.models.AccountOverview
 import org.shadowrunrussia2020.android.common.models.Rent
 import org.shadowrunrussia2020.android.view.universal_list.RentListItem
 import org.shadowrunrussia2020.android.view.universal_list.UniversalAdapter
@@ -47,6 +48,14 @@ class BillingRentsFragment : Fragment() {
                     universalAdapter.apply()
                 }
             })
+
+        mModel.getAccountOverview().observe(this,
+            Observer { accountOverview: AccountOverview? ->
+                if (accountOverview != null) {
+                    textViewRentsSum.text = accountOverview.sumRents.toString()
+                }
+            }
+        )
 
         rentsView.adapter = universalAdapter
         rentsView.layoutManager = LinearLayoutManager(requireContext())

@@ -14,12 +14,15 @@ data class AccountOverview (
     var sin: String,
     var currentBalance: Float,
     var currentScoring: Float,
+    var sumRents: Float,
     var lifeStyle: String,
     var forecastLifeStyle: String,
     var metatype: String,
     var citizenship: String,
     var nationality: String,
-    var status: String
+    var status: String,
+    var insurance: String,
+    var licenses: List<String>
 )
 
 data class BalanceResponse(
@@ -64,6 +67,11 @@ data class Rent (
     var dateCreated: Date
 ) : Parcelable
 
+data class RentsData (
+    var rentas: List<Rent>,
+    var sum: Float
+)
+
 data class RentsResponse (
-    var data: List<Rent>
+    var data: RentsData
 )

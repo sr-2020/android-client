@@ -27,7 +27,9 @@ internal class BillingRepository(private val mService: BillingWebService, privat
                 mBillingDao.deleteTransactions()
                 mBillingDao.insertTransactions(accountHistory.data.map { it })
                 mBillingDao.deleteRents()
-                mBillingDao.insertRents(rents.data.map { it })
+                mBillingDao.insertRents(rents.data.rentas.map { it })
+
+                accountInfo.data.sumRents = rents.data.sum
                 mBillingDao.setAccountOverview(accountInfo.data)
             }
         }

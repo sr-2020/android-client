@@ -11,13 +11,13 @@ internal interface BillingWebService {
     @POST("billing/transfer")
     fun transfer(@Body request: Transfer): Deferred<Response<Empty>>
 
-    @GET("billing/balance")
+    @GET("billing/sin")
     fun balance(): Deferred<Response<BalanceResponse>>
 
     @GET("billing/transfers")
     fun transfers(): Deferred<Response<TransfersResponse>>
 
-    @GET("billing/api/billing/info/getrentas")
+    @GET("billing/rentas")
     fun rents(): Deferred<Response<RentsResponse>>
 }
 

@@ -28,7 +28,9 @@ class BillingPassportFragment : Fragment() {
                 textViewMetatype.text = it.metatype
                 textViewCitizenship.text = it.citizenship
                 textViewNationality.text = it.nationality
-                textViewStatus.text = it.status
+                textViewInsurance.text = it.status
+                textViewInsurance.text = it.insurance
+                textViewLicenses.text = it.licenses.joinToString()
             }
         })
     }
