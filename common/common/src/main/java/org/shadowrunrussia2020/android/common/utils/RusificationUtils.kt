@@ -69,6 +69,7 @@ fun russianQrType(type: QrType): String {
         QrType.reanimate_capsule -> "Воскрешательная капсула"
         QrType.ai_symbol -> "Символ ИИ"
         QrType.focus -> "Магический фокус"
+        QrType.repair_kit -> "Ремкомплект"
     }
 }
 

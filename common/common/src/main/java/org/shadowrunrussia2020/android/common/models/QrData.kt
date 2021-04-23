@@ -39,7 +39,8 @@ enum class QrType {
     foundation_node,
     reanimate_capsule,
     ai_symbol,
-    focus
+    focus,
+    repair_kit,
 }
 
 @Parcelize data class SimpleQrData(
