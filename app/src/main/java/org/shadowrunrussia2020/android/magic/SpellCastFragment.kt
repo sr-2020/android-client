@@ -36,6 +36,7 @@ class SpellCastFragment : Fragment() {
     private val args: SpellCastFragmentArgs by navArgs()
     private val spell: Spell by lazy { args.spell }
     private val power: Int by lazy { args.power }
+    private val focusId: String? by lazy { args.focusId }
     private val disposer = CompositeDisposable()
     private val service = ApplicationSingletonScope.DependencyProvider.provideDependency<ApplicationSingletonScope.Dependency>()
         .modelEngineRetrofit.create(ModelEngineWebService::class.java)
@@ -63,6 +64,7 @@ class SpellCastFragment : Fragment() {
 
         castModel.power = power
         castModel.id = spell.id
+        castModel.focusId = focusId
 
         textAbilityName.text = "${spell.humanReadableName} (мощь ${castModel.power})"
         textAbilityDescription.text = spell.description
@@ -221,6 +223,10 @@ class SpellCastFragment : Fragment() {
                 if (castModel.targetCharacterId != null) {
                     data["targetCharacterId"] = castModel.targetCharacterId!!
                 }
+                if (castModel.focusId != null) {
+                    data["focusId"] = castModel.focusId!!
+                }
+
                 val response = mCharacterModel.castSpell(castModel.id, data)
 
                 response?.tableResponse?.let { tableResponse ->

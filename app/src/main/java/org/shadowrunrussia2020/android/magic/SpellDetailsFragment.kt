@@ -59,7 +59,7 @@ class SpellDetailsFragment : Fragment() {
 
         castSpell.setOnClickListener {
             findNavController().navigate(
-                SpellDetailsFragmentDirections.actionStartCast(spell, mModel.power)
+                SpellDetailsFragmentDirections.actionStartCast(spell, mModel.power, mModel.focusId)
             )
         }
 
@@ -137,6 +137,8 @@ class SpellDetailsFragment : Fragment() {
             }
 
             mModel.powerFocusBonus = bonus
+            mModel.focusId = fullQrData.modelId
+
             addFocus.text = "Фокус (${bonus})"
             updateMaxPower()
         })

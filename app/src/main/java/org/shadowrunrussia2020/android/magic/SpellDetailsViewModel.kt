@@ -8,4 +8,5 @@ class SpellDetailsViewModel(application: Application) : AndroidViewModel(applica
     var maxCharacterPower = 0
     var powerFocusBonus = 0
     var powerLocationBonus = -2
+    var focusId: String? = null
 }
