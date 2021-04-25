@@ -40,6 +40,7 @@ enum class QrType {
     reanimate_capsule,
     ai_symbol,
     focus,
+    focus_on_cooldown,
     repair_kit,
 }
 

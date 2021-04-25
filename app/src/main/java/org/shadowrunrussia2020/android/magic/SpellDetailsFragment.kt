@@ -112,8 +112,14 @@ class SpellDetailsFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         maybeQrScanned(requireActivity(), requestCode, resultCode, data, { fullQrData ->
+
             if (fullQrData.type != QrType.focus) {
-                showErrorMessage(requireContext(), "Неожиданный QR-код: ${russianQrType(fullQrData.type)}. Подходящие: Фокус.");
+                if (fullQrData.type == QrType.focus_on_cooldown) {
+                    showErrorMessage(requireContext(), "Этот фокус в данный момент на кулдауне.");
+                } else {
+                    showErrorMessage(requireContext(), "Неожиданный QR-код: ${russianQrType(fullQrData.type)}. Подходящие: Фокус.");
+                }
+
                 return@maybeQrScanned
             }
 
