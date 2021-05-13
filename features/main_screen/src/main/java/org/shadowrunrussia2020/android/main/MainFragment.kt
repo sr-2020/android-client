@@ -41,6 +41,7 @@ class MainFragment : Fragment() {
                 fullTextIntelligence.text = "Интеллект: ${character.intelligence}"
                 fullTextCharisma.text = "Харизма: ${character.charisma}"
                 fullTextResonance.text = "Резонанс: ${character.resonance}"
+                fullTextFading.text = "Фейдинг: ${character.hacking.fading}"
                 fullTextStrength.text = "Сила: ${character.strength}"
                 fullTextMagic.text = "Магия: ${character.magic}"
 

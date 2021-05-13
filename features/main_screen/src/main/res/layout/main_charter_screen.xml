@@ -46,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:textColor="#000"
-                app:layout_constraintBottom_toBottomOf="@+id/fullTextBody"
+                app:layout_constraintBottom_toTopOf="@+id/fullTextBody"
                 app:layout_constraintEnd_toStartOf="@+id/qrDataView"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
@@ -107,6 +107,19 @@
                 tools:text="Резонанс: 1" />
 
             <TextView
+                android:id="@+id/fullTextFading"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:textColor="#000"
+                app:layout_constraintBottom_toTopOf="@+id/fullTextStrength"
+                app:layout_constraintEnd_toStartOf="@+id/qrDataView"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fullTextResonance"
+                tools:text="Фейдинг: 100" />
+
+            <TextView
                 android:id="@+id/fullTextStrength"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -116,7 +129,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/qrDataView"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fullTextResonance"
+                app:layout_constraintTop_toBottomOf="@+id/fullTextFading"
                 tools:text="Сила: 1" />
 
             <TextView

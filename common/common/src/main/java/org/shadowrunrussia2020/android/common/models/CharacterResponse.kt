@@ -129,6 +129,10 @@ data class MagicStats(
     val maxPowerBonus: Int
 )
 
+data class Hacking(
+    val fading: Int
+)
+
 data class Karma(
     val available: Float,
     val spent: Float,
@@ -182,6 +186,8 @@ data class Character(
     val ethic: Ethic,
     @Embedded
     val magicStats: MagicStats,
+    @Embedded
+    val hacking: Hacking,
     @Embedded
     val karma: Karma,
     @Embedded(prefix = "screens")
