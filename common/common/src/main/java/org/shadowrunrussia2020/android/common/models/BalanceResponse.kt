@@ -12,6 +12,7 @@ data class AccountOverview (
     var id: Int,
     var characterId: Int,
     var sin: String,
+    var personName: String,
     var currentBalance: Float,
     var currentScoring: Float,
     var sumRents: Float,
@@ -19,9 +20,9 @@ data class AccountOverview (
     var forecastLifeStyle: String,
     var metatype: String,
     var citizenship: String,
-    var nationality: String,
-    var status: String,
     var insurance: String,
+    var pledgee: String,
+    var viza: String,
     var licenses: List<String>
 )
 

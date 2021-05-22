@@ -25,10 +25,11 @@ class BillingPassportFragment : Fragment() {
         val accountOverview = mModel.getAccountOverview()
         accountOverview.observe(this, Observer {
             if (it != null) {
+                textViewName.text = it.personName
                 textViewMetatype.text = it.metatype
                 textViewCitizenship.text = it.citizenship
-                textViewNationality.text = it.nationality
-                textViewInsurance.text = it.status
+                textViewStockManager.text = it.pledgee
+                textViewVisa.text = it.viza
                 textViewInsurance.text = it.insurance
                 textViewLicenses.text = it.licenses.joinToString()
             }
