@@ -49,9 +49,9 @@ data class TransfersResponse (
 
 @Parcelize
 data class Transfer(
-    var sin_to: Int,
-    var amount: Int,
-    var comment: String?
+    var SinTo: String,
+    var Amount: Int,
+    var Comment: String?
 ) : Parcelable
 
 @Parcelize

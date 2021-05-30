@@ -57,9 +57,9 @@ class ScanAnyQrFragment : Fragment() {
                     val parts = qrData.modelId.split(',', limit = 3)
                     askForTransfer(
                         Transfer(
-                            sin_to = parts[0].toInt(),
-                            amount = parts[1].toInt(),
-                            comment = parts[2]
+                            SinTo = parts[0],
+                            Amount = parts[1].toInt(),
+                            Comment = parts[2]
                         )
                     )
                 }
@@ -82,16 +82,16 @@ class ScanAnyQrFragment : Fragment() {
         AlertDialog.Builder(activity!!)
             .setMessage(
                 "Запрос о переводе %d нью-йен на аккаунт %d. Комментарий: %s. Подтверждаете перевод?".format(
-                    t.amount,
-                    t.sin_to,
-                    t.comment
+                    t.Amount,
+                    t.SinTo,
+                    t.Comment
                 )
             )
             .setPositiveButton(R.string.ok) { _, _ ->
                 CoroutineScope(Dispatchers.Main).launch {
                     progressLoader.visibility = View.VISIBLE
                     ViewModelProviders.of(activity!!).get(BillingViewModel::class.java)
-                        .transferMoney(receiver = t.sin_to, amount = t.amount, comment = t.comment)
+                        .transferMoney(receiver = t.SinTo, amount = t.Amount, comment = t.Comment)
                     findNavController().popBackStack(R.id.scanAnyQrFragment, true)
                 }
             }

@@ -8,7 +8,7 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 
 internal interface BillingWebService {
-    @POST("billing/transfer")
+    @POST("billing/api/Billing/transfer/createtransfersinsin")
     fun transfer(@Body request: Transfer): Deferred<Response<Empty>>
 
     @GET("billing/sin")

@@ -35,7 +35,7 @@
     <string name="account_balance">Баланс:</string>
     <string name="account_sin">SIN:</string>
     <string name="new_transfer">Новый перевод</string>
-    <string name="transfer_receiver">Получатель</string>
+    <string name="transfer_receiver">Получатель (SIN)</string>
     <string name="transfer_amount">Сумма</string>
     <string name="transfer_comment">Комментарий (опционально)</string>
     <string name="transfer_confirm">Перевести</string>

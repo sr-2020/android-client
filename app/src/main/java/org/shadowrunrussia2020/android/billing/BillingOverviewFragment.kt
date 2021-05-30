@@ -66,7 +66,7 @@ class BillingOverviewFragment : Fragment() {
             buttonTransfer.isEnabled = false
             CoroutineScope(Dispatchers.Main).launch {
                 try {
-                    mModel.transferMoney(Integer.parseInt(recipient), amount, comment)
+                    mModel.transferMoney(recipient, amount, comment)
                     showSuccessMessage(requireContext(), "Перевод осуществлен")
                     editTextRecipient.text!!.clear()
                     editTextAmount.text!!.clear()

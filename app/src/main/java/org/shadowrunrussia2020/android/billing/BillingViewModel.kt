@@ -29,7 +29,7 @@ class BillingViewModel(application: Application) : AndroidViewModel(application)
         mBillingRepository.refresh()
     }
 
-    suspend fun transferMoney(receiver: Int, amount: Int, comment: String?) {
+    suspend fun transferMoney(receiver: String, amount: Int, comment: String?) {
         mBillingRepository.transferMoney(
             Transfer(
                 receiver,
