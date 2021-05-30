@@ -338,14 +338,7 @@ class MainActivity : AppCompatActivity(), IMainActivityDi {
                 exit(); return true
             }
             R.id.action_wound -> {
-                CoroutineScope(Dispatchers.Main).launch {
-                    try {
-                        characterViewModel.postEvent("wound")
-                    } catch (e: Exception) {
-                        showErrorMessage(this@MainActivity, "${e.message}")
-                    }
-                }
-                return true
+                wound(); return true
             }
             else -> return item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(
                 item
@@ -387,6 +380,22 @@ class MainActivity : AppCompatActivity(), IMainActivityDi {
             }
             goToLoginScreen()
         }
+    }
+
+    fun wound() {
+        AlertDialog.Builder(this)
+            .setTitle("Подтверждаете тяжелое ранение?")
+            .setPositiveButton(android.R.string.ok) { _, _ ->
+                CoroutineScope(Dispatchers.Main).launch {
+                    try {
+                        characterViewModel.postEvent("wound")
+                    } catch (e: Exception) {
+                        showErrorMessage(this@MainActivity, "${e.message}")
+                    }
+                }
+            }
+            .setNegativeButton(android.R.string.cancel) { _, _ -> }
+            .show()
     }
 
     private fun goToLoginScreen() {
