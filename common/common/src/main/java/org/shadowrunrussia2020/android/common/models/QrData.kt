@@ -42,6 +42,8 @@ enum class QrType {
     focus,
     focus_on_cooldown,
     repair_kit,
+    armour,
+    weapon
 }
 
 @Parcelize data class SimpleQrData(

@@ -71,6 +71,8 @@ fun russianQrType(type: QrType): String {
         QrType.focus -> "Магический фокус"
         QrType.focus_on_cooldown -> "Магический фокус (кулдаун)"
         QrType.repair_kit -> "Ремкомплект"
+        QrType.armour -> "Броня"
+        QrType.weapon -> "Оружие"
     }
 }
 
