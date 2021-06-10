@@ -7,7 +7,7 @@ import java.io.IOException
 
 
 data class ErrorMessage(val message: String)
-data class Error(val error: ErrorMessage)
+data class Error(val error: ErrorMessage?, val message: String?)
 
 class AuthorizationInterceptor(private val session: Session) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
@@ -21,7 +21,7 @@ class AuthorizationInterceptor(private val session: Session) : Interceptor {
 class TestSuccessInterceptor(private val session: Session) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
         val request = chain.request()
-        var response = chain.proceed(request)
+        val response = chain.proceed(request)
 
         if (response.isSuccessful) {
             return response
@@ -35,7 +35,10 @@ class TestSuccessInterceptor(private val session: Session) : Interceptor {
 
     private fun getExceptionMessage(body: String): String {
         return try {
-            Gson().fromJson(body, Error::class.java).error.message
+            val error = Gson().fromJson(body, Error::class.java)
+            if (error.error != null) return error.error.message
+            if (error.message != null) return error.message
+            return "Некорректный ответ сервера"
         } catch (e: Exception) {
             "Некорректный ответ сервера"
         }
