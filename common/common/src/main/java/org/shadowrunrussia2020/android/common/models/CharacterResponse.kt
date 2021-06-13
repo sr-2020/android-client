@@ -153,7 +153,8 @@ data class Screens(
     val ethics: Boolean,
     val location: Boolean,
     val wound: Boolean,
-    val scanQr: Boolean
+    val scanQr: Boolean,
+    val scoring: Boolean
 )
 
 @Entity
