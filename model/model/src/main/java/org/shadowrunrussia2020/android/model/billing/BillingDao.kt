@@ -7,6 +7,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import org.shadowrunrussia2020.android.common.models.AccountOverview
 import org.shadowrunrussia2020.android.common.models.Rent
+import org.shadowrunrussia2020.android.common.models.ScoringInfo
 import org.shadowrunrussia2020.android.common.models.Transaction
 
 @Dao
@@ -34,4 +35,10 @@ internal interface BillingDao {
 
     @Query("SELECT * FROM `AccountOverview`")
     fun accountOverview(): LiveData<AccountOverview>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun setScoringInfo(scoringInfo: ScoringInfo)
+
+    @Query("SELECT * FROM `ScoringInfo`")
+    fun scoringInfo(): LiveData<ScoringInfo>
 }

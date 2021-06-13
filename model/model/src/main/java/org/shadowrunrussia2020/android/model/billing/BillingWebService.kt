@@ -19,6 +19,9 @@ internal interface BillingWebService {
 
     @GET("billing/rentas")
     fun rents(): Deferred<Response<RentsResponse>>
+
+    @GET("billing/api/Scoring/info/getmyscoring")
+    fun scoring(): Deferred<Response<ScoringResponse>>
 }
 
 

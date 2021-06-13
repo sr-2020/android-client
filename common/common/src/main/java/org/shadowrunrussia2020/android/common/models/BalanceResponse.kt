@@ -76,3 +76,25 @@ data class RentsData (
 data class RentsResponse (
     var data: RentsData
 )
+
+@Entity
+data class ScoringCategory (
+    @PrimaryKey
+    val name: String,
+    val value: Float,
+    val weight: Float
+)
+
+@Entity
+data class ScoringInfo (
+    @PrimaryKey
+    val character: Int,
+    val currentFix: Float,
+    val currentRelative: Float,
+    val relativeCategories: List<ScoringCategory>,
+    val fixCategories: List<ScoringCategory>
+)
+
+data class ScoringResponse(
+    var data: ScoringInfo
+)

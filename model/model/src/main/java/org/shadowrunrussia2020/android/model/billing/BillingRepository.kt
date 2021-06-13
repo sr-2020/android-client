@@ -5,23 +5,18 @@ import androidx.lifecycle.LiveData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.shadowrunrussia2020.android.common.declaration.repository.IBillingRepository
-import org.shadowrunrussia2020.android.common.models.AccountOverview
-import org.shadowrunrussia2020.android.common.models.Rent
-import org.shadowrunrussia2020.android.common.models.Transaction
-import org.shadowrunrussia2020.android.common.models.Transfer
+import org.shadowrunrussia2020.android.common.models.*
 
 internal class BillingRepository(private val mService: BillingWebService, private val mBillingDao: BillingDao) :
     IBillingRepository {
 
     override suspend fun refresh() {
         withContext(Dispatchers.IO) {
-            val responseBalance = mService.balance().await()
-            val responseHistory = mService.transfers().await()
-            val rentsHistory = mService.rents().await()
-            val accountInfo = responseBalance.body()
-            val accountHistory = responseHistory.body()
-            val rents = rentsHistory.body()
-            if (accountInfo == null || accountHistory == null || rents == null) {
+            val accountInfo = mService.balance().await().body()
+            val accountHistory = mService.transfers().await().body()
+            val rents = mService.rents().await().body()
+            val scoringData = mService.scoring().await().body()
+            if (accountInfo == null || accountHistory == null || rents == null || scoringData == null) {
                 Log.e("BillingRepository", "Invalid server response - body is empty")
             } else {
                 mBillingDao.deleteTransactions()
@@ -31,6 +26,8 @@ internal class BillingRepository(private val mService: BillingWebService, privat
 
                 accountInfo.data.sumRents = rents.data.sum
                 mBillingDao.setAccountOverview(accountInfo.data)
+
+                mBillingDao.setScoringInfo(scoringData.data)
             }
         }
     }
@@ -45,6 +42,10 @@ internal class BillingRepository(private val mService: BillingWebService, privat
 
     override fun getAccountOverview(): LiveData<AccountOverview> {
         return mBillingDao.accountOverview()
+    }
+
+    override fun getScoringInfo(): LiveData<ScoringInfo> {
+        return mBillingDao.scoringInfo()
     }
 
     override suspend fun transferMoney(transfer: Transfer) {

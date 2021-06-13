@@ -134,6 +134,18 @@ class Converters {
     }
 
     @TypeConverter
+    fun jsonToScoringCategories(value: String?): List<ScoringCategory>? {
+        if (value == null) return null;
+        return Gson().fromJson(value, object : TypeToken<List<ScoringCategory>>() {}.type)
+    }
+
+    @TypeConverter
+    fun scoringCategoriesToJson(value: List<ScoringCategory>?): String? {
+        if (value == null) return null;
+        return Gson().toJson(value)
+    }
+
+    @TypeConverter
     fun stringsListToJson(value: List<String>): String {
         return Gson().toJson(value)
     }
