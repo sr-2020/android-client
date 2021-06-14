@@ -8,11 +8,10 @@ import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.timer_item.view.*
-import org.ocpsoft.prettytime.PrettyTime
 import org.shadowrunrussia2020.android.common.models.Timer
 import org.shadowrunrussia2020.android.common.utils.MainThreadSchedulers
 import org.shadowrunrussia2020.android.common.utils.plusAssign
-import java.util.*
+import org.shadowrunrussia2020.android.common.utils.timeBeforeInMinutes
 import java.util.concurrent.TimeUnit
 
 class TimerListItem(
@@ -44,8 +43,7 @@ private class TimerViewHolder private constructor(override val containerView: Vi
         disposer += Observable.interval(0, 10, TimeUnit.SECONDS)
             .observeOn(MainThreadSchedulers.androidUiScheduler)
             .subscribe {
-                val t = modelTimestamp + timer.miliseconds
-                containerView.subText.text = PrettyTime(Locale("ru")).format(Date(t))
+                containerView.subText.text = "Через ${timeBeforeInMinutes(System.currentTimeMillis(), modelTimestamp + timer.miliseconds)}"
             }
     }
 }

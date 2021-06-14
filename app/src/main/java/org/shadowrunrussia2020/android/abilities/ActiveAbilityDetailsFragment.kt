@@ -20,16 +20,12 @@ import kotlinx.android.synthetic.main.fragment_active_ability_details.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.ocpsoft.prettytime.PrettyTime
 import org.shadowrunrussia2020.android.R
 import org.shadowrunrussia2020.android.character.CharacterViewModel
 import org.shadowrunrussia2020.android.common.models.ActiveAbility
 import org.shadowrunrussia2020.android.common.models.HistoryRecord
 import org.shadowrunrussia2020.android.common.models.TargetType
-import org.shadowrunrussia2020.android.common.utils.MainThreadSchedulers
-import org.shadowrunrussia2020.android.common.utils.plusAssign
-import org.shadowrunrussia2020.android.common.utils.russianQrType
-import org.shadowrunrussia2020.android.common.utils.showErrorMessage
+import org.shadowrunrussia2020.android.common.utils.*
 import org.shadowrunrussia2020.android.model.qr.encode
 import org.shadowrunrussia2020.android.model.qr.maybeQrScanned
 import org.shadowrunrussia2020.android.model.qr.mentalQrData
@@ -113,13 +109,11 @@ class ActiveAbilityDetailsFragment : Fragment() {
                     if (validUntil < currentTimestamp) {
                         findNavController().popBackStack()
                     } else {
-                        textValidUntil.text =
-                            "Закончится " + PrettyTime(Locale("ru")).format(Date(validUntil))
+                        textValidUntil.text = "Закончится через ${timeBeforeInMinutes(currentTimestamp, validUntil)}"
                         targetButtons.isVisible = true
                     }
                 } else if (ability.cooldownUntil >= currentTimestamp) {
-                    textValidUntil.text =
-                        "Доступно " + PrettyTime(Locale("ru")).format(Date(ability.cooldownUntil))
+                    textValidUntil.text = "Доступно через ${timeBeforeInMinutes(currentTimestamp, ability.cooldownUntil)}"
                     targetButtons.isVisible = false
                 } else {
                     textValidUntil.text = ""

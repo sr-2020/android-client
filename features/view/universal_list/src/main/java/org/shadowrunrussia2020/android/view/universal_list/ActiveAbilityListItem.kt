@@ -8,11 +8,10 @@ import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.generic_recycler_view_item.view.*
-import org.ocpsoft.prettytime.PrettyTime
 import org.shadowrunrussia2020.android.common.models.ActiveAbility
 import org.shadowrunrussia2020.android.common.utils.MainThreadSchedulers
 import org.shadowrunrussia2020.android.common.utils.plusAssign
-import java.util.*
+import org.shadowrunrussia2020.android.common.utils.timeBeforeInMinutes
 import java.util.concurrent.TimeUnit
 
 fun createActiveAbilityHeader(list:Collection<UniversalViewData>) = HeaderItem(R.id.active_ability_item, "Активируемые способности", R.drawable.statement, list)
@@ -50,13 +49,14 @@ private class ActiveAbilityViewHolder private constructor(override val container
                 val validUntil = activeAbility.validUntil
                 if (validUntil != null) {
                     containerView.time.text =
-                        "Закончится " + PrettyTime(Locale("ru")).format(Date(validUntil))
+                        "Закончится через ${timeBeforeInMinutes(currentTimestamp, validUntil)}"
                 } else if (activeAbility.cooldownUntil >= currentTimestamp) {
                     containerView.time.text =
-                        "Доступно " + PrettyTime(Locale("ru")).format(Date(activeAbility.cooldownUntil))
+                        "Доступно через ${timeBeforeInMinutes(currentTimestamp, activeAbility.cooldownUntil)}"
                 } else {
                     containerView.time.text = ""
                 }
             }
     }
 }
+

@@ -1,6 +1,7 @@
 package org.shadowrunrussia2020.android.common.utils
 
 import org.shadowrunrussia2020.android.common.models.*
+import kotlin.math.ceil
 
 fun russianSlotName(slot: ImplantSlot): String {
     return when (slot) {
@@ -85,4 +86,10 @@ fun russianSpellSphere(sphere: SpellSphere): String {
         SpellSphere.aura -> "Анализ ауры"
         SpellSphere.stats -> "Влияние на характеристики"
     }
+}
+
+fun timeBeforeInMinutes(nowMs: Long, beforeMs: Long): String {
+    val delta = beforeMs - nowMs
+    val minutes = ceil(delta / (60.0 * 1000)).toInt()
+    return "$minutes минут"
 }
