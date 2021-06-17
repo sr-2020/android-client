@@ -21,6 +21,7 @@ class BillingFragment : Fragment() {
     private val characterViewModel by lazy {
         ViewModelProviders.of(this).get(CharacterViewModel::class.java)
     }
+    private var scoringScreenVisible = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_billing, container, false)
@@ -33,31 +34,34 @@ class BillingFragment : Fragment() {
 
         tabLayout.setupWithViewPager(viewPager)
 
-        characterViewModel.getCharacter().observe(this, Observer {
-            viewPager.adapter = object : FragmentPagerAdapter(childFragmentManager) {
-                override fun getCount(): Int = if (it.screens.scoring) 5 else 4
-                override fun getItem(position: Int): Fragment {
-                    return when (position) {
-                        0 -> BillingOverviewFragment()
-                        1 -> BillingHistoryFragment()
-                        2 -> BillingRentsFragment()
-                        3 -> BillingPassportFragment()
-                        4 -> BillingScoringFragment()
-                        else -> throw Error();
-                    }
-                }
-
-                override fun getPageTitle(position: Int): CharSequence? {
-                    return when (position) {
-                        0 -> "Обзор"
-                        1 -> "История"
-                        2 -> "Ренты"
-                        3 -> "Паспорт"
-                        4 -> "Скоринг"
-                        else -> throw Error();
-                    }
+        viewPager.adapter = object : FragmentPagerAdapter(childFragmentManager) {
+            override fun getCount(): Int = if (scoringScreenVisible) 5 else 4
+            override fun getItem(position: Int): Fragment {
+                return when (position) {
+                    0 -> BillingOverviewFragment()
+                    1 -> BillingHistoryFragment()
+                    2 -> BillingRentsFragment()
+                    3 -> BillingPassportFragment()
+                    4 -> BillingScoringFragment()
+                    else -> throw Error();
                 }
             }
+
+            override fun getPageTitle(position: Int): CharSequence? {
+                return when (position) {
+                    0 -> "Обзор"
+                    1 -> "История"
+                    2 -> "Ренты"
+                    3 -> "Паспорт"
+                    4 -> "Скоринг"
+                    else -> throw Error();
+                }
+            }
+        }
+
+        characterViewModel.getCharacter().observe(this, Observer {
+            scoringScreenVisible = it.screens.scoring
+            (viewPager.adapter as FragmentPagerAdapter).notifyDataSetChanged()
         })
 
         // Hack to un-break SwipeRefreshLayout and ViewPager interaction. Without that SwipeRefreshLayout
