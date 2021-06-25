@@ -60,6 +60,7 @@ fun russianQrType(type: QrType): String {
         QrType.box -> "Коробка"
         QrType.body_storage -> "Телохранилище"
         QrType.spirit -> "Дух"
+        QrType.spirit_jar -> "Духохранилище"
         QrType.drone -> "Дрон"
         QrType.drone_mod -> "Мод для дрона"
         QrType.sprite -> "Спрайт"

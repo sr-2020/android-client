@@ -30,6 +30,7 @@ enum class QrType {
     box,
     body_storage,
     spirit,
+    spirit_jar,
     drone,
     drone_mod,
     sprite,
