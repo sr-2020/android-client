@@ -21,7 +21,7 @@ import org.shadowrunrussia2020.android.model.positions.PositionsDao
         Position::class,
         ScoringInfo::class
     ],
-    version = 44
+    version = 45
 )
 @TypeConverters(Converters::class)
 internal abstract class CacheDatabase : RoomDatabase() {
