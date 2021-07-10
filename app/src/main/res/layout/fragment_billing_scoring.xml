@@ -23,7 +23,7 @@ android:layout_height="match_parent"
             android:layout_marginTop="16dp"
             android:text="Постоянные категории"
             android:textAlignment="viewStart"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
         <TextView
             android:id="@+id/textViewScoringFixCoefficient"
@@ -32,7 +32,7 @@ android:layout_height="match_parent"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:textAlignment="viewEnd"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -59,7 +59,7 @@ android:layout_height="match_parent"
             android:layout_marginTop="16dp"
             android:text="Относительные категории"
             android:textAlignment="viewStart"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
         <TextView
             android:id="@+id/textViewScoringRelativeCoefficient"
@@ -68,7 +68,7 @@ android:layout_height="match_parent"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:textAlignment="viewEnd"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
