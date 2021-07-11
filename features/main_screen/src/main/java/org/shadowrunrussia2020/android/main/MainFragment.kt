@@ -44,6 +44,7 @@ class MainFragment : Fragment() {
                 fullTextFading.text = "Фейдинг: ${character.hacking.fading}"
                 fullTextStrength.text = "Сила: ${character.strength}"
                 fullTextMagic.text = "Магия: ${character.magic}"
+                fullTextDepth.text = "Глубина: ${character.depth}"
 
                 val barcodeEncoder = BarcodeEncoder()
                 val bitmap = barcodeEncoder.encodeBitmap(encode(character.qrData), BarcodeFormat.QR_CODE, 400, 400)

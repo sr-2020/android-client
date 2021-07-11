@@ -171,6 +171,7 @@ data class Character(
     val essence: Int,
     val mentalQrId: Int,
     val magic: Int,
+    val depth: Int,
     val resonance: Int,
     val strength: Int,
     val matrixHp: Int,
