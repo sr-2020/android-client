@@ -17,7 +17,7 @@ interface PositionsWebService {
     @GET("position/manalevel")
     fun manalevel(): Deferred<Response<ManaLevelResponse>>
 
-    @GET("users")
+    @GET("profile")
     fun users():  Deferred<Response<List<UserResponse>>>
 }
 
