@@ -46,6 +46,7 @@ fun russianQrType(type: QrType): String {
         QrType.ASTRAL_BODY -> "Астральное тело"
         QrType.ROBOT_BODY -> "Дрон"
         QrType.ECTOPLASM_BODY -> "Дух"
+        QrType.VR_BODY -> "Аватар VR"
         QrType.empty -> "Пустышка"
         QrType.pill -> "Препарат"
         QrType.implant -> "Имплант"

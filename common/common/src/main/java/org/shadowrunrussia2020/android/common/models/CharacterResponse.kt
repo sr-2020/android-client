@@ -69,7 +69,7 @@ data class EthicTrigger(
 enum class ImplantSlot { body, arm, head, rcc }
 enum class ImplantGrade { alpha, beta, gamma, delta, bio }
 enum class HealthState { healthy, wounded, clinically_dead, biologically_dead }
-enum class BodyType { physical, astral, drone, ectoplasm }
+enum class BodyType { physical, astral, drone, ectoplasm, vr }
 
 @Parcelize
 data class Implant(

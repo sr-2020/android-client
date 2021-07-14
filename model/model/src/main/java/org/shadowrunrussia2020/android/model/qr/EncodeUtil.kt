@@ -13,6 +13,7 @@ import java.util.concurrent.TimeUnit
 fun getQrType(character: Character): QrType {
     return when (character.currentBody) {
         BodyType.astral -> QrType.ASTRAL_BODY
+        BodyType.vr -> QrType.VR_BODY
         BodyType.ectoplasm -> QrType.ECTOPLASM_BODY
         BodyType.drone -> QrType.ROBOT_BODY
         BodyType.physical -> when (character.healthState) {
