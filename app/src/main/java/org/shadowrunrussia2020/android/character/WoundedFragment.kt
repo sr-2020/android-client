@@ -26,7 +26,6 @@ import org.shadowrunrussia2020.android.R
 import org.shadowrunrussia2020.android.common.di.ApplicationSingletonScope
 import org.shadowrunrussia2020.android.common.models.Character
 import org.shadowrunrussia2020.android.common.models.HealthState
-import org.shadowrunrussia2020.android.common.utils.showErrorMessage
 import org.shadowrunrussia2020.android.model.qr.encode
 import org.shadowrunrussia2020.android.model.qr.qrData
 import org.shadowrunrussia2020.android.positioning.BeaconsScanner
@@ -52,16 +51,6 @@ class WoundedFragment : Fragment() {
             this,
             Observer { data: Character? -> if (data != null) onCharacterUpdate(data) }
         )
-
-        buttonDebugSelfRevive.setOnClickListener {
-            CoroutineScope(Dispatchers.Main).launch {
-                try {
-                    mModel.postEvent("debugReviveAbsolute")
-                 } catch (e: Exception) {
-                    showErrorMessage(requireActivity(), "${e.message}")
-                }
-            }
-        }
 
         buttonLogout.setOnClickListener {
             ApplicationSingletonScope.DependencyProvider.dependency.session.invalidate()
