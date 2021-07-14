@@ -28,11 +28,11 @@ private class TransactionViewHolder private constructor(override val containerVi
 
         if (transaction.transferType == "Incoming") {
             containerView.direction.setImageResource(R.drawable.ic_transfer_to)
-            containerView.comment.text = commentInBrackets(transaction)
+            containerView.comment.text = transaction.comment ?: ""
             containerView.amount.text = transaction.amount.toString()
         } else {
             containerView.direction.setImageResource(R.drawable.ic_transfer_from)
-            containerView.comment.text = commentInBrackets(transaction)
+            containerView.comment.text = transaction.comment ?: ""
             containerView.amount.text = (-transaction.amount).toString()
         }
         containerView.time.text  = PrettyTime(Locale("ru")).format(transaction.operationTime)
@@ -40,11 +40,5 @@ private class TransactionViewHolder private constructor(override val containerVi
         containerView.setOnClickListener {
             onClick?.invoke()
         }
-    }
-
-    private fun commentInBrackets(t: Transaction): String {
-        val comment = t.comment
-        if (comment == null || comment.isEmpty()) return ""
-        return "($comment)"
     }
 }
