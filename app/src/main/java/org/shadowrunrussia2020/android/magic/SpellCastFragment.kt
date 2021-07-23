@@ -237,10 +237,10 @@ class SpellCastFragment : Fragment() {
                                     "", it.timestamp,
                                     "${it.spellName}, мощь: ${it.power}, откат: ${it.magicFeedback}",
                                     it.casterAura,
-                                    "" + (it.participantsAmount != null and it.participantsAmount > 0
+                                    "" + (it.participantsAmount != null && it.participantsAmount > 0
                                           ? ", участники: ${it.participantsAmount}"
                                           :"")
-                                       + (it.victimsAmount != null and it.victimsAmount > 0
+                                       + (it.victimsAmount != null && it.victimsAmount > 0
                                           ? ", жертвы: ${it.victimsAmount}"
                                           : "")
                                 )
