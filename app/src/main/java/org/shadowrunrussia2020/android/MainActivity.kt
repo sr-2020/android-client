@@ -139,7 +139,7 @@ class MainActivity : AppCompatActivity(), IMainActivityDi {
 
                 val header = findViewById<NavigationView>(R.id.nav_view).getHeaderView(0);
                 header.findViewById<TextView>(R.id.headerTitle).text = "Персонаж #${data.modelId}"
-                header.findViewById<TextView>(R.id.headerSubtitle).text = ""
+                header.findViewById<TextView>(R.id.headerSubtitle).text = "Имя: ${data.name}"
 
                 if (data.healthState == HealthState.healthy) {
                     if (navController.currentDestination?.id == R.id.woundedFragment) {
