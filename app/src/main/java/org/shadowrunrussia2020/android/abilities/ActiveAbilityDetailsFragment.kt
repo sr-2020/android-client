@@ -166,7 +166,9 @@ class ActiveAbilityDetailsFragment : Fragment() {
                             tableResponse.map {
                                 HistoryRecord(
                                     "", it.timestamp,
-                                    "${it.spellName}, мощь: ${it.power}, откат: ${it.magicFeedback}",
+                                    "${it.spellName}, " +
+                                            if (it.power > 0) "мощь: ${it.power}" else ""+
+                                                    if (it.magicFeedback > 0) ", откат: ${it.magicFeedback}" else "",
                                     it.casterAura
                                     , ""
                                             + if (it.participantsAmount > 0)  ", участники: ${it.participantsAmount}" else ""
