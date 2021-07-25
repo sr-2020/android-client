@@ -97,7 +97,9 @@ data class SpellTrace(
     val casterAura: String,
     val metarace: String,
     val power: Int,
-    val magicFeedback: Int
+    val magicFeedback: Int,
+    val participantsAmount: Int,
+    val victimsAmount: Int
 ) : Parcelable
 
 @Parcelize
@@ -160,6 +162,7 @@ data class Screens(
 @Entity
 data class Character(
     @PrimaryKey val modelId: String,
+    val name: String,
     val timestamp: Long,
     val maxHp: Int,
     val healthState: HealthState,

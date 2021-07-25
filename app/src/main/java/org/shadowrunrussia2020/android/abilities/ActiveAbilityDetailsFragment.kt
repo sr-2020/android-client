@@ -30,7 +30,6 @@ import org.shadowrunrussia2020.android.model.qr.encode
 import org.shadowrunrussia2020.android.model.qr.maybeQrScanned
 import org.shadowrunrussia2020.android.model.qr.mentalQrData
 import org.shadowrunrussia2020.android.model.qr.startQrScan
-import java.util.*
 import java.util.concurrent.TimeUnit
 
 class ActiveAbilityDetailsFragment : Fragment() {
@@ -166,8 +165,7 @@ class ActiveAbilityDetailsFragment : Fragment() {
                         ActiveAbilityDetailsFragmentDirections.actionShowAbilityResult(
                             tableResponse.map {
                                 HistoryRecord(
-                                    "", it.timestamp, it.spellName, "", ""
-                                )
+                                    "", it.timestamp, it.spellName, "", ""                                )
                             }.toTypedArray()
                         )
                     )

@@ -236,7 +236,10 @@ class SpellCastFragment : Fragment() {
                                 HistoryRecord(
                                     "", it.timestamp,
                                     "${it.spellName}, мощь: ${it.power}, откат: ${it.magicFeedback}",
-                                    it.casterAura, ""
+                                    it.casterAura
+                                            + if (it.participantsAmount != null && it.participantsAmount > 0) ", участники: ${it.participantsAmount}" else ""
+                                            + if (it.victimsAmount != 0 && it.victimsAmount > 0)  ", жертвы: ${it.victimsAmount}" else ""
+                                    , ""
                                 )
                             }.toTypedArray()
                         )
