@@ -165,17 +165,7 @@ class ActiveAbilityDetailsFragment : Fragment() {
                         ActiveAbilityDetailsFragmentDirections.actionShowAbilityResult(
                             tableResponse.map {
                                 HistoryRecord(
-                                    "", it.timestamp,
-                                    "${it.spellName}, " +
-                                            if (it.power > 0) "мощь: ${it.power}" else ""+
-                                                    if (it.magicFeedback > 0) ", откат: ${it.magicFeedback}" else "",
-                                    it.casterAura
-                                    , ""
-                                            + if (it.participantsAmount > 0)  ", участники: ${it.participantsAmount}" else ""
-                                            + if (it.victimsAmount > 0)  ", жертвы: ${it.victimsAmount}" else ""
-
-
-                                )
+                                    "", it.timestamp, it.spellName, "", ""                                )
                             }.toTypedArray()
                         )
                     )
