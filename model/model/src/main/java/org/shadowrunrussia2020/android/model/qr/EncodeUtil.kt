@@ -58,7 +58,6 @@ suspend fun retrieveQrData(data: SimpleQrData): FullQrData {
             return downloadRewritableQrData(data.payload)
         QrType.PAYMENT_REQUEST_WITH_PRICE ->
             return FullQrData(data.type, "Запрос о переводе", "Запрос о переводе с указанием цены", 1, "");
-        QrType.PAYMENT_REQUEST_SIMPLE -> TODO()
         QrType.SHOP_BILL ->
             return FullQrData(data.type, "Магазинный ценник", "Позволяет оплатить товар", 1, data.payload);
         QrType.HEALTHY_BODY ->
@@ -71,10 +70,15 @@ suspend fun retrieveQrData(data: SimpleQrData): FullQrData {
             return FullQrData(data.type, "Мясное тело", "Мясное тело. Абсолютно мертво.", 1, data.payload);
         QrType.ASTRAL_BODY ->
             return FullQrData(data.type, "Астральное тело", "", 1, data.payload);
+        QrType.ROBOT_BODY ->
+            return FullQrData(data.type, "Тело дрона", "", 1, data.payload);
+        QrType.ECTOPLASM_BODY ->
+            return FullQrData(data.type, "Эктоплазменное тело", "", 1, data.payload);
+        QrType.VR_BODY ->
+            return FullQrData(data.type, "VR-тело", "", 1, data.payload);
         else -> TODO()
     }
 }
-
 
 class FormatException: Exception()
 class ValidationException: Exception()
