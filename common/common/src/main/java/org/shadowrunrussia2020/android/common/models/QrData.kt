@@ -6,6 +6,7 @@ import kotlinx.android.parcel.Parcelize
 enum class QrType {
     UNKNOWN,
     REWRITABLE,
+    PAYMENT_REQUEST_SIMPLE,
     PAYMENT_REQUEST_WITH_PRICE,
     SHOP_BILL,
     HEALTHY_BODY,

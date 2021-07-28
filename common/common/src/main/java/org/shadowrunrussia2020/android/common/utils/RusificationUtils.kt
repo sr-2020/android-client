@@ -36,6 +36,7 @@ fun russianQrType(type: QrType): String {
     return when (type) {
         QrType.UNKNOWN -> ""
         QrType.REWRITABLE -> ""
+        QrType.PAYMENT_REQUEST_SIMPLE -> "Запрос о переводе"
         QrType.PAYMENT_REQUEST_WITH_PRICE -> "Запрос о переводе с ценой"
         QrType.SHOP_BILL -> "Магазинный ценник"
         QrType.HEALTHY_BODY -> "Здоровое мясное тело"
